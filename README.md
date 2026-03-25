@@ -9,43 +9,63 @@ Next.js 16 · TypeScript · Tailwind CSS · PostgreSQL · Prisma · Auth.js v5
 ## Prérequis
 
 - [Node.js](https://nodejs.org) v20+
-- [PostgreSQL](https://www.postgresql.org/download) (noter le port et le mot de passe à l'installation)
+- [PostgreSQL](https://www.postgresql.org/download/windows) — noter le mot de passe `postgres` défini à l'installation
+- [GitHub Desktop](https://desktop.github.com)
+- [VSCode](https://code.visualstudio.com)
 
 ## Installation
 
+**1. Cloner le repo**
+
+Dans GitHub Desktop : `File → Clone repository` → coller `https://github.com/hyosua/gmp` → choisir un dossier local → Clone.
+
+Puis ouvrir le projet dans VSCode : `Open in Visual Studio Code`.
+
+**2. Installer les dépendances**
+
+Dans le terminal VSCode (`Ctrl+ù` ou `Terminal → New Terminal`) :
+
 ```bash
-git clone https://github.com/hyosua/gmp.git
-cd gmp
 npm install
 ```
 
 ## Configuration
 
-Copier `.env.example` en `.env` et remplir les valeurs :
+**3. Créer le fichier `.env`**
 
-```bash
-cp .env.example .env
-```
+Copier `.env.example` en `.env` (dans VSCode : clic droit sur `.env.example` → Copy, puis coller et renommer en `.env`).
+
+Remplir les valeurs :
 
 ```env
-# Adapter selon votre config locale
-# Windows : port 5432, user postgres
-# Linux   : port 5433, user <votre-user-système>
-DATABASE_URL="postgresql://USER:PASSWORD@localhost:5432/gmp?schema=public"
-
-# Générer avec : npx auth secret
+DATABASE_URL="postgresql://postgres:VOTRE_MOT_DE_PASSE@localhost:5432/gmp?schema=public"
 AUTH_SECRET=""
 ```
 
+Générer `AUTH_SECRET` dans le terminal :
+
+```bash
+npx auth secret
+```
+
+Copier la valeur générée dans `.env`.
+
 ## Base de données
+
+**4. Créer la base et appliquer le schéma**
+
+Dans le terminal VSCode :
 
 ```bash
 # Créer la base (une seule fois)
-createdb gmp
+createdb -U postgres gmp
 
 # Appliquer le schéma
 npx prisma migrate dev
 ```
+
+> Si `createdb` n'est pas reconnu, ajouter PostgreSQL au PATH Windows :
+> `C:\Program Files\PostgreSQL\16\bin` → Variables d'environnement système → Path.
 
 ## Lancer le projet
 
