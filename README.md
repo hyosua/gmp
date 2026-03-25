@@ -2,6 +2,17 @@
 
 Site institutionnel du département Génie Mécanique et Productique (IUT d'Évry).
 
+## Sommaire
+
+- [Stack](#stack)
+- [Prérequis](#prérequis)
+- [Installer PostgreSQL (Windows)](#installer-postgresql-windows)
+- [Installation du projet](#installation-du-projet)
+- [Configuration](#configuration)
+- [Base de données](#base-de-données)
+- [Lancer le projet](#lancer-le-projet)
+- [Commandes utiles](#commandes-utiles)
+
 ## Stack
 
 Next.js 16 · TypeScript · Tailwind CSS · PostgreSQL · Prisma · Auth.js v5
