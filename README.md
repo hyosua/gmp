@@ -8,18 +8,37 @@ Next.js 16 · TypeScript · Tailwind CSS · PostgreSQL · Prisma · Auth.js v5
 
 ## Prérequis
 
-- [Node.js](https://nodejs.org) v20+
-- [PostgreSQL](https://www.postgresql.org/download/windows) — noter le mot de passe `postgres` défini à l'installation
+- [Node.js](https://nodejs.org) v20+ — choisir la version LTS
+- [PostgreSQL 16 pour Windows](https://www.enterprisedb.com/downloads/postgres-postgresql-downloads) — installer la version 16
 - [GitHub Desktop](https://desktop.github.com)
 - [VSCode](https://code.visualstudio.com)
 
-## Installation
+## Installer PostgreSQL (Windows)
+
+1. Télécharger l'installeur PostgreSQL 16 sur le lien ci-dessus
+2. Lancer l'installeur, laisser les options par défaut
+3. Choisir un mot de passe pour l'utilisateur `postgres` — **le noter**, il sera nécessaire
+4. Laisser le port **5432** (défaut)
+5. À la fin de l'installation, **décocher** "Launch Stack Builder"
+
+**Ajouter PostgreSQL au PATH :**
+
+`Panneau de configuration → Système → Paramètres système avancés → Variables d'environnement`
+
+Dans "Variables système", sélectionner `Path` → Modifier → Nouveau → coller :
+```
+C:\Program Files\PostgreSQL\16\bin
+```
+
+Valider et **redémarrer VSCode**.
+
+## Installation du projet
 
 **1. Cloner le repo**
 
 Dans GitHub Desktop : `File → Clone repository` → coller `https://github.com/hyosua/gmp` → choisir un dossier local → Clone.
 
-Puis ouvrir le projet dans VSCode : `Open in Visual Studio Code`.
+Puis : `Open in Visual Studio Code`.
 
 **2. Installer les dépendances**
 
@@ -33,7 +52,7 @@ npm install
 
 **3. Créer le fichier `.env`**
 
-Copier `.env.example` en `.env` (dans VSCode : clic droit sur `.env.example` → Copy, puis coller et renommer en `.env`).
+Dans VSCode : clic droit sur `.env.example` → `Copy` → coller dans le même dossier → renommer en `.env`.
 
 Remplir les valeurs :
 
@@ -42,19 +61,19 @@ DATABASE_URL="postgresql://postgres:VOTRE_MOT_DE_PASSE@localhost:5432/gmp?schema
 AUTH_SECRET=""
 ```
 
-Générer `AUTH_SECRET` dans le terminal :
+Remplacer `VOTRE_MOT_DE_PASSE` par le mot de passe choisi lors de l'installation PostgreSQL.
+
+Générer `AUTH_SECRET` :
 
 ```bash
 npx auth secret
 ```
 
-Copier la valeur générée dans `.env`.
+Copier la valeur affichée dans le champ `AUTH_SECRET` du `.env`.
 
 ## Base de données
 
 **4. Créer la base et appliquer le schéma**
-
-Dans le terminal VSCode :
 
 ```bash
 # Créer la base (une seule fois)
@@ -64,8 +83,7 @@ createdb -U postgres gmp
 npx prisma migrate dev
 ```
 
-> Si `createdb` n'est pas reconnu, ajouter PostgreSQL au PATH Windows :
-> `C:\Program Files\PostgreSQL\16\bin` → Variables d'environnement système → Path.
+Saisir le mot de passe `postgres` si demandé.
 
 ## Lancer le projet
 
