@@ -1,6 +1,40 @@
+'use client'
 import Image from "next/image";
+import { useEffect, useState } from "react";
 
 export default function Home() {
+
+
+  const [button, setButton] = useState(false)
+  const fc = async () => {
+    const email = await fetch("/api/mail", {
+      method: "POST",
+       headers: {
+      "Content-Type": "application/json"
+    },
+      body: JSON.stringify({
+        to: "colleterhyosua@gmail.com"
+
+      })
+    }
+
+
+    )
+    const data = await email.json();
+
+    return data
+
+  }
+
+  useEffect(() => {
+
+    if (button) {
+      const data = fc();
+
+      console.log(data);
+      setButton(false)
+    }
+  }, [button])
   return (
     <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
       <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
@@ -58,6 +92,7 @@ export default function Home() {
           >
             Documentation
           </a>
+          <button onClick={() => setButton(true)}>Envoyer</button>
         </div>
       </main>
     </div>
