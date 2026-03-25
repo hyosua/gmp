@@ -219,7 +219,14 @@ Next.js App (port 3000 — géré par PM2)
 User
   ├── id, email, password (hashé), nom, prenom
   ├── role: ETUDIANT | ENSEIGNANT | ENTREPRISE | ADMIN
+  ├── parcours: SIMULATION_REALITE_VIRTUELLE | CONCEPTION_PRODUCTION_DURABLE | NON_DEFINI
+  ├── typeFormation: INITIALE | ALTERNANCE
   └── createdAt, updatedAt
+
+Groupe
+  ├── id, nom (ex: "TD1", "TP2A", "Promo BUT2")
+  ├── type: CM | TD | TP
+  └── etudiants → User[] (relation n,n)
 
 Note
   ├── id, valeur (0–20)
@@ -232,7 +239,8 @@ Matiere
 
 EmploiDuTemps
   ├── id, jour, heureDebut, heureFin, salle, intitule
-  └── userId → User
+  ├── groupeId → Groupe
+  └── enseignantId → User
 
 SupportDeCours
   ├── id, titre, cheminFichier, taille

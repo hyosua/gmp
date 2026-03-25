@@ -11,6 +11,13 @@ UTILISATEUR
   - nom
   - prenom
   - role (ETUDIANT | ENSEIGNANT | ENTREPRISE | ADMIN)
+  - parcours (SIMULATION_REALITE_VIRTUELLE | CONCEPTION_PRODUCTION_DURABLE | NON_DEFINI)
+  - type_formation (INITIALE | ALTERNANCE)
+
+GROUPE
+  - id_groupe (clé)
+  - nom (ex: "TD1", "TP2A", "Promo BUT2")
+  - type (CM | TD | TP)
 
 MATIERE
   - id_matiere (clé)
@@ -70,9 +77,17 @@ CONCERNER
   - NOTE 1,1 <---> 1,n MATIERE
   - Une note concerne une matière
 
-AVOIR_PLANNING
-  - UTILISATEUR 1,n <---> 1,1 EMPLOI_DU_TEMPS
-  - Chaque créneau appartient à un utilisateur
+APPARTENIR
+  - UTILISATEUR (étudiant) 1,n <---> 1,n GROUPE
+  - Un étudiant appartient à plusieurs groupes (CM, TD, TP)
+
+PLANIFIER
+  - GROUPE 1,n <---> 1,1 EMPLOI_DU_TEMPS
+  - Un groupe a plusieurs créneaux
+
+ENSEIGNER
+  - UTILISATEUR (enseignant) 1,n <---> 1,1 EMPLOI_DU_TEMPS
+  - Un enseignant est assigné à plusieurs créneaux
 
 DEPOSER_SUPPORT
   - UTILISATEUR (enseignant) 1,n <---> 1,1 SUPPORT_COURS
@@ -91,6 +106,10 @@ NOTES LOOPING
 -------------
 
 - UTILISATEUR est une entité unique avec attribut role (pas de sous-entités)
+- Les attributs parcours et type_formation ne concernent que les étudiants (null pour les autres rôles)
 - NOTE est une entité à part entière (pas une association) car elle a ses propres attributs
 - RECEVOIR et DEPOSER_NOTE partent toutes deux de UTILISATEUR vers NOTE
   => préciser les rôles "étudiant" et "enseignant" sur les pattes dans Looping
+- APPARTENIR est une association n,n entre UTILISATEUR et GROUPE (table de jointure en SQL)
+- EMPLOI_DU_TEMPS est lié à GROUPE (pas à UTILISATEUR directement)
+  => un étudiant voit les créneaux de ses groupes, un enseignant voit les créneaux où il est assigné

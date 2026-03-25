@@ -13,23 +13,52 @@ enum Role {
   ADMIN
 }
 
-model User {
-  id        String   @id @default(cuid())
-  email     String   @unique
-  password  String
-  nom       String
-  prenom    String
-  role      Role
-  actif     Boolean  @default(true)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+enum Parcours {
+  SIMULATION_REALITE_VIRTUELLE
+  CONCEPTION_PRODUCTION_DURABLE
+  NON_DEFINI
+}
 
-  notesRecues    Note[]           @relation("NotesEtudiant")
-  notesDeposees  Note[]           @relation("NotesEnseignant")
-  emploisDuTemps EmploiDuTemps[]
-  supports       SupportDeCours[]
-  projets        ProjetTuteure[]
-  offres         OffreAlternance[]
+enum TypeFormation {
+  INITIALE
+  ALTERNANCE
+}
+
+enum TypeGroupe {
+  CM
+  TD
+  TP
+}
+
+model User {
+  id            String        @id @default(cuid())
+  email         String        @unique
+  password      String
+  nom           String
+  prenom        String
+  role          Role
+  actif         Boolean       @default(true)
+  parcours      Parcours      @default(NON_DEFINI)
+  typeFormation TypeFormation @default(INITIALE)
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  notesRecues      Note[]            @relation("NotesEtudiant")
+  notesDeposees    Note[]            @relation("NotesEnseignant")
+  emploisDuTemps   EmploiDuTemps[]
+  supports         SupportDeCours[]
+  projets          ProjetTuteure[]
+  offres           OffreAlternance[]
+  groupes          Groupe[]          @relation("GroupeEtudiants")
+}
+
+model Groupe {
+  id       String     @id @default(cuid())
+  nom      String
+  type     TypeGroupe
+
+  etudiants  User[]          @relation("GroupeEtudiants")
+  creneaux   EmploiDuTemps[]
 }
 
 model Matiere {
@@ -56,15 +85,18 @@ model Note {
 }
 
 model EmploiDuTemps {
-  id          String   @id @default(cuid())
-  jour        String
-  heureDebut  String
-  heureFin    String
-  salle       String
-  intitule    String
+  id           String   @id @default(cuid())
+  jour         String
+  heureDebut   String
+  heureFin     String
+  salle        String
+  intitule     String
 
-  user        User   @relation(fields: [userId], references: [id])
-  userId      String
+  groupe       Groupe @relation(fields: [groupeId], references: [id])
+  groupeId     String
+
+  enseignant   User   @relation(fields: [enseignantId], references: [id])
+  enseignantId String
 }
 
 model SupportDeCours {
