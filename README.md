@@ -1,36 +1,65 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Site web — Département GMP
 
-## Getting Started
+Site institutionnel du département Génie Mécanique et Productique (IUT d'Évry).
 
-First, run the development server:
+## Stack
+
+Next.js 16 · TypeScript · Tailwind CSS · PostgreSQL · Prisma · Auth.js v5
+
+## Prérequis
+
+- [Node.js](https://nodejs.org) v20+
+- [PostgreSQL](https://www.postgresql.org/download) (noter le port et le mot de passe à l'installation)
+
+## Installation
+
+```bash
+git clone https://github.com/hyosua/gmp.git
+cd gmp
+npm install
+```
+
+## Configuration
+
+Copier `.env.example` en `.env` et remplir les valeurs :
+
+```bash
+cp .env.example .env
+```
+
+```env
+# Adapter selon votre config locale
+# Windows : port 5432, user postgres
+# Linux   : port 5433, user <votre-user-système>
+DATABASE_URL="postgresql://USER:PASSWORD@localhost:5432/gmp?schema=public"
+
+# Générer avec : npx auth secret
+AUTH_SECRET=""
+```
+
+## Base de données
+
+```bash
+# Créer la base (une seule fois)
+createdb gmp
+
+# Appliquer le schéma
+npx prisma migrate dev
+```
+
+## Lancer le projet
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Ouvrir [http://localhost:3000](http://localhost:3000)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Commandes utiles
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+| Commande | Description |
+|----------|-------------|
+| `npm run dev` | Serveur de développement |
+| `npm run build` | Build de production |
+| `npx prisma migrate dev` | Appliquer les migrations |
+| `npx prisma studio` | Interface visuelle BDD |
