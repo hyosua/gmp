@@ -11,6 +11,7 @@ Site institutionnel du département Génie Mécanique et Productique (IUT d'Évr
 - [Configuration](#configuration)
 - [Base de données](#base-de-données)
 - [Lancer le projet](#lancer-le-projet)
+- [Mettre à jour le schéma Prisma](#mettre-à-jour-le-schéma-prisma)
 - [Commandes utiles](#commandes-utiles)
 
 ## Stack
@@ -70,6 +71,8 @@ Remplir les valeurs :
 ```env
 DATABASE_URL="postgresql://postgres:VOTRE_MOT_DE_PASSE@localhost:5432/gmp?schema=public"
 AUTH_SECRET=""
+RESEND_API_KEY=""
+RESEND_FROM="noreply@votre-domaine.fr"
 ```
 
 Remplacer `VOTRE_MOT_DE_PASSE` par le mot de passe choisi lors de l'installation PostgreSQL.
@@ -81,6 +84,8 @@ npx auth secret
 ```
 
 Copier la valeur affichée dans le champ `AUTH_SECRET` du `.env`.
+
+> `RESEND_API_KEY` et `RESEND_FROM` sont nécessaires uniquement pour les fonctionnalités d'email (mot de passe oublié, notifications). Laisser vide en dev si non utilisé.
 
 ## Base de données
 
@@ -103,6 +108,27 @@ npm run dev
 ```
 
 Ouvrir [http://localhost:3000](http://localhost:3000)
+
+## Mettre à jour le schéma Prisma
+
+Quand le schéma Prisma change (nouvelle migration dans `prisma/migrations/`), appliquer les changements :
+
+```bash
+git pull
+npm install
+npx prisma migrate dev
+```
+
+> `npm install` est nécessaire si de nouvelles dépendances ont été ajoutées.
+> `npx prisma migrate dev` applique toutes les migrations en attente sur votre BDD locale.
+
+En cas d'erreur de synchronisation :
+
+```bash
+npx prisma migrate reset
+```
+
+> ⚠️ Cette commande supprime toutes les données locales. À n'utiliser qu'en développement.
 
 ## Commandes utiles
 
