@@ -17,6 +17,9 @@ enum Parcours {
   SIMULATION_REALITE_VIRTUELLE
   CONCEPTION_PRODUCTION_DURABLE
   NON_DEFINI
+  LP_MIE
+  LP_MIEF
+  LP_MRI
 }
 
 enum TypeFormation {
@@ -30,18 +33,26 @@ enum TypeGroupe {
   TP
 }
 
+enum Statut {
+  PENDING
+  PUBLISHED
+  REJECTED
+}
+
 model User {
-  id            String        @id @default(cuid())
-  email         String        @unique
-  password      String
-  nom           String
-  prenom        String
-  role          Role
-  actif         Boolean       @default(true)
-  parcours      Parcours      @default(NON_DEFINI)
-  typeFormation TypeFormation @default(INITIALE)
-  createdAt     DateTime      @default(now())
-  updatedAt     DateTime      @updatedAt
+  id               String        @id @default(cuid())
+  email            String        @unique
+  password         String
+  nom              String
+  prenom           String
+  role             Role
+  actif            Boolean       @default(true)
+  parcours         Parcours      @default(NON_DEFINI)
+  typeFormation    TypeFormation @default(INITIALE)
+  anneePromotion   Int           @default(1)
+  promesseEmbauche Boolean       @default(false)
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
 
   notesRecues      Note[]            @relation("NotesEtudiant")
   notesDeposees    Note[]            @relation("NotesEnseignant")
@@ -50,15 +61,34 @@ model User {
   projets          ProjetTuteure[]
   offres           OffreAlternance[]
   groupes          Groupe[]          @relation("GroupeEtudiants")
+  resetTokens      ResetToken[]
+}
+
+model ResetToken {
+  id        String   @id @default(cuid())
+  token     String   @unique
+  expiresAt DateTime
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
 }
 
 model Groupe {
-  id       String     @id @default(cuid())
-  nom      String
-  type     TypeGroupe
+  id            String     @id @default(cuid())
+  nom           String
+  type          TypeGroupe
+  anneeScolaire String
 
   etudiants  User[]          @relation("GroupeEtudiants")
   creneaux   EmploiDuTemps[]
+}
+
+model UE {
+  id          String    @id @default(cuid())
+  nom         String
+  code        String    @unique
+  coefficient Float
+
+  matieres    Matiere[]
 }
 
 model Matiere {
@@ -66,31 +96,37 @@ model Matiere {
   nom  String
   code String @unique
 
+  ue    UE     @relation(fields: [ueId], references: [id])
+  ueId  String
+
   notes Note[]
 }
 
 model Note {
-  id          String   @id @default(cuid())
-  valeur      Float
-  dateDepot   DateTime @default(now())
+  id        String   @id @default(cuid())
+  valeur    Float
+  semestre  Int
+  annee     Int
+  dateDepot DateTime @default(now())
 
-  etudiant    User    @relation("NotesEtudiant", fields: [etudiantId], references: [id])
-  etudiantId  String
+  etudiant     User    @relation("NotesEtudiant", fields: [etudiantId], references: [id])
+  etudiantId   String
 
-  enseignant  User    @relation("NotesEnseignant", fields: [enseignantId], references: [id])
+  enseignant   User    @relation("NotesEnseignant", fields: [enseignantId], references: [id])
   enseignantId String
 
-  matiere     Matiere @relation(fields: [matiereId], references: [id])
-  matiereId   String
+  matiere   Matiere @relation(fields: [matiereId], references: [id])
+  matiereId String
 }
 
 model EmploiDuTemps {
-  id           String   @id @default(cuid())
-  jour         String
-  heureDebut   String
-  heureFin     String
-  salle        String
-  intitule     String
+  id         String   @id @default(cuid())
+  semaine    DateTime
+  jour       String
+  heureDebut String
+  heureFin   String
+  salle      String
+  intitule   String
 
   groupe       Groupe @relation(fields: [groupeId], references: [id])
   groupeId     String
@@ -106,8 +142,8 @@ model SupportDeCours {
   taille        Int
   dateDepot     DateTime @default(now())
 
-  enseignant    User   @relation(fields: [enseignantId], references: [id])
-  enseignantId  String
+  enseignant   User   @relation(fields: [enseignantId], references: [id])
+  enseignantId String
 }
 
 model ProjetTuteure {
@@ -116,6 +152,7 @@ model ProjetTuteure {
   description String
   prerequis   String?
   nbEtudiants Int      @default(1)
+  statut      Statut   @default(PENDING)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
@@ -130,6 +167,7 @@ model OffreAlternance {
   duree        String
   remuneration String?
   prerequis    String?
+  statut       Statut   @default(PENDING)
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 
