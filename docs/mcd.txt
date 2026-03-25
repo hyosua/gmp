@@ -1,0 +1,96 @@
+MCD - Site web département GMP
+================================
+
+ENTITES ET ATTRIBUTS
+---------------------
+
+UTILISATEUR
+  - id_utilisateur (clé)
+  - email
+  - mot_de_passe
+  - nom
+  - prenom
+  - role (ETUDIANT | ENSEIGNANT | ENTREPRISE | ADMIN)
+
+MATIERE
+  - id_matiere (clé)
+  - nom
+  - code
+
+NOTE
+  - id_note (clé)
+  - valeur (0-20)
+  - date_depot
+
+EMPLOI_DU_TEMPS
+  - id_creneau (clé)
+  - jour
+  - heure_debut
+  - heure_fin
+  - salle
+  - intitule
+
+SUPPORT_COURS
+  - id_support (clé)
+  - titre
+  - chemin_fichier
+  - taille
+  - date_depot
+
+PROJET_TUTEURE
+  - id_projet (clé)
+  - titre
+  - description
+  - prerequis
+  - nb_etudiants
+  - date_creation
+
+OFFRE_ALTERNANCE
+  - id_offre (clé)
+  - poste
+  - description
+  - duree
+  - remuneration
+  - prerequis
+  - date_creation
+
+
+ASSOCIATIONS
+------------
+
+RECEVOIR
+  - UTILISATEUR (étudiant) 1,n <---> 1,1 NOTE
+  - Un étudiant reçoit plusieurs notes
+
+DEPOSER_NOTE
+  - UTILISATEUR (enseignant) 1,n <---> 1,1 NOTE
+  - Un enseignant dépose plusieurs notes
+
+CONCERNER
+  - NOTE 1,1 <---> 1,n MATIERE
+  - Une note concerne une matière
+
+AVOIR_PLANNING
+  - UTILISATEUR 1,n <---> 1,1 EMPLOI_DU_TEMPS
+  - Chaque créneau appartient à un utilisateur
+
+DEPOSER_SUPPORT
+  - UTILISATEUR (enseignant) 1,n <---> 1,1 SUPPORT_COURS
+  - Un enseignant dépose plusieurs supports de cours
+
+PROPOSER_PROJET
+  - UTILISATEUR (entreprise) 1,n <---> 1,1 PROJET_TUTEURE
+  - Une entreprise propose plusieurs projets tuteurés
+
+PROPOSER_OFFRE
+  - UTILISATEUR (entreprise) 1,n <---> 1,1 OFFRE_ALTERNANCE
+  - Une entreprise propose plusieurs offres d'alternance
+
+
+NOTES LOOPING
+-------------
+
+- UTILISATEUR est une entité unique avec attribut role (pas de sous-entités)
+- NOTE est une entité à part entière (pas une association) car elle a ses propres attributs
+- RECEVOIR et DEPOSER_NOTE partent toutes deux de UTILISATEUR vers NOTE
+  => préciser les rôles "étudiant" et "enseignant" sur les pattes dans Looping
