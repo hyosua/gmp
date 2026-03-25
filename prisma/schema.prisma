@@ -1,0 +1,106 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  ETUDIANT
+  ENSEIGNANT
+  ENTREPRISE
+  ADMIN
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  nom       String
+  prenom    String
+  role      Role
+  actif     Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  notesRecues    Note[]           @relation("NotesEtudiant")
+  notesDeposees  Note[]           @relation("NotesEnseignant")
+  emploisDuTemps EmploiDuTemps[]
+  supports       SupportDeCours[]
+  projets        ProjetTuteure[]
+  offres         OffreAlternance[]
+}
+
+model Matiere {
+  id   String @id @default(cuid())
+  nom  String
+  code String @unique
+
+  notes Note[]
+}
+
+model Note {
+  id          String   @id @default(cuid())
+  valeur      Float
+  dateDepot   DateTime @default(now())
+
+  etudiant    User    @relation("NotesEtudiant", fields: [etudiantId], references: [id])
+  etudiantId  String
+
+  enseignant  User    @relation("NotesEnseignant", fields: [enseignantId], references: [id])
+  enseignantId String
+
+  matiere     Matiere @relation(fields: [matiereId], references: [id])
+  matiereId   String
+}
+
+model EmploiDuTemps {
+  id          String   @id @default(cuid())
+  jour        String
+  heureDebut  String
+  heureFin    String
+  salle       String
+  intitule    String
+
+  user        User   @relation(fields: [userId], references: [id])
+  userId      String
+}
+
+model SupportDeCours {
+  id            String   @id @default(cuid())
+  titre         String
+  cheminFichier String
+  taille        Int
+  dateDepot     DateTime @default(now())
+
+  enseignant    User   @relation(fields: [enseignantId], references: [id])
+  enseignantId  String
+}
+
+model ProjetTuteure {
+  id          String   @id @default(cuid())
+  titre       String
+  description String
+  prerequis   String?
+  nbEtudiants Int      @default(1)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  entreprise   User   @relation(fields: [entrepriseId], references: [id])
+  entrepriseId String
+}
+
+model OffreAlternance {
+  id           String   @id @default(cuid())
+  poste        String
+  description  String
+  duree        String
+  remuneration String?
+  prerequis    String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  entreprise   User   @relation(fields: [entrepriseId], references: [id])
+  entrepriseId String
+}
