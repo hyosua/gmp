@@ -1,26 +1,96 @@
 @import "tailwindcss";
 
 :root {
+  /* V2 Forge Outfit — light */
+  --c-bg: #f8fafc;
+  --c-bg-deep: #f1f5f9;
+  --c-bg-card: #ffffff;
+  --c-primary: #0d9488;
+  --c-secondary: #171717;
+  --c-accent: #f59e0b;
+  --c-border: #e2e8f0;
+  --c-muted: #81adc8;
+  --c-primary-hover: #0f766e;
+  --c-photo-overlay: rgba(13,148,136,0.55);
+  --c-grid-color: rgba(13,148,136,0.07);
+  --c-grid-color-sm: rgba(13,148,136,0.03);
+  --c-scanlines: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0,0,0,0.006) 3px, rgba(0,0,0,0.006) 4px);
+  /* opacity variants (hex alpha → rgba) */
+  --c-primary-15:   rgba(13,148,136,0.08);
+  --c-primary-20:   rgba(13,148,136,0.13);
+  --c-primary-30:   rgba(13,148,136,0.19);
+  --c-accent-30:    rgba(245,158,11,0.19);
+  --c-accent-40:    rgba(245,158,11,0.25);
+  --c-secondary-25: rgba(23,23,23,0.15);
+  --c-secondary-30: rgba(23,23,23,0.19);
+  --c-secondary-40: rgba(23,23,23,0.25);
+  --c-secondary-80: rgba(23,23,23,0.50);
+  --c-secondary-90: rgba(23,23,23,0.56);
+}
+
+.dark {
+  /* Forge — dark (ancien style) */
+  --c-bg: #0f172a;
+  --c-bg-deep: #020617;
+  --c-bg-card: #1e293b;
+  --c-primary: #f97316;
+  --c-secondary: #e2e8f0;
+  --c-accent: #fbbf24;
+  --c-border: #334155;
+  --c-muted: #64748b;
+  --c-primary-hover: #ea6a0a;
+  --c-photo-overlay: rgba(249,115,22,0.45);
+  --c-grid-color: rgba(249,115,22,0.06);
+  --c-grid-color-sm: rgba(249,115,22,0.025);
+  --c-scanlines: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(255,255,255,0.012) 3px, rgba(255,255,255,0.012) 4px);
+  /* opacity variants */
+  --c-primary-15:   rgba(249,115,22,0.08);
+  --c-primary-20:   rgba(249,115,22,0.13);
+  --c-primary-30:   rgba(249,115,22,0.19);
+  --c-accent-30:    rgba(251,191,36,0.19);
+  --c-accent-40:    rgba(251,191,36,0.25);
+  --c-secondary-25: rgba(226,232,240,0.15);
+  --c-secondary-30: rgba(226,232,240,0.19);
+  --c-secondary-40: rgba(226,232,240,0.25);
+  --c-secondary-80: rgba(226,232,240,0.50);
+  --c-secondary-90: rgba(226,232,240,0.56);
+}
+
+:root {
   --background: #ffffff;
   --foreground: #171717;
+
+  /* Charte GMP */
+  --color-primary:       #0d9488;
+  --color-primary-dark:  #0f766e;
+  --color-primary-light: #14b8a6;
+  --color-secondary:       #f59e0b;
+  --color-secondary-dark:  #d97706;
+  --color-secondary-light: #fbbf24;
+  --color-neutral:       #81adc8;
+  --color-neutral-dark:  #5a8aaa;
+  --color-neutral-light: #b8d4e8;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
+  --font-sans: var(--font-outfit);
   --font-mono: var(--font-geist-mono);
-}
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-primary:        var(--color-primary);
+  --color-primary-dark:   var(--color-primary-dark);
+  --color-primary-light:  var(--color-primary-light);
+  --color-secondary:      var(--color-secondary);
+  --color-secondary-dark: var(--color-secondary-dark);
+  --color-secondary-light:var(--color-secondary-light);
+  --color-neutral:        var(--color-neutral);
+  --color-neutral-dark:   var(--color-neutral-dark);
+  --color-neutral-light:  var(--color-neutral-light);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-outfit), sans-serif;
 }
