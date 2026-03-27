@@ -11,8 +11,8 @@ import {
   Wrench,
   Zap,
 } from "lucide-react";
+import Image from "next/image";
 import {
-  IllustrationGearAssembly,
   IllustrationCAO,
   IllustrationUsinage,
   IllustrationRobot,
@@ -167,7 +167,8 @@ function Hero() {
       <div className="absolute left-0 right-0 top-[116px] h-[1px] bg-white/10" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-        <div className="max-w-3xl">
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
+        <div className="">
           {/* label */}
           <div className="flex items-center gap-3 mb-6">
             <div className="w-4 h-[1px] bg-[#f59e0b]" />
@@ -241,10 +242,45 @@ function Hero() {
               </div>
             ))}
           </div>
+        </div>{/* end text col */}
+
+        {/* photo col */}
+        <div className="hidden lg:block relative">
+          {/* blueprint cadre */}
+          <div className="absolute -top-3 -left-3 w-12 h-12 border-t-2 border-l-2 border-white/30" />
+          <div className="absolute -bottom-3 -right-3 w-12 h-12 border-b-2 border-r-2 border-[#f59e0b]/60" />
+          {/* annotation ref */}
+          <span
+            className="absolute -top-6 left-0 text-[9px] tracking-widest text-white/30 uppercase"
+            style={{ fontFamily: "var(--font-geist-mono)" }}
+          >
+            PHOTO · GMP-STU-001
+          </span>
+
+          {/* image avec overlay teal monochrome */}
+          <div className="relative overflow-hidden">
+            <Image
+              src="/gmp-stud.png"
+              alt="Étudiants en TP de génie mécanique"
+              width={680}
+              height={500}
+              className="w-full h-auto object-cover grayscale"
+              priority
+            />
+            {/* overlay teal multiply */}
+            <div
+              className="absolute inset-0"
+              style={{
+                background: "rgba(13,148,136,0.45)",
+                mixBlendMode: "multiply",
+              }}
+            />
+            {/* overlay gradient bas pour fondre avec le fond */}
+            <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-[#0d9488]/60 to-transparent" />
+          </div>
         </div>
 
-        {/* blueprint gear assembly illustration — right side */}
-        <IllustrationGearAssembly className="hidden lg:block absolute right-0 top-1/2 -translate-y-1/2 w-[480px] opacity-20 pointer-events-none" />
+        </div>{/* end grid */}
       </div>
 
       {/* bottom border decoration */}
@@ -383,6 +419,66 @@ function Parcours() {
         </div>
       </div>
     </section>
+  );
+}
+
+/* ─── Bande photos ──────────────────────────────────────────── */
+
+function BandePhotos() {
+  return (
+    <div className="grid md:grid-cols-2 h-72 overflow-hidden">
+      {/* dessin.jpg */}
+      <div className="relative group overflow-hidden">
+        <Image
+          src="/dessin.jpg"
+          alt="Dessin technique et conception"
+          fill
+          className="object-cover grayscale group-hover:grayscale-0 transition-all duration-500 scale-105 group-hover:scale-100"
+        />
+        <div
+          className="absolute inset-0 transition-opacity duration-500 group-hover:opacity-0"
+          style={{ background: "rgba(13,148,136,0.50)", mixBlendMode: "multiply" }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+        <div className="absolute bottom-4 left-4">
+          <span
+            className="text-[10px] tracking-[0.2em] text-white/60 uppercase block mb-1"
+            style={{ fontFamily: "var(--font-geist-mono)" }}
+          >
+            PHOTO · GMP-DES-001
+          </span>
+          <p className="text-white font-semibold text-sm" style={{ fontFamily: "var(--font-outfit)" }}>
+            Conception & Dessin technique
+          </p>
+        </div>
+      </div>
+
+      {/* machine.jpg */}
+      <div className="relative group overflow-hidden border-l border-white/10">
+        <Image
+          src="/machine.jpg"
+          alt="Machine-outil en atelier"
+          fill
+          className="object-cover grayscale group-hover:grayscale-0 transition-all duration-500 scale-105 group-hover:scale-100"
+        />
+        <div
+          className="absolute inset-0 transition-opacity duration-500 group-hover:opacity-0"
+          style={{ background: "rgba(13,148,136,0.50)", mixBlendMode: "multiply" }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+        <div className="absolute bottom-4 left-4">
+          <span
+            className="text-[10px] tracking-[0.2em] text-white/60 uppercase block mb-1"
+            style={{ fontFamily: "var(--font-geist-mono)" }}
+          >
+            PHOTO · GMP-MAC-001
+          </span>
+          <p className="text-white font-semibold text-sm" style={{ fontFamily: "var(--font-outfit)" }}>
+            Atelier & Machines-outils
+          </p>
+        </div>
+      </div>
+    </div>
   );
 }
 
@@ -696,6 +792,7 @@ export default function HomePage() {
       <Nav />
       <Hero />
       <Parcours />
+      <BandePhotos />
       <ChiffresClés />
       <Entreprises />
       <Footer />
