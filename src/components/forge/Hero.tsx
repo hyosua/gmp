@@ -1,9 +1,9 @@
 "use client";
 
 import { ChevronRight, Flame } from "lucide-react";
-import Image from "next/image";
 import { C, forgeGrid, scanLines } from "@/lib/forge";
 import { IllustrationForgeHero } from "@/components/forge/illustrations/IllustrationForgeHero";
+import { PhotoBlueprint } from "@/components/forge/PhotoBlueprint";
 
 export function Hero() {
   return (
@@ -271,147 +271,7 @@ export function Hero() {
           style={{ position: "relative" }}
           className="hidden lg:block"
         >
-          {/* label référence */}
-          <span
-            style={{
-              display: "block",
-              fontFamily: C.mono,
-              fontSize: "0.55rem",
-              letterSpacing: "0.2em",
-              color: C.muted,
-              marginBottom: "0.5rem",
-              textTransform: "uppercase" as const,
-            }}
-          >
-            PHOTO · GMP-STU-001 · FORGE-THEME
-          </span>
-
-          {/* cadre extérieur */}
-          <div
-            style={{
-              position: "relative",
-              border: "1px solid var(--c-primary)",
-              padding: 0,
-            }}
-          >
-            {/* second cadre décalé (profondeur) */}
-            <div
-              style={{
-                position: "absolute",
-                top: "8px",
-                left: "8px",
-                right: "-8px",
-                bottom: "-8px",
-                border: "1px solid var(--c-primary-20)",
-                pointerEvents: "none",
-                zIndex: 0,
-              }}
-            />
-
-            {/* conteneur image */}
-            <div style={{ position: "relative", aspectRatio: "4/3", overflow: "hidden" }}>
-              {/* coins supérieurs — teal primary */}
-              {/* coin supérieur gauche */}
-              <div
-                style={{
-                  position: "absolute",
-                  top: "-1px",
-                  left: "-1px",
-                  width: "20px",
-                  height: "20px",
-                  borderTop: `2px solid ${C.primary}`,
-                  borderLeft: `2px solid ${C.primary}`,
-                  zIndex: 4,
-                }}
-              />
-              {/* coin supérieur droit */}
-              <div
-                style={{
-                  position: "absolute",
-                  top: "-1px",
-                  right: "-1px",
-                  width: "20px",
-                  height: "20px",
-                  borderTop: `2px solid ${C.primary}`,
-                  borderRight: `2px solid ${C.primary}`,
-                  zIndex: 4,
-                }}
-              />
-              {/* coin inférieur gauche — muted */}
-              <div
-                style={{
-                  position: "absolute",
-                  bottom: "-1px",
-                  left: "-1px",
-                  width: "20px",
-                  height: "20px",
-                  borderBottom: `2px solid ${C.muted}`,
-                  borderLeft: `2px solid ${C.muted}`,
-                  zIndex: 4,
-                }}
-              />
-              {/* coin inférieur droit — muted */}
-              <div
-                style={{
-                  position: "absolute",
-                  bottom: "-1px",
-                  right: "-1px",
-                  width: "20px",
-                  height: "20px",
-                  borderBottom: `2px solid ${C.muted}`,
-                  borderRight: `2px solid ${C.muted}`,
-                  zIndex: 4,
-                }}
-              />
-
-              <Image
-                src="/gmp-stud.png"
-                alt="Étudiants en atelier GMP"
-                fill
-                priority
-                style={{ objectFit: "cover", aspectRatio: "4/3", filter: "grayscale(100%)" }}
-              />
-              {/* overlay couleur */}
-              <div
-                style={{
-                  position: "absolute",
-                  inset: 0,
-                  background: "var(--c-photo-overlay)",
-                  mixBlendMode: "multiply",
-                }}
-              />
-              {/* fondu bas */}
-              <div
-                style={{
-                  position: "absolute",
-                  bottom: 0,
-                  left: 0,
-                  right: 0,
-                  height: "80px",
-                  background: "linear-gradient(to top, var(--c-bg), transparent)",
-                }}
-              />
-              {/* badge technique */}
-              <span
-                style={{
-                  position: "absolute",
-                  bottom: "12px",
-                  right: "12px",
-                  zIndex: 5,
-                  fontFamily: C.mono,
-                  fontSize: "0.55rem",
-                  letterSpacing: "0.15em",
-                  color: C.primary,
-                  background: "var(--c-bg-card)",
-                  border: "1px solid var(--c-primary)",
-                  padding: "2px 8px",
-                  textTransform: "uppercase" as const,
-                }}
-              >
-                GMP · IUT ÉVRY
-              </span>
-            </div>
-          </div>
+          <PhotoBlueprint />
         </div>
       </div>
 
