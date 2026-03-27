@@ -523,7 +523,7 @@ export default function DesignPage() {
           className="border-t border-[#81adc8]/30 pt-6 flex items-center justify-between text-xs text-[#81adc8]"
           style={{ fontFamily: "var(--font-geist-mono)" }}
         >
-          <span>GMP · IUT d'Évry · Charte graphique v1.0</span>
+          <span>GMP · IUT d'Évry · Charte graphique V2 Forge Outfit</span>
           <span className="text-[#0d9488]">— page de validation interne —</span>
         </div>
       </div>
