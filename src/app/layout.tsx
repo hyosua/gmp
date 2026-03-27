@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Outfit, Geist_Mono } from "next/font/google";
+import { cookies } from "next/headers";
 import "./globals.css";
 
 const outfit = Outfit({
@@ -17,15 +18,19 @@ export const metadata: Metadata = {
   description: "Département Génie Mécanique et Productique, IUT d'Évry",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const jar = await cookies();
+  const isDark = jar.get("theme")?.value !== "light";
+
   return (
     <html
       lang="fr"
-      className={`${outfit.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${outfit.variable} ${geistMono.variable} h-full antialiased${isDark ? " dark" : ""}`}
+      suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col">{children}</body>
     </html>

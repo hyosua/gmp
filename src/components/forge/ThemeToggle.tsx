@@ -5,21 +5,20 @@ import { Sun, Moon } from "lucide-react";
 import { C } from "@/lib/forge";
 
 export function ThemeToggle() {
-  const [dark, setDark] = useState(false);
+  // null = pas encore hydraté (évite le flash d'icône)
+  const [dark, setDark] = useState<boolean | null>(null);
 
   useEffect(() => {
-    const stored = localStorage.getItem("theme");
-    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    const isDark = stored === "dark" || (!stored && prefersDark);
-    setDark(isDark);
-    document.documentElement.classList.toggle("dark", isDark);
+    // Lit l'état réel du DOM (appliqué par le serveur via cookie)
+    setDark(document.documentElement.classList.contains("dark"));
   }, []);
 
   function toggle() {
     const next = !dark;
     setDark(next);
     document.documentElement.classList.toggle("dark", next);
-    localStorage.setItem("theme", next ? "dark" : "light");
+    // Persiste dans un cookie (lu par le serveur au prochain rendu)
+    document.cookie = `theme=${next ? "dark" : "light"}; path=/; max-age=31536000; SameSite=Lax`;
   }
 
   return (
@@ -47,7 +46,11 @@ export function ThemeToggle() {
         e.currentTarget.style.color = C.muted;
       }}
     >
-      {dark ? <Sun style={{ width: "14px", height: "14px" }} /> : <Moon style={{ width: "14px", height: "14px" }} />}
+      {/* Tant que non hydraté, affiche l'icône neutre */}
+      {dark === null ? null : dark
+        ? <Sun style={{ width: "14px", height: "14px" }} />
+        : <Moon style={{ width: "14px", height: "14px" }} />
+      }
     </button>
   );
 }

@@ -4,11 +4,11 @@ import { C } from "@/lib/forge";
 import { ArrowL, ArrowR, ArrowU, ArrowD } from "@/components/forge/illustrations/helpers";
 
 export function IllustrationForgeHero({ className = "" }: { className?: string }) {
-  const s  = "#f97316";
-  const sd = "rgba(249,115,22,0.4)";
-  const sc = "rgba(249,115,22,0.2)";
-  const tx = "rgba(249,115,22,0.65)";
-  const sf = "rgba(249,115,22,0.07)";
+  const s  = "var(--c-primary)";
+  const sd = "var(--c-primary-30)";
+  const sc = "var(--c-primary-20)";
+  const tx = "var(--c-primary)";
+  const sf = "var(--c-primary-15)";
   const mono = "monospace";
 
   return (
