@@ -11,6 +11,12 @@ import {
   Wrench,
   Zap,
 } from "lucide-react";
+import {
+  IllustrationGearAssembly,
+  IllustrationCAO,
+  IllustrationUsinage,
+  IllustrationRobot,
+} from "./_illustrations";
 
 /* ─── Blueprint background ──────────────────────────────────── */
 
@@ -237,27 +243,8 @@ function Hero() {
           </div>
         </div>
 
-        {/* floating blueprint element — right side */}
-        <div className="hidden lg:block absolute right-0 top-1/2 -translate-y-1/2 w-80 h-80 opacity-10">
-          <svg viewBox="0 0 320 320" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="160" cy="160" r="120" stroke="white" strokeWidth="0.5" />
-            <circle cx="160" cy="160" r="80" stroke="white" strokeWidth="0.5" />
-            <circle cx="160" cy="160" r="40" stroke="white" strokeWidth="0.5" />
-            <line x1="160" y1="0" x2="160" y2="320" stroke="white" strokeWidth="0.3" />
-            <line x1="0" y1="160" x2="320" y2="160" stroke="white" strokeWidth="0.3" />
-            <line x1="40" y1="40" x2="280" y2="280" stroke="white" strokeWidth="0.3" />
-            <line x1="280" y1="40" x2="40" y2="280" stroke="white" strokeWidth="0.3" />
-            {[0, 45, 90, 135, 180, 225, 270, 315].map((angle) => {
-              const rad = (angle * Math.PI) / 180;
-              const x1 = 160 + 120 * Math.cos(rad);
-              const y1 = 160 + 120 * Math.sin(rad);
-              const x2 = 160 + 130 * Math.cos(rad);
-              const y2 = 160 + 130 * Math.sin(rad);
-              return <line key={angle} x1={x1} y1={y1} x2={x2} y2={y2} stroke="white" strokeWidth="0.5" />;
-            })}
-            <circle cx="160" cy="160" r="4" fill="white" opacity="0.4" />
-          </svg>
-        </div>
+        {/* blueprint gear assembly illustration — right side */}
+        <IllustrationGearAssembly className="hidden lg:block absolute right-0 top-1/2 -translate-y-1/2 w-[480px] opacity-20 pointer-events-none" />
       </div>
 
       {/* bottom border decoration */}
@@ -281,6 +268,7 @@ const parcours = [
     description:
       "Formation universitaire technologique complète, de la conception à la production. Débouchés ingénierie, méthodes, qualité.",
     tags: ["CAO/FAO", "Méthodes", "Robotique"],
+    illustration: <IllustrationCAO className="w-full h-36" />,
   },
   {
     icon: <Zap className="w-6 h-6" />,
@@ -290,6 +278,7 @@ const parcours = [
     description:
       "Spécialisation rapide pour les titulaires d'un BTS/DUT. Accent sur l'optimisation des procédés et la lean manufacturing.",
     tags: ["Lean", "Qualité", "Gestion prod."],
+    illustration: <IllustrationUsinage className="w-full h-36" />,
   },
   {
     icon: <Repeat2 className="w-6 h-6" />,
@@ -299,6 +288,7 @@ const parcours = [
     description:
       "Combinez formation et expérience professionnelle en entreprise. Rythme 1 semaine IUT / 3 semaines entreprise.",
     tags: ["Contrat pro", "Contrat app."],
+    illustration: <IllustrationRobot className="w-full h-36" />,
   },
 ];
 
@@ -326,11 +316,17 @@ function Parcours() {
         </div>
 
         <div className="grid md:grid-cols-3 gap-6">
-          {parcours.map(({ icon, code, title, duration, description, tags }) => (
+          {parcours.map(({ icon, code, title, duration, description, tags, illustration }) => (
             <div
               key={code}
-              className="border border-[#81adc8]/25 p-8 bg-white hover:border-[#f59e0b] hover:shadow-[5px_5px_0_#f59e0b] transition-all duration-150 group cursor-pointer"
+              className="border border-[#81adc8]/25 bg-white hover:border-[#f59e0b] hover:shadow-[5px_5px_0_#f59e0b] transition-all duration-150 group cursor-pointer"
             >
+              {/* illustration panel */}
+              <div className="border-b border-[#81adc8]/20 bg-[#f8fafc] overflow-hidden">
+                {illustration}
+              </div>
+
+              <div className="p-8">
               {/* code label */}
               <div className="flex items-center justify-between mb-6">
                 <span
@@ -381,6 +377,7 @@ function Parcours() {
                 <span style={{ fontFamily: "var(--font-outfit)" }}>En savoir plus</span>
                 <ChevronRight className="w-4 h-4" />
               </div>
+              </div>{/* end p-8 */}
             </div>
           ))}
         </div>
