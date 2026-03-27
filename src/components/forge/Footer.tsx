@@ -25,8 +25,8 @@ export function Footer() {
           position: "absolute",
           inset: 0,
           backgroundImage: `
-            linear-gradient(rgba(13,148,136,0.05) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(13,148,136,0.05) 1px, transparent 1px)
+            linear-gradient(var(--c-grid-color) 1px, transparent 1px),
+            linear-gradient(90deg, var(--c-grid-color) 1px, transparent 1px)
           `,
           backgroundSize: "80px 80px",
           pointerEvents: "none",
@@ -194,9 +194,9 @@ export function Footer() {
               textTransform: "uppercase" as const,
             }}
           >
-            <span>DOC: GMP-WEB-V2-2026</span>
+            <span>DOC: GMP-WEB-FORGE-2026</span>
             <span>REV: 2.0</span>
-            <span>CHARTE: FORGE-OUTFIT</span>
+            <span>CHARTE: FORGE</span>
             <span>IUT ÉVRY · UNIV. PARIS-SACLAY</span>
           </div>
           <p

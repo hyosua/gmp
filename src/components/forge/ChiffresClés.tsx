@@ -40,8 +40,8 @@ export function ChiffresClés() {
           left: 0,
           width: "120px",
           height: "120px",
-          borderBottom: `1px solid ${C.primary}20`,
-          borderRight: `1px solid ${C.primary}20`,
+          borderBottom: "1px solid var(--c-primary-20)",
+          borderRight: "1px solid var(--c-primary-20)",
         }}
       />
       <div
@@ -51,8 +51,8 @@ export function ChiffresClés() {
           right: 0,
           width: "120px",
           height: "120px",
-          borderTop: `1px solid ${C.primary}20`,
-          borderLeft: `1px solid ${C.primary}20`,
+          borderTop: "1px solid var(--c-primary-20)",
+          borderLeft: "1px solid var(--c-primary-20)",
         }}
       />
 

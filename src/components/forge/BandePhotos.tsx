@@ -29,7 +29,7 @@ export function BandePhotos() {
             style={{
               position: "absolute",
               inset: 0,
-              background: "rgba(13,148,136,0.55)",
+              background: "var(--c-photo-overlay)",
               mixBlendMode: "multiply",
             }}
           />
@@ -71,7 +71,7 @@ export function BandePhotos() {
             </p>
           </div>
           {/* border-right separator */}
-          <div style={{ position: "absolute", top: 0, right: 0, bottom: 0, width: "1px", background: `${C.primary}30` }} />
+          <div style={{ position: "absolute", top: 0, right: 0, bottom: 0, width: "1px", background: "var(--c-primary-30)" }} />
         </div>
       ))}
     </div>

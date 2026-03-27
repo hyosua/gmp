@@ -119,8 +119,8 @@ export function Entreprises() {
                     style={{
                       width: "28px",
                       height: "28px",
-                      background: `${C.primary}15`,
-                      border: `1px solid ${C.primary}30`,
+                      background: "var(--c-primary-15)",
+                      border: "1px solid var(--c-primary-30)",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
@@ -159,7 +159,7 @@ export function Entreprises() {
                 transition: "all 0.15s",
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.background = "#0f766e";
+                e.currentTarget.style.background = "var(--c-primary-hover)";
                 e.currentTarget.style.boxShadow = `3px 3px 0 ${C.accent}`;
               }}
               onMouseLeave={(e) => {
@@ -199,8 +199,8 @@ export function Entreprises() {
                       style={{
                         width: "34px",
                         height: "34px",
-                        background: `${C.primary}15`,
-                        border: `1px solid ${C.primary}30`,
+                        background: "var(--c-primary-15)",
+                        border: "1px solid var(--c-primary-30)",
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
@@ -240,7 +240,7 @@ export function Entreprises() {
                       fontSize: "0.6rem",
                       letterSpacing: "0.06em",
                       color: C.accent,
-                      border: `1px solid ${C.accent}30`,
+                      border: "1px solid var(--c-accent-30)",
                       padding: "2px 8px",
                       whiteSpace: "nowrap" as const,
                     }}

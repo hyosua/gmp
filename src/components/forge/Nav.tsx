@@ -2,6 +2,7 @@
 
 import { Cog, LogIn } from "lucide-react";
 import { C } from "@/lib/forge";
+import { ThemeToggle } from "@/components/forge/ThemeToggle";
 
 export function Nav() {
   return (
@@ -94,6 +95,8 @@ export function Nav() {
         </div>
 
         {/* cta */}
+        <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+        <ThemeToggle />
         <button
           style={{
             display: "flex",
@@ -124,6 +127,7 @@ export function Nav() {
           <LogIn style={{ width: "13px", height: "13px" }} />
           CONNEXION
         </button>
+        </div>
       </div>
     </nav>
   );

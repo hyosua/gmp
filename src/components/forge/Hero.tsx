@@ -116,7 +116,7 @@ export function Hero() {
                   fontFamily: C.mono,
                   fontSize: "0.7rem",
                   letterSpacing: "0.2em",
-                  color: `${C.secondary}80`,
+                  color: "var(--c-secondary-80)",
                   textTransform: "uppercase" as const,
                 }}
               >
@@ -130,7 +130,7 @@ export function Hero() {
                 fontFamily: "var(--font-outfit, sans-serif)",
                 fontWeight: 400,
                 fontSize: "1.1rem",
-                color: `${C.secondary}90`,
+                color: "var(--c-secondary-90)",
                 lineHeight: 1.65,
                 maxWidth: "480px",
                 marginBottom: "2.5rem",
@@ -167,7 +167,7 @@ export function Hero() {
                   transition: "all 0.15s",
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.background = "#0f766e";
+                  e.currentTarget.style.background = "var(--c-primary-hover)";
                   e.currentTarget.style.boxShadow = `3px 3px 0 ${C.accent}`;
                 }}
                 onMouseLeave={(e) => {
@@ -195,7 +195,7 @@ export function Hero() {
                 }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.borderColor = C.secondary;
-                  e.currentTarget.style.boxShadow = `2px 2px 0 ${C.secondary}30`;
+                  e.currentTarget.style.boxShadow = "2px 2px 0 var(--c-secondary-30)";
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.borderColor = C.border;
@@ -245,7 +245,7 @@ export function Hero() {
                     style={{
                       fontFamily: C.mono,
                       fontSize: "0.6rem",
-                      color: `${C.secondary}40`,
+                      color: "var(--c-secondary-40)",
                       letterSpacing: "0.15em",
                       marginTop: "0.25rem",
                     }}
@@ -294,7 +294,7 @@ export function Hero() {
                 fontFamily: C.mono,
                 fontSize: "0.55rem",
                 letterSpacing: "0.2em",
-                color: `${C.secondary}25`,
+                color: "var(--c-secondary-25)",
                 textTransform: "uppercase" as const,
                 zIndex: 4,
               }}
@@ -316,7 +316,7 @@ export function Hero() {
                 style={{
                   position: "absolute",
                   inset: 0,
-                  background: "rgba(13,148,136,0.55)",
+                  background: "var(--c-photo-overlay)",
                   mixBlendMode: "multiply",
                 }}
               />
@@ -327,7 +327,7 @@ export function Hero() {
                   left: 0,
                   right: 0,
                   height: "80px",
-                  background: `linear-gradient(to top, ${C.bg}, transparent)`,
+                  background: "linear-gradient(to top, var(--c-bg), transparent)",
                 }}
               />
             </div>
@@ -360,7 +360,7 @@ export function Hero() {
         }}
       >
         <div style={{ height: "2px", background: C.primary, width: "80px" }} />
-        <div style={{ height: "2px", background: `${C.primary}20`, flex: 1 }} />
+        <div style={{ height: "2px", background: "var(--c-primary-20)", flex: 1 }} />
         <div style={{ height: "2px", background: C.primary, width: "80px" }} />
       </div>
     </section>

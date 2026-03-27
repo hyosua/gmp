@@ -151,7 +151,7 @@ export function Parcours() {
                     fontSize: "0.62rem",
                     letterSpacing: "0.08em",
                     color: C.accent,
-                    border: `1px solid ${C.accent}40`,
+                    border: "1px solid var(--c-accent-40)",
                     padding: "2px 8px",
                     marginBottom: "0.875rem",
                   }}
