@@ -57,10 +57,10 @@ export function Parcours() {
         style={{
           maxWidth: "1280px",
           margin: "0 auto",
-          padding: "0 2rem",
           position: "relative",
           zIndex: 2,
         }}
+        className="px-4 md:px-8"
       >
         {/* header */}
         <div style={{ marginBottom: "3.5rem" }}>
@@ -82,12 +82,8 @@ export function Parcours() {
 
         {/* cards grid */}
         <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(3, 1fr)",
-            gap: "1.5rem",
-          }}
-          className="grid-cols-1 md:grid-cols-3"
+          style={{ gap: "1.5rem" }}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
         >
           {parcours.map(({ code, title, duration, icon, description, tags, illustration }) => (
             <div

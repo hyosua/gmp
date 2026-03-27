@@ -19,12 +19,12 @@ export function Nav() {
         style={{
           maxWidth: "1280px",
           margin: "0 auto",
-          padding: "0 2rem",
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
           height: "56px",
         }}
+        className="px-4 md:px-8"
       >
         {/* logo */}
         <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>

@@ -12,12 +12,11 @@ export function Hero() {
         background: C.bg,
         position: "relative",
         overflow: "hidden",
-        paddingTop: "8rem",
-        paddingBottom: "8rem",
         minHeight: "80vh",
         display: "flex",
         alignItems: "center",
       }}
+      className="py-16 md:py-24 lg:py-32"
     >
       {/* forge grid texture */}
       <div style={forgeGrid} />
@@ -58,16 +57,13 @@ export function Hero() {
         style={{
           maxWidth: "1280px",
           margin: "0 auto",
-          padding: "0 2rem",
           position: "relative",
           zIndex: 3,
           width: "100%",
-          display: "grid",
-          gridTemplateColumns: "1fr 1fr",
           gap: "3rem",
           alignItems: "center",
         }}
-        className="lg:grid-cols-2 grid-cols-1"
+        className="grid grid-cols-1 lg:grid-cols-2 px-4 md:px-8"
       >
         {/* colonne gauche — texte */}
         <div>
@@ -272,60 +268,150 @@ export function Hero() {
 
         {/* colonne droite — photo cadrée */}
         <div
-          style={{ position: "relative", aspectRatio: "4/3", overflow: "hidden" }}
+          style={{ position: "relative" }}
           className="hidden lg:block"
         >
-          {/* coin supérieur gauche */}
+          {/* label référence */}
+          <span
+            style={{
+              display: "block",
+              fontFamily: C.mono,
+              fontSize: "0.55rem",
+              letterSpacing: "0.2em",
+              color: C.muted,
+              marginBottom: "0.5rem",
+              textTransform: "uppercase" as const,
+            }}
+          >
+            PHOTO · GMP-STU-001 · FORGE-THEME
+          </span>
+
+          {/* cadre extérieur */}
           <div
             style={{
-              position: "absolute",
-              top: "-8px",
-              left: "-8px",
-              width: "32px",
-              height: "32px",
-              borderTop: `2px solid ${C.primary}`,
-              borderLeft: `2px solid ${C.primary}`,
-              zIndex: 4,
+              position: "relative",
+              border: "1px solid var(--c-primary)",
+              padding: 0,
             }}
-          />
-          {/* coin inférieur droit */}
-          <div
-            style={{
-              position: "absolute",
-              bottom: "-8px",
-              right: "-8px",
-              width: "32px",
-              height: "32px",
-              borderBottom: `2px solid ${C.muted}`,
-              borderRight: `2px solid ${C.muted}`,
-              zIndex: 4,
-            }}
-          />
-          <Image
-            src="/gmp-stud.png"
-            alt="Étudiants en atelier GMP"
-            fill
-            priority
-            style={{ objectFit: "cover", filter: "grayscale(100%)" }}
-          />
-          <div
-            style={{
-              position: "absolute",
-              inset: 0,
-              background: "var(--c-photo-overlay)",
-              mixBlendMode: "multiply",
-            }}
-          />
-          <div
-            style={{
-              position: "absolute",
-              bottom: 0,
-              left: 0,
-              right: 0,
-              height: "80px",
-              background: "linear-gradient(to top, var(--c-bg), transparent)",
-            }}
-          />
+          >
+            {/* second cadre décalé (profondeur) */}
+            <div
+              style={{
+                position: "absolute",
+                top: "8px",
+                left: "8px",
+                right: "-8px",
+                bottom: "-8px",
+                border: "1px solid var(--c-primary-20)",
+                pointerEvents: "none",
+                zIndex: 0,
+              }}
+            />
+
+            {/* conteneur image */}
+            <div style={{ position: "relative", aspectRatio: "4/3", overflow: "hidden" }}>
+              {/* coins supérieurs — teal primary */}
+              {/* coin supérieur gauche */}
+              <div
+                style={{
+                  position: "absolute",
+                  top: "-1px",
+                  left: "-1px",
+                  width: "20px",
+                  height: "20px",
+                  borderTop: `2px solid ${C.primary}`,
+                  borderLeft: `2px solid ${C.primary}`,
+                  zIndex: 4,
+                }}
+              />
+              {/* coin supérieur droit */}
+              <div
+                style={{
+                  position: "absolute",
+                  top: "-1px",
+                  right: "-1px",
+                  width: "20px",
+                  height: "20px",
+                  borderTop: `2px solid ${C.primary}`,
+                  borderRight: `2px solid ${C.primary}`,
+                  zIndex: 4,
+                }}
+              />
+              {/* coin inférieur gauche — muted */}
+              <div
+                style={{
+                  position: "absolute",
+                  bottom: "-1px",
+                  left: "-1px",
+                  width: "20px",
+                  height: "20px",
+                  borderBottom: `2px solid ${C.muted}`,
+                  borderLeft: `2px solid ${C.muted}`,
+                  zIndex: 4,
+                }}
+              />
+              {/* coin inférieur droit — muted */}
+              <div
+                style={{
+                  position: "absolute",
+                  bottom: "-1px",
+                  right: "-1px",
+                  width: "20px",
+                  height: "20px",
+                  borderBottom: `2px solid ${C.muted}`,
+                  borderRight: `2px solid ${C.muted}`,
+                  zIndex: 4,
+                }}
+              />
+
+              <Image
+                src="/gmp-stud.png"
+                alt="Étudiants en atelier GMP"
+                fill
+                priority
+                style={{ objectFit: "cover", aspectRatio: "4/3", filter: "grayscale(100%)" }}
+              />
+              {/* overlay couleur */}
+              <div
+                style={{
+                  position: "absolute",
+                  inset: 0,
+                  background: "var(--c-photo-overlay)",
+                  mixBlendMode: "multiply",
+                }}
+              />
+              {/* fondu bas */}
+              <div
+                style={{
+                  position: "absolute",
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                  height: "80px",
+                  background: "linear-gradient(to top, var(--c-bg), transparent)",
+                }}
+              />
+              {/* badge technique */}
+              <span
+                style={{
+                  position: "absolute",
+                  bottom: "12px",
+                  right: "12px",
+                  zIndex: 5,
+                  fontFamily: C.mono,
+                  fontSize: "0.55rem",
+                  letterSpacing: "0.15em",
+                  color: C.primary,
+                  background: "var(--c-bg-card)",
+                  border: "1px solid var(--c-primary)",
+                  padding: "2px 8px",
+                  textTransform: "uppercase" as const,
+                }}
+              >
+                GMP · IUT ÉVRY
+              </span>
+            </div>
+          </div>
         </div>
       </div>
 

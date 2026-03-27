@@ -60,30 +60,35 @@ export function ChiffresClés() {
         style={{
           maxWidth: "1280px",
           margin: "0 auto",
-          padding: "0 2rem",
           position: "relative",
           zIndex: 2,
         }}
+        className="px-4 md:px-8"
       >
         <SectionLabel>04 · Données · Année 2025-2026</SectionLabel>
 
         <div
           style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(4, 1fr)",
             gap: 0,
             borderTop: `1px solid ${C.border}`,
           }}
-          className="grid-cols-2 md:grid-cols-4"
+          className="grid grid-cols-2 md:grid-cols-4"
         >
           {metrics.map(({ val, label, sub }, i) => (
             <div
               key={val}
               style={{
-                padding: "3rem 2rem",
-                borderRight: i < 3 ? `1px solid ${C.border}` : "none",
+                padding: "2rem 1.25rem",
                 borderBottom: `1px solid ${C.border}`,
+                borderRight: `1px solid ${C.border}`,
               }}
+              className={
+                // mobile (2-col): odd index = right column → no right border
+                // desktop (4-col): last item (index 3) → no right border
+                i === 1 ? "border-r-0 md:border-r" :
+                i === 3 ? "border-r-0" :
+                ""
+              }
             >
               <p
                 style={{

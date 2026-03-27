@@ -45,19 +45,14 @@ export function Footer() {
         style={{
           maxWidth: "1280px",
           margin: "0 auto",
-          padding: "3.5rem 2rem",
           position: "relative",
           zIndex: 2,
         }}
+        className="px-4 md:px-8 py-14"
       >
         <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "2fr 1fr 1fr",
-            gap: "3rem",
-            marginBottom: "3rem",
-          }}
-          className="grid-cols-1 md:grid-cols-3"
+          style={{ gap: "3rem", marginBottom: "3rem" }}
+          className="grid grid-cols-1 md:grid-cols-3"
         >
           {/* brand */}
           <div>

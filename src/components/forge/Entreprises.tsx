@@ -53,19 +53,14 @@ export function Entreprises() {
         style={{
           maxWidth: "1280px",
           margin: "0 auto",
-          padding: "0 2rem",
           position: "relative",
           zIndex: 2,
         }}
+        className="px-4 md:px-8"
       >
         <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "1fr 1.4fr",
-            gap: "4rem",
-            alignItems: "start",
-          }}
-          className="grid-cols-1 lg:grid-cols-2"
+          style={{ gap: "4rem", alignItems: "start" }}
+          className="grid grid-cols-1 lg:grid-cols-2"
         >
           {/* left — pitch */}
           <div>
