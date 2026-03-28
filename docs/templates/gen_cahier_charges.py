@@ -254,6 +254,21 @@ doc.table(
     col_widths=[5, 11],
 )
 
+# ── §7.1 Maquettes ───────────────────────────────────────────────────────────
+
+doc.heading("7.1 Maquettes", level=2)
+doc.body("Les maquettes haute fidélité sont disponibles sous forme de prototype HTML interactif (docs/maquettes.html — ouvrir dans un navigateur).")
+doc.table(
+    headers=["Écran", "Description"],
+    rows=[
+        ["Connexion",                        "Formulaire email/mot de passe, fond blueprint"],
+        ["Espace étudiant — Notes",           "Tableau de notes avec moyenne, sidebar de navigation"],
+        ["Espace entreprise — Dépôt offre",  "Formulaire de création d'offre d'alternance"],
+    ],
+    col_widths=[6, 10],
+)
+doc.body("Les maquettes respectent la charte graphique (thème dark, #0A3D67 / #F29400) et servent de référence visuelle pour le développement des phases 2 à 5.")
+
 # ── §8 Planning ──────────────────────────────────────────────────────────────
 
 doc.heading("8. Planning")
@@ -300,7 +315,7 @@ doc.table(
     headers=["Livrable", "Format", "Échéance"],
     rows=[
         ["Cahier des charges",            "Markdown / PDF",    "Mars 2026"],
-        ["Maquettes (wireframes)",        "Figma ou équivalent","Avril 2026"],
+        ["Maquettes (wireframes)",        "HTML prototype (docs/maquettes.html)","Mars 2026 ✓"],
         ["Code source",                   "Dépôt GitHub",      "19/05/2026"],
         ["Site déployé et fonctionnel",   "URL en ligne",      "19/05/2026"],
         ["Documentation de déploiement",  "Markdown",          "19/05/2026"],
