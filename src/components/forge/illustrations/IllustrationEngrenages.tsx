@@ -5,9 +5,9 @@ import { ArrowL, ArrowR } from "@/components/forge/illustrations/helpers";
 import { GearTeeth } from "@/components/forge/illustrations/helpers";
 
 export function IllustrationEngrenages({ className = "" }: { className?: string }) {
-  const s  = "#f97316";
-  const sd = "rgba(249,115,22,0.4)";
-  const sc = "rgba(249,115,22,0.18)";
+  const s  = "#F29400";
+  const sd = "rgba(242,148,0,0.4)";
+  const sc = "rgba(242,148,0,0.18)";
   const sf = "rgba(249,115,22,0.07)";
   const sh = "rgba(249,115,22,0.15)";
   const tx = "rgba(249,115,22,0.6)";

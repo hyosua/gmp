@@ -4,10 +4,10 @@ import { C } from "@/lib/forge";
 import { ArrowD } from "@/components/forge/illustrations/helpers";
 
 export function IllustrationCNC({ className = "" }: { className?: string }) {
-  const s  = "#f97316";
-  const sd = "rgba(249,115,22,0.4)";
-  const sc = "rgba(249,115,22,0.18)";
-  const tx = "rgba(249,115,22,0.6)";
+  const s  = "#F29400";
+  const sd = "rgba(242,148,0,0.4)";
+  const sc = "rgba(242,148,0,0.18)";
+  const tx = "rgba(242,148,0,0.6)";
   const sf = "rgba(249,115,22,0.06)";
   const mono = "monospace";
 

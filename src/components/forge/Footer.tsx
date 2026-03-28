@@ -3,9 +3,9 @@
 import { Cog } from "lucide-react";
 import { C } from "@/lib/forge";
 
-const DARK = "#0f172a";
-const DARK_DEEP = "#020617";
-const DARK_BORDER = "#334155";
+const DARK = "#0A3D67";
+const DARK_DEEP = "#072d4d";
+const DARK_BORDER = "#1A5A8A";
 const TEXT_LIGHT = "#e2e8f0";
 const TEXT_MUTED = "#64748b";
 

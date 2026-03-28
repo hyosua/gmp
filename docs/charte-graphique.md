@@ -14,7 +14,7 @@ Le site supporte deux thèmes commutables via un bouton dans la nav. **Dark mode
 | Thème | Fond principal | Primaire | Description |
 |-------|---------------|----------|-------------|
 | **Light** — V2 Forge Outfit | `#f8fafc` | `#0d9488` teal | Institutionnel clair |
-| **Dark** — Forge | `#0f172a` | `#f97316` orange | Industriel sombre |
+| **Dark** — Forge | `#0A3D67` | `#F29400` orange GMP | Industriel sombre |
 
 Le thème est persisté dans un **cookie HTTP** (`theme=dark|light`) lu côté serveur au rendu initial — pas de flash au chargement.
 
@@ -41,13 +41,13 @@ Les couleurs sont définies comme **CSS custom properties** dans `globals.css`, 
 
 | Rôle | Variable | Valeur |
 |------|----------|--------|
-| Fond | `--c-bg` | `#0f172a` |
-| Fond profond | `--c-bg-deep` | `#020617` |
-| Fond carte | `--c-bg-card` | `#1e293b` |
-| Primaire | `--c-primary` | `#f97316` — Orange forge |
+| Fond | `--c-bg` | `#0A3D67` |
+| Fond profond | `--c-bg-deep` | `#072d4d` |
+| Fond carte | `--c-bg-card` | `#0D4E80` |
+| Primaire | `--c-primary` | `#F29400` — Orange GMP |
 | Texte | `--c-secondary` | `#e2e8f0` |
 | Accent | `--c-accent` | `#fbbf24` — Ambre chaud |
-| Bordure | `--c-border` | `#334155` |
+| Bordure | `--c-border` | `#1A5A8A` |
 | Neutre | `--c-muted` | `#64748b` |
 
 ### Variables utilitaires (opacité)
@@ -135,7 +135,7 @@ style={{ background: "var(--c-primary-15)" }}   // opacité
 
 1. **Sharp over rounded** — les angles droits évoquent la mécanique de précision
 2. **Borders over shadows** — esthétique blueprint technique, flat et net
-3. **Teal dominant en light, orange dominant en dark** — primaire cohérent avec le thème
+3. **Teal dominant en light, orange GMP (#F29400) dominant en dark** — primaire cohérent avec le thème
 4. **Amber rare** — réservé aux CTA et alertes importantes
 5. **Bleu acier comme respiration** — `#81adc8` pour les zones secondaires
 6. **Pas de hex alpha** — utiliser les variables `--c-*` d'opacité, jamais `${C.primary}20`

@@ -3,11 +3,11 @@
 import { C } from "@/lib/forge";
 
 export function IllustrationChaine({ className = "" }: { className?: string }) {
-  const s  = "#f97316";
-  const sd = "rgba(249,115,22,0.4)";
-  const sc = "rgba(249,115,22,0.18)";
-  const tx = "rgba(249,115,22,0.6)";
-  const sf = "rgba(249,115,22,0.07)";
+  const s  = "#F29400";
+  const sd = "rgba(242,148,0,0.4)";
+  const sc = "rgba(242,148,0,0.18)";
+  const tx = "rgba(242,148,0,0.6)";
+  const sf = "rgba(242,148,0,0.07)";
   const mono = "monospace";
 
   return (
