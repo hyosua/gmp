@@ -1,13 +1,85 @@
 "use client";
 
+import { useRef } from "react";
 import { ChevronRight, Flame } from "lucide-react";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
 import { C, forgeGrid, scanLines } from "@/lib/forge";
 import { IllustrationForgeHero } from "@/components/forge/illustrations/IllustrationForgeHero";
 import { PhotoBlueprint } from "@/components/forge/PhotoBlueprint";
 
 export function Hero() {
+  const heroRef    = useRef<HTMLElement>(null);
+  const bgSvgRef   = useRef<HTMLDivElement>(null);
+  const photoBpRef = useRef<HTMLDivElement>(null);
+
+  useGSAP(() => {
+    const hero  = heroRef.current;
+    const bgDiv = bgSvgRef.current;
+    const bp    = photoBpRef.current;
+    if (!hero || !bgDiv || !bp) return;
+
+    const bgSvg = bgDiv.querySelector("svg");
+    const bpSvg = bp.querySelector("svg");
+
+    // ── États initiaux ───────────────────────────────────────────────────────
+    gsap.set([".hero-eyebrow", ".hero-subtitle", ".hero-desc", ".hero-cta", ".hero-stat"], { autoAlpha: 0, y: 8 });
+
+    // Chaque ligne du H1 a sa propre origine
+    const h1 = hero.querySelectorAll(".hero-h1-line");
+    gsap.set(h1[0], { autoAlpha: 0, x: -40 });           // "Génie"        ← gauche
+    gsap.set(h1[1], { autoAlpha: 0, x: 50 });            // "Mécanique"    → droite
+    gsap.set(h1[2], { autoAlpha: 0, y: 30, scale: 0.92 }); // "& Productique" ↑ bas + scale
+
+    gsap.set(hero.querySelector(".hero-accent-stripe"), { scaleY: 0, transformOrigin: "top" });
+
+    if (bgSvg) gsap.set(bgSvg, { autoAlpha: 0 });
+
+    if (bpSvg) {
+      gsap.set(bp.querySelector(".bp-photo"), { autoAlpha: 0 });
+      gsap.set(bpSvg.querySelectorAll(".bp-border"), { strokeDasharray: 1400, strokeDashoffset: 1400 });
+      gsap.set(bpSvg.querySelectorAll(".bp-header, .bp-corner-top, .bp-corner-bottom, .bp-grad-x, .bp-grad-y, .bp-dim-h, .bp-dim-v, .bp-annot, .bp-cartouche"), { autoAlpha: 0 });
+    }
+
+    const tl = gsap.timeline({ defaults: { ease: "power2.out" } });
+
+    // ── 1. Tout le contenu texte apparaît ensemble, rapidement ──────────────
+    const h1Lines = hero.querySelectorAll<HTMLElement>(".hero-h1-line");
+
+    tl.to(hero.querySelector(".hero-accent-stripe"), { scaleY: 1, duration: 0.5 }, 0)
+      .to(".hero-eyebrow", { autoAlpha: 1, y: 0, duration: 0.35 }, 0.05)
+      // "Génie" — glisse depuis la gauche
+      .to(h1Lines[0], { autoAlpha: 1, x: 0, y: 0, duration: 0.4 }, 0.1)
+      // "Mécanique" — glisse depuis la droite
+      .to(h1Lines[1], { autoAlpha: 1, x: 0, y: 0, duration: 0.4 }, 0.18)
+      // "& Productique" — monte depuis le bas avec légère scale
+      .to(h1Lines[2], { autoAlpha: 1, x: 0, y: 0, scale: 1, duration: 0.45 }, 0.26)
+      .to([".hero-subtitle", ".hero-desc", ".hero-cta", ".hero-stat"],
+        { autoAlpha: 1, y: 0, duration: 0.4, stagger: 0.04 }, 0.32);
+
+    // ── 2. SVG arrière-plan — apparaît en un bloc doux ──────────────────────
+    if (bgSvg) {
+      tl.to(bgSvg, { autoAlpha: 1, duration: 0.6, ease: "power1.out" }, 0.1);
+    }
+
+    // ── 3. Photo + cadre (séquence conservée) ───────────────────────────────
+    if (bp && bpSvg) {
+      tl.to(bp.querySelector(".bp-photo"), { autoAlpha: 1, duration: 0.5 }, 0.15);
+
+      tl.to(bpSvg.querySelectorAll(".bp-border"), {
+        strokeDashoffset: 0, duration: 0.9, ease: "power1.inOut",
+      }, 0.35);
+
+      // Tous les détails blueprint apparaissent ensemble après le cadre
+      tl.to(bpSvg.querySelectorAll(
+        ".bp-header, .bp-corner-top, .bp-corner-bottom, .bp-grad-x, .bp-grad-y, .bp-dim-h, .bp-dim-v, .bp-annot, .bp-cartouche"
+      ), { autoAlpha: 1, duration: 0.4, stagger: 0.015 }, 0.9);
+    }
+  }, { scope: heroRef });
+
   return (
     <section
+      ref={heroRef}
       style={{
         background: C.bg,
         position: "relative",
@@ -25,6 +97,7 @@ export function Hero() {
 
       {/* SVG blueprint — arrière-plan géant */}
       <div
+        ref={bgSvgRef}
         style={{
           position: "absolute",
           right: "-5%",
@@ -41,6 +114,7 @@ export function Hero() {
 
       {/* vertical accent stripe left */}
       <div
+        className="hero-accent-stripe"
         style={{
           position: "absolute",
           left: 0,
@@ -69,6 +143,7 @@ export function Hero() {
         <div>
           {/* eyebrow */}
           <div
+            className="hero-eyebrow"
             style={{
               display: "flex",
               alignItems: "center",
@@ -101,15 +176,14 @@ export function Hero() {
               letterSpacing: "0.02em",
             }}
           >
-            Génie
-            <br />
-            Mécanique
-            <br />
-            <span style={{ color: C.primary }}>&amp; Productique</span>
+            <span className="hero-h1-line" style={{ display: "block" }}>Génie</span>
+            <span className="hero-h1-line" style={{ display: "block" }}>Mécanique</span>
+            <span className="hero-h1-line" style={{ display: "block", color: C.primary }}>&amp; Productique</span>
           </h1>
 
           {/* sub-title tag */}
           <div
+            className="hero-subtitle"
             style={{
               display: "inline-flex",
               alignItems: "center",
@@ -134,6 +208,7 @@ export function Hero() {
 
           {/* description */}
           <p
+            className="hero-desc"
             style={{
               fontFamily: "var(--font-outfit, sans-serif)",
               fontWeight: 400,
@@ -161,6 +236,7 @@ export function Hero() {
             }}
           >
             <button
+              className="hero-cta"
               style={{
                 display: "flex",
                 alignItems: "center",
@@ -188,6 +264,7 @@ export function Hero() {
               <ChevronRight style={{ width: "16px", height: "16px" }} />
             </button>
             <button
+              className="hero-cta"
               style={{
                 display: "flex",
                 alignItems: "center",
@@ -233,32 +310,17 @@ export function Hero() {
             ].map(({ val, label }, i) => (
               <div
                 key={label}
+                className="hero-stat"
                 style={{
                   paddingRight: "2rem",
                   marginRight: "2rem",
                   borderRight: i < 3 ? `1px solid ${C.border}` : "none",
                 }}
               >
-                <p
-                  style={{
-                    fontFamily: "var(--font-outfit, sans-serif)",
-                    fontSize: "2.25rem",
-                    color: C.primary,
-                    lineHeight: 1,
-                    letterSpacing: "0.03em",
-                  }}
-                >
+                <p style={{ fontFamily: "var(--font-outfit, sans-serif)", fontSize: "2.25rem", color: C.primary, lineHeight: 1, letterSpacing: "0.03em" }}>
                   {val}
                 </p>
-                <p
-                  style={{
-                    fontFamily: C.mono,
-                    fontSize: "0.6rem",
-                    color: C.muted,
-                    letterSpacing: "0.15em",
-                    marginTop: "0.25rem",
-                  }}
-                >
+                <p style={{ fontFamily: C.mono, fontSize: "0.6rem", color: C.muted, letterSpacing: "0.15em", marginTop: "0.25rem" }}>
                   {label}
                 </p>
               </div>
@@ -267,11 +329,8 @@ export function Hero() {
         </div>
 
         {/* colonne droite — photo cadrée */}
-        <div
-          style={{ position: "relative" }}
-          className="hidden lg:block"
-        >
-          <PhotoBlueprint />
+        <div style={{ position: "relative" }} className="hidden lg:block">
+          <PhotoBlueprint ref={photoBpRef} />
         </div>
       </div>
 
