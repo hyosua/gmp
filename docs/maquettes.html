@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Maquettes — Site GMP IUT d'Évry</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg: #0A3D67;
+      --card: #0D4E80;
+      --dark: #082E4F;
+      --orange: #F29400;
+      --amber: #fbbf24;
+      --text: #e2e8f0;
+      --muted: #64748b;
+      --border: #1A5A8A;
+      --nav-h: 40px;
+    }
+
+    html, body {
+      height: 100%;
+      font-family: 'Outfit', sans-serif;
+      background: #020617;
+      color: var(--text);
+    }
+
+    /* ─── PROTOTYPE NAVIGATOR ─── */
+    #proto-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: var(--nav-h);
+      background: #020617;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 1rem;
+      z-index: 1000;
+      border-bottom: 1px solid #1e293b;
+    }
+
+    #proto-nav .proto-label {
+      font-family: monospace;
+      font-size: 0.65rem;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    #proto-nav .proto-buttons {
+      display: flex;
+      gap: 0.375rem;
+    }
+
+    #proto-nav button {
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 500;
+      padding: 0.25rem 0.75rem;
+      cursor: pointer;
+      border: 1px solid var(--border);
+      color: var(--text);
+      background: transparent;
+      transition: background 0.15s, color 0.15s;
+    }
+
+    #proto-nav button.active {
+      background: var(--orange);
+      color: var(--dark);
+      border-color: var(--orange);
+      font-weight: 700;
+    }
+
+    #proto-nav button:not(.active):hover {
+      background: var(--card);
+    }
+
+    /* ─── SCREEN WRAPPER ─── */
+    .screen {
+      display: none;
+      position: fixed;
+      top: var(--nav-h);
+      left: 0;
+      right: 0;
+      bottom: 0;
+      overflow: hidden;
+    }
+
+    .screen.active {
+      display: flex;
+    }
+
+    /* ─── WATERMARK ─── */
+    #watermark {
+      position: fixed;
+      bottom: 0.5rem;
+      right: 0.75rem;
+      font-family: monospace;
+      font-size: 0.65rem;
+      color: var(--muted);
+      z-index: 999;
+      letter-spacing: 0.06em;
+      opacity: 0.5;
+      pointer-events: none;
+    }
+
+    /* ══════════════════════════════════════════
+       SCREEN 1 — CONNEXION
+    ══════════════════════════════════════════ */
+    #screen-1 {
+      background: var(--bg);
+      background-image:
+        repeating-linear-gradient(
+          0deg,
+          transparent,
+          transparent 39px,
+          rgba(242, 148, 0, 0.035) 39px,
+          rgba(242, 148, 0, 0.035) 40px
+        ),
+        repeating-linear-gradient(
+          90deg,
+          transparent,
+          transparent 39px,
+          rgba(242, 148, 0, 0.035) 39px,
+          rgba(242, 148, 0, 0.035) 40px
+        );
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .login-logo {
+      text-align: center;
+    }
+
+    .login-logo .logo-main {
+      font-family: 'Outfit', sans-serif;
+      font-size: 3.5rem;
+      font-weight: 800;
+      color: var(--orange);
+      line-height: 1;
+      letter-spacing: -0.02em;
+    }
+
+    .login-logo .logo-sub {
+      font-family: monospace;
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-top: 0.25rem;
+      letter-spacing: 0.05em;
+    }
+
+    .login-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 2.5rem;
+      width: 420px;
+    }
+
+    .login-card h1 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .login-card .title-bar {
+      width: 40px;
+      height: 2px;
+      background: var(--orange);
+      margin-top: 0.625rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.25rem;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.875rem;
+      color: var(--text);
+      margin-bottom: 0.375rem;
+      font-weight: 500;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      background: var(--dark);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 0.75rem;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.9375rem;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+      border-color: var(--orange);
+    }
+
+    .form-group input::placeholder,
+    .form-group textarea::placeholder {
+      color: var(--muted);
+    }
+
+    .form-group select option {
+      background: var(--dark);
+    }
+
+    .btn-primary {
+      width: 100%;
+      background: var(--orange);
+      color: var(--dark);
+      border: none;
+      padding: 0.875rem;
+      font-family: 'Outfit', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      letter-spacing: 0.02em;
+      transition: box-shadow 0.15s;
+    }
+
+    .btn-primary:hover {
+      box-shadow: 4px 4px 0 rgba(242, 148, 0, 0.35);
+    }
+
+    .login-hint {
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-top: 1.25rem;
+    }
+
+    /* ══════════════════════════════════════════
+       SHARED TOPBAR + SIDEBAR LAYOUT
+    ══════════════════════════════════════════ */
+    .app-layout {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      height: 100%;
+    }
+
+    .topbar {
+      height: 56px;
+      min-height: 56px;
+      background: var(--dark);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 1.5rem;
+      flex-shrink: 0;
+    }
+
+    .topbar-left {
+      display: flex;
+      align-items: center;
+      gap: 0.875rem;
+    }
+
+    .topbar-brand {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--orange);
+      letter-spacing: -0.01em;
+    }
+
+    .topbar-sep {
+      width: 1px;
+      height: 20px;
+      background: var(--border);
+    }
+
+    .topbar-section {
+      font-size: 0.875rem;
+      color: var(--muted);
+      font-weight: 400;
+    }
+
+    .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .topbar-user {
+      text-align: right;
+    }
+
+    .topbar-user .user-name {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--text);
+      display: block;
+    }
+
+    .topbar-user .user-role {
+      font-size: 0.75rem;
+      color: var(--muted);
+      font-family: monospace;
+    }
+
+    .topbar-logout {
+      font-size: 0.8rem;
+      color: var(--orange);
+      text-decoration: none;
+      border: 1px solid var(--border);
+      padding: 0.25rem 0.75rem;
+      transition: box-shadow 0.15s;
+    }
+
+    .topbar-logout:hover {
+      box-shadow: 3px 3px 0 rgba(242, 148, 0, 0.3);
+    }
+
+    .app-body {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+    }
+
+    /* ─── SIDEBAR ─── */
+    .sidebar {
+      width: 220px;
+      min-width: 220px;
+      background: var(--card);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      padding-top: 0.5rem;
+      overflow-y: auto;
+    }
+
+    .sidebar-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem 1.25rem;
+      font-size: 0.875rem;
+      color: var(--text);
+      cursor: pointer;
+      border-left: 3px solid transparent;
+      transition: background 0.12s;
+      user-select: none;
+    }
+
+    .sidebar-item:hover {
+      background: var(--bg);
+    }
+
+    .sidebar-item.active {
+      border-left-color: var(--orange);
+      background: var(--bg);
+      color: var(--orange);
+      font-weight: 600;
+    }
+
+    .sidebar-icon {
+      font-size: 1rem;
+      width: 1.25rem;
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+    /* ─── MAIN CONTENT ─── */
+    .main-content {
+      flex: 1;
+      background: var(--bg);
+      padding: 2rem;
+      overflow-y: auto;
+    }
+
+    .page-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .page-title-bar {
+      width: 48px;
+      height: 2px;
+      background: var(--orange);
+      margin-top: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .page-subtitle {
+      font-family: monospace;
+      font-size: 0.8rem;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+      margin-bottom: 1.75rem;
+    }
+
+    /* ══════════════════════════════════════════
+       SCREEN 2 — NOTES
+    ══════════════════════════════════════════ */
+    .filter-row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .filter-row label {
+      font-size: 0.875rem;
+      color: var(--text);
+      white-space: nowrap;
+    }
+
+    .filter-row select {
+      background: var(--card);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 0.5rem 0.75rem;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.875rem;
+      outline: none;
+      min-width: 220px;
+    }
+
+    .filter-row select:focus {
+      border-color: var(--orange);
+    }
+
+    .filter-row select option {
+      background: var(--dark);
+    }
+
+    .notes-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.875rem;
+    }
+
+    .notes-table thead tr {
+      background: var(--dark);
+    }
+
+    .notes-table thead th {
+      text-align: left;
+      padding: 0.75rem 1rem;
+      color: var(--orange);
+      font-family: monospace;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .notes-table tbody tr:nth-child(odd) {
+      background: var(--card);
+    }
+
+    .notes-table tbody tr:nth-child(even) {
+      background: var(--bg);
+    }
+
+    .notes-table tbody td {
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--text);
+    }
+
+    .note-good { color: #4ade80; font-weight: 600; }
+    .note-mid  { color: var(--orange); font-weight: 600; }
+    .note-low  { color: #f87171; font-weight: 600; }
+
+    .summary-card {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      background: var(--card);
+      border-left: 3px solid var(--orange);
+      padding: 1rem 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .summary-stat {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .summary-stat .stat-label {
+      font-size: 0.75rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-family: monospace;
+    }
+
+    .summary-stat .stat-value {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--orange);
+      font-family: 'Outfit', sans-serif;
+      line-height: 1.1;
+    }
+
+    .summary-stat .stat-value.neutral {
+      color: var(--text);
+    }
+
+    .summary-sep {
+      width: 1px;
+      height: 40px;
+      background: var(--border);
+    }
+
+    /* ══════════════════════════════════════════
+       SCREEN 3 — ENTREPRISE FORM
+    ══════════════════════════════════════════ */
+    .form-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 2rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .form-row-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+    }
+
+    .form-buttons {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 1.5rem;
+    }
+
+    .btn-submit {
+      background: var(--orange);
+      color: var(--dark);
+      border: none;
+      padding: 0.875rem 2rem;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.9375rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: box-shadow 0.15s;
+    }
+
+    .btn-submit:hover {
+      box-shadow: 4px 4px 0 rgba(242, 148, 0, 0.35);
+    }
+
+    .btn-draft {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+      padding: 0.875rem 2rem;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.9375rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: box-shadow 0.15s, background 0.15s;
+    }
+
+    .btn-draft:hover {
+      background: var(--dark);
+      box-shadow: 3px 3px 0 rgba(26, 90, 138, 0.4);
+    }
+
+    .info-box {
+      background: var(--dark);
+      border-left: 3px solid var(--orange);
+      padding: 0.875rem 1.25rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      font-size: 0.875rem;
+      color: var(--text);
+    }
+
+    .info-box .info-icon {
+      color: var(--orange);
+      font-size: 1rem;
+      flex-shrink: 0;
+      margin-top: 0.05rem;
+    }
+
+    textarea {
+      resize: vertical;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- PROTOTYPE NAVIGATOR -->
+  <nav id="proto-nav">
+    <span class="proto-label">PROTOTYPE MAQUETTES — GMP</span>
+    <div class="proto-buttons">
+      <button class="active" onclick="showScreen(1, this)">1 · Connexion</button>
+      <button onclick="showScreen(2, this)">2 · Espace étudiant</button>
+      <button onclick="showScreen(3, this)">3 · Espace entreprise</button>
+    </div>
+  </nav>
+
+  <!-- WATERMARK -->
+  <div id="watermark">MAQUETTE · GMP · 2026</div>
+
+  <!-- ══════════════════════════════════
+       SCREEN 1 — CONNEXION
+  ══════════════════════════════════ -->
+  <div id="screen-1" class="screen active">
+    <div class="login-logo">
+      <div class="logo-main">GMP</div>
+      <div class="logo-sub">IUT D'ÉVRY-COURCOURONNES</div>
+    </div>
+
+    <div class="login-card">
+      <h1>Connexion</h1>
+      <div class="title-bar"></div>
+
+      <div class="form-group">
+        <label for="login-email">Email</label>
+        <input type="email" id="login-email" placeholder="prenom.nom@iut-evry.fr" />
+      </div>
+
+      <div class="form-group">
+        <label for="login-pwd">Mot de passe</label>
+        <input type="password" id="login-pwd" placeholder="••••••••" />
+      </div>
+
+      <button class="btn-primary">Se connecter</button>
+
+      <p class="login-hint">Accès réservé aux membres du département GMP</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════
+       SCREEN 2 — ESPACE ÉTUDIANT / NOTES
+  ══════════════════════════════════ -->
+  <div id="screen-2" class="screen">
+    <div class="app-layout">
+
+      <!-- Topbar -->
+      <header class="topbar">
+        <div class="topbar-left">
+          <span class="topbar-brand">GMP</span>
+          <div class="topbar-sep"></div>
+          <span class="topbar-section">Espace Étudiant</span>
+        </div>
+        <div class="topbar-right">
+          <div class="topbar-user">
+            <span class="user-name">Lucas Martin</span>
+            <span class="user-role">BUT GMP · S2</span>
+          </div>
+          <a href="#" class="topbar-logout">Déconnexion</a>
+        </div>
+      </header>
+
+      <div class="app-body">
+        <!-- Sidebar -->
+        <nav class="sidebar">
+          <div class="sidebar-item active">
+            <span class="sidebar-icon">◈</span>
+            <span>Notes</span>
+          </div>
+          <div class="sidebar-item">
+            <span class="sidebar-icon">◷</span>
+            <span>Emploi du temps</span>
+          </div>
+          <div class="sidebar-item">
+            <span class="sidebar-icon">◫</span>
+            <span>Supports de cours</span>
+          </div>
+          <div class="sidebar-item">
+            <span class="sidebar-icon">◉</span>
+            <span>Projets tuteurés</span>
+          </div>
+          <div class="sidebar-item">
+            <span class="sidebar-icon">◎</span>
+            <span>Offres d'alternance</span>
+          </div>
+        </nav>
+
+        <!-- Main -->
+        <main class="main-content">
+          <h2 class="page-title">Mes notes</h2>
+          <div class="page-title-bar"></div>
+          <p class="page-subtitle">BUT GMP · SEMESTRE 2 · 2025–2026</p>
+
+          <div class="filter-row">
+            <label for="filter-matiere">Filtrer par matière</label>
+            <select id="filter-matiere">
+              <option value="">Toutes les matières</option>
+              <option>Mécanique des fluides</option>
+              <option>Résistance des matériaux</option>
+              <option>CAO - SolidWorks</option>
+              <option>Fabrication additive</option>
+              <option>Mathématiques appliquées</option>
+              <option>Automatismes industriels</option>
+              <option>Métrologie</option>
+              <option>Anglais technique</option>
+              <option>Gestion de projet</option>
+              <option>Thermodynamique</option>
+            </select>
+          </div>
+
+          <table class="notes-table">
+            <thead>
+              <tr>
+                <th>Matière</th>
+                <th>Enseignant</th>
+                <th>Note</th>
+                <th>Mention</th>
+                <th>Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Mécanique des fluides</td>
+                <td>M. Benali</td>
+                <td class="note-mid">14/20</td>
+                <td>Bien</td>
+                <td>15/01/2026</td>
+              </tr>
+              <tr>
+                <td>Résistance des matériaux</td>
+                <td>Mme. Leroux</td>
+                <td class="note-mid">12/20</td>
+                <td>Assez bien</td>
+                <td>18/01/2026</td>
+              </tr>
+              <tr>
+                <td>CAO - SolidWorks</td>
+                <td>M. Dupont</td>
+                <td class="note-good">17/20</td>
+                <td>Très bien</td>
+                <td>22/01/2026</td>
+              </tr>
+              <tr>
+                <td>Fabrication additive</td>
+                <td>M. Karim</td>
+                <td class="note-mid">15/20</td>
+                <td>Bien</td>
+                <td>28/01/2026</td>
+              </tr>
+              <tr>
+                <td>Mathématiques appliquées</td>
+                <td>Mme. Petit</td>
+                <td class="note-low">11/20</td>
+                <td>Passable</td>
+                <td>02/02/2026</td>
+              </tr>
+              <tr>
+                <td>Automatismes industriels</td>
+                <td>M. Torres</td>
+                <td class="note-good">16/20</td>
+                <td>Bien</td>
+                <td>07/02/2026</td>
+              </tr>
+              <tr>
+                <td>Métrologie</td>
+                <td>M. Benali</td>
+                <td class="note-mid">13/20</td>
+                <td>Assez bien</td>
+                <td>12/02/2026</td>
+              </tr>
+              <tr>
+                <td>Anglais technique</td>
+                <td>Mme. Collins</td>
+                <td class="note-mid">15/20</td>
+                <td>Bien</td>
+                <td>14/02/2026</td>
+              </tr>
+              <tr>
+                <td>Gestion de projet</td>
+                <td>M. Dupont</td>
+                <td class="note-good">18/20</td>
+                <td>Très bien</td>
+                <td>19/02/2026</td>
+              </tr>
+              <tr>
+                <td>Thermodynamique</td>
+                <td>Mme. Leroux</td>
+                <td class="note-low">10/20</td>
+                <td>Passable</td>
+                <td>25/02/2026</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="summary-card">
+            <div class="summary-stat">
+              <span class="stat-label">Moyenne générale</span>
+              <span class="stat-value">14.1 / 20</span>
+            </div>
+            <div class="summary-sep"></div>
+            <div class="summary-stat">
+              <span class="stat-label">Matières validées</span>
+              <span class="stat-value neutral">8 / 10</span>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════
+       SCREEN 3 — ESPACE ENTREPRISE
+  ══════════════════════════════════ -->
+  <div id="screen-3" class="screen">
+    <div class="app-layout">
+
+      <!-- Topbar -->
+      <header class="topbar">
+        <div class="topbar-left">
+          <span class="topbar-brand">GMP</span>
+          <div class="topbar-sep"></div>
+          <span class="topbar-section">Espace Entreprise</span>
+        </div>
+        <div class="topbar-right">
+          <div class="topbar-user">
+            <span class="user-name">Schneider Electric</span>
+            <span class="user-role">Entreprise partenaire</span>
+          </div>
+          <a href="#" class="topbar-logout">Déconnexion</a>
+        </div>
+      </header>
+
+      <div class="app-body">
+        <!-- Sidebar -->
+        <nav class="sidebar">
+          <div class="sidebar-item active">
+            <span class="sidebar-icon">◎</span>
+            <span>Offres d'alternance</span>
+          </div>
+          <div class="sidebar-item">
+            <span class="sidebar-icon">◉</span>
+            <span>Projets tuteurés</span>
+          </div>
+        </nav>
+
+        <!-- Main -->
+        <main class="main-content">
+          <h2 class="page-title">Déposer une offre d'alternance</h2>
+          <div class="page-title-bar"></div>
+          <p class="page-subtitle">LES OFFRES SONT EXAMINÉES SOUS 48H AVANT PUBLICATION</p>
+
+          <div class="form-card">
+            <div class="form-group">
+              <label for="poste-intitule">Intitulé du poste</label>
+              <input type="text" id="poste-intitule" placeholder="Ex: Technicien méthodes en alternance" />
+            </div>
+
+            <div class="form-group">
+              <label for="poste-desc">Description du poste</label>
+              <textarea id="poste-desc" rows="4" placeholder="Décrivez les missions confiées à l'alternant..."></textarea>
+            </div>
+
+            <div class="form-row-2">
+              <div class="form-group">
+                <label for="duree">Durée</label>
+                <select id="duree">
+                  <option>12 mois</option>
+                  <option>24 mois</option>
+                  <option>36 mois</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="remuneration">Rémunération mensuelle</label>
+                <input type="text" id="remuneration" placeholder="Ex: 850 €/mois" />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="prerequis">Prérequis / Compétences attendues</label>
+              <textarea id="prerequis" rows="3" placeholder="Ex: Maîtrise de SolidWorks, bases en automatismes..."></textarea>
+            </div>
+
+            <div class="form-row-2">
+              <div class="form-group">
+                <label for="date-debut">Date de début souhaitée</label>
+                <input type="date" id="date-debut" />
+              </div>
+              <div class="form-group">
+                <label for="localisation">Localisation</label>
+                <input type="text" id="localisation" placeholder="Ex: Massy, Île-de-France" />
+              </div>
+            </div>
+
+            <div class="form-buttons">
+              <button class="btn-submit">Publier l'offre</button>
+              <button class="btn-draft">Enregistrer en brouillon</button>
+            </div>
+          </div>
+
+          <div class="info-box">
+            <span class="info-icon">ⓘ</span>
+            <span>Votre offre sera examinée par l'équipe GMP avant publication. Délai habituel : 48h.</span>
+          </div>
+        </main>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function showScreen(num, btn) {
+      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+      document.getElementById('screen-' + num).classList.add('active');
+      document.querySelectorAll('#proto-nav button').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    }
+  </script>
+</body>
+</html>

@@ -316,6 +316,20 @@ OffreAlternance
 | Typographie                 | A définir                                                       |
 | Maquettes                   | A produire (phase 2 des étapes de réalisation)                  |
 
+### 7.1 Maquettes
+
+Les maquettes haute fidélité sont disponibles sous forme de prototype HTML interactif :
+
+**Fichier** : `docs/maquettes.html` — ouvrir dans un navigateur.
+
+| Écran | Description |
+|-------|-------------|
+| Connexion | Formulaire email/mot de passe, fond blueprint |
+| Espace étudiant — Notes | Tableau de notes avec moyenne, sidebar de navigation |
+| Espace entreprise — Dépôt offre | Formulaire de création d'offre d'alternance |
+
+Les maquettes respectent la charte graphique (thème dark, `#0A3D67` / `#F29400`) et servent de référence visuelle pour le développement des phases 2 à 5.
+
 ---
 
 ## 8. Planning
@@ -357,7 +371,7 @@ OffreAlternance
 | Livrable                     | Format              | Echéance   |
 | ---------------------------- | ------------------- | ---------- |
 | Cahier des charges           | Markdown / PDF      | Mars 2026  |
-| Maquettes (wireframes)       | Figma ou équivalent | Avril 2026 |
+| Maquettes (wireframes)       | HTML prototype (docs/maquettes.html) | Mars 2026 ✓ |
 | Code source                  | Dépôt GitHub        | 19/05/2026 |
 | Site déployé et fonctionnel  | URL en ligne        | 19/05/2026 |
 | Documentation de déploiement | Markdown            | 19/05/2026 |
