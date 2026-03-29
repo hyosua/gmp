@@ -1,21 +1,29 @@
 @import "tailwindcss";
 
+/* ═══════════════════════════════════════════════════════
+   TOKENS FORGE — un seul système, mode clair / sombre
+   Utiliser les variables --c-* partout dans les composants
+   ═══════════════════════════════════════════════════════ */
+
 :root {
-  /* V2 Forge Outfit — light */
-  --c-bg: #f8fafc;
-  --c-bg-deep: #f1f5f9;
-  --c-bg-card: #ffffff;
-  --c-primary: #0d9488;
+  --c-bg:        #f8fafc;
+  --c-bg-deep:   #f1f5f9;
+  --c-bg-card:   #ffffff;
+  --c-primary:   #0d9488;
   --c-secondary: #171717;
-  --c-accent: #f59e0b;
-  --c-border: #e2e8f0;
-  --c-muted: #81adc8;
+  --c-accent:    #f59e0b;
+  --c-border:    #e2e8f0;
+  --c-muted:     #81adc8;
   --c-primary-hover: #0f766e;
   --c-photo-overlay: rgba(13,148,136,0.55);
-  --c-grid-color: rgba(13,148,136,0.07);
+  --c-grid-color:    rgba(13,148,136,0.07);
   --c-grid-color-sm: rgba(13,148,136,0.03);
-  --c-scanlines: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0,0,0,0.006) 3px, rgba(0,0,0,0.006) 4px);
-  /* opacity variants (hex alpha → rgba) */
+  --c-scanlines: repeating-linear-gradient(
+    0deg,
+    transparent, transparent 3px,
+    rgba(0,0,0,0.006) 3px, rgba(0,0,0,0.006) 4px
+  );
+  /* Variants semi-transparents */
   --c-primary-15:   rgba(13,148,136,0.08);
   --c-primary-20:   rgba(13,148,136,0.13);
   --c-primary-30:   rgba(13,148,136,0.19);
@@ -29,21 +37,24 @@
 }
 
 .dark {
-  /* Forge — dark (palette GMP #0A3D67 / #F29400) */
-  --c-bg: #0A3D67;
-  --c-bg-deep: #072d4d;
-  --c-bg-card: #0D4E80;
-  --c-primary: #F29400;
-  --c-secondary: #e2e8f0;
-  --c-accent: #fbbf24;
-  --c-border: #1A5A8A;
-  --c-muted: #64748b;
+  --c-bg:        #001429;
+  --c-bg-deep:   #000f20;
+  --c-bg-card:   #00213d;
+  --c-bg-bright: #063b65;
+  --c-primary:   #F29400;
+  --c-secondary: #d1e4ff;
+  --c-accent:    #fbbf24;
+  --c-border:    #544434;
+  --c-muted:     #a28d7a;
   --c-primary-hover: #d98200;
   --c-photo-overlay: rgba(242,148,0,0.45);
-  --c-grid-color: rgba(242,148,0,0.06);
+  --c-grid-color:    rgba(242,148,0,0.06);
   --c-grid-color-sm: rgba(242,148,0,0.025);
-  --c-scanlines: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(255,255,255,0.012) 3px, rgba(255,255,255,0.012) 4px);
-  /* opacity variants */
+  --c-scanlines: repeating-linear-gradient(
+    0deg,
+    transparent, transparent 3px,
+    rgba(255,255,255,0.012) 3px, rgba(255,255,255,0.012) 4px
+  );
   --c-primary-15:   rgba(242,148,0,0.08);
   --c-primary-20:   rgba(242,148,0,0.13);
   --c-primary-30:   rgba(242,148,0,0.19);
@@ -56,41 +67,103 @@
   --c-secondary-90: rgba(226,232,240,0.56);
 }
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-
-  /* Charte GMP */
-  --color-primary:       #0d9488;
-  --color-primary-dark:  #0f766e;
-  --color-primary-light: #14b8a6;
-  --color-secondary:       #f59e0b;
-  --color-secondary-dark:  #d97706;
-  --color-secondary-light: #fbbf24;
-  --color-neutral:       #81adc8;
-  --color-neutral-dark:  #5a8aaa;
-  --color-neutral-light: #b8d4e8;
-}
+/* ═══════════════════════════════════════════════════════
+   TAILWIND — utilitaires thématisés
+   Ex : bg-primary, text-secondary, border-border…
+   ═══════════════════════════════════════════════════════ */
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-outfit);
-  --font-mono: var(--font-geist-mono);
+  --color-background:    var(--c-bg);
+  --color-foreground:    var(--c-secondary);
+  --font-sans:           var(--font-outfit);
+  --font-mono:           var(--font-geist-mono);
 
-  --color-primary:        var(--color-primary);
-  --color-primary-dark:   var(--color-primary-dark);
-  --color-primary-light:  var(--color-primary-light);
-  --color-secondary:      var(--color-secondary);
-  --color-secondary-dark: var(--color-secondary-dark);
-  --color-secondary-light:var(--color-secondary-light);
-  --color-neutral:        var(--color-neutral);
-  --color-neutral-dark:   var(--color-neutral-dark);
-  --color-neutral-light:  var(--color-neutral-light);
+  --color-primary:       var(--c-primary);
+  --color-primary-hover: var(--c-primary-hover);
+  --color-secondary:     var(--c-secondary);
+  --color-accent:        var(--c-accent);
+  --color-muted:         var(--c-muted);
+  --color-border:        var(--c-border);
+  --color-bg-card:       var(--c-bg-card);
+  --color-bg-deep:       var(--c-bg-deep);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background: var(--c-bg);
+  color: var(--c-secondary);
   font-family: var(--font-outfit), sans-serif;
+}
+
+/* ═══════════════════════════════════════════════════════
+   CLASSES FORGE — base des composants ui.tsx
+   ═══════════════════════════════════════════════════════ */
+
+/* Section pleine largeur (position: relative pour le forgeGrid) */
+.forge-section {
+  position: relative;
+  overflow: hidden;
+  padding: 6rem 0;
+}
+
+/* Conteneur centré standard */
+.forge-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+
+/* Carte interactive : border + shadow au survol */
+.forge-card {
+  border: 1px solid var(--c-border);
+  background: var(--c-bg-card);
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.forge-card:hover {
+  border-color: var(--c-primary);
+  box-shadow: 3px 3px 0 var(--c-primary);
+}
+
+/* Titre de carte — couleur héritée, change au survol du parent */
+[data-card-title] {
+  color: var(--c-secondary);
+  transition: color 0.15s;
+}
+.forge-card:hover [data-card-title] {
+  color: var(--c-primary);
+}
+
+/* Boutons */
+.forge-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.75rem;
+  font-family: var(--font-outfit, sans-serif);
+  font-size: 1rem;
+  letter-spacing: 0.1em;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: background 0.15s, box-shadow 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.forge-btn-primary {
+  background: var(--c-primary);
+  color: white;
+  border-color: var(--c-primary);
+}
+.forge-btn-primary:hover {
+  background: var(--c-primary-hover);
+  box-shadow: 3px 3px 0 var(--c-accent);
+}
+
+.forge-btn-ghost {
+  background: transparent;
+  color: var(--c-secondary);
+  border-color: var(--c-border);
+}
+.forge-btn-ghost:hover {
+  border-color: var(--c-primary);
+  color: var(--c-primary);
+  box-shadow: 3px 3px 0 var(--c-primary);
 }

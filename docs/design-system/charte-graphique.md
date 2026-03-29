@@ -41,14 +41,15 @@ Les couleurs sont définies comme **CSS custom properties** dans `globals.css`, 
 
 | Rôle | Variable | Valeur |
 |------|----------|--------|
-| Fond | `--c-bg` | `#0A3D67` |
-| Fond profond | `--c-bg-deep` | `#072d4d` |
-| Fond carte | `--c-bg-card` | `#0D4E80` |
+| Fond | `--c-bg` | `#001429` — Navy profond |
+| Fond profond | `--c-bg-deep` | `#000f20` |
+| Fond carte | `--c-bg-card` | `#00213d` |
+| Fond élevé | `--c-bg-bright` | `#063b65` — hover/focus zones |
 | Primaire | `--c-primary` | `#F29400` — Orange GMP |
-| Texte | `--c-secondary` | `#e2e8f0` |
+| Texte | `--c-secondary` | `#d1e4ff` |
 | Accent | `--c-accent` | `#fbbf24` — Ambre chaud |
-| Bordure | `--c-border` | `#1A5A8A` |
-| Neutre | `--c-muted` | `#64748b` |
+| Bordure | `--c-border` | `#544434` — Outline chaud |
+| Neutre | `--c-muted` | `#a28d7a` — Outline secondaire |
 
 ### Variables utilitaires (opacité)
 

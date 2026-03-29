@@ -2,7 +2,7 @@
 
 import { Cog, LogIn } from "lucide-react";
 import { C } from "@/lib/forge";
-import { ThemeToggle } from "@/components/forge/ThemeToggle";
+import { ThemeToggle } from "@/components/layout/ThemeToggle";
 
 export function Nav() {
   return (

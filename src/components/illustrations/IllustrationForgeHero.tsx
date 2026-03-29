@@ -1,7 +1,7 @@
 "use client";
 
 import { C } from "@/lib/forge";
-import { ArrowL, ArrowR, ArrowU, ArrowD } from "@/components/forge/illustrations/helpers";
+import { ArrowL, ArrowR, ArrowU, ArrowD } from "@/components/illustrations/helpers";
 
 export function IllustrationForgeHero({ className = "" }: { className?: string }) {
   const s  = "var(--c-primary)";

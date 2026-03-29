@@ -1,7 +1,7 @@
 "use client";
 
 import { C } from "@/lib/forge";
-import { ArrowD } from "@/components/forge/illustrations/helpers";
+import { ArrowD } from "@/components/illustrations/helpers";
 
 export function IllustrationCNC({ className = "" }: { className?: string }) {
   const s  = "#F29400";

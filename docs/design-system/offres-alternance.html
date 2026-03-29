@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&amp;family=Geist+Mono:wght@400;700&amp;family=Space+Grotesk:wght@300;500;700&amp;family=Inter:wght@400;500&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "error-container": "#93000a",
+              "on-error-container": "#ffdad6",
+              "tertiary-fixed-dim": "#9dcaff",
+              "on-tertiary-fixed": "#001d35",
+              "surface": "#001429",
+              "surface-dim": "#001429",
+              "surface-variant": "#003660",
+              "on-secondary-fixed-variant": "#5c4300",
+              "surface-container": "#00213d",
+              "tertiary-fixed": "#d1e4ff",
+              "on-primary-fixed-variant": "#683d00",
+              "tertiary": "#9dcaff",
+              "surface-bright": "#063b65",
+              "on-primary-fixed": "#2c1700",
+              "inverse-primary": "#895200",
+              "secondary-fixed-dim": "#f9bd22",
+              "inverse-surface": "#d1e4ff",
+              "background": "#001429",
+              "primary": "#ffb86a",
+              "error": "#ffb4ab",
+              "outline": "#a28d7a",
+              "surface-tint": "#ffb86a",
+              "on-secondary-container": "#5a4100",
+              "inverse-on-surface": "#003258",
+              "surface-container-highest": "#003660",
+              "on-surface": "#d1e4ff",
+              "tertiary-container": "#7caee6",
+              "on-tertiary-container": "#00416e",
+              "on-primary-container": "#5c3500",
+              "on-primary": "#492900",
+              "surface-container-high": "#002b4e",
+              "secondary-fixed": "#ffdf9f",
+              "outline-variant": "#544434",
+              "on-tertiary-fixed-variant": "#02497b",
+              "on-surface-variant": "#dac2ad",
+              "primary-container": "#f29400",
+              "on-error": "#690005",
+              "on-tertiary": "#003257",
+              "on-secondary": "#402d00",
+              "secondary": "#ffc640",
+              "surface-container-lowest": "#000f20",
+              "surface-container-low": "#001d36",
+              "on-secondary-fixed": "#261a00",
+              "primary-fixed-dim": "#ffb86a",
+              "primary-fixed": "#ffdcbc",
+              "on-background": "#d1e4ff",
+              "secondary-container": "#e3aa00"
+            },
+            fontFamily: {
+              "headline": ["Outfit", "sans-serif"],
+              "body": ["Outfit", "sans-serif"],
+              "label": ["Geist Mono", "monospace"],
+              "mono": ["Geist Mono", "monospace"]
+            },
+            borderRadius: {"DEFAULT": "0px", "lg": "0px", "xl": "0px", "full": "0px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .blueprint-grid {
+            background-image: 
+                linear-gradient(to right, rgba(84, 68, 52, 0.1) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(84, 68, 52, 0.1) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+        .hatch-pattern {
+            background: repeating-linear-gradient(
+                45deg,
+                rgba(84, 68, 52, 0.1),
+                rgba(84, 68, 52, 0.1) 10px,
+                rgba(0, 20, 41, 0.2) 10px,
+                rgba(0, 20, 41, 0.2) 20px
+            );
+        }
+        .corner-bracket {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-color: #f29400;
+        }
+        .bracket-tl { top: 0; left: 0; border-top: 1px solid; border-left: 1px solid; }
+        .bracket-tr { top: 0; right: 0; border-top: 1px solid; border-right: 1px solid; }
+        .bracket-bl { bottom: 0; left: 0; border-bottom: 1px solid; border-left: 1px solid; }
+        .bracket-br { bottom: 0; right: 0; border-bottom: 1px solid; border-right: 1px solid; }
+        
+        .dimension-line {
+            position: relative;
+            height: 1px;
+            background: repeating-linear-gradient(90deg, #544434 0, #544434 4px, transparent 4px, transparent 8px);
+        }
+        .dimension-line::before, .dimension-line::after {
+            content: '';
+            position: absolute;
+            top: -3px;
+            width: 1px;
+            height: 7px;
+            background: #544434;
+        }
+        .dimension-line::after { right: 0; }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary-container selection:text-on-primary-container min-h-screen">
+<!-- TopAppBar -->
+<header class="bg-[#001429] dark:bg-[#001429] flex justify-between items-center w-full px-6 py-4 max-w-full border-b-2 border-[#544434] border-solid sticky top-0 z-50">
+<div class="flex items-center gap-8">
+<div class="font-['Geist_Mono'] font-black text-xl tracking-tighter text-[#f29400]">
+                MECH_BOARD_V1.0
+            </div>
+<nav class="hidden md:flex gap-6 items-center">
+<a class="text-[#a28d7a] font-['Geist_Mono'] uppercase text-[0.75rem] tracking-widest hover:bg-[#063b65] transition-colors duration-100 px-2 py-1 active:scale-95" href="#">Accueil</a>
+<a class="text-[#a28d7a] font-['Geist_Mono'] uppercase text-[0.75rem] tracking-widest hover:bg-[#063b65] transition-colors duration-100 px-2 py-1 active:scale-95" href="#">Formation</a>
+<a class="text-[#a28d7a] font-['Geist_Mono'] uppercase text-[0.75rem] tracking-widest hover:bg-[#063b65] transition-colors duration-100 px-2 py-1 active:scale-95" href="#">Entreprises</a>
+<a class="text-[#ffb86a] border-b-2 border-[#f29400] pb-1 font-['Geist_Mono'] uppercase text-[0.75rem] tracking-widest active:scale-95" href="#">Actualités</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="hidden sm:flex items-center bg-surface-container border border-outline-variant px-3 py-1.5">
+<span class="material-symbols-outlined text-sm text-outline">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-[10px] font-mono text-primary w-32 uppercase placeholder:text-outline/50" placeholder="COMMAND_FIND..." type="text"/>
+</div>
+<button class="material-symbols-outlined text-[#f29400] hover:bg-[#063b65] p-2 transition-all active:scale-95">settings</button>
+<button class="material-symbols-outlined text-[#f29400] hover:bg-[#063b65] p-2 transition-all active:scale-95">account_circle</button>
+</div>
+</header>
+<main class="blueprint-grid min-h-[calc(100vh-140px)] relative">
+<!-- Hero Section -->
+<section class="border-b border-outline-variant relative overflow-hidden bg-surface-container-lowest/50">
+<div class="absolute inset-0 z-0 opacity-10 pointer-events-none flex items-center justify-end pr-20">
+<svg class="text-primary animate-spin-slow" height="400" style="animation: spin 60s linear infinite;" viewbox="0 0 100 100" width="400">
+<path d="M50 5 L55 20 L70 20 L60 30 L65 45 L50 35 L35 45 L40 30 L30 20 L45 20 Z" fill="none" stroke="currentColor" stroke-width="0.5"></path>
+<circle cx="50" cy="50" fill="none" r="40" stroke="currentColor" stroke-dasharray="2 1" stroke-width="0.2"></circle>
+<circle cx="50" cy="50" fill="none" r="5" stroke="currentColor" stroke-width="0.5"></circle>
+</svg>
+</div>
+<div class="max-w-7xl mx-auto px-6 py-16 relative z-10">
+<div class="mb-2">
+<span class="font-mono text-[10px] text-primary bg-surface-bright px-2 py-0.5 border border-outline-variant">FILE_PATH: /CAREERS/OFFERS_2025</span>
+</div>
+<h1 class="font-headline font-black text-5xl md:text-7xl text-on-surface uppercase tracking-tighter leading-none mb-4">
+                    Offres d'alternance<br/>
+<span class="text-primary">&amp; stages — GMP Évry</span>
+</h1>
+<p class="max-w-2xl font-body text-outline text-lg leading-relaxed">
+                    Accédez aux opportunités techniques du département Génie Mécanique et Productique. Plateforme de mise en relation directe avec nos partenaires industriels.
+                </p>
+<!-- Schematic Line -->
+<div class="mt-8 flex items-center gap-4">
+<div class="h-[1px] w-24 bg-primary/30"></div>
+<div class="w-2 h-2 border border-primary rotate-45"></div>
+<div class="font-mono text-[10px] text-primary/60 uppercase">System active // Mechanical Dept // Evry</div>
+</div>
+</div>
+</section>
+<div class="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 lg:grid-cols-12 gap-8">
+<!-- Left Content: Filter & Grid -->
+<div class="lg:col-span-9 space-y-8">
+<!-- Filter Bar -->
+<div class="bg-surface-container border border-outline-variant p-4 flex flex-wrap gap-4 items-end relative">
+<div class="bracket-tl corner-bracket"></div><div class="bracket-tr corner-bracket"></div><div class="bracket-bl corner-bracket"></div><div class="bracket-br corner-bracket"></div>
+<div class="flex-1 min-w-[200px]">
+<label class="block font-mono text-[10px] text-outline uppercase mb-1">Secteur_D'activité</label>
+<select class="w-full bg-surface-container-low border-outline-variant text-on-surface font-body text-sm h-10 px-3 focus:border-primary focus:ring-0">
+<option>TOUS LES SECTEURS</option>
+<option>AUTOMOBILE</option>
+<option>AÉRONAUTIQUE</option>
+<option>INDUSTRIE</option>
+<option>ÉNERGIE</option>
+</select>
+</div>
+<div class="flex-1 min-w-[200px]">
+<label class="block font-mono text-[10px] text-outline uppercase mb-1">Type_De_Contrat</label>
+<select class="w-full bg-surface-container-low border-outline-variant text-on-surface font-body text-sm h-10 px-3 focus:border-primary focus:ring-0">
+<option>TOUS LES CONTRATS</option>
+<option>ALTERNANCE</option>
+<option>STAGE 6 MOIS</option>
+<option>STAGE 3 MOIS</option>
+</select>
+</div>
+<div class="flex-1 min-w-[150px]">
+<label class="block font-mono text-[10px] text-outline uppercase mb-1">Localisation</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-2.5 text-sm text-outline">location_on</span>
+<input class="w-full bg-surface-container-low border-outline-variant text-on-surface font-body text-sm h-10 pl-9 pr-3 focus:border-primary focus:ring-0 placeholder:text-outline/30 uppercase" placeholder="EVRY, PARIS..." type="text"/>
+</div>
+</div>
+<button class="bg-primary-container text-on-primary-container font-mono text-xs font-bold uppercase h-10 px-6 hover:bg-primary transition-colors active:scale-95 shrink-0">
+                        Exécuter_Filtre
+                    </button>
+</div>
+<!-- Main Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<!-- Card 1 -->
+<div class="bg-surface-container border border-outline-variant p-6 relative group transition-colors hover:border-primary/50">
+<div class="absolute top-4 right-4 font-mono text-[10px] text-outline-variant group-hover:text-primary transition-colors">REF-2025-042</div>
+<div class="bracket-tl corner-bracket opacity-20 group-hover:opacity-100"></div>
+<div class="mb-4">
+<span class="font-mono text-[9px] border border-outline px-1.5 py-0.5 text-outline uppercase group-hover:text-primary group-hover:border-primary transition-colors">AÉRONAUTIQUE</span>
+</div>
+<h3 class="font-headline font-bold text-xl text-on-surface group-hover:text-primary transition-colors">Safran Aircraft Engines</h3>
+<p class="font-body text-on-surface-variant text-base mt-1">Technicien Conception Mécanique (H/F)</p>
+<div class="mt-6 flex gap-4 text-sm font-body text-outline">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px]">location_on</span>
+<span>Evry | 1 an</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px]">work</span>
+<span>Alternance</span>
+</div>
+</div>
+<div class="mt-8 pt-4 border-t border-outline-variant flex justify-between items-center">
+<span class="font-mono text-[10px] text-outline-variant uppercase">Publié il y a 3 jours</span>
+<button class="bg-primary-container text-on-primary-container font-mono text-[11px] font-bold uppercase px-4 py-2 active:scale-95 transition-all">
+                                Voir l'offre
+                            </button>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="bg-surface-container border border-outline-variant p-6 relative group transition-colors hover:border-primary/50">
+<div class="absolute top-4 right-4 font-mono text-[10px] text-outline-variant group-hover:text-primary transition-colors">REF-2025-051</div>
+<div class="bracket-tl corner-bracket opacity-20 group-hover:opacity-100"></div>
+<div class="mb-4">
+<span class="font-mono text-[9px] border border-outline px-1.5 py-0.5 text-outline uppercase group-hover:text-primary group-hover:border-primary transition-colors">AUTOMOBILE</span>
+</div>
+<h3 class="font-headline font-bold text-xl text-on-surface group-hover:text-primary transition-colors">Renault Group</h3>
+<p class="font-body text-on-surface-variant text-base mt-1">Stagiaire Assistant Qualité Production</p>
+<div class="mt-6 flex gap-4 text-sm font-body text-outline">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px]">location_on</span>
+<span>Guyancourt | 6 mois</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px]">school</span>
+<span>Stage</span>
+</div>
+</div>
+<div class="mt-8 pt-4 border-t border-outline-variant flex justify-between items-center">
+<span class="font-mono text-[10px] text-outline-variant uppercase">Publié il y a 1 jour</span>
+<button class="bg-primary-container text-on-primary-container font-mono text-[11px] font-bold uppercase px-4 py-2 active:scale-95 transition-all">
+                                Voir l'offre
+                            </button>
+</div>
+</div>
+<!-- Card 3 (Expired/Filled) -->
+<div class="bg-surface-container border border-outline-variant p-6 relative overflow-hidden group">
+<!-- Hatching Overlay -->
+<div class="absolute inset-0 hatch-pattern z-10 pointer-events-none opacity-40"></div>
+<div class="absolute top-4 right-4 font-mono text-[10px] text-outline-variant group-hover:text-primary transition-colors">REF-2025-028</div>
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 rotate-12">
+<div class="border-4 border-error text-error font-mono font-bold text-2xl px-6 py-2 uppercase tracking-widest opacity-80">Remplie</div>
+</div>
+<div class="mb-4">
+<span class="font-mono text-[9px] border border-outline-variant px-1.5 py-0.5 text-outline-variant uppercase">ÉNERGIE</span>
+</div>
+<h3 class="font-headline font-bold text-xl text-on-surface opacity-50">EDF Hydro</h3>
+<p class="font-body text-on-surface-variant text-base mt-1 opacity-50">Maintenance des Systèmes Mécaniques</p>
+<div class="mt-6 flex gap-4 text-sm font-body text-outline opacity-50">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px]">location_on</span>
+<span>Dammarie | 1 an</span>
+</div>
+</div>
+<div class="mt-8 pt-4 border-t border-outline-variant flex justify-between items-center opacity-50">
+<span class="font-mono text-[10px] text-outline-variant uppercase">Publié il y a 2 semaines</span>
+<button class="bg-surface-container-high text-outline-variant font-mono text-[11px] font-bold uppercase px-4 py-2 cursor-not-allowed" disabled="">
+                                Indisponible
+                            </button>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="bg-surface-container border border-outline-variant p-6 relative group transition-colors hover:border-primary/50">
+<div class="absolute top-4 right-4 font-mono text-[10px] text-outline-variant group-hover:text-primary transition-colors">REF-2025-060</div>
+<div class="bracket-tl corner-bracket opacity-20 group-hover:opacity-100"></div>
+<div class="mb-4">
+<span class="font-mono text-[9px] border border-outline px-1.5 py-0.5 text-outline uppercase group-hover:text-primary group-hover:border-primary transition-colors">INDUSTRIE</span>
+</div>
+<h3 class="font-headline font-bold text-xl text-on-surface group-hover:text-primary transition-colors">Schneider Electric</h3>
+<p class="font-body text-on-surface-variant text-base mt-1">Stagiaire Industrialisation 4.0</p>
+<div class="mt-6 flex gap-4 text-sm font-body text-outline">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px]">location_on</span>
+<span>Rungis | 4 mois</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px]">school</span>
+<span>Stage</span>
+</div>
+</div>
+<div class="mt-8 pt-4 border-t border-outline-variant flex justify-between items-center">
+<span class="font-mono text-[10px] text-outline-variant uppercase">Publié il y a 5 heures</span>
+<button class="bg-primary-container text-on-primary-container font-mono text-[11px] font-bold uppercase px-4 py-2 active:scale-95 transition-all">
+                                Voir l'offre
+                            </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Sidebar: Stats Panel -->
+<aside class="lg:col-span-3 space-y-6">
+<div class="bg-surface-container border border-outline-variant p-6 relative overflow-hidden">
+<div class="bracket-tl corner-bracket"></div><div class="bracket-br corner-bracket"></div>
+<h4 class="font-mono text-[12px] font-bold text-primary uppercase mb-6 tracking-widest flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">monitoring</span>
+                        Statistiques_Live
+                    </h4>
+<div class="space-y-8">
+<div>
+<div class="flex justify-between items-end mb-1">
+<span class="font-mono text-[10px] text-outline uppercase">Offres_Actives</span>
+<span class="font-headline font-bold text-3xl text-primary">12</span>
+</div>
+<div class="dimension-line"></div>
+</div>
+<div>
+<div class="flex justify-between items-end mb-1">
+<span class="font-mono text-[10px] text-outline uppercase">Nouveautés_Semaine</span>
+<span class="font-headline font-bold text-3xl text-on-surface">03</span>
+</div>
+<div class="dimension-line"></div>
+</div>
+<div>
+<div class="flex justify-between items-end mb-1">
+<span class="font-mono text-[10px] text-outline uppercase">Candidatures_En_Cours</span>
+<span class="font-headline font-bold text-3xl text-outline">48</span>
+</div>
+<div class="dimension-line"></div>
+</div>
+</div>
+<div class="mt-10 p-4 border border-outline-variant bg-surface-container-low">
+<p class="font-mono text-[10px] text-outline leading-tight">
+<span class="text-primary font-bold">RECOMMANDATION:</span> Les offres en aéronautique reçoivent 40% de candidatures en plus. Postulez rapidement.
+                        </p>
+</div>
+</div>
+<!-- Technical Support Block -->
+<div class="border border-dashed border-outline-variant p-6 group cursor-help transition-colors hover:border-primary/50">
+<h5 class="font-mono text-[10px] text-outline-variant uppercase mb-2">Technical_Support</h5>
+<p class="font-body text-xs text-outline mb-4">Un problème avec votre dépôt de CV ? Contactez le bureau des stages.</p>
+<a class="font-mono text-[10px] text-primary uppercase underline hover:text-on-primary-fixed transition-colors" href="#">rel_internship_evry@univ-evry.fr</a>
+</div>
+<div class="p-6 relative">
+<img class="w-full grayscale opacity-30 hover:grayscale-0 hover:opacity-100 transition-all duration-500 border border-outline-variant" data-alt="Close-up of industrial machinery parts and mechanical blueprints with dramatic warm lighting highlighting technical details" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD8fLZeWZ-DWBD_A95WZxQU7j_QD9LI896efN258CIP9r6BjN-NKamiixggc6GhiOc_QTLc7_4GJK_BxIWVrI4gJOxQhg7UjZbS1iSgrFug0xgJsELTbiQLhvSVq1PqYwueus0_ntmx7nVJYKLrlnE4kSzkA7gCN_YjId62OR1AQaHBU7xIS9rnbrV20DCKNSXpNpqYFv74_KVNjZTwBIUr39A20p2Q6fcciaCFQ1mz5yS0mJEZptCIi2JyB1JxvW8398bHp70SVeE"/>
+<div class="absolute bottom-10 right-10 font-mono text-[8px] text-primary bg-surface/80 p-1">IMG_SRC: REF_MECH_04</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-[#001429] dark:bg-[#001429] w-full py-8 px-12 flex flex-col md:flex-row justify-between items-center gap-4 border-t border-[#544434]">
+<div class="text-[#a28d7a] font-['Geist_Mono'] text-[10px] uppercase">
+            ©2024 MECHANICAL_DEPT // REF_SYS_8820
+        </div>
+<div class="flex gap-8">
+<a class="text-[#a28d7a] font-['Geist_Mono'] uppercase text-[10px] hover:text-[#ffb86a] transition-colors" href="#">Mentions Légales</a>
+<a class="text-[#a28d7a] font-['Geist_Mono'] uppercase text-[10px] hover:text-[#ffb86a] transition-colors" href="#">Contact Tech</a>
+<a class="text-[#a28d7a] font-['Geist_Mono'] uppercase text-[10px] hover:text-[#ffb86a] transition-colors" href="#">Plan du Site</a>
+</div>
+<div class="flex gap-4">
+<div class="w-8 h-[1px] bg-outline-variant"></div>
+<div class="font-mono text-[10px] text-outline-variant">STABLE_BUILD_V2</div>
+</div>
+</footer>
+</body></html>

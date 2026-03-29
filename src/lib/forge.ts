@@ -4,6 +4,7 @@ export const C = {
   bg:       "var(--c-bg)",
   bgDeep:   "var(--c-bg-deep)",
   bgCard:   "var(--c-bg-card)",
+  bgBright: "var(--c-bg-bright)",
   primary:  "var(--c-primary)",
   secondary:"var(--c-secondary)",
   accent:   "var(--c-accent)",
