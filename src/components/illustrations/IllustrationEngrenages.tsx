@@ -1,8 +1,8 @@
 "use client";
 
 import { C } from "@/lib/forge";
-import { ArrowL, ArrowR } from "@/components/forge/illustrations/helpers";
-import { GearTeeth } from "@/components/forge/illustrations/helpers";
+import { ArrowL, ArrowR } from "@/components/illustrations/helpers";
+import { GearTeeth } from "@/components/illustrations/helpers";
 
 export function IllustrationEngrenages({ className = "" }: { className?: string }) {
   const s  = "#F29400";

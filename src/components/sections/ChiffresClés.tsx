@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { C, scanLines } from "@/lib/forge";
-import { SectionLabel } from "@/components/forge/ui";
+import { SectionLabel } from "@/components/ui";
 
 const metrics = [
   { val: "87%",  label: "Taux d'insertion professionnelle", sub: "à 6 mois après diplomation" },

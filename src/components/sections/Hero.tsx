@@ -5,8 +5,8 @@ import { ChevronRight, Flame } from "lucide-react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { C, forgeGrid, scanLines } from "@/lib/forge";
-import { IllustrationForgeHero } from "@/components/forge/illustrations/IllustrationForgeHero";
-import { PhotoBlueprint } from "@/components/forge/PhotoBlueprint";
+import { IllustrationForgeHero } from "@/components/illustrations/IllustrationForgeHero";
+import { PhotoBlueprint } from "@/components/sections/PhotoBlueprint";
 
 export function Hero() {
   const heroRef = useRef<HTMLElement>(null);
