@@ -1,24 +1,167 @@
 "use client";
 
-import { Cog, LogIn } from "lucide-react";
+import { useState, useRef } from "react";
+import { Cog, LogIn, ChevronDown } from "lucide-react";
 import { C } from "@/lib/forge";
 import { ThemeToggle } from "@/components/layout/ThemeToggle";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+
+type SubLink = { label: string; href: string };
+
+type NavLink = {
+  label: string;
+  href: string;
+  sub?: SubLink[];
+};
+
+const links: NavLink[] = [
+  {
+    label: "Formation",
+    href: "/presentation",
+    sub: [
+      { label: "Programme", href: "/presentation/programme" },
+      { label: "Spécificités", href: "/presentation/specificite" },
+      { label: "Lieux", href: "/presentation/lieu" },
+      { label: "Objectif BUT GMP", href: "/presentation/but-gmp" },
+      { label: "Alternance", href: "/presentation/alternance" },
+      { label: "Après le BUT", href: "/presentation/apres-but" },
+    ],
+  },
+  {
+    label: "Licences",
+    href: "/licences",
+    sub: [
+      { label: "Licence MIE", href: "/licences/mie" },
+      { label: "Licence MIEF", href: "/licences/mief" },
+      { label: "Licence MRI", href: "/licences/mri" },
+    ],
+  },
+  { label: "Entreprises", href: "#entreprises" },
+  { label: "Contact", href: "#contact" },
+];
+
+const labelStyle = {
+  padding: "0.375rem 0.875rem",
+  fontSize: "0.75rem",
+  fontFamily: C.sans,
+  fontWeight: 600,
+  letterSpacing: "0.08em",
+  textTransform: "uppercase" as const,
+  textDecoration: "none",
+  transition: "color 0.15s",
+  background: "transparent",
+  border: "none",
+  cursor: "pointer",
+  display: "flex",
+  alignItems: "center",
+  gap: "0.25rem",
+};
+
+function NavItem({ link }: { link: NavLink }) {
+  const pathname = usePathname();
+  const [open, setOpen] = useState(false);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const isActive =
+    pathname.startsWith(link.href) &&
+    link.href !== "#entreprises" &&
+    link.href !== "#contact";
+
+  const color = isActive || open ? C.primary : C.muted;
+
+  const handleEnter = () => {
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    setOpen(true);
+  };
+
+  const handleLeave = () => {
+    timeoutRef.current = setTimeout(() => setOpen(false), 120);
+  };
+
+  return (
+    <div
+      style={{ position: "relative" }}
+      onMouseEnter={handleEnter}
+      onMouseLeave={handleLeave}
+    >
+      {link.sub ? (
+        <button
+          style={{ ...labelStyle, color }}
+          onMouseEnter={(e) => (e.currentTarget.style.color = C.primary)}
+          onMouseLeave={(e) => (e.currentTarget.style.color = color)}
+        >
+          {link.label}
+          <ChevronDown
+            size={11}
+            style={{
+              transition: "transform 0.15s",
+              transform: open ? "rotate(180deg)" : "rotate(0deg)",
+            }}
+          />
+        </button>
+      ) : (
+        <Link
+          href={link.href}
+          style={{ ...labelStyle, color }}
+          onMouseEnter={(e) => (e.currentTarget.style.color = C.primary)}
+          onMouseLeave={(e) => (e.currentTarget.style.color = color)}
+        >
+          {link.label}
+        </Link>
+      )}
+
+      {link.sub && open && (
+        <div
+          style={{
+            position: "absolute",
+            top: "100%",
+            left: 0,
+            minWidth: "200px",
+            background: C.bgCard,
+            border: `1px solid ${C.border}`,
+            borderTop: `2px solid ${C.primary}`,
+            zIndex: 100,
+            boxShadow: `2px 4px 0 ${C.accent}`,
+            paddingTop: "0.25rem",
+            paddingBottom: "0.25rem",
+          }}
+        >
+          {link.sub.map((sub) => (
+            <Link
+              key={sub.href}
+              href={sub.href}
+              style={{
+                display: "block",
+                padding: "0.5rem 1rem",
+                fontSize: "0.75rem",
+                fontFamily: C.sans,
+                fontWeight: 600,
+                letterSpacing: "0.05em",
+                color: C.muted,
+                textDecoration: "none",
+                transition: "color 0.15s, background 0.15s",
+                whiteSpace: "nowrap",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.color = C.primary;
+                e.currentTarget.style.background = C.bgDeep;
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.color = C.muted;
+                e.currentTarget.style.background = "transparent";
+              }}
+            >
+              {sub.label}
+            </Link>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
 
 export function Nav() {
-
-  const linkstyles = {
-    padding: "0.375rem 0.875rem",
-    fontSize: "0.75rem",
-    color: C.muted,
-    fontFamily: "var(--font-outfit, sans-serif)",
-    fontWeight: 600,
-    letterSpacing: "0.08em",
-    textTransform: "uppercase" as const,
-    textDecoration: "none",
-    transition: "color 0.15s",
-  };
-  const router = useRouter();
   return (
     <nav
       style={{
@@ -27,8 +170,7 @@ export function Nav() {
         position: "sticky",
         top: 0,
         zIndex: 50,
-      }
-      }
+      }}
     >
       <div
         style={{
@@ -41,8 +183,11 @@ export function Nav() {
         }}
         className="px-4 md:px-8"
       >
-        {/* logo */}
-        <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+        {/* Logo */}
+        <Link
+          href="/"
+          style={{ display: "flex", alignItems: "center", gap: "0.75rem", textDecoration: "none" }}
+        >
           <div
             style={{
               width: "30px",
@@ -52,18 +197,13 @@ export function Nav() {
               alignItems: "center",
               justifyContent: "center",
             }}
-
-            onClick={() => router.push("/")}
           >
-            <Cog
-              style={{ width: "16px", height: "16px", color: "white" }}
-              strokeWidth={2.5}
-            />
+            <Cog style={{ width: "16px", height: "16px", color: "white" }} strokeWidth={2.5} />
           </div>
           <div>
             <span
               style={{
-                fontFamily: "var(--font-outfit, sans-serif)",
+                fontFamily: C.sans,
                 fontSize: "1.5rem",
                 color: C.secondary,
                 letterSpacing: "0.1em",
@@ -84,64 +224,20 @@ export function Nav() {
               IUT d'Évry
             </span>
           </div>
-        </div>
+        </Link>
 
-        {/* links */}
-        <div style={{ display: "flex", gap: "0.25rem" }} className="hidden md:flex">
-          {["Formation", "Entreprises", "Actualités", "Contact"].map((item) => (
-            <a
-              key={item}
-              href="#"
-              style={linkstyles}
-              onMouseEnter={(e) => (e.currentTarget.style.color = C.primary)}
-              onMouseLeave={(e) => (e.currentTarget.style.color = C.muted)}
-            >
-              {item}
-            </a>
+        {/* Liens */}
+        <div className="hidden md:flex" style={{ alignItems: "center" }}>
+          {links.map((link) => (
+            <NavItem key={link.label} link={link} />
           ))}
         </div>
 
-        <div style={{ display: "flex", gap: "3" }} className="hidden md:flex">
-
-          <div style={{ marginTop: "1px" }}>
-            <a style={linkstyles} href="/presentation/programme" onMouseEnter={(e) => (e.currentTarget.style.color = C.primary)}
-              onMouseLeave={(e) => (e.currentTarget.style.color = C.muted)}>
-              Programme
-            </a>
-
-
-            <a style={linkstyles} href="/presentation/specificite" onMouseEnter={(e) => (e.currentTarget.style.color = C.primary)}
-              onMouseLeave={(e) => (e.currentTarget.style.color = C.muted)}>
-              Spécificités
-            </a>
-
-            <a style={linkstyles} href="/presentation/lieu" onMouseEnter={(e) => (e.currentTarget.style.color = C.primary)}
-              onMouseLeave={(e) => (e.currentTarget.style.color = C.muted)}>
-              Lieux
-            </a>
-
-            <a style={linkstyles} href="/presentation/but-gmp" onMouseEnter={(e) => (e.currentTarget.style.color = C.primary)}
-              onMouseLeave={(e) => (e.currentTarget.style.color = C.muted)}>
-              Objectif
-            </a>
-
-            <a style={linkstyles} href="/presentation/alternance" onMouseEnter={(e) => (e.currentTarget.style.color = C.primary)}
-              onMouseLeave={(e) => (e.currentTarget.style.color = C.muted)}>
-              Alternance
-            </a>
-
-            <a style={linkstyles} href="/presentation/apres-but" onMouseEnter={(e) => (e.currentTarget.style.color = C.primary)}
-              onMouseLeave={(e) => (e.currentTarget.style.color = C.muted)}>
-              Après
-            </a>
-          </div>
-
-        </div>
-
-        {/* cta */}
+        {/* CTA */}
         <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
           <ThemeToggle />
-          <button
+          <Link
+            href="/dashboard"
             style={{
               display: "flex",
               alignItems: "center",
@@ -149,12 +245,12 @@ export function Nav() {
               padding: "0.4rem 1.1rem",
               fontSize: "0.75rem",
               fontWeight: 700,
-              fontFamily: "var(--font-outfit, sans-serif)",
+              fontFamily: C.sans,
               letterSpacing: "0.12em",
               background: "transparent",
               color: C.primary,
               border: `1px solid ${C.primary}`,
-              cursor: "pointer",
+              textDecoration: "none",
               transition: "all 0.15s",
             }}
             onMouseEnter={(e) => {
@@ -170,9 +266,9 @@ export function Nav() {
           >
             <LogIn style={{ width: "13px", height: "13px" }} />
             CONNEXION
-          </button>
+          </Link>
         </div>
       </div>
-    </nav >
+    </nav>
   );
 }
