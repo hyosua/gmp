@@ -101,33 +101,40 @@ export function Nav() {
           ))}
         </div>
 
-        <div style={{ display: "flex", gap: "0.25rem" }} className="hidden md:flex">
+        <div style={{ display: "flex", gap: "3" }} className="hidden md:flex">
 
-          <a style={linkstyles} href="/presentation/programme" onMouseEnter={(e) => (e.currentTarget.style.color = C.primary)}
-            onMouseLeave={(e) => (e.currentTarget.style.color = C.muted)}>
-            Programme
-          </a>
-          <a style={linkstyles} href="/presentation/specificite" onMouseEnter={(e) => (e.currentTarget.style.color = C.primary)}
-            onMouseLeave={(e) => (e.currentTarget.style.color = C.muted)}>
-            Spécificités
-          </a>
-          <a style={linkstyles} href="/presentation/lieu" onMouseEnter={(e) => (e.currentTarget.style.color = C.primary)}
-            onMouseLeave={(e) => (e.currentTarget.style.color = C.muted)}>
-            Lieux
-          </a>
-          <a style={linkstyles} href="/presentation/but-gmp" onMouseEnter={(e) => (e.currentTarget.style.color = C.primary)}
-            onMouseLeave={(e) => (e.currentTarget.style.color = C.muted)}>
-            Buts GMP
-          </a>
-          <a style={linkstyles} href="/presentation/alternance" onMouseEnter={(e) => (e.currentTarget.style.color = C.primary)}
-            onMouseLeave={(e) => (e.currentTarget.style.color = C.muted)}>
-            Alternance
-          </a>
-          <a style={linkstyles} href="/presentation/apres-but" onMouseEnter={(e) => (e.currentTarget.style.color = C.primary)}
-            onMouseLeave={(e) => (e.currentTarget.style.color = C.muted)}>
-            Après le BUT
-          </a>
+          <div style={{ marginTop: "1px" }}>
+            <a style={linkstyles} href="/presentation/programme" onMouseEnter={(e) => (e.currentTarget.style.color = C.primary)}
+              onMouseLeave={(e) => (e.currentTarget.style.color = C.muted)}>
+              Programme
+            </a>
 
+
+            <a style={linkstyles} href="/presentation/specificite" onMouseEnter={(e) => (e.currentTarget.style.color = C.primary)}
+              onMouseLeave={(e) => (e.currentTarget.style.color = C.muted)}>
+              Spécificités
+            </a>
+
+            <a style={linkstyles} href="/presentation/lieu" onMouseEnter={(e) => (e.currentTarget.style.color = C.primary)}
+              onMouseLeave={(e) => (e.currentTarget.style.color = C.muted)}>
+              Lieux
+            </a>
+
+            <a style={linkstyles} href="/presentation/but-gmp" onMouseEnter={(e) => (e.currentTarget.style.color = C.primary)}
+              onMouseLeave={(e) => (e.currentTarget.style.color = C.muted)}>
+              Objectif
+            </a>
+
+            <a style={linkstyles} href="/presentation/alternance" onMouseEnter={(e) => (e.currentTarget.style.color = C.primary)}
+              onMouseLeave={(e) => (e.currentTarget.style.color = C.muted)}>
+              Alternance
+            </a>
+
+            <a style={linkstyles} href="/presentation/apres-but" onMouseEnter={(e) => (e.currentTarget.style.color = C.primary)}
+              onMouseLeave={(e) => (e.currentTarget.style.color = C.muted)}>
+              Après
+            </a>
+          </div>
 
         </div>
 
