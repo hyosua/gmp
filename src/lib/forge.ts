@@ -10,6 +10,7 @@ export const C = {
   accent:   "var(--c-accent)",
   border:   "var(--c-border)",
   muted:    "var(--c-muted)",
+  sans:     "var(--font-outfit, sans-serif)",
   mono:     "var(--font-geist-mono, monospace)",
 };
 
