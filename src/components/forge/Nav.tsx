@@ -6,7 +6,7 @@ import { ThemeToggle } from "@/components/layout/ThemeToggle";
 import { useRouter } from "next/navigation";
 
 export function Nav() {
-
+  // styles
   const linkstyles = {
     padding: "0.375rem 0.875rem",
     fontSize: "0.75rem",
