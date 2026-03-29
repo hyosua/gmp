@@ -95,12 +95,16 @@ export function Parcours() {
                 transition: "all 0.15s",
               }}
               onMouseEnter={(e) => {
-                (e.currentTarget as HTMLDivElement).style.borderColor = C.primary;
-                (e.currentTarget as HTMLDivElement).style.boxShadow = `4px 4px 0 ${C.primary}`;
+                const el = e.currentTarget as HTMLDivElement;
+                el.style.borderColor = C.primary;
+                el.style.boxShadow = `4px 4px 0 ${C.primary}`;
+                (el.querySelector("h3") as HTMLElement | null)?.style.setProperty("color", C.primary);
               }}
               onMouseLeave={(e) => {
-                (e.currentTarget as HTMLDivElement).style.borderColor = C.border;
-                (e.currentTarget as HTMLDivElement).style.boxShadow = "none";
+                const el = e.currentTarget as HTMLDivElement;
+                el.style.borderColor = C.border;
+                el.style.boxShadow = "none";
+                (el.querySelector("h3") as HTMLElement | null)?.style.setProperty("color", C.secondary);
               }}
             >
               {/* illustration panel */}

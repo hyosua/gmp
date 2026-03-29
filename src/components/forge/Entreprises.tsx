@@ -180,12 +180,16 @@ export function Entreprises() {
                   cursor: "pointer",
                 }}
                 onMouseEnter={(e) => {
-                  (e.currentTarget as HTMLDivElement).style.borderColor = C.primary;
-                  (e.currentTarget as HTMLDivElement).style.boxShadow = `3px 3px 0 ${C.primary}`;
+                  const el = e.currentTarget as HTMLDivElement;
+                  el.style.borderColor = C.primary;
+                  el.style.boxShadow = `3px 3px 0 ${C.primary}`;
+                  (el.querySelector("[data-card-title]") as HTMLElement | null)?.style.setProperty("color", C.primary);
                 }}
                 onMouseLeave={(e) => {
-                  (e.currentTarget as HTMLDivElement).style.borderColor = C.border;
-                  (e.currentTarget as HTMLDivElement).style.boxShadow = "none";
+                  const el = e.currentTarget as HTMLDivElement;
+                  el.style.borderColor = C.border;
+                  el.style.boxShadow = "none";
+                  (el.querySelector("[data-card-title]") as HTMLElement | null)?.style.setProperty("color", C.secondary);
                 }}
               >
                 <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", marginBottom: "0.875rem" }}>
@@ -245,6 +249,7 @@ export function Entreprises() {
                 </div>
 
                 <p
+                  data-card-title
                   style={{
                     fontFamily: "var(--font-outfit, sans-serif)",
                     fontWeight: 600,

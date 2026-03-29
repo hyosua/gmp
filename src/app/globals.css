@@ -29,15 +29,16 @@
 }
 
 .dark {
-  /* Forge — dark (palette GMP #0A3D67 / #F29400) */
-  --c-bg: #0A3D67;
-  --c-bg-deep: #072d4d;
-  --c-bg-card: #0D4E80;
+  /* Forge — dark (palette GMP #001429 / #F29400) */
+  --c-bg: #001429;
+  --c-bg-deep: #000f20;
+  --c-bg-card: #00213d;
+  --c-bg-bright: #063b65;
   --c-primary: #F29400;
-  --c-secondary: #e2e8f0;
+  --c-secondary: #d1e4ff;
   --c-accent: #fbbf24;
-  --c-border: #1A5A8A;
-  --c-muted: #64748b;
+  --c-border: #544434;
+  --c-muted: #a28d7a;
   --c-primary-hover: #d98200;
   --c-photo-overlay: rgba(242,148,0,0.45);
   --c-grid-color: rgba(242,148,0,0.06);
