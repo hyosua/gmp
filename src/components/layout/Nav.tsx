@@ -52,6 +52,8 @@ export function Nav() {
               alignItems: "center",
               justifyContent: "center",
             }}
+
+            onClick={() => router.push("/")}
           >
             <Cog
               style={{ width: "16px", height: "16px", color: "white" }}

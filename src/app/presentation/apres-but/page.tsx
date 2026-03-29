@@ -8,26 +8,94 @@
 
 'use client';
 
+import { C } from "@/lib/forge";
+
 function ApresButPage() {
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen py-12 px-4">
-            <div className="max-w-4xl w-full">
-                <div className="text-center mb-12">
-                    <h1 className="text-5xl font-bold mb-6 dark:text-white">Après le BUT</h1>
-                    <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+        <div style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            minHeight: "100vh",
+            padding: "3rem 1rem",
+            background: C.bg,
+            color: C.secondary
+        }}>
+            <div style={{
+                maxWidth: "1280px",
+                width: "100%"
+            }}>
+                <div style={{
+                    textAlign: "center",
+                    marginBottom: "3rem"
+                }}>
+                    <h1 style={{
+                        fontSize: "3rem",
+                        fontWeight: "bold",
+                        marginBottom: "1.5rem",
+                        color: C.secondary,
+                        fontFamily: "var(--font-outfit, sans-serif)"
+                    }}>Après le BUT</h1>
+                    <p style={{
+                        fontSize: "1.125rem",
+                        color: C.muted,
+                        maxWidth: "42rem",
+                        margin: "0 auto",
+                        fontFamily: "var(--font-outfit, sans-serif)"
+                    }}>
                         Les perspectives professionnelles et de poursuite d'études après l'obtention du BUT GMP
                     </p>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-                    <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg">
-                        <h2 className="text-2xl font-bold mb-4 text-blue-600 dark:text-blue-400">💼 Insertion professionnelle</h2>
-                        <div className="space-y-4">
-                            <div className="bg-green-50 dark:bg-green-900/20 p-4 rounded-lg">
-                                <p className="text-green-800 dark:text-green-200 font-semibold">Taux d'insertion : 95%</p>
-                                <p className="text-sm text-green-700 dark:text-green-300">dans les 6 mois suivant l'obtention du diplôme</p>
+                <div style={{
+                    display: "grid",
+                    gridTemplateColumns: "repeat(auto-fit, minmax(350px, 1fr))",
+                    gap: "2rem",
+                    marginBottom: "3rem"
+                }}>
+                    <div style={{
+                        background: C.bg,
+                        padding: "1.5rem",
+                        borderRadius: "0.5rem",
+                        border: `2px solid ${C.primary}`,
+                        boxShadow: `4px 4px 0 ${C.accent}`
+                    }}>
+                        <h2 style={{
+                            fontSize: "1.5rem",
+                            fontWeight: "bold",
+                            marginBottom: "1rem",
+                            color: C.primary,
+                            fontFamily: "var(--font-outfit, sans-serif)"
+                        }}>💼 Insertion professionnelle</h2>
+                        <div style={{
+                            display: "flex",
+                            flexDirection: "column",
+                            gap: "1rem"
+                        }}>
+                            <div style={{
+                                background: C.secondary + "20",
+                                padding: "1rem",
+                                borderRadius: "0.5rem"
+                            }}>
+                                <p style={{
+                                    color: C.secondary,
+                                    fontWeight: "600",
+                                    fontFamily: "var(--font-outfit, sans-serif)"
+                                }}>Taux d'insertion : 95%</p>
+                                <p style={{
+                                    fontSize: "0.875rem",
+                                    color: C.secondary,
+                                    fontFamily: "var(--font-outfit, sans-serif)"
+                                }}>dans les 6 mois suivant l'obtention du diplôme</p>
                             </div>
-                            <ul className="space-y-2 text-gray-700 dark:text-gray-300">
+                            <ul style={{
+                                display: "flex",
+                                flexDirection: "column",
+                                gap: "0.5rem",
+                                color: C.secondary,
+                                fontFamily: "var(--font-outfit, sans-serif)"
+                            }}>
                                 <li>• Technicien(ne) méthodes</li>
                                 <li>• Technicien(ne) industrialisation</li>
                                 <li>• Responsable qualité</li>
@@ -37,49 +105,153 @@ function ApresButPage() {
                         </div>
                     </div>
 
-                    <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg">
-                        <h2 className="text-2xl font-bold mb-4 text-purple-600 dark:text-purple-400">📈 Évolution de carrière</h2>
-                        <div className="space-y-3">
-                            <div className="border-l-4 border-purple-500 pl-4">
-                                <h4 className="font-semibold text-purple-700 dark:text-purple-300">Après 2-3 ans d'expérience</h4>
-                                <p className="text-sm text-gray-600 dark:text-gray-400">Responsable méthodes, Chef d'équipe</p>
+                    <div style={{
+                        background: C.bg,
+                        padding: "1.5rem",
+                        borderRadius: "0.5rem",
+                        border: `2px solid ${C.primary}`,
+                        boxShadow: `4px 4px 0 ${C.accent}`
+                    }}>
+                        <h2 style={{
+                            fontSize: "1.5rem",
+                            fontWeight: "bold",
+                            marginBottom: "1rem",
+                            color: C.primary,
+                            fontFamily: "var(--font-outfit, sans-serif)"
+                        }}>📈 Évolution de carrière</h2>
+                        <div style={{
+                            display: "flex",
+                            flexDirection: "column",
+                            gap: "0.75rem"
+                        }}>
+                            <div style={{
+                                borderLeft: `4px solid ${C.primary}`,
+                                paddingLeft: "1rem"
+                            }}>
+                                <h4 style={{
+                                    fontWeight: "600",
+                                    color: C.primary,
+                                    fontFamily: "var(--font-outfit, sans-serif)"
+                                }}>Après 2-3 ans d'expérience</h4>
+                                <p style={{
+                                    fontSize: "0.875rem",
+                                    color: C.muted,
+                                    fontFamily: "var(--font-outfit, sans-serif)"
+                                }}>Responsable méthodes, Chef d'équipe</p>
                             </div>
-                            <div className="border-l-4 border-purple-500 pl-4">
-                                <h4 className="font-semibold text-purple-700 dark:text-purple-300">Après 5 ans</h4>
-                                <p className="text-sm text-gray-600 dark:text-gray-400">Ingénieur d'affaires, Manager industriel</p>
+                            <div style={{
+                                borderLeft: `4px solid ${C.primary}`,
+                                paddingLeft: "1rem"
+                            }}>
+                                <h4 style={{
+                                    fontWeight: "600",
+                                    color: C.primary,
+                                    fontFamily: "var(--font-outfit, sans-serif)"
+                                }}>Après 5 ans</h4>
+                                <p style={{
+                                    fontSize: "0.875rem",
+                                    color: C.muted,
+                                    fontFamily: "var(--font-outfit, sans-serif)"
+                                }}>Ingénieur d'affaires, Manager industriel</p>
                             </div>
-                            <div className="border-l-4 border-purple-500 pl-4">
-                                <h4 className="font-semibold text-purple-700 dark:text-purple-300">Après 8-10 ans</h4>
-                                <p className="text-sm text-gray-600 dark:text-gray-400">Directeur technique, Consultant</p>
+                            <div style={{
+                                borderLeft: `4px solid ${C.primary}`,
+                                paddingLeft: "1rem"
+                            }}>
+                                <h4 style={{
+                                    fontWeight: "600",
+                                    color: C.primary,
+                                    fontFamily: "var(--font-outfit, sans-serif)"
+                                }}>Après 8-10 ans</h4>
+                                <p style={{
+                                    fontSize: "0.875rem",
+                                    color: C.muted,
+                                    fontFamily: "var(--font-outfit, sans-serif)"
+                                }}>Directeur technique, Consultant</p>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div className="bg-gradient-to-r from-purple-600 to-blue-600 text-white p-8 rounded-lg mb-8">
-                    <h3 className="text-2xl font-bold mb-6 text-center">Poursuite d'études</h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        <div className="bg-white/10 p-4 rounded-lg">
-                            <h4 className="font-bold mb-2">🎓 Masters professionnels</h4>
-                            <ul className="text-sm space-y-1">
+                <div style={{
+                    background: `linear-gradient(90deg, ${C.primary}, ${C.secondary})`,
+                    color: C.bg,
+                    padding: "2rem",
+                    borderRadius: "0.5rem",
+                    marginBottom: "2rem",
+                    fontFamily: "var(--font-outfit, sans-serif)"
+                }}>
+                    <h3 style={{
+                        fontSize: "1.5rem",
+                        fontWeight: "bold",
+                        marginBottom: "1.5rem",
+                        textAlign: "center"
+                    }}>Poursuite d'études</h3>
+                    <div style={{
+                        display: "grid",
+                        gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
+                        gap: "1.5rem"
+                    }}>
+                        <div style={{
+                            background: "rgba(255, 255, 255, 0.1)",
+                            padding: "1rem",
+                            borderRadius: "0.5rem"
+                        }}>
+                            <h4 style={{
+                                fontWeight: "bold",
+                                marginBottom: "0.5rem",
+                                fontSize: "1.125rem"
+                            }}>🎓 Masters professionnels</h4>
+                            <ul style={{
+                                fontSize: "0.875rem",
+                                display: "flex",
+                                flexDirection: "column",
+                                gap: "0.25rem"
+                            }}>
                                 <li>• Master Productique</li>
                                 <li>• Master Qualité</li>
                                 <li>• Master Maintenance</li>
                                 <li>• Master Management Industriel</li>
                             </ul>
                         </div>
-                        <div className="bg-white/10 p-4 rounded-lg">
-                            <h4 className="font-bold mb-2">🏫 Écoles d'ingénieurs</h4>
-                            <ul className="text-sm space-y-1">
+                        <div style={{
+                            background: "rgba(255, 255, 255, 0.1)",
+                            padding: "1rem",
+                            borderRadius: "0.5rem"
+                        }}>
+                            <h4 style={{
+                                fontWeight: "bold",
+                                marginBottom: "0.5rem",
+                                fontSize: "1.125rem"
+                            }}>🏫 Écoles d'ingénieurs</h4>
+                            <ul style={{
+                                fontSize: "0.875rem",
+                                display: "flex",
+                                flexDirection: "column",
+                                gap: "0.25rem"
+                            }}>
                                 <li>• Arts et Métiers</li>
                                 <li>• CentraleSupélec</li>
                                 <li>• INSA</li>
                                 <li>• Écoles spécialisées</li>
                             </ul>
                         </div>
-                        <div className="bg-white/10 p-4 rounded-lg">
-                            <h4 className="font-bold mb-2">💼 MBA et formations</h4>
-                            <ul className="text-sm space-y-1">
+                        <div style={{
+                            background: "rgba(255, 255, 255, 0.1)",
+                            padding: "1rem",
+                            borderRadius: "0.5rem"
+                        }}>
+                            <h4 style={{
+                                fontWeight: "bold",
+                                marginBottom: "0.5rem",
+                                fontSize: "1.125rem"
+                            }}>💼 MBA et formations</h4>
+                            <ul style={{
+                                fontSize: "0.875rem",
+                                display: "flex",
+                                flexDirection: "column",
+                                gap: "0.25rem"
+                            }}>
                                 <li>• MBA Management Industriel</li>
                                 <li>• Executive MBA</li>
                                 <li>• Formations continues</li>
@@ -89,40 +261,122 @@ function ApresButPage() {
                     </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg text-center">
-                        <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <span className="text-white text-2xl font-bold">€</span>
-                        </div>
-                        <h3 className="text-xl font-bold mb-3 text-blue-600 dark:text-blue-400">Salaire</h3>
-                        <div className="text-gray-700 dark:text-gray-300">
-                            <p className="font-semibold">Débutant : 28-32k€</p>
-                            <p className="text-sm">Après 3 ans : 35-45k€</p>
-                            <p className="text-sm">Après 5 ans : 45-60k€</p>
+                <div style={{
+                    display: "grid",
+                    gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
+                    gap: "1.5rem"
+                }}>
+                    <div style={{
+                        background: C.bg,
+                        padding: "1.5rem",
+                        borderRadius: "0.5rem",
+                        border: `2px solid ${C.primary}`,
+                        boxShadow: `4px 4px 0 ${C.accent}`,
+                        textAlign: "center"
+                    }}>
+                        <div style={{
+                            width: "4rem",
+                            height: "4rem",
+                            background: C.primary,
+                            borderRadius: "50%",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            margin: "0 auto 1rem",
+                            fontSize: "1.5rem",
+                            fontWeight: "bold",
+                            color: C.bg
+                        }}>€</div>
+                        <h3 style={{
+                            fontSize: "1.25rem",
+                            fontWeight: "bold",
+                            marginBottom: "0.75rem",
+                            color: C.primary,
+                            fontFamily: "var(--font-outfit, sans-serif)"
+                        }}>Salaire</h3>
+                        <div style={{
+                            color: C.secondary,
+                            fontFamily: "var(--font-outfit, sans-serif)"
+                        }}>
+                            <p style={{ fontWeight: "600" }}>Débutant : 28-32k€</p>
+                            <p style={{ fontSize: "0.875rem" }}>Après 3 ans : 35-45k€</p>
+                            <p style={{ fontSize: "0.875rem" }}>Après 5 ans : 45-60k€</p>
                         </div>
                     </div>
 
-                    <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg text-center">
-                        <div className="w-16 h-16 bg-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <span className="text-white text-2xl font-bold">📍</span>
-                        </div>
-                        <h3 className="text-xl font-bold mb-3 text-green-600 dark:text-green-400">Mobilité</h3>
-                        <div className="text-gray-700 dark:text-gray-300">
-                            <p className="font-semibold">France entière</p>
-                            <p className="text-sm">Europe et international</p>
-                            <p className="text-sm">Tous secteurs industriels</p>
+                    <div style={{
+                        background: C.bg,
+                        padding: "1.5rem",
+                        borderRadius: "0.5rem",
+                        border: `2px solid ${C.primary}`,
+                        boxShadow: `4px 4px 0 ${C.accent}`,
+                        textAlign: "center"
+                    }}>
+                        <div style={{
+                            width: "4rem",
+                            height: "4rem",
+                            background: C.primary,
+                            borderRadius: "50%",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            margin: "0 auto 1rem",
+                            fontSize: "1.5rem",
+                            fontWeight: "bold",
+                            color: C.bg
+                        }}>📍</div>
+                        <h3 style={{
+                            fontSize: "1.25rem",
+                            fontWeight: "bold",
+                            marginBottom: "0.75rem",
+                            color: C.primary,
+                            fontFamily: "var(--font-outfit, sans-serif)"
+                        }}>Mobilité</h3>
+                        <div style={{
+                            color: C.secondary,
+                            fontFamily: "var(--font-outfit, sans-serif)"
+                        }}>
+                            <p style={{ fontWeight: "600" }}>France entière</p>
+                            <p style={{ fontSize: "0.875rem" }}>Europe et international</p>
+                            <p style={{ fontSize: "0.875rem" }}>Tous secteurs industriels</p>
                         </div>
                     </div>
 
-                    <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg text-center">
-                        <div className="w-16 h-16 bg-purple-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <span className="text-white text-2xl font-bold">🚀</span>
-                        </div>
-                        <h3 className="text-xl font-bold mb-3 text-purple-600 dark:text-purple-400">Évolution</h3>
-                        <div className="text-gray-700 dark:text-gray-300">
-                            <p className="font-semibold">Création d'entreprise</p>
-                            <p className="text-sm">Conseil et expertise</p>
-                            <p className="text-sm">Management d'équipe</p>
+                    <div style={{
+                        background: C.bg,
+                        padding: "1.5rem",
+                        borderRadius: "0.5rem",
+                        border: `2px solid ${C.primary}`,
+                        boxShadow: `4px 4px 0 ${C.accent}`,
+                        textAlign: "center"
+                    }}>
+                        <div style={{
+                            width: "4rem",
+                            height: "4rem",
+                            background: C.primary,
+                            borderRadius: "50%",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            margin: "0 auto 1rem",
+                            fontSize: "1.5rem",
+                            fontWeight: "bold",
+                            color: C.bg
+                        }}>🚀</div>
+                        <h3 style={{
+                            fontSize: "1.25rem",
+                            fontWeight: "bold",
+                            marginBottom: "0.75rem",
+                            color: C.primary,
+                            fontFamily: "var(--font-outfit, sans-serif)"
+                        }}>Évolution</h3>
+                        <div style={{
+                            color: C.secondary,
+                            fontFamily: "var(--font-outfit, sans-serif)"
+                        }}>
+                            <p style={{ fontWeight: "600" }}>Création d'entreprise</p>
+                            <p style={{ fontSize: "0.875rem" }}>Conseil et expertise</p>
+                            <p style={{ fontSize: "0.875rem" }}>Management d'équipe</p>
                         </div>
                     </div>
                 </div>
