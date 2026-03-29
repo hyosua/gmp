@@ -10,13 +10,11 @@ import { Footer } from "@/components/forge/Footer";
 export default function HomePage() {
   return (
     <div style={{ background: C.bg, minHeight: "100vh" }}>
-      <Nav />
       <Hero />
       <Parcours />
       <BandePhotos />
       <ChiffresClés />
       <Entreprises />
-      <Footer />
     </div>
   );
 }

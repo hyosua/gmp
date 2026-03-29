@@ -3,8 +3,22 @@
 import { Cog, LogIn } from "lucide-react";
 import { C } from "@/lib/forge";
 import { ThemeToggle } from "@/components/forge/ThemeToggle";
+import { useRouter } from "next/navigation";
 
 export function Nav() {
+
+  const linkstyles = {
+    padding: "0.375rem 0.875rem",
+    fontSize: "0.75rem",
+    color: C.muted,
+    fontFamily: "var(--font-outfit, sans-serif)",
+    fontWeight: 600,
+    letterSpacing: "0.08em",
+    textTransform: "uppercase" as const,
+    textDecoration: "none",
+    transition: "color 0.15s",
+  };
+  const router = useRouter();
   return (
     <nav
       style={{
@@ -13,7 +27,8 @@ export function Nav() {
         position: "sticky",
         top: 0,
         zIndex: 50,
-      }}
+      }
+      }
     >
       <div
         style={{
@@ -75,17 +90,7 @@ export function Nav() {
             <a
               key={item}
               href="#"
-              style={{
-                padding: "0.375rem 0.875rem",
-                fontSize: "0.75rem",
-                color: C.muted,
-                fontFamily: "var(--font-outfit, sans-serif)",
-                fontWeight: 600,
-                letterSpacing: "0.08em",
-                textTransform: "uppercase" as const,
-                textDecoration: "none",
-                transition: "color 0.15s",
-              }}
+              style={linkstyles}
               onMouseEnter={(e) => (e.currentTarget.style.color = C.primary)}
               onMouseLeave={(e) => (e.currentTarget.style.color = C.muted)}
             >
@@ -94,41 +99,71 @@ export function Nav() {
           ))}
         </div>
 
+        <div style={{ display: "flex", gap: "0.25rem" }} className="hidden md:flex">
+
+          <a style={linkstyles} href="/presentation/programme" onMouseEnter={(e) => (e.currentTarget.style.color = C.primary)}
+            onMouseLeave={(e) => (e.currentTarget.style.color = C.muted)}>
+            Programme
+          </a>
+          <a style={linkstyles} href="/presentation/specificite" onMouseEnter={(e) => (e.currentTarget.style.color = C.primary)}
+            onMouseLeave={(e) => (e.currentTarget.style.color = C.muted)}>
+            Spécificités
+          </a>
+          <a style={linkstyles} href="/presentation/lieu" onMouseEnter={(e) => (e.currentTarget.style.color = C.primary)}
+            onMouseLeave={(e) => (e.currentTarget.style.color = C.muted)}>
+            Lieux
+          </a>
+          <a style={linkstyles} href="/presentation/but-gmp" onMouseEnter={(e) => (e.currentTarget.style.color = C.primary)}
+            onMouseLeave={(e) => (e.currentTarget.style.color = C.muted)}>
+            Buts GMP
+          </a>
+          <a style={linkstyles} href="/presentation/alternance" onMouseEnter={(e) => (e.currentTarget.style.color = C.primary)}
+            onMouseLeave={(e) => (e.currentTarget.style.color = C.muted)}>
+            Alternance
+          </a>
+          <a style={linkstyles} href="/presentation/apres-but" onMouseEnter={(e) => (e.currentTarget.style.color = C.primary)}
+            onMouseLeave={(e) => (e.currentTarget.style.color = C.muted)}>
+            Après le BUT
+          </a>
+
+
+        </div>
+
         {/* cta */}
         <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-        <ThemeToggle />
-        <button
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "0.5rem",
-            padding: "0.4rem 1.1rem",
-            fontSize: "0.75rem",
-            fontWeight: 700,
-            fontFamily: "var(--font-outfit, sans-serif)",
-            letterSpacing: "0.12em",
-            background: "transparent",
-            color: C.primary,
-            border: `1px solid ${C.primary}`,
-            cursor: "pointer",
-            transition: "all 0.15s",
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.background = C.primary;
-            e.currentTarget.style.color = C.bgDeep;
-            e.currentTarget.style.boxShadow = `2px 2px 0 ${C.accent}`;
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.background = "transparent";
-            e.currentTarget.style.color = C.primary;
-            e.currentTarget.style.boxShadow = "none";
-          }}
-        >
-          <LogIn style={{ width: "13px", height: "13px" }} />
-          CONNEXION
-        </button>
+          <ThemeToggle />
+          <button
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "0.5rem",
+              padding: "0.4rem 1.1rem",
+              fontSize: "0.75rem",
+              fontWeight: 700,
+              fontFamily: "var(--font-outfit, sans-serif)",
+              letterSpacing: "0.12em",
+              background: "transparent",
+              color: C.primary,
+              border: `1px solid ${C.primary}`,
+              cursor: "pointer",
+              transition: "all 0.15s",
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = C.primary;
+              e.currentTarget.style.color = C.bgDeep;
+              e.currentTarget.style.boxShadow = `2px 2px 0 ${C.accent}`;
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = "transparent";
+              e.currentTarget.style.color = C.primary;
+              e.currentTarget.style.boxShadow = "none";
+            }}
+          >
+            <LogIn style={{ width: "13px", height: "13px" }} />
+            CONNEXION
+          </button>
         </div>
       </div>
-    </nav>
+    </nav >
   );
 }
