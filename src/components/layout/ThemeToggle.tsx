@@ -9,6 +9,7 @@ export function ThemeToggle() {
 
   useEffect(() => {
     // Lit l'état réel du DOM (appliqué par le serveur via cookie)
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setDark(document.documentElement.classList.contains("dark"));
   }, []);
 

@@ -81,7 +81,7 @@ export function Nav() {
                 letterSpacing: "0.1em",
               }}
             >
-              IUT d'Évry
+              IUT d&rsquo;Évry
             </span>
           </div>
         </div>

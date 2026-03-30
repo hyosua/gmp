@@ -9,7 +9,7 @@ function ProgrammePage() {
                 <div className="text-center mb-12">
                     <h1 className="text-5xl font-bold mb-6 text-secondary font-sans">Programme</h1>
                     <p className="text-lg text-muted max-w-[42rem] mx-auto font-sans">
-                        Découvrez le programme complet du BUT GMP, une formation d'excellence en génie mécanique et productique
+                        Découvrez le programme complet du BUT GMP, une formation d&rsquo;excellence en génie mécanique et productique
                     </p>
                 </div>
 
@@ -52,9 +52,9 @@ function ProgrammePage() {
                         <ul className="flex flex-col gap-2 text-secondary font-sans">
                             <li>• Management de projet</li>
                             <li>• Innovation technologique</li>
-                            <li>• Projet de fin d'études</li>
+                            <li>• Projet de fin d&rsquo;études</li>
                             <li>• Stage de spécialisation</li>
-                            <li>• Préparation à l'insertion professionnelle</li>
+                            <li>• Préparation à l&rsquo;insertion professionnelle</li>
                         </ul>
                     </div>
                 </div>

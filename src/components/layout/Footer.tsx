@@ -38,7 +38,7 @@ export function Footer() {
             <p className="font-sans text-[0.875rem] leading-[1.7] max-w-[280px] text-[#64748b]">
               Département Génie Mécanique et Productique
               <br />
-              IUT d'Évry-Val-d'Essonne
+              IUT d&rsquo;Évry-Val-d&rsquo;Essonne
               <br />
               Université Paris-Saclay
             </p>

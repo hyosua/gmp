@@ -10,7 +10,7 @@ const offres = [
     type: "Alternance",
     title: "Technicien méthodes & industrialisation",
     description:
-      "Intégrez l'équipe méthodes de notre usine de production pour optimiser les procédés d'assemblage et participer à la transition industrie 4.0.",
+      "Intégrez l&rsquo;équipe méthodes de notre usine de production pour optimiser les procédés d&rsquo;assemblage et participer à la transition industrie 4.0.",
     tags: ["Méthodes", "Lean", "CAO"],
     start: "Sept. 2026",
   },
@@ -20,7 +20,7 @@ const offres = [
     type: "Stage 6 mois",
     title: "Contrôle qualité pièces moteur",
     description:
-      "Participation au contrôle dimensionnel et à l'analyse des non-conformités sur pièces de haute précision pour moteurs aéronautiques.",
+      "Participation au contrôle dimensionnel et à l&rsquo;analyse des non-conformités sur pièces de haute précision pour moteurs aéronautiques.",
     tags: ["Qualité", "Métrologie", "Aéro"],
     start: "Fév. 2026",
   },
@@ -30,7 +30,7 @@ const offres = [
     type: "Alternance",
     title: "Technicien Process Emboutissage",
     description:
-      "Suivi de la fabrication des pièces embouties, analyse des dérives process et propositions d'améliorations sur ligne de presse à froid.",
+      "Suivi de la fabrication des pièces embouties, analyse des dérives process et propositions d&rsquo;améliorations sur ligne de presse à froid.",
     tags: ["Process", "Emboutissage", "AMDEC"],
     start: "Sept. 2026",
   },
@@ -52,15 +52,15 @@ export function Entreprises() {
           >
             Recrutez des talents
             <br />
-            <span className="text-primary">forgés pour l'industrie</span>
+            <span className="text-primary">forgés pour l&rsquo;industrie</span>
           </h2>
           <p
             className="text-[1rem] text-muted leading-[1.7] mb-8"
             style={{ fontFamily: "var(--font-outfit, sans-serif)" }}
           >
             Le département GMP entretient des relations étroites avec les
-            acteurs industriels de l'Île-de-France. Proposez vos offres de
-            stage, d'alternance ou de projets tuteurés directement à nos
+            acteurs industriels de l&rsquo;Île-de-France. Proposez vos offres de
+            stage, d&rsquo;alternance ou de projets tuteurés directement à nos
             étudiants qualifiés.
           </p>
 
