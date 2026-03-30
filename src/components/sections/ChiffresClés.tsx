@@ -20,7 +20,7 @@ export function ChiffresClés() {
           src="/machine.jpg"
           alt=""
           fill
-          style={{ objectFit: "cover", filter: "grayscale(100%)", opacity: 0.08 }}
+          className="object-cover grayscale opacity-[0.08]"
         />
       </div>
       <div style={scanLines} />
@@ -33,8 +33,7 @@ export function ChiffresClés() {
         <SectionLabel>04 · Données · Année 2025-2026</SectionLabel>
 
         <div
-          className="grid grid-cols-2 md:grid-cols-4 border-t border-border"
-          style={{ gap: 0 }}
+          className="grid grid-cols-2 md:grid-cols-4 border-t border-border gap-0"
         >
           {metrics.map(({ val, label, sub }, i) => (
             <div
@@ -47,14 +46,12 @@ export function ChiffresClés() {
               ].join(" ")}
             >
               <p
-                className="text-primary leading-none tracking-[0.02em] mb-2"
-                style={{ fontFamily: "var(--font-outfit, sans-serif)", fontSize: "4.5rem" }}
+                className="font-sans text-primary leading-none tracking-[0.02em] mb-2 text-[4.5rem]"
               >
                 {val}
               </p>
               <p
-                className="font-semibold text-[0.9rem] text-secondary mb-1"
-                style={{ fontFamily: "var(--font-outfit, sans-serif)" }}
+                className="font-sans font-semibold text-[0.9rem] text-secondary mb-1"
               >
                 {label}
               </p>

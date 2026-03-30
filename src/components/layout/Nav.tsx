@@ -75,10 +75,7 @@ function NavItem({ link }: { link: NavLink }) {
           {link.label}
           <ChevronDown
             size={11}
-            style={{
-              transition: "transform 0.15s",
-              transform: open ? "rotate(180deg)" : "rotate(0deg)",
-            }}
+            className={`transition-transform duration-150 ${open ? "rotate-180" : "rotate-0"}`}
           />
         </button>
       ) : (

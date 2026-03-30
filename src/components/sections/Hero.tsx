@@ -164,12 +164,8 @@ export function Hero() {
 
           {/* main title */}
           <h1
-            className="text-secondary mb-2 tracking-[0.02em]"
-            style={{
-              fontFamily: "var(--font-outfit, sans-serif)",
-              fontSize: "clamp(2.5rem, 5vw, 4.5rem)",
-              lineHeight: 0.92,
-            }}
+            className="font-sans text-secondary mb-2 tracking-[0.02em]"
+            style={{ fontSize: "clamp(2.5rem, 5vw, 4.5rem)", lineHeight: 0.92 }}
           >
             <span className="hero-h1-line block">
               Génie
@@ -192,8 +188,7 @@ export function Hero() {
 
           {/* description */}
           <p
-            className="hero-desc font-normal text-[1.1rem] text-secondary leading-[1.65] max-w-[480px] mb-10 opacity-75"
-            style={{ fontFamily: "var(--font-outfit, sans-serif)" }}
+            className="hero-desc font-sans font-normal text-[1.1rem] text-secondary leading-[1.65] max-w-[480px] mb-10 opacity-75"
           >
             Formez-vous aux métiers de l'industrie de demain — conception
             assistée par ordinateur, fabrication additive, robotique et méthodes
@@ -204,8 +199,7 @@ export function Hero() {
           {/* CTAs */}
           <div className="flex gap-3 flex-wrap mb-12">
             <button
-              className="hero-cta flex items-center gap-2 py-3 px-7 text-base tracking-[0.1em] bg-primary text-white border border-primary cursor-pointer transition-all"
-              style={{ fontFamily: "var(--font-outfit, sans-serif)" }}
+              className="hero-cta font-sans flex items-center gap-2 py-3 px-7 text-base tracking-[0.1em] bg-primary text-white border border-primary cursor-pointer transition-all"
               onMouseEnter={(e) => {
                 e.currentTarget.style.background = "var(--c-primary-hover)";
                 e.currentTarget.style.boxShadow = "3px 3px 0 var(--c-accent)";
@@ -219,8 +213,7 @@ export function Hero() {
               <ChevronRight className="w-4 h-4" />
             </button>
             <button
-              className="hero-cta flex items-center gap-2 py-3 px-7 text-base tracking-[0.1em] bg-transparent text-secondary border border-border cursor-pointer transition-all"
-              style={{ fontFamily: "var(--font-outfit, sans-serif)" }}
+              className="hero-cta font-sans flex items-center gap-2 py-3 px-7 text-base tracking-[0.1em] bg-transparent text-secondary border border-border cursor-pointer transition-all"
               onMouseEnter={(e) => {
                 e.currentTarget.style.borderColor = "var(--c-secondary)";
                 e.currentTarget.style.boxShadow = "2px 2px 0 var(--c-secondary-30)";
@@ -244,12 +237,10 @@ export function Hero() {
             ].map(({ val, label }, i) => (
               <div
                 key={label}
-                className="hero-stat pr-8 mr-8"
-                style={{ borderRight: i < 3 ? "1px solid var(--c-border)" : "none" }}
+                className={`hero-stat pr-8 mr-8 ${i < 3 ? "border-r border-border" : ""}`}
               >
                 <p
-                  className="text-primary leading-none tracking-[0.03em]"
-                  style={{ fontFamily: "var(--font-outfit, sans-serif)", fontSize: "2.25rem" }}
+                  className="font-sans text-primary leading-none tracking-[0.03em] text-[2.25rem]"
                 >
                   {val}
                 </p>

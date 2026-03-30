@@ -1,7 +1,6 @@
 "use client";
 
 import { ChevronRight, GraduationCap, BarChart3, Repeat2 } from "lucide-react";
-import { C } from "@/lib/forge";
 import { Tag, SectionLabel, MonoLabel, ForgeCard, ForgeSection } from "@/components/ui";
 import { IllustrationCNC } from "@/components/illustrations/IllustrationCNC";
 import { IllustrationChaine } from "@/components/illustrations/IllustrationChaine";
@@ -42,16 +41,13 @@ const parcours = [
 
 export function Parcours() {
   return (
-    <ForgeSection bg={C.bgDeep} withScanLines>
+    <ForgeSection bg="var(--c-bg-deep)" withScanLines>
       {/* header */}
       <div className="mb-14">
         <SectionLabel>03 · Formations disponibles</SectionLabel>
         <h2
-          className="text-secondary leading-[0.95] tracking-[0.02em]"
-          style={{
-            fontFamily: "var(--font-outfit, sans-serif)",
-            fontSize: "clamp(2.5rem, 5vw, 4rem)",
-          }}
+          className="font-sans text-secondary leading-[0.95] tracking-[0.02em]"
+          style={{ fontSize: "clamp(2.5rem, 5vw, 4rem)" }}
         >
           3 parcours,
           <br />
@@ -77,7 +73,7 @@ export function Parcours() {
 
               {/* duration badge */}
               <MonoLabel
-                color={C.accent}
+                color="var(--c-accent)"
                 borderColor="var(--c-accent-40)"
                 style={{ display: "inline-block", marginBottom: "0.875rem" }}
               >
@@ -86,14 +82,12 @@ export function Parcours() {
 
               <h3
                 data-card-title
-                className="text-[1.9rem] tracking-[0.02em] mb-3 leading-[1.1] font-bold"
-                style={{ fontFamily: "var(--font-outfit, sans-serif)" }}
+                className="font-sans text-[1.9rem] tracking-[0.02em] mb-3 leading-[1.1] font-bold"
               >
                 {title}
               </h3>
               <p
-                className="text-[0.9rem] text-muted leading-[1.6] mb-5"
-                style={{ fontFamily: "var(--font-outfit, sans-serif)" }}
+                className="font-sans text-[0.9rem] text-muted leading-[1.6] mb-5"
               >
                 {description}
               </p>
@@ -105,8 +99,7 @@ export function Parcours() {
 
               {/* cta link */}
               <div
-                className="flex items-center gap-[0.375rem] text-primary font-semibold text-[0.85rem] tracking-[0.04em]"
-                style={{ fontFamily: "var(--font-outfit, sans-serif)" }}
+                className="font-sans flex items-center gap-[0.375rem] text-primary font-semibold text-[0.85rem] tracking-[0.04em]"
               >
                 En savoir plus
                 <ChevronRight className="w-[14px] h-[14px]" />
