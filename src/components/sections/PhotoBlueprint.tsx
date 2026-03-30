@@ -6,7 +6,6 @@ import Image from "next/image";
 // Canvas SVG — la photo occupe la région IMG, entourée d'espace technique
 const VB  = { w: 460, h: 390 };
 const IMG = { x: 0, y: 40, w: 400, h: 300 };
-const CX  = IMG.x + IMG.w / 2;
 const CY  = IMG.y + IMG.h / 2;
 
 /**

@@ -7,7 +7,7 @@ function ApresButPage() {
                 <div className="text-center mb-12">
                     <h1 className="text-5xl font-bold mb-6 text-secondary font-sans">Après le BUT</h1>
                     <p className="text-lg text-muted max-w-[42rem] mx-auto font-sans">
-                        Les perspectives professionnelles et de poursuite d'études après l'obtention du BUT GMP
+                        Les perspectives professionnelles et de poursuite d&rsquo;études après l&rsquo;obtention du BUT GMP
                     </p>
                 </div>
 
@@ -16,8 +16,8 @@ function ApresButPage() {
                         <h2 className="text-2xl font-bold mb-4 text-primary font-sans">💼 Insertion professionnelle</h2>
                         <div className="flex flex-col gap-4">
                             <div className="bg-secondary/[0.125] p-4 rounded-lg">
-                                <p className="text-secondary font-semibold font-sans">Taux d'insertion : 95%</p>
-                                <p className="text-sm text-secondary font-sans">dans les 6 mois suivant l'obtention du diplôme</p>
+                                <p className="text-secondary font-semibold font-sans">Taux d&rsquo;insertion : 95%</p>
+                                <p className="text-sm text-secondary font-sans">dans les 6 mois suivant l&rsquo;obtention du diplôme</p>
                             </div>
                             <ul className="flex flex-col gap-2 text-secondary font-sans">
                                 <li>• Technicien(ne) méthodes</li>
@@ -33,12 +33,12 @@ function ApresButPage() {
                         <h2 className="text-2xl font-bold mb-4 text-primary font-sans">📈 Évolution de carrière</h2>
                         <div className="flex flex-col gap-3">
                             <div className="border-l-4 border-primary pl-4">
-                                <h4 className="font-semibold text-primary font-sans">Après 2-3 ans d'expérience</h4>
-                                <p className="text-sm text-muted font-sans">Responsable méthodes, Chef d'équipe</p>
+                                <h4 className="font-semibold text-primary font-sans">Après 2-3 ans d&rsquo;expérience</h4>
+                                <p className="text-sm text-muted font-sans">Responsable méthodes, Chef d&rsquo;équipe</p>
                             </div>
                             <div className="border-l-4 border-primary pl-4">
                                 <h4 className="font-semibold text-primary font-sans">Après 5 ans</h4>
-                                <p className="text-sm text-muted font-sans">Ingénieur d'affaires, Manager industriel</p>
+                                <p className="text-sm text-muted font-sans">Ingénieur d&rsquo;affaires, Manager industriel</p>
                             </div>
                             <div className="border-l-4 border-primary pl-4">
                                 <h4 className="font-semibold text-primary font-sans">Après 8-10 ans</h4>
@@ -52,7 +52,7 @@ function ApresButPage() {
                     className="p-8 rounded-lg mb-8 font-sans"
                     style={{ background: "linear-gradient(90deg, var(--c-primary), var(--c-secondary))", color: "var(--c-bg)" }}
                 >
-                    <h3 className="text-2xl font-bold mb-6 text-center">Poursuite d'études</h3>
+                    <h3 className="text-2xl font-bold mb-6 text-center">Poursuite d&rsquo;études</h3>
                     <div className="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-6">
                         <div className="bg-white/10 p-4 rounded-lg">
                             <h4 className="font-bold mb-2 text-lg">🎓 Masters professionnels</h4>
@@ -64,7 +64,7 @@ function ApresButPage() {
                             </ul>
                         </div>
                         <div className="bg-white/10 p-4 rounded-lg">
-                            <h4 className="font-bold mb-2 text-lg">🏫 Écoles d'ingénieurs</h4>
+                            <h4 className="font-bold mb-2 text-lg">🏫 Écoles d&rsquo;ingénieurs</h4>
                             <ul className="text-sm flex flex-col gap-1">
                                 <li>• Arts et Métiers</li>
                                 <li>• CentraleSupélec</li>
@@ -109,9 +109,9 @@ function ApresButPage() {
                         <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4 text-2xl font-bold text-background">🚀</div>
                         <h3 className="text-xl font-bold mb-3 text-primary font-sans">Évolution</h3>
                         <div className="text-secondary font-sans">
-                            <p className="font-semibold">Création d'entreprise</p>
+                            <p className="font-semibold">Création d&rsquo;entreprise</p>
                             <p className="text-sm">Conseil et expertise</p>
-                            <p className="text-sm">Management d'équipe</p>
+                            <p className="text-sm">Management d&rsquo;équipe</p>
                         </div>
                     </div>
                 </div>

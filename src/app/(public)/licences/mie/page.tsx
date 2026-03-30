@@ -24,7 +24,7 @@ function MIEPage() {
                     </div>
 
                     <div className="bg-background p-6 rounded-lg border-2 border-primary shadow-[4px_4px_0_var(--c-accent)]">
-                        <h2 className="text-2xl font-bold mb-4 text-primary font-sans">📚 Programme d'études</h2>
+                        <h2 className="text-2xl font-bold mb-4 text-primary font-sans">📚 Programme d&rsquo;études</h2>
                         <div className="flex flex-col gap-3 text-secondary font-sans">
                             <div>
                                 <h4 className="font-semibold text-primary">Semestre 1 : Bases techniques</h4>
@@ -78,13 +78,13 @@ function MIEPage() {
                             <li>• Technicien(ne) de maintenance industrielle</li>
                             <li>• Responsable de maintenance</li>
                             <li>• Technicien(ne) méthodes maintenance</li>
-                            <li>• Chargé(e) d'exploitation industrielle</li>
+                            <li>• Chargé(e) d&rsquo;exploitation industrielle</li>
                             <li>• Technicien(ne) en équipements industriels</li>
                         </ul>
                     </div>
 
                     <div className="bg-background p-6 rounded-lg border-2 border-primary shadow-[4px_4px_0_var(--c-accent)]">
-                        <h3 className="text-xl font-bold mb-4 text-primary font-sans">🏢 Secteurs d'activité</h3>
+                        <h3 className="text-xl font-bold mb-4 text-primary font-sans">🏢 Secteurs d&rsquo;activité</h3>
                         <ul className="flex flex-col gap-2 text-secondary font-sans">
                             <li>• Industrie manufacturière</li>
                             <li>• Énergie et utilities</li>

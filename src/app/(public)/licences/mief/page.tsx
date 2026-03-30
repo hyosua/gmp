@@ -24,7 +24,7 @@ function MIEFPage() {
                     </div>
 
                     <div className="bg-background p-6 rounded-lg border-2 border-primary shadow-[4px_4px_0_var(--c-accent)]">
-                        <h2 className="text-2xl font-bold mb-4 text-primary font-sans">📚 Programme d'études</h2>
+                        <h2 className="text-2xl font-bold mb-4 text-primary font-sans">📚 Programme d&rsquo;études</h2>
                         <div className="flex flex-col gap-3 text-secondary font-sans">
                             <div>
                                 <h4 className="font-semibold text-primary">Semestre 1 : Bases ferroviaires</h4>
@@ -78,19 +78,19 @@ function MIEFPage() {
                             <li>• Technicien(ne) de maintenance ferroviaire</li>
                             <li>• Agent(e) de maintenance matériel roulant</li>
                             <li>• Technicien(ne) signalisation</li>
-                            <li>• Chargé(e) d'exploitation ferroviaire</li>
+                            <li>• Chargé(e) d&rsquo;exploitation ferroviaire</li>
                             <li>• Contrôleur(euse) qualité équipements</li>
                         </ul>
                     </div>
 
                     <div className="bg-background p-6 rounded-lg border-2 border-primary shadow-[4px_4px_0_var(--c-accent)]">
-                        <h3 className="text-xl font-bold mb-4 text-primary font-sans">🏢 Secteurs d'activité</h3>
+                        <h3 className="text-xl font-bold mb-4 text-primary font-sans">🏢 Secteurs d&rsquo;activité</h3>
                         <ul className="flex flex-col gap-2 text-secondary font-sans">
                             <li>• SNCF et filiales</li>
                             <li>• RATP (métro, RER)</li>
                             <li>• Opérateurs de fret</li>
                             <li>• Constructeurs ferroviaires</li>
-                            <li>• Maintenance d'infrastructures</li>
+                            <li>• Maintenance d&rsquo;infrastructures</li>
                         </ul>
                     </div>
                 </div>

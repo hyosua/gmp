@@ -7,7 +7,7 @@ function LieuPage() {
                 <div className="text-center mb-12">
                     <h1 className="text-5xl font-bold mb-6 text-secondary font-sans">Lieux</h1>
                     <p className="text-lg text-muted max-w-[42rem] mx-auto font-sans">
-                        Découvrez les installations modernes de l'IUT d'Évry pour votre formation GMP
+                        Découvrez les installations modernes de l&rsquo;IUT d&rsquo;Évry pour votre formation GMP
                     </p>
                 </div>
 
@@ -15,12 +15,12 @@ function LieuPage() {
                     <div className="bg-background p-6 rounded-lg border-2 border-primary shadow-[4px_4px_0_var(--c-accent)]">
                         <h2 className="text-2xl font-bold mb-4 text-primary font-sans flex items-center">
                             <span className="text-3xl mr-3">🏫</span>
-                            Campus d'Évry
+                            Campus d&rsquo;Évry
                         </h2>
                         <div className="flex flex-col gap-3 text-secondary font-sans">
                             <p><strong>Adresse :</strong> 25 cours Monseigneur Romero, 91000 Évry-Courcouronnes</p>
                             <p><strong>Accès :</strong> RER D station Évry-Courcouronnes (15 min de Paris)</p>
-                            <p><strong>Environnement :</strong> Campus universitaire moderne en plein cœur de la ville nouvelle d'Évry</p>
+                            <p><strong>Environnement :</strong> Campus universitaire moderne en plein cœur de la ville nouvelle d&rsquo;Évry</p>
                         </div>
                     </div>
 
@@ -30,9 +30,9 @@ function LieuPage() {
                             Ateliers techniques
                         </h2>
                         <ul className="flex flex-col gap-2 text-secondary font-sans">
-                            <li>• Atelier d'usinage CNC</li>
+                            <li>• Atelier d&rsquo;usinage CNC</li>
                             <li>• Laboratoire de métrologie</li>
-                            <li>• Salle d'automatisme industriel</li>
+                            <li>• Salle d&rsquo;automatisme industriel</li>
                             <li>• Atelier de prototypage rapide</li>
                             <li>• Laboratoire de mécanique des fluides</li>
                         </ul>
@@ -41,7 +41,7 @@ function LieuPage() {
                     <div className="bg-background p-6 rounded-lg border-2 border-primary shadow-[4px_4px_0_var(--c-accent)]">
                         <h2 className="text-2xl font-bold mb-4 text-primary font-sans flex items-center">
                             <span className="text-3xl mr-3">📚</span>
-                            Espaces d'étude
+                            Espaces d&rsquo;étude
                         </h2>
                         <ul className="flex flex-col gap-2 text-secondary font-sans">
                             <li>• Salles de cours équipées</li>
@@ -73,7 +73,7 @@ function LieuPage() {
                 >
                     <h3 className="text-2xl font-bold mb-4">Un campus connecté</h3>
                     <p className="text-lg mb-4">
-                        Situé à 30 minutes de Paris, l'IUT d'Évry bénéficie d'une excellente accessibilité
+                        Situé à 30 minutes de Paris, l&rsquo;IUT d&rsquo;Évry bénéficie d&rsquo;une excellente accessibilité
                     </p>
                     <div className="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-4 text-sm">
                         <div>

@@ -16,7 +16,7 @@ function MRIPage() {
                         <h2 className="text-2xl font-bold mb-4 text-primary font-sans">🎯 Objectifs de la formation</h2>
                         <ul className="flex flex-col gap-2 text-secondary font-sans">
                             <li>• Maîtriser les techniques de réparation industrielle</li>
-                            <li>• Acquérir des compétences en rénovation d'équipements</li>
+                            <li>• Acquérir des compétences en rénovation d&rsquo;équipements</li>
                             <li>• Gérer les processus de remise en état</li>
                             <li>• Optimiser les coûts de maintenance et réparation</li>
                             <li>• Assurer la conformité et la sécurité des équipements</li>
@@ -24,7 +24,7 @@ function MRIPage() {
                     </div>
 
                     <div className="bg-background p-6 rounded-lg border-2 border-primary shadow-[4px_4px_0_var(--c-accent)]">
-                        <h2 className="text-2xl font-bold mb-4 text-primary font-sans">📚 Programme d'études</h2>
+                        <h2 className="text-2xl font-bold mb-4 text-primary font-sans">📚 Programme d&rsquo;études</h2>
                         <div className="flex flex-col gap-3 text-secondary font-sans">
                             <div>
                                 <h4 className="font-semibold text-primary">Semestre 1 : Techniques de réparation</h4>
@@ -76,15 +76,15 @@ function MRIPage() {
                         <h3 className="text-xl font-bold mb-4 text-primary font-sans">💼 Débouchés professionnels</h3>
                         <ul className="flex flex-col gap-2 text-secondary font-sans">
                             <li>• Technicien(ne) de réparation industrielle</li>
-                            <li>• Responsable d'atelier de réparation</li>
+                            <li>• Responsable d&rsquo;atelier de réparation</li>
                             <li>• Technicien(ne) rénovation équipements</li>
-                            <li>• Chargé(e) d'affaires maintenance</li>
+                            <li>• Chargé(e) d&rsquo;affaires maintenance</li>
                             <li>• Expert(e) en remise en état</li>
                         </ul>
                     </div>
 
                     <div className="bg-background p-6 rounded-lg border-2 border-primary shadow-[4px_4px_0_var(--c-accent)]">
-                        <h3 className="text-xl font-bold mb-4 text-primary font-sans">🏢 Secteurs d'activité</h3>
+                        <h3 className="text-xl font-bold mb-4 text-primary font-sans">🏢 Secteurs d&rsquo;activité</h3>
                         <ul className="flex flex-col gap-2 text-secondary font-sans">
                             <li>• Industrie lourde</li>
                             <li>• Construction mécanique</li>

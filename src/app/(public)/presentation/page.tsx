@@ -19,7 +19,7 @@ export default function PresentationPage() {
           Présentation
         </h1>
         <p className="text-base text-muted mb-10 font-sans">
-          Découvrez le département Génie Mécanique et Productique de l'IUT d'Évry
+          Découvrez le département Génie Mécanique et Productique de l&rsquo;IUT d&rsquo;Évry
         </p>
 
         <div className="grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-4">

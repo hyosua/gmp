@@ -120,7 +120,7 @@ export function Nav() {
               GMP
             </span>
             <span className="ml-2 font-mono text-[0.65rem] text-muted tracking-[0.1em]">
-              IUT d'Évry
+              IUT d&rsquo;Évry
             </span>
           </div>
         </Link>

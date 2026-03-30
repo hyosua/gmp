@@ -1,5 +1,3 @@
-import { Nav } from "@/components/layout/Nav";
-import { Footer } from "@/components/layout/Footer";
 import { Hero } from "@/components/sections/Hero";
 import { Parcours } from "@/components/sections/Parcours";
 import { BandePhotos } from "@/components/sections/BandePhotos";

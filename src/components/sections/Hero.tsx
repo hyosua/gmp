@@ -158,7 +158,7 @@ export function Hero() {
           <div className="hero-eyebrow flex items-center gap-3 mb-8">
             <Flame className="w-3 h-3 text-primary" />
             <span className="font-mono text-[0.65rem] tracking-[0.25em] text-primary uppercase">
-              IUT d'Évry-Courcouronnes · Université Paris-Saclay
+              IUT d&rsquo;Évry-Courcouronnes · Université Paris-Saclay
             </span>
           </div>
 
@@ -190,10 +190,10 @@ export function Hero() {
           <p
             className="hero-desc font-sans font-normal text-[1.1rem] text-secondary leading-[1.65] max-w-[480px] mb-10 opacity-75"
           >
-            Formez-vous aux métiers de l'industrie de demain — conception
+            Formez-vous aux métiers de l&rsquo;industrie de demain — conception
             assistée par ordinateur, fabrication additive, robotique et méthodes
             de production dans un département à taille humaine, au cœur de
-            l'Essonne.
+            l&rsquo;Essonne.
           </p>
 
           {/* CTAs */}

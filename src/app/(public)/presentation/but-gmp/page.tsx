@@ -70,14 +70,14 @@ function ButGmpPage() {
                         <h3 className="text-xl font-bold mb-3 text-primary font-sans">Métiers visés</h3>
                         <ul className="text-sm flex flex-col gap-1 text-secondary font-sans">
                             <li>• Technicien méthodes</li>
-                            <li>• Ingénieur d'affaires</li>
+                            <li>• Ingénieur d&rsquo;affaires</li>
                             <li>• Chef de projet industriel</li>
                             <li>• Responsable qualité</li>
                         </ul>
                     </div>
 
                     <div className="bg-background p-6 rounded-lg border-2 border-primary shadow-[4px_4px_0_var(--c-accent)] text-center">
-                        <h3 className="text-xl font-bold mb-3 text-primary font-sans">Secteurs d'activité</h3>
+                        <h3 className="text-xl font-bold mb-3 text-primary font-sans">Secteurs d&rsquo;activité</h3>
                         <ul className="text-sm flex flex-col gap-1 text-secondary font-sans">
                             <li>• Automobile</li>
                             <li>• Aéronautique</li>
@@ -87,10 +87,10 @@ function ButGmpPage() {
                     </div>
 
                     <div className="bg-background p-6 rounded-lg border-2 border-primary shadow-[4px_4px_0_var(--c-accent)] text-center">
-                        <h3 className="text-xl font-bold mb-3 text-primary font-sans">Poursuite d'études</h3>
+                        <h3 className="text-xl font-bold mb-3 text-primary font-sans">Poursuite d&rsquo;études</h3>
                         <ul className="text-sm flex flex-col gap-1 text-secondary font-sans">
                             <li>• Masters industriels</li>
-                            <li>• Écoles d'ingénieurs</li>
+                            <li>• Écoles d&rsquo;ingénieurs</li>
                             <li>• MBA spécialisés</li>
                             <li>• Doctorat</li>
                         </ul>
