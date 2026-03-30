@@ -1,7 +1,6 @@
 "use client";
 
 import { Building2, MapPin, Shield, Wrench, Zap } from "lucide-react";
-import { C } from "@/lib/forge";
 import { Tag, SectionLabel, MonoLabel, IconBox, Button, ForgeCard, ForgeSection } from "@/components/ui";
 
 const offres = [
@@ -40,35 +39,24 @@ const offres = [
 export function Entreprises() {
   return (
     <ForgeSection>
-      <div
-        style={{ gap: "4rem", alignItems: "start" }}
-        className="grid grid-cols-1 lg:grid-cols-2"
-      >
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
         {/* left — pitch */}
         <div>
           <SectionLabel>05 · Partenariats industriels</SectionLabel>
           <h2
+            className="text-secondary leading-[0.95] tracking-[0.02em] mb-6"
             style={{
               fontFamily: "var(--font-outfit, sans-serif)",
               fontSize: "clamp(2.5rem, 4vw, 3.5rem)",
-              color: C.secondary,
-              lineHeight: 0.95,
-              letterSpacing: "0.02em",
-              marginBottom: "1.5rem",
             }}
           >
             Recrutez des talents
             <br />
-            <span style={{ color: C.primary }}>forgés pour l'industrie</span>
+            <span className="text-primary">forgés pour l'industrie</span>
           </h2>
           <p
-            style={{
-              fontFamily: "var(--font-outfit, sans-serif)",
-              fontSize: "1rem",
-              color: C.muted,
-              lineHeight: 1.7,
-              marginBottom: "2rem",
-            }}
+            className="text-[1rem] text-muted leading-[1.7] mb-8"
+            style={{ fontFamily: "var(--font-outfit, sans-serif)" }}
           >
             Le département GMP entretient des relations étroites avec les
             acteurs industriels de l'Île-de-France. Proposez vos offres de
@@ -77,28 +65,17 @@ export function Entreprises() {
           </p>
 
           {/* benefits */}
-          <div style={{ marginBottom: "2rem" }}>
+          <div className="mb-8">
             {[
-              { icon: <Shield style={{ width: "14px", height: "14px" }} />, text: "Étudiants formés aux normes industrielles" },
-              { icon: <Wrench style={{ width: "14px", height: "14px" }} />, text: "Maîtrise des outils CAO/FAO & ERP" },
-              { icon: <Zap style={{ width: "14px", height: "14px" }} />, text: "Réseau IUT · 40+ entreprises partenaires" },
+              { icon: <Shield className="w-[14px] h-[14px]" />, text: "Étudiants formés aux normes industrielles" },
+              { icon: <Wrench className="w-[14px] h-[14px]" />, text: "Maîtrise des outils CAO/FAO & ERP" },
+              { icon: <Zap className="w-[14px] h-[14px]" />, text: "Réseau IUT · 40+ entreprises partenaires" },
             ].map(({ icon, text }) => (
-              <div
-                key={text}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "0.75rem",
-                  marginBottom: "0.75rem",
-                }}
-              >
+              <div key={text} className="flex items-center gap-3 mb-3">
                 <IconBox>{icon}</IconBox>
                 <span
-                  style={{
-                    fontFamily: "var(--font-outfit, sans-serif)",
-                    fontSize: "0.875rem",
-                    color: C.muted,
-                  }}
+                  className="text-[0.875rem] text-muted"
+                  style={{ fontFamily: "var(--font-outfit, sans-serif)" }}
                 >
                   {text}
                 </span>
@@ -107,66 +84,53 @@ export function Entreprises() {
           </div>
 
           <Button>
-            <Building2 style={{ width: "14px", height: "14px" }} />
+            <Building2 className="w-[14px] h-[14px]" />
             Déposer une offre
           </Button>
         </div>
 
         {/* right — offer cards */}
-        <div style={{ display: "flex", flexDirection: "column" as const, gap: "1rem" }}>
+        <div className="flex flex-col gap-4">
           {offres.map(({ company, location, type, title, description, tags, start }) => (
             <ForgeCard key={company} style={{ cursor: "pointer" }}>
-              <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", marginBottom: "0.875rem" }}>
-                <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+              <div className="flex items-start justify-between mb-[0.875rem]">
+                <div className="flex items-center gap-3">
                   <IconBox size={34}>
-                    <Building2 style={{ width: "14px", height: "14px" }} />
+                    <Building2 className="w-[14px] h-[14px]" />
                   </IconBox>
                   <div>
                     <p
-                      style={{
-                        fontFamily: "var(--font-outfit, sans-serif)",
-                        fontWeight: 700,
-                        fontSize: "0.875rem",
-                        color: C.secondary,
-                      }}
+                      className="font-bold text-[0.875rem] text-secondary"
+                      style={{ fontFamily: "var(--font-outfit, sans-serif)" }}
                     >
                       {company}
                     </p>
                     <MonoLabel style={{ display: "flex", alignItems: "center", gap: "4px" }}>
-                      <MapPin style={{ width: "9px", height: "9px" }} /> {location}
+                      <MapPin className="w-[9px] h-[9px]" /> {location}
                     </MonoLabel>
                   </div>
                 </div>
-                <MonoLabel color={C.accent} borderColor="var(--c-accent-30)" style={{ padding: "2px 8px", whiteSpace: "nowrap" }}>
+                <MonoLabel color="var(--c-accent)" borderColor="var(--c-accent-30)" style={{ padding: "2px 8px", whiteSpace: "nowrap" }}>
                   {type}
                 </MonoLabel>
               </div>
 
               <p
                 data-card-title
-                style={{
-                  fontFamily: "var(--font-outfit, sans-serif)",
-                  fontWeight: 600,
-                  fontSize: "0.9rem",
-                  marginBottom: "0.5rem",
-                }}
+                className="font-semibold text-[0.9rem] mb-2"
+                style={{ fontFamily: "var(--font-outfit, sans-serif)" }}
               >
                 {title}
               </p>
               <p
-                style={{
-                  fontFamily: "var(--font-outfit, sans-serif)",
-                  fontSize: "0.8rem",
-                  color: C.muted,
-                  lineHeight: 1.55,
-                  marginBottom: "1rem",
-                }}
+                className="text-[0.8rem] text-muted leading-[1.55] mb-4"
+                style={{ fontFamily: "var(--font-outfit, sans-serif)" }}
               >
                 {description}
               </p>
 
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                <div style={{ display: "flex", gap: "0.375rem", flexWrap: "wrap" as const }}>
+              <div className="flex items-center justify-between">
+                <div className="flex gap-[0.375rem] flex-wrap">
                   {tags.map((t) => <Tag key={t}>{t}</Tag>)}
                 </div>
                 <MonoLabel style={{ whiteSpace: "nowrap" }}>{start}</MonoLabel>

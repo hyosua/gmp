@@ -1,4 +1,3 @@
-import { C } from "@/lib/forge";
 import { Nav } from "@/components/layout/Nav";
 import { Footer } from "@/components/layout/Footer";
 import { Hero } from "@/components/sections/Hero";
@@ -9,7 +8,7 @@ import { Entreprises } from "@/components/sections/Entreprises";
 
 export default function HomePage() {
   return (
-    <div style={{ background: C.bg, minHeight: "100vh" }}>
+    <div className="bg-background min-h-screen">
       <Hero />
       <Parcours />
       <BandePhotos />

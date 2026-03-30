@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { C, scanLines } from "@/lib/forge";
+import { scanLines } from "@/lib/forge";
 import { SectionLabel } from "@/components/ui";
 
 const metrics = [
@@ -13,114 +13,49 @@ const metrics = [
 
 export function ChiffresClés() {
   return (
-    <section
-      style={{
-        background: C.bgDeep,
-        position: "relative",
-        overflow: "hidden",
-        padding: "6rem 0",
-      }}
-    >
+    <section className="bg-bg-deep relative overflow-hidden py-24">
       {/* machine.jpg background with heavy overlay */}
-      <div style={{ position: "absolute", inset: 0, overflow: "hidden" }}>
+      <div className="absolute inset-0 overflow-hidden">
         <Image
           src="/machine.jpg"
           alt=""
           fill
-          style={{ objectFit: "cover", filter: "grayscale(100%)", opacity: 0.08 }}
+          className="object-cover grayscale opacity-[0.08]"
         />
       </div>
       <div style={scanLines} />
 
       {/* corner decorations */}
-      <div
-        style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: "120px",
-          height: "120px",
-          borderBottom: "1px solid var(--c-primary-20)",
-          borderRight: "1px solid var(--c-primary-20)",
-        }}
-      />
-      <div
-        style={{
-          position: "absolute",
-          bottom: 0,
-          right: 0,
-          width: "120px",
-          height: "120px",
-          borderTop: "1px solid var(--c-primary-20)",
-          borderLeft: "1px solid var(--c-primary-20)",
-        }}
-      />
+      <div className="absolute top-0 left-0 w-[120px] h-[120px] border-b border-r border-[var(--c-primary-20)]" />
+      <div className="absolute bottom-0 right-0 w-[120px] h-[120px] border-t border-l border-[var(--c-primary-20)]" />
 
-      <div
-        style={{
-          maxWidth: "1280px",
-          margin: "0 auto",
-          position: "relative",
-          zIndex: 2,
-        }}
-        className="px-4 md:px-8"
-      >
+      <div className="max-w-[1280px] mx-auto relative z-[2] px-4 md:px-8">
         <SectionLabel>04 · Données · Année 2025-2026</SectionLabel>
 
         <div
-          style={{
-            gap: 0,
-            borderTop: `1px solid ${C.border}`,
-          }}
-          className="grid grid-cols-2 md:grid-cols-4"
+          className="grid grid-cols-2 md:grid-cols-4 border-t border-border gap-0"
         >
           {metrics.map(({ val, label, sub }, i) => (
             <div
               key={val}
-              style={{
-                padding: "2rem 1.25rem",
-                borderBottom: `1px solid ${C.border}`,
-                borderRight: `1px solid ${C.border}`,
-              }}
-              className={
-                // mobile (2-col): odd index = right column → no right border
-                // desktop (4-col): last item (index 3) → no right border
+              className={[
+                "p-8 border-b border-border border-r border-border",
                 i === 1 ? "border-r-0 md:border-r" :
                 i === 3 ? "border-r-0" :
-                ""
-              }
+                "",
+              ].join(" ")}
             >
               <p
-                style={{
-                  fontFamily: "var(--font-outfit, sans-serif)",
-                  fontSize: "4.5rem",
-                  color: C.primary,
-                  lineHeight: 1,
-                  letterSpacing: "0.02em",
-                  marginBottom: "0.5rem",
-                }}
+                className="font-sans text-primary leading-none tracking-[0.02em] mb-2 text-[4.5rem]"
               >
                 {val}
               </p>
               <p
-                style={{
-                  fontFamily: "var(--font-outfit, sans-serif)",
-                  fontWeight: 600,
-                  fontSize: "0.9rem",
-                  color: C.secondary,
-                  marginBottom: "0.25rem",
-                }}
+                className="font-sans font-semibold text-[0.9rem] text-secondary mb-1"
               >
                 {label}
               </p>
-              <p
-                style={{
-                  fontFamily: C.mono,
-                  fontSize: "0.6rem",
-                  color: C.muted,
-                  letterSpacing: "0.05em",
-                }}
-              >
+              <p className="font-mono text-[0.6rem] text-muted tracking-[0.05em]">
                 {sub}
               </p>
             </div>

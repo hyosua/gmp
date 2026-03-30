@@ -8,7 +8,7 @@ export default function DashboardLayout({
   return (
     <div className="flex-1 flex overflow-hidden">
       <Sidebar />
-      <main className="flex-1 overflow-y-auto" style={{ background: "var(--c-bg)" }}>
+      <main className="flex-1 overflow-y-auto bg-background">
         {children}
       </main>
     </div>

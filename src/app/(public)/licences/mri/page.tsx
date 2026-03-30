@@ -1,72 +1,20 @@
 'use client';
 
-import { C } from "@/lib/forge";
-
 function MRIPage() {
     return (
-        <div style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            minHeight: "100vh",
-            padding: "3rem 1rem",
-            background: C.bg,
-            color: C.secondary
-        }}>
-            <div style={{
-                maxWidth: "1280px",
-                width: "100%"
-            }}>
-                <div style={{
-                    textAlign: "center",
-                    marginBottom: "3rem"
-                }}>
-                    <h1 style={{
-                        fontSize: "3rem",
-                        fontWeight: "bold",
-                        marginBottom: "1.5rem",
-                        color: C.secondary,
-                        fontFamily: "var(--font-outfit, sans-serif)"
-                    }}>Licence MRI</h1>
-                    <p style={{
-                        fontSize: "1.125rem",
-                        color: C.muted,
-                        maxWidth: "42rem",
-                        margin: "0 auto",
-                        fontFamily: "var(--font-outfit, sans-serif)"
-                    }}>
+        <div className="flex flex-col items-center justify-center min-h-screen py-12 px-4 bg-background text-secondary">
+            <div className="max-w-[1280px] w-full">
+                <div className="text-center mb-12">
+                    <h1 className="text-5xl font-bold mb-6 text-secondary font-sans">Licence MRI</h1>
+                    <p className="text-lg text-muted max-w-[42rem] mx-auto font-sans">
                         Maintenance et Réparation Industrielle - Expertise en réparation et rénovation
                     </p>
                 </div>
 
-                <div style={{
-                    display: "grid",
-                    gridTemplateColumns: "repeat(auto-fit, minmax(350px, 1fr))",
-                    gap: "2rem",
-                    marginBottom: "3rem"
-                }}>
-                    <div style={{
-                        background: C.bg,
-                        padding: "1.5rem",
-                        borderRadius: "0.5rem",
-                        border: `2px solid ${C.primary}`,
-                        boxShadow: `4px 4px 0 ${C.accent}`
-                    }}>
-                        <h2 style={{
-                            fontSize: "1.5rem",
-                            fontWeight: "bold",
-                            marginBottom: "1rem",
-                            color: C.primary,
-                            fontFamily: "var(--font-outfit, sans-serif)"
-                        }}>🎯 Objectifs de la formation</h2>
-                        <ul style={{
-                            display: "flex",
-                            flexDirection: "column",
-                            gap: "0.5rem",
-                            color: C.secondary,
-                            fontFamily: "var(--font-outfit, sans-serif)"
-                        }}>
+                <div className="grid grid-cols-[repeat(auto-fit,minmax(350px,1fr))] gap-8 mb-12">
+                    <div className="bg-background p-6 rounded-lg border-2 border-primary shadow-[4px_4px_0_var(--c-accent)]">
+                        <h2 className="text-2xl font-bold mb-4 text-primary font-sans">🎯 Objectifs de la formation</h2>
+                        <ul className="flex flex-col gap-2 text-secondary font-sans">
                             <li>• Maîtriser les techniques de réparation industrielle</li>
                             <li>• Acquérir des compétences en rénovation d'équipements</li>
                             <li>• Gérer les processus de remise en état</li>
@@ -75,167 +23,58 @@ function MRIPage() {
                         </ul>
                     </div>
 
-                    <div style={{
-                        background: C.bg,
-                        padding: "1.5rem",
-                        borderRadius: "0.5rem",
-                        border: `2px solid ${C.primary}`,
-                        boxShadow: `4px 4px 0 ${C.accent}`
-                    }}>
-                        <h2 style={{
-                            fontSize: "1.5rem",
-                            fontWeight: "bold",
-                            marginBottom: "1rem",
-                            color: C.primary,
-                            fontFamily: "var(--font-outfit, sans-serif)"
-                        }}>📚 Programme d'études</h2>
-                        <div style={{
-                            display: "flex",
-                            flexDirection: "column",
-                            gap: "0.75rem",
-                            color: C.secondary,
-                            fontFamily: "var(--font-outfit, sans-serif)"
-                        }}>
+                    <div className="bg-background p-6 rounded-lg border-2 border-primary shadow-[4px_4px_0_var(--c-accent)]">
+                        <h2 className="text-2xl font-bold mb-4 text-primary font-sans">📚 Programme d'études</h2>
+                        <div className="flex flex-col gap-3 text-secondary font-sans">
                             <div>
-                                <h4 style={{ fontWeight: "600", color: C.primary }}>Semestre 1 : Techniques de réparation</h4>
-                                <p style={{ fontSize: "0.875rem", color: C.muted }}>Soudage, usinage, traitement de surface</p>
+                                <h4 className="font-semibold text-primary">Semestre 1 : Techniques de réparation</h4>
+                                <p className="text-sm text-muted">Soudage, usinage, traitement de surface</p>
                             </div>
                             <div>
-                                <h4 style={{ fontWeight: "600", color: C.primary }}>Semestre 2 : Gestion de projet</h4>
-                                <p style={{ fontSize: "0.875rem", color: C.muted }}>Planification, budgétisation, qualité</p>
+                                <h4 className="font-semibold text-primary">Semestre 2 : Gestion de projet</h4>
+                                <p className="text-sm text-muted">Planification, budgétisation, qualité</p>
                             </div>
                             <div>
-                                <h4 style={{ fontWeight: "600", color: C.primary }}>Stage professionnel</h4>
-                                <p style={{ fontSize: "0.875rem", color: C.muted }}>4 mois en entreprise de réparation</p>
+                                <h4 className="font-semibold text-primary">Stage professionnel</h4>
+                                <p className="text-sm text-muted">4 mois en entreprise de réparation</p>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div style={{
-                    background: `linear-gradient(90deg, ${C.primary}, ${C.secondary})`,
-                    color: C.bg,
-                    padding: "2rem",
-                    borderRadius: "0.5rem",
-                    marginBottom: "2rem",
-                    fontFamily: "var(--font-outfit, sans-serif)"
-                }}>
-                    <h3 style={{
-                        fontSize: "1.5rem",
-                        fontWeight: "bold",
-                        marginBottom: "1.5rem",
-                        textAlign: "center"
-                    }}>Compétences développées</h3>
-                    <div style={{
-                        display: "grid",
-                        gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
-                        gap: "1.5rem"
-                    }}>
-                        <div style={{
-                            background: "rgba(255, 255, 255, 0.1)",
-                            padding: "1rem",
-                            borderRadius: "0.5rem",
-                            textAlign: "center"
-                        }}>
-                            <div style={{
-                                fontSize: "2rem",
-                                marginBottom: "0.5rem"
-                            }}>🔩</div>
-                            <h4 style={{
-                                fontWeight: "bold",
-                                marginBottom: "0.5rem",
-                                fontSize: "1.125rem"
-                            }}>Réparation</h4>
-                            <p style={{
-                                fontSize: "0.875rem"
-                            }}>Techniques avancées</p>
+                <div
+                    className="p-8 rounded-lg mb-8 font-sans"
+                    style={{ background: "linear-gradient(90deg, var(--c-primary), var(--c-secondary))", color: "var(--c-bg)" }}
+                >
+                    <h3 className="text-2xl font-bold mb-6 text-center">Compétences développées</h3>
+                    <div className="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-6">
+                        <div className="bg-white/10 p-4 rounded-lg text-center">
+                            <div className="text-3xl mb-2">🔩</div>
+                            <h4 className="font-bold mb-2 text-lg">Réparation</h4>
+                            <p className="text-sm">Techniques avancées</p>
                         </div>
-                        <div style={{
-                            background: "rgba(255, 255, 255, 0.1)",
-                            padding: "1rem",
-                            borderRadius: "0.5rem",
-                            textAlign: "center"
-                        }}>
-                            <div style={{
-                                fontSize: "2rem",
-                                marginBottom: "0.5rem"
-                            }}>🔄</div>
-                            <h4 style={{
-                                fontWeight: "bold",
-                                marginBottom: "0.5rem",
-                                fontSize: "1.125rem"
-                            }}>Rénovation</h4>
-                            <p style={{
-                                fontSize: "0.875rem"
-                            }}>Remise en état</p>
+                        <div className="bg-white/10 p-4 rounded-lg text-center">
+                            <div className="text-3xl mb-2">🔄</div>
+                            <h4 className="font-bold mb-2 text-lg">Rénovation</h4>
+                            <p className="text-sm">Remise en état</p>
                         </div>
-                        <div style={{
-                            background: "rgba(255, 255, 255, 0.1)",
-                            padding: "1rem",
-                            borderRadius: "0.5rem",
-                            textAlign: "center"
-                        }}>
-                            <div style={{
-                                fontSize: "2rem",
-                                marginBottom: "0.5rem"
-                            }}>💰</div>
-                            <h4 style={{
-                                fontWeight: "bold",
-                                marginBottom: "0.5rem",
-                                fontSize: "1.125rem"
-                            }}>Économie</h4>
-                            <p style={{
-                                fontSize: "0.875rem"
-                            }}>Gestion des coûts</p>
+                        <div className="bg-white/10 p-4 rounded-lg text-center">
+                            <div className="text-3xl mb-2">💰</div>
+                            <h4 className="font-bold mb-2 text-lg">Économie</h4>
+                            <p className="text-sm">Gestion des coûts</p>
                         </div>
-                        <div style={{
-                            background: "rgba(255, 255, 255, 0.1)",
-                            padding: "1rem",
-                            borderRadius: "0.5rem",
-                            textAlign: "center"
-                        }}>
-                            <div style={{
-                                fontSize: "2rem",
-                                marginBottom: "0.5rem"
-                            }}>📋</div>
-                            <h4 style={{
-                                fontWeight: "bold",
-                                marginBottom: "0.5rem",
-                                fontSize: "1.125rem"
-                            }}>Qualité</h4>
-                            <p style={{
-                                fontSize: "0.875rem"
-                            }}>Contrôle et conformité</p>
+                        <div className="bg-white/10 p-4 rounded-lg text-center">
+                            <div className="text-3xl mb-2">📋</div>
+                            <h4 className="font-bold mb-2 text-lg">Qualité</h4>
+                            <p className="text-sm">Contrôle et conformité</p>
                         </div>
                     </div>
                 </div>
 
-                <div style={{
-                    display: "grid",
-                    gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-                    gap: "1.5rem"
-                }}>
-                    <div style={{
-                        background: C.bg,
-                        padding: "1.5rem",
-                        borderRadius: "0.5rem",
-                        border: `2px solid ${C.primary}`,
-                        boxShadow: `4px 4px 0 ${C.accent}`
-                    }}>
-                        <h3 style={{
-                            fontSize: "1.25rem",
-                            fontWeight: "bold",
-                            marginBottom: "1rem",
-                            color: C.primary,
-                            fontFamily: "var(--font-outfit, sans-serif)"
-                        }}>💼 Débouchés professionnels</h3>
-                        <ul style={{
-                            display: "flex",
-                            flexDirection: "column",
-                            gap: "0.5rem",
-                            color: C.secondary,
-                            fontFamily: "var(--font-outfit, sans-serif)"
-                        }}>
+                <div className="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-6">
+                    <div className="bg-background p-6 rounded-lg border-2 border-primary shadow-[4px_4px_0_var(--c-accent)]">
+                        <h3 className="text-xl font-bold mb-4 text-primary font-sans">💼 Débouchés professionnels</h3>
+                        <ul className="flex flex-col gap-2 text-secondary font-sans">
                             <li>• Technicien(ne) de réparation industrielle</li>
                             <li>• Responsable d'atelier de réparation</li>
                             <li>• Technicien(ne) rénovation équipements</li>
@@ -244,27 +83,9 @@ function MRIPage() {
                         </ul>
                     </div>
 
-                    <div style={{
-                        background: C.bg,
-                        padding: "1.5rem",
-                        borderRadius: "0.5rem",
-                        border: `2px solid ${C.primary}`,
-                        boxShadow: `4px 4px 0 ${C.accent}`
-                    }}>
-                        <h3 style={{
-                            fontSize: "1.25rem",
-                            fontWeight: "bold",
-                            marginBottom: "1rem",
-                            color: C.primary,
-                            fontFamily: "var(--font-outfit, sans-serif)"
-                        }}>🏢 Secteurs d'activité</h3>
-                        <ul style={{
-                            display: "flex",
-                            flexDirection: "column",
-                            gap: "0.5rem",
-                            color: C.secondary,
-                            fontFamily: "var(--font-outfit, sans-serif)"
-                        }}>
+                    <div className="bg-background p-6 rounded-lg border-2 border-primary shadow-[4px_4px_0_var(--c-accent)]">
+                        <h3 className="text-xl font-bold mb-4 text-primary font-sans">🏢 Secteurs d'activité</h3>
+                        <ul className="flex flex-col gap-2 text-secondary font-sans">
                             <li>• Industrie lourde</li>
                             <li>• Construction mécanique</li>
                             <li>• Services de réparation</li>

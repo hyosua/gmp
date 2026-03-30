@@ -1,113 +1,32 @@
-
-
-
-
-
 'use client';
-
-import { C } from "@/lib/forge";
 
 function ButGmpPage() {
     return (
-        <div style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            minHeight: "100vh",
-            padding: "3rem 1rem",
-            background: C.bg,
-            color: C.secondary
-        }}>
-            <div style={{
-                maxWidth: "1280px",
-                width: "100%"
-            }}>
-                <div style={{
-                    textAlign: "center",
-                    marginBottom: "3rem"
-                }}>
-                    <h1 style={{
-                        fontSize: "3rem",
-                        fontWeight: "bold",
-                        marginBottom: "1.5rem",
-                        color: C.secondary,
-                        fontFamily: "var(--font-outfit, sans-serif)"
-                    }}>Buts GMP</h1>
-                    <p style={{
-                        fontSize: "1.125rem",
-                        color: C.muted,
-                        maxWidth: "42rem",
-                        margin: "0 auto",
-                        fontFamily: "var(--font-outfit, sans-serif)"
-                    }}>
+        <div className="flex flex-col items-center justify-center min-h-screen py-12 px-4 bg-background text-secondary">
+            <div className="max-w-[1280px] w-full">
+                <div className="text-center mb-12">
+                    <h1 className="text-5xl font-bold mb-6 text-secondary font-sans">Buts GMP</h1>
+                    <p className="text-lg text-muted max-w-[42rem] mx-auto font-sans">
                         Les objectifs de formation du BUT Génie Mécanique et Productique
                     </p>
                 </div>
 
-                <div style={{
-                    display: "grid",
-                    gridTemplateColumns: "repeat(auto-fit, minmax(350px, 1fr))",
-                    gap: "2rem",
-                    marginBottom: "3rem"
-                }}>
-                    <div style={{
-                        background: C.bg,
-                        padding: "1.5rem",
-                        borderRadius: "0.5rem",
-                        border: `2px solid ${C.primary}`,
-                        boxShadow: `4px 4px 0 ${C.accent}`
-                    }}>
-                        <h2 style={{
-                            fontSize: "1.5rem",
-                            fontWeight: "bold",
-                            marginBottom: "1rem",
-                            color: C.primary,
-                            fontFamily: "var(--font-outfit, sans-serif)"
-                        }}>🎯 Objectif principal</h2>
-                        <p style={{
-                            color: C.secondary,
-                            marginBottom: "1rem",
-                            fontFamily: "var(--font-outfit, sans-serif)"
-                        }}>
+                <div className="grid grid-cols-[repeat(auto-fit,minmax(350px,1fr))] gap-8 mb-12">
+                    <div className="bg-background p-6 rounded-lg border-2 border-primary shadow-[4px_4px_0_var(--c-accent)]">
+                        <h2 className="text-2xl font-bold mb-4 text-primary font-sans">🎯 Objectif principal</h2>
+                        <p className="text-secondary mb-4 font-sans">
                             Former des techniciens supérieurs capables de concevoir, réaliser et optimiser des systèmes mécaniques et de production industrielle.
                         </p>
-                        <div style={{
-                            background: C.primary + "20",
-                            padding: "1rem",
-                            borderRadius: "0.5rem"
-                        }}>
-                            <p style={{
-                                fontSize: "0.875rem",
-                                color: C.primary,
-                                fontFamily: "var(--font-outfit, sans-serif)"
-                            }}>
+                        <div className="bg-primary/[0.125] p-4 rounded-lg">
+                            <p className="text-sm text-primary font-sans">
                                 <strong>Diplôme :</strong> Bachelor Universitaire de Technologie - niveau 6 (Bac+3)
                             </p>
                         </div>
                     </div>
 
-                    <div style={{
-                        background: C.bg,
-                        padding: "1.5rem",
-                        borderRadius: "0.5rem",
-                        border: `2px solid ${C.primary}`,
-                        boxShadow: `4px 4px 0 ${C.accent}`
-                    }}>
-                        <h2 style={{
-                            fontSize: "1.5rem",
-                            fontWeight: "bold",
-                            marginBottom: "1rem",
-                            color: C.primary,
-                            fontFamily: "var(--font-outfit, sans-serif)"
-                        }}>💼 Compétences visées</h2>
-                        <ul style={{
-                            display: "flex",
-                            flexDirection: "column",
-                            gap: "0.5rem",
-                            color: C.secondary,
-                            fontFamily: "var(--font-outfit, sans-serif)"
-                        }}>
+                    <div className="bg-background p-6 rounded-lg border-2 border-primary shadow-[4px_4px_0_var(--c-accent)]">
+                        <h2 className="text-2xl font-bold mb-4 text-primary font-sans">💼 Compétences visées</h2>
+                        <ul className="flex flex-col gap-2 text-secondary font-sans">
                             <li>• Concevoir des systèmes mécaniques</li>
                             <li>• Gérer la production industrielle</li>
                             <li>• Assurer la qualité et la maintenance</li>
@@ -117,148 +36,39 @@ function ButGmpPage() {
                     </div>
                 </div>
 
-                <div style={{
-                    background: `linear-gradient(90deg, ${C.primary}, ${C.secondary})`,
-                    color: C.bg,
-                    padding: "2rem",
-                    borderRadius: "0.5rem",
-                    marginBottom: "2rem",
-                    fontFamily: "var(--font-outfit, sans-serif)"
-                }}>
-                    <h3 style={{
-                        fontSize: "1.5rem",
-                        fontWeight: "bold",
-                        marginBottom: "1.5rem",
-                        textAlign: "center"
-                    }}>Les 4 piliers de la formation</h3>
-                    <div style={{
-                        display: "grid",
-                        gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
-                        gap: "1.5rem"
-                    }}>
-                        <div style={{
-                            textAlign: "center"
-                        }}>
-                            <div style={{
-                                width: "4rem",
-                                height: "4rem",
-                                background: "rgba(255, 255, 255, 0.2)",
-                                borderRadius: "50%",
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "center",
-                                margin: "0 auto 0.75rem",
-                                fontSize: "1.5rem"
-                            }}>⚙️</div>
-                            <h4 style={{
-                                fontWeight: "bold",
-                                marginBottom: "0.5rem",
-                                fontSize: "1.125rem"
-                            }}>Mécanique</h4>
-                            <p style={{
-                                fontSize: "0.875rem"
-                            }}>Conception et calcul</p>
+                <div
+                    className="p-8 rounded-lg mb-8 font-sans"
+                    style={{ background: "linear-gradient(90deg, var(--c-primary), var(--c-secondary))", color: "var(--c-bg)" }}
+                >
+                    <h3 className="text-2xl font-bold mb-6 text-center">Les 4 piliers de la formation</h3>
+                    <div className="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-6">
+                        <div className="text-center">
+                            <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-3 text-2xl">⚙️</div>
+                            <h4 className="font-bold mb-2 text-lg">Mécanique</h4>
+                            <p className="text-sm">Conception et calcul</p>
                         </div>
-                        <div style={{
-                            textAlign: "center"
-                        }}>
-                            <div style={{
-                                width: "4rem",
-                                height: "4rem",
-                                background: "rgba(255, 255, 255, 0.2)",
-                                borderRadius: "50%",
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "center",
-                                margin: "0 auto 0.75rem",
-                                fontSize: "1.5rem"
-                            }}>🏭</div>
-                            <h4 style={{
-                                fontWeight: "bold",
-                                marginBottom: "0.5rem",
-                                fontSize: "1.125rem"
-                            }}>Production</h4>
-                            <p style={{
-                                fontSize: "0.875rem"
-                            }}>Industrialisation</p>
+                        <div className="text-center">
+                            <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-3 text-2xl">🏭</div>
+                            <h4 className="font-bold mb-2 text-lg">Production</h4>
+                            <p className="text-sm">Industrialisation</p>
                         </div>
-                        <div style={{
-                            textAlign: "center"
-                        }}>
-                            <div style={{
-                                width: "4rem",
-                                height: "4rem",
-                                background: "rgba(255, 255, 255, 0.2)",
-                                borderRadius: "50%",
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "center",
-                                margin: "0 auto 0.75rem",
-                                fontSize: "1.5rem"
-                            }}>🔧</div>
-                            <h4 style={{
-                                fontWeight: "bold",
-                                marginBottom: "0.5rem",
-                                fontSize: "1.125rem"
-                            }}>Maintenance</h4>
-                            <p style={{
-                                fontSize: "0.875rem"
-                            }}>Fiabilité système</p>
+                        <div className="text-center">
+                            <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-3 text-2xl">🔧</div>
+                            <h4 className="font-bold mb-2 text-lg">Maintenance</h4>
+                            <p className="text-sm">Fiabilité système</p>
                         </div>
-                        <div style={{
-                            textAlign: "center"
-                        }}>
-                            <div style={{
-                                width: "4rem",
-                                height: "4rem",
-                                background: "rgba(255, 255, 255, 0.2)",
-                                borderRadius: "50%",
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "center",
-                                margin: "0 auto 0.75rem",
-                                fontSize: "1.5rem"
-                            }}>📊</div>
-                            <h4 style={{
-                                fontWeight: "bold",
-                                marginBottom: "0.5rem",
-                                fontSize: "1.125rem"
-                            }}>Qualité</h4>
-                            <p style={{
-                                fontSize: "0.875rem"
-                            }}>Management QSE</p>
+                        <div className="text-center">
+                            <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-3 text-2xl">📊</div>
+                            <h4 className="font-bold mb-2 text-lg">Qualité</h4>
+                            <p className="text-sm">Management QSE</p>
                         </div>
                     </div>
                 </div>
 
-                <div style={{
-                    display: "grid",
-                    gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
-                    gap: "1.5rem"
-                }}>
-                    <div style={{
-                        background: C.bg,
-                        padding: "1.5rem",
-                        borderRadius: "0.5rem",
-                        border: `2px solid ${C.primary}`,
-                        boxShadow: `4px 4px 0 ${C.accent}`,
-                        textAlign: "center"
-                    }}>
-                        <h3 style={{
-                            fontSize: "1.25rem",
-                            fontWeight: "bold",
-                            marginBottom: "0.75rem",
-                            color: C.primary,
-                            fontFamily: "var(--font-outfit, sans-serif)"
-                        }}>Métiers visés</h3>
-                        <ul style={{
-                            fontSize: "0.875rem",
-                            display: "flex",
-                            flexDirection: "column",
-                            gap: "0.25rem",
-                            color: C.secondary,
-                            fontFamily: "var(--font-outfit, sans-serif)"
-                        }}>
+                <div className="grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-6">
+                    <div className="bg-background p-6 rounded-lg border-2 border-primary shadow-[4px_4px_0_var(--c-accent)] text-center">
+                        <h3 className="text-xl font-bold mb-3 text-primary font-sans">Métiers visés</h3>
+                        <ul className="text-sm flex flex-col gap-1 text-secondary font-sans">
                             <li>• Technicien méthodes</li>
                             <li>• Ingénieur d'affaires</li>
                             <li>• Chef de projet industriel</li>
@@ -266,29 +76,9 @@ function ButGmpPage() {
                         </ul>
                     </div>
 
-                    <div style={{
-                        background: C.bg,
-                        padding: "1.5rem",
-                        borderRadius: "0.5rem",
-                        border: `2px solid ${C.primary}`,
-                        boxShadow: `4px 4px 0 ${C.accent}`,
-                        textAlign: "center"
-                    }}>
-                        <h3 style={{
-                            fontSize: "1.25rem",
-                            fontWeight: "bold",
-                            marginBottom: "0.75rem",
-                            color: C.primary,
-                            fontFamily: "var(--font-outfit, sans-serif)"
-                        }}>Secteurs d'activité</h3>
-                        <ul style={{
-                            fontSize: "0.875rem",
-                            display: "flex",
-                            flexDirection: "column",
-                            gap: "0.25rem",
-                            color: C.secondary,
-                            fontFamily: "var(--font-outfit, sans-serif)"
-                        }}>
+                    <div className="bg-background p-6 rounded-lg border-2 border-primary shadow-[4px_4px_0_var(--c-accent)] text-center">
+                        <h3 className="text-xl font-bold mb-3 text-primary font-sans">Secteurs d'activité</h3>
+                        <ul className="text-sm flex flex-col gap-1 text-secondary font-sans">
                             <li>• Automobile</li>
                             <li>• Aéronautique</li>
                             <li>• Énergie</li>
@@ -296,29 +86,9 @@ function ButGmpPage() {
                         </ul>
                     </div>
 
-                    <div style={{
-                        background: C.bg,
-                        padding: "1.5rem",
-                        borderRadius: "0.5rem",
-                        border: `2px solid ${C.primary}`,
-                        boxShadow: `4px 4px 0 ${C.accent}`,
-                        textAlign: "center"
-                    }}>
-                        <h3 style={{
-                            fontSize: "1.25rem",
-                            fontWeight: "bold",
-                            marginBottom: "0.75rem",
-                            color: C.primary,
-                            fontFamily: "var(--font-outfit, sans-serif)"
-                        }}>Poursuite d'études</h3>
-                        <ul style={{
-                            fontSize: "0.875rem",
-                            display: "flex",
-                            flexDirection: "column",
-                            gap: "0.25rem",
-                            color: C.secondary,
-                            fontFamily: "var(--font-outfit, sans-serif)"
-                        }}>
+                    <div className="bg-background p-6 rounded-lg border-2 border-primary shadow-[4px_4px_0_var(--c-accent)] text-center">
+                        <h3 className="text-xl font-bold mb-3 text-primary font-sans">Poursuite d'études</h3>
+                        <ul className="text-sm flex flex-col gap-1 text-secondary font-sans">
                             <li>• Masters industriels</li>
                             <li>• Écoles d'ingénieurs</li>
                             <li>• MBA spécialisés</li>

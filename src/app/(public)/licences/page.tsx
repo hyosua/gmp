@@ -1,116 +1,30 @@
 'use client';
 
-import { C } from "@/lib/forge";
 import Link from "next/link";
 
 function LicencesPage() {
     return (
-        <div style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            minHeight: "100vh",
-            padding: "3rem 1rem",
-            background: C.bg,
-            color: C.secondary
-        }}>
-            <div style={{
-                maxWidth: "1280px",
-                width: "100%"
-            }}>
-                <div style={{
-                    textAlign: "center",
-                    marginBottom: "3rem"
-                }}>
-                    <h1 style={{
-                        fontSize: "3rem",
-                        fontWeight: "bold",
-                        marginBottom: "1.5rem",
-                        color: C.secondary,
-                        fontFamily: "var(--font-outfit, sans-serif)"
-                    }}>Licences Professionnelles</h1>
-                    <p style={{
-                        fontSize: "1.125rem",
-                        color: C.muted,
-                        maxWidth: "42rem",
-                        margin: "0 auto",
-                        fontFamily: "var(--font-outfit, sans-serif)"
-                    }}>
+        <div className="flex flex-col items-center justify-center min-h-screen py-12 px-4 bg-background text-secondary">
+            <div className="max-w-[1280px] w-full">
+                <div className="text-center mb-12">
+                    <h1 className="text-5xl font-bold mb-6 text-secondary font-sans">Licences Professionnelles</h1>
+                    <p className="text-lg text-muted max-w-[42rem] mx-auto font-sans">
                         Poursuite d'études après le BUT GMP - Spécialisations professionnelles
                     </p>
                 </div>
 
-                <div style={{
-                    display: "grid",
-                    gridTemplateColumns: "repeat(auto-fit, minmax(350px, 1fr))",
-                    gap: "2rem",
-                    marginBottom: "3rem"
-                }}>
-                    <Link href="/licences/mie" style={{ textDecoration: "none" }}>
-                        <div style={{
-                            background: C.bg,
-                            padding: "1.5rem",
-                            borderRadius: "0.5rem",
-                            border: `2px solid ${C.primary}`,
-                            boxShadow: `4px 4px 0 ${C.accent}`,
-                            cursor: "pointer",
-                            transition: "transform 0.2s",
-                            height: "100%"
-                        }}
-                            onMouseEnter={(e) => {
-                                e.currentTarget.style.transform = "translateY(-4px)";
-                            }}
-                            onMouseLeave={(e) => {
-                                e.currentTarget.style.transform = "translateY(0)";
-                            }}
-                        >
-                            <div style={{
-                                display: "flex",
-                                alignItems: "center",
-                                marginBottom: "1rem"
-                            }}>
-                                <div style={{
-                                    width: "3rem",
-                                    height: "3rem",
-                                    background: C.primary,
-                                    borderRadius: "50%",
-                                    display: "flex",
-                                    alignItems: "center",
-                                    justifyContent: "center",
-                                    marginRight: "1rem",
-                                    fontSize: "1.5rem",
-                                    color: C.bg
-                                }}>🔧</div>
-                                <h2 style={{
-                                    fontSize: "1.5rem",
-                                    fontWeight: "bold",
-                                    color: C.primary,
-                                    fontFamily: "var(--font-outfit, sans-serif)"
-                                }}>Licence MIE</h2>
+                <div className="grid grid-cols-[repeat(auto-fit,minmax(350px,1fr))] gap-8 mb-12">
+                    <Link href="/licences/mie" className="no-underline">
+                        <div className="bg-background p-6 rounded-lg border-2 border-primary shadow-[4px_4px_0_var(--c-accent)] cursor-pointer transition-transform duration-200 h-full hover:-translate-y-1">
+                            <div className="flex items-center mb-4">
+                                <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center mr-4 text-2xl text-background">🔧</div>
+                                <h2 className="text-2xl font-bold text-primary font-sans">Licence MIE</h2>
                             </div>
-                            <h3 style={{
-                                fontSize: "1.125rem",
-                                fontWeight: "600",
-                                marginBottom: "0.75rem",
-                                color: C.secondary,
-                                fontFamily: "var(--font-outfit, sans-serif)"
-                            }}>Maintenance Industrielle et Équipements</h3>
-                            <p style={{
-                                color: C.muted,
-                                fontFamily: "var(--font-outfit, sans-serif)",
-                                marginBottom: "1rem"
-                            }}>
+                            <h3 className="text-lg font-semibold mb-3 text-secondary font-sans">Maintenance Industrielle et Équipements</h3>
+                            <p className="text-muted font-sans mb-4">
                                 Formation spécialisée en maintenance préventive et curative des équipements industriels.
                             </p>
-                            <ul style={{
-                                display: "flex",
-                                flexDirection: "column",
-                                gap: "0.25rem",
-                                color: C.secondary,
-                                fontFamily: "var(--font-outfit, sans-serif)",
-                                fontSize: "0.875rem"
-                            }}>
+                            <ul className="flex flex-col gap-1 text-secondary font-sans text-sm">
                                 <li>• Électrotechnique industrielle</li>
                                 <li>• Automatisme et robotique</li>
                                 <li>• Gestion de production</li>
@@ -118,70 +32,17 @@ function LicencesPage() {
                         </div>
                     </Link>
 
-                    <Link href="/licences/mief" style={{ textDecoration: "none" }}>
-                        <div style={{
-                            background: C.bg,
-                            padding: "1.5rem",
-                            borderRadius: "0.5rem",
-                            border: `2px solid ${C.primary}`,
-                            boxShadow: `4px 4px 0 ${C.accent}`,
-                            cursor: "pointer",
-                            transition: "transform 0.2s",
-                            height: "100%"
-                        }}
-                            onMouseEnter={(e) => {
-                                e.currentTarget.style.transform = "translateY(-4px)";
-                            }}
-                            onMouseLeave={(e) => {
-                                e.currentTarget.style.transform = "translateY(0)";
-                            }}
-                        >
-                            <div style={{
-                                display: "flex",
-                                alignItems: "center",
-                                marginBottom: "1rem"
-                            }}>
-                                <div style={{
-                                    width: "3rem",
-                                    height: "3rem",
-                                    background: C.primary,
-                                    borderRadius: "50%",
-                                    display: "flex",
-                                    alignItems: "center",
-                                    justifyContent: "center",
-                                    marginRight: "1rem",
-                                    fontSize: "1.5rem",
-                                    color: C.bg
-                                }}>🚂</div>
-                                <h2 style={{
-                                    fontSize: "1.5rem",
-                                    fontWeight: "bold",
-                                    color: C.primary,
-                                    fontFamily: "var(--font-outfit, sans-serif)"
-                                }}>Licence MIEF</h2>
+                    <Link href="/licences/mief" className="no-underline">
+                        <div className="bg-background p-6 rounded-lg border-2 border-primary shadow-[4px_4px_0_var(--c-accent)] cursor-pointer transition-transform duration-200 h-full hover:-translate-y-1">
+                            <div className="flex items-center mb-4">
+                                <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center mr-4 text-2xl text-background">🚂</div>
+                                <h2 className="text-2xl font-bold text-primary font-sans">Licence MIEF</h2>
                             </div>
-                            <h3 style={{
-                                fontSize: "1.125rem",
-                                fontWeight: "600",
-                                marginBottom: "0.75rem",
-                                color: C.secondary,
-                                fontFamily: "var(--font-outfit, sans-serif)"
-                            }}>Maintenance Industrielle et Équipements Ferroviaires</h3>
-                            <p style={{
-                                color: C.muted,
-                                fontFamily: "var(--font-outfit, sans-serif)",
-                                marginBottom: "1rem"
-                            }}>
+                            <h3 className="text-lg font-semibold mb-3 text-secondary font-sans">Maintenance Industrielle et Équipements Ferroviaires</h3>
+                            <p className="text-muted font-sans mb-4">
                                 Spécialisation dans la maintenance du matériel roulant et des infrastructures ferroviaires.
                             </p>
-                            <ul style={{
-                                display: "flex",
-                                flexDirection: "column",
-                                gap: "0.25rem",
-                                color: C.secondary,
-                                fontFamily: "var(--font-outfit, sans-serif)",
-                                fontSize: "0.875rem"
-                            }}>
+                            <ul className="flex flex-col gap-1 text-secondary font-sans text-sm">
                                 <li>• Matériel roulant ferroviaire</li>
                                 <li>• Signalisation et sécurité</li>
                                 <li>• Traction électrique</li>
@@ -189,70 +50,17 @@ function LicencesPage() {
                         </div>
                     </Link>
 
-                    <Link href="/licences/mri" style={{ textDecoration: "none" }}>
-                        <div style={{
-                            background: C.bg,
-                            padding: "1.5rem",
-                            borderRadius: "0.5rem",
-                            border: `2px solid ${C.primary}`,
-                            boxShadow: `4px 4px 0 ${C.accent}`,
-                            cursor: "pointer",
-                            transition: "transform 0.2s",
-                            height: "100%"
-                        }}
-                            onMouseEnter={(e) => {
-                                e.currentTarget.style.transform = "translateY(-4px)";
-                            }}
-                            onMouseLeave={(e) => {
-                                e.currentTarget.style.transform = "translateY(0)";
-                            }}
-                        >
-                            <div style={{
-                                display: "flex",
-                                alignItems: "center",
-                                marginBottom: "1rem"
-                            }}>
-                                <div style={{
-                                    width: "3rem",
-                                    height: "3rem",
-                                    background: C.primary,
-                                    borderRadius: "50%",
-                                    display: "flex",
-                                    alignItems: "center",
-                                    justifyContent: "center",
-                                    marginRight: "1rem",
-                                    fontSize: "1.5rem",
-                                    color: C.bg
-                                }}>🔄</div>
-                                <h2 style={{
-                                    fontSize: "1.5rem",
-                                    fontWeight: "bold",
-                                    color: C.primary,
-                                    fontFamily: "var(--font-outfit, sans-serif)"
-                                }}>Licence MRI</h2>
+                    <Link href="/licences/mri" className="no-underline">
+                        <div className="bg-background p-6 rounded-lg border-2 border-primary shadow-[4px_4px_0_var(--c-accent)] cursor-pointer transition-transform duration-200 h-full hover:-translate-y-1">
+                            <div className="flex items-center mb-4">
+                                <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center mr-4 text-2xl text-background">🔄</div>
+                                <h2 className="text-2xl font-bold text-primary font-sans">Licence MRI</h2>
                             </div>
-                            <h3 style={{
-                                fontSize: "1.125rem",
-                                fontWeight: "600",
-                                marginBottom: "0.75rem",
-                                color: C.secondary,
-                                fontFamily: "var(--font-outfit, sans-serif)"
-                            }}>Maintenance et Réparation Industrielle</h3>
-                            <p style={{
-                                color: C.muted,
-                                fontFamily: "var(--font-outfit, sans-serif)",
-                                marginBottom: "1rem"
-                            }}>
+                            <h3 className="text-lg font-semibold mb-3 text-secondary font-sans">Maintenance et Réparation Industrielle</h3>
+                            <p className="text-muted font-sans mb-4">
                                 Expertise en réparation et rénovation d'équipements industriels complexes.
                             </p>
-                            <ul style={{
-                                display: "flex",
-                                flexDirection: "column",
-                                gap: "0.25rem",
-                                color: C.secondary,
-                                fontFamily: "var(--font-outfit, sans-serif)",
-                                fontSize: "0.875rem"
-                            }}>
+                            <ul className="flex flex-col gap-1 text-secondary font-sans text-sm">
                                 <li>• Techniques de réparation</li>
                                 <li>• Rénovation d'équipements</li>
                                 <li>• Gestion de projet</li>
@@ -261,31 +69,15 @@ function LicencesPage() {
                     </Link>
                 </div>
 
-                <div style={{
-                    background: `linear-gradient(90deg, ${C.primary}, ${C.secondary})`,
-                    color: C.bg,
-                    padding: "2rem",
-                    borderRadius: "0.5rem",
-                    textAlign: "center",
-                    fontFamily: "var(--font-outfit, sans-serif)"
-                }}>
-                    <h3 style={{
-                        fontSize: "1.5rem",
-                        fontWeight: "bold",
-                        marginBottom: "1rem"
-                    }}>Admission en Licences Professionnelles</h3>
-                    <p style={{
-                        fontSize: "1.125rem",
-                        marginBottom: "1.5rem"
-                    }}>
+                <div
+                    className="p-8 rounded-lg text-center font-sans"
+                    style={{ background: "linear-gradient(90deg, var(--c-primary), var(--c-secondary))", color: "var(--c-bg)" }}
+                >
+                    <h3 className="text-2xl font-bold mb-4">Admission en Licences Professionnelles</h3>
+                    <p className="text-lg mb-6">
                         Accessible après un BUT GMP ou équivalent, avec validation d'expérience professionnelle
                     </p>
-                    <div style={{
-                        display: "grid",
-                        gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
-                        gap: "1rem",
-                        fontSize: "0.875rem"
-                    }}>
+                    <div className="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-4 text-sm">
                         <div>
                             <strong>📅 Durée</strong><br />
                             1 an (2 semestres + stage)
