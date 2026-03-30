@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { Sun, Moon } from "lucide-react";
-import { C } from "@/lib/forge";
 
 export function ThemeToggle() {
   // null = pas encore hydraté (évite le flash d'icône)
@@ -25,31 +24,12 @@ export function ThemeToggle() {
     <button
       onClick={toggle}
       aria-label="Changer de thème"
-      style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        width: "32px",
-        height: "32px",
-        border: `1px solid ${C.border}`,
-        background: "transparent",
-        color: C.muted,
-        cursor: "pointer",
-        transition: "all 0.15s",
-      }}
-      onMouseEnter={(e) => {
-        e.currentTarget.style.borderColor = C.primary;
-        e.currentTarget.style.color = C.primary;
-      }}
-      onMouseLeave={(e) => {
-        e.currentTarget.style.borderColor = C.border;
-        e.currentTarget.style.color = C.muted;
-      }}
+      className="flex items-center justify-center w-8 h-8 border border-border bg-transparent text-muted cursor-pointer transition-all hover:border-primary hover:text-primary"
     >
       {/* Tant que non hydraté, affiche l'icône neutre */}
       {dark === null ? null : dark
-        ? <Sun style={{ width: "14px", height: "14px" }} />
-        : <Moon style={{ width: "14px", height: "14px" }} />
+        ? <Sun className="w-[14px] h-[14px]" />
+        : <Moon className="w-[14px] h-[14px]" />
       }
     </button>
   );

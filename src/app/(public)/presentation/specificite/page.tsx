@@ -1,7 +1,5 @@
 "use client";
 
-import { C } from "@/lib/forge";
-
 const cards = [
   {
     icon: "⚙️",
@@ -37,131 +35,41 @@ const cards = [
 
 export default function SpecificitePage() {
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        minHeight: "100vh",
-        padding: "3rem 1rem",
-        background: C.bg,
-        color: C.secondary,
-      }}
-    >
-      <div style={{ maxWidth: "1280px", width: "100%" }}>
-        <div style={{ textAlign: "center", marginBottom: "3rem" }}>
-          <h1
-            style={{
-              fontSize: "3rem",
-              fontWeight: "bold",
-              marginBottom: "1.5rem",
-              color: C.secondary,
-              fontFamily: C.sans,
-            }}
-          >
+    <div className="flex flex-col items-center justify-center min-h-screen py-12 px-4 bg-background text-secondary">
+      <div className="max-w-[1280px] w-full">
+        <div className="text-center mb-12">
+          <h1 className="text-5xl font-bold mb-6 text-secondary font-sans">
             Spécificités
           </h1>
-          <p
-            style={{
-              fontSize: "1.125rem",
-              color: C.muted,
-              maxWidth: "42rem",
-              margin: "0 auto",
-              fontFamily: C.sans,
-            }}
-          >
+          <p className="text-lg text-muted max-w-[42rem] mx-auto font-sans">
             Ce qui fait la particularité du BUT GMP à l'IUT d'Évry
           </p>
         </div>
 
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-            gap: "1.5rem",
-            marginBottom: "3rem",
-          }}
-        >
+        <div className="grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-6 mb-12">
           {cards.map(({ icon, title, desc }) => (
             <div
               key={title}
-              style={{
-                background: C.bgCard,
-                padding: "1.5rem",
-                border: `1px solid ${C.border}`,
-                borderTop: `3px solid ${C.primary}`,
-                textAlign: "center",
-              }}
+              className="bg-bg-card p-6 border border-border border-t-[3px] border-t-primary text-center"
             >
-              <div
-                style={{
-                  width: "52px",
-                  height: "52px",
-                  background: C.primary,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  margin: "0 auto 1rem",
-                  fontSize: "1.375rem",
-                }}
-              >
+              <div className="w-[52px] h-[52px] bg-primary flex items-center justify-center mx-auto mb-4 text-[1.375rem]">
                 {icon}
               </div>
-              <h3
-                style={{
-                  fontSize: "1rem",
-                  fontWeight: 700,
-                  marginBottom: "0.75rem",
-                  color: C.primary,
-                  fontFamily: C.sans,
-                  letterSpacing: "0.03em",
-                }}
-              >
+              <h3 className="text-base font-bold mb-3 text-primary font-sans tracking-[0.03em]">
                 {title}
               </h3>
-              <p
-                style={{
-                  color: C.muted,
-                  fontSize: "0.875rem",
-                  fontFamily: C.sans,
-                  lineHeight: 1.6,
-                }}
-              >
+              <p className="text-muted text-sm font-sans leading-relaxed">
                 {desc}
               </p>
             </div>
           ))}
         </div>
 
-        <div
-          style={{
-            background: C.bgCard,
-            border: `2px solid ${C.primary}`,
-            boxShadow: `4px 4px 0 ${C.accent}`,
-            padding: "2rem",
-          }}
-        >
-          <h3
-            style={{
-              fontSize: "1.25rem",
-              fontWeight: "bold",
-              marginBottom: "1.5rem",
-              textAlign: "center",
-              color: C.primary,
-              fontFamily: C.sans,
-              letterSpacing: "0.05em",
-            }}
-          >
+        <div className="bg-bg-card border-2 border-primary shadow-[4px_4px_0_var(--c-accent)] p-8">
+          <h3 className="text-xl font-bold mb-6 text-center text-primary font-sans tracking-[0.05em]">
             Pourquoi choisir le BUT GMP d'Évry ?
           </h3>
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
-              gap: "1.5rem",
-            }}
-          >
+          <div className="grid grid-cols-[repeat(auto-fit,minmax(240px,1fr))] gap-6">
             {[
               { icon: "🏆", title: "Excellence académique", desc: "Formation reconnue et appréciée par les entreprises du secteur industriel" },
               { icon: "💼", title: "Réseau professionnel", desc: "Plus de 200 entreprises partenaires dans la région Île-de-France" },
@@ -169,20 +77,10 @@ export default function SpecificitePage() {
               { icon: "📚", title: "Poursuite d'études", desc: "Possibilité d'intégrer des masters ou écoles d'ingénieurs" },
             ].map(({ icon, title, desc }) => (
               <div key={title}>
-                <h4
-                  style={{
-                    fontWeight: 700,
-                    marginBottom: "0.5rem",
-                    color: C.secondary,
-                    fontFamily: C.sans,
-                    fontSize: "0.875rem",
-                  }}
-                >
+                <h4 className="font-bold mb-2 text-secondary font-sans text-sm">
                   {icon} {title}
                 </h4>
-                <p style={{ fontSize: "0.875rem", color: C.muted, fontFamily: C.sans }}>
-                  {desc}
-                </p>
+                <p className="text-sm text-muted font-sans">{desc}</p>
               </div>
             ))}
           </div>

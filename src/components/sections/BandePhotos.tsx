@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import { C } from "@/lib/forge";
 
 const photos = [
   { src: "/dessin.jpg", alt: "Dessin technique et conception CAO", label: "Conception & Dessin technique", ref: "GMP-DES-001" },
@@ -10,9 +9,9 @@ const photos = [
 
 export function BandePhotos() {
   return (
-    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", height: "300px", overflow: "hidden" }}>
+    <div className="grid grid-cols-2 h-[300px] overflow-hidden">
       {photos.map(({ src, alt, label, ref }) => (
-        <div key={ref} style={{ position: "relative", overflow: "hidden" }}>
+        <div key={ref} className="relative overflow-hidden">
           <Image
             src={src}
             alt={alt}
@@ -26,52 +25,25 @@ export function BandePhotos() {
           />
           {/* orange overlay */}
           <div
-            style={{
-              position: "absolute",
-              inset: 0,
-              background: "var(--c-photo-overlay)",
-              mixBlendMode: "multiply",
-            }}
+            className="absolute inset-0"
+            style={{ background: "var(--c-photo-overlay)", mixBlendMode: "multiply" }}
           />
           {/* gradient bas */}
           <div
-            style={{
-              position: "absolute",
-              bottom: 0,
-              left: 0,
-              right: 0,
-              height: "80px",
-              background: "linear-gradient(to top, rgba(2,6,23,0.8), transparent)",
-            }}
+            className="absolute bottom-0 left-0 right-0 h-[80px]"
+            style={{ background: "linear-gradient(to top, rgba(2,6,23,0.8), transparent)" }}
           />
           {/* label */}
-          <div style={{ position: "absolute", bottom: "16px", left: "20px" }}>
-            <span
-              style={{
-                fontFamily: C.mono,
-                fontSize: "0.55rem",
-                letterSpacing: "0.2em",
-                color: "rgba(226,232,240,0.5)",
-                textTransform: "uppercase" as const,
-                display: "block",
-                marginBottom: "4px",
-              }}
-            >
+          <div className="absolute bottom-4 left-5">
+            <span className="font-mono text-[0.55rem] tracking-[0.2em] text-[rgba(226,232,240,0.5)] uppercase block mb-1">
               PHOTO · {ref}
             </span>
-            <p
-              style={{
-                fontFamily: "var(--font-outfit, sans-serif)",
-                fontWeight: 600,
-                fontSize: "0.9rem",
-                color: "#e2e8f0",
-              }}
-            >
+            <p className="font-semibold text-[0.9rem] text-[#e2e8f0]" style={{ fontFamily: "var(--font-outfit, sans-serif)" }}>
               {label}
             </p>
           </div>
           {/* border-right separator */}
-          <div style={{ position: "absolute", top: 0, right: 0, bottom: 0, width: "1px", background: "var(--c-primary-30)" }} />
+          <div className="absolute top-0 right-0 bottom-0 w-px bg-[var(--c-primary-30)]" />
         </div>
       ))}
     </div>

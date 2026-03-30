@@ -1,6 +1,5 @@
 "use client";
 
-import { C } from "@/lib/forge";
 import Link from "next/link";
 
 const links = [
@@ -14,74 +13,21 @@ const links = [
 
 export default function PresentationPage() {
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        minHeight: "100vh",
-        padding: "3rem 1rem",
-        background: C.bg,
-        color: C.secondary,
-      }}
-    >
-      <div style={{ maxWidth: "720px", width: "100%", textAlign: "center" }}>
-        <h1
-          style={{
-            fontSize: "3rem",
-            fontWeight: "bold",
-            marginBottom: "0.75rem",
-            color: C.secondary,
-            fontFamily: C.sans,
-          }}
-        >
+    <div className="flex flex-col items-center justify-center min-h-screen py-12 px-4 bg-background text-secondary">
+      <div className="max-w-[720px] w-full text-center">
+        <h1 className="text-5xl font-bold mb-3 text-secondary font-sans">
           Présentation
         </h1>
-        <p
-          style={{
-            fontSize: "1rem",
-            color: C.muted,
-            marginBottom: "2.5rem",
-            fontFamily: C.sans,
-          }}
-        >
+        <p className="text-base text-muted mb-10 font-sans">
           Découvrez le département Génie Mécanique et Productique de l'IUT d'Évry
         </p>
 
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-            gap: "1rem",
-          }}
-        >
+        <div className="grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-4">
           {links.map(({ label, href }) => (
             <Link
               key={href}
               href={href}
-              style={{
-                display: "block",
-                padding: "1rem 1.25rem",
-                background: C.bgCard,
-                border: `1px solid ${C.border}`,
-                borderLeft: `3px solid ${C.primary}`,
-                color: C.secondary,
-                fontFamily: C.sans,
-                fontWeight: 600,
-                fontSize: "0.875rem",
-                letterSpacing: "0.04em",
-                textDecoration: "none",
-                transition: "border-color 0.15s, color 0.15s, box-shadow 0.15s",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.color = C.primary;
-                e.currentTarget.style.boxShadow = `2px 2px 0 ${C.accent}`;
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.color = C.secondary;
-                e.currentTarget.style.boxShadow = "none";
-              }}
+              className="block px-5 py-4 bg-bg-card border border-border border-l-[3px] border-l-primary text-secondary font-sans font-semibold text-sm tracking-[0.04em] no-underline transition-colors duration-150 hover:text-primary hover:shadow-[2px_2px_0_var(--c-accent)]"
             >
               {label}
             </Link>

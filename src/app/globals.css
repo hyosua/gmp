@@ -86,6 +86,7 @@
   --color-border:        var(--c-border);
   --color-bg-card:       var(--c-bg-card);
   --color-bg-deep:       var(--c-bg-deep);
+  --color-bg-bright:     var(--c-bg-bright);
 }
 
 body {

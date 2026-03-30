@@ -4,7 +4,7 @@ import { useRef } from "react";
 import { ChevronRight, Flame } from "lucide-react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import { C, forgeGrid, scanLines } from "@/lib/forge";
+import { forgeGrid, scanLines } from "@/lib/forge";
 import { IllustrationForgeHero } from "@/components/illustrations/IllustrationForgeHero";
 import { PhotoBlueprint } from "@/components/sections/PhotoBlueprint";
 
@@ -127,15 +127,7 @@ export function Hero() {
   return (
     <section
       ref={heroRef}
-      style={{
-        background: C.bg,
-        position: "relative",
-        overflow: "hidden",
-        minHeight: "80vh",
-        display: "flex",
-        alignItems: "center",
-      }}
-      className="py-16 md:py-24 lg:py-32"
+      className="bg-background relative overflow-hidden min-h-[80vh] flex items-center py-16 md:py-24 lg:py-32"
     >
       {/* forge grid texture */}
       <div style={forgeGrid} />
@@ -145,140 +137,63 @@ export function Hero() {
       {/* SVG blueprint — arrière-plan géant */}
       <div
         ref={bgSvgRef}
-        style={{
-          position: "absolute",
-          right: "-5%",
-          top: "50%",
-          transform: "translateY(-50%)",
-          width: "72%",
-          opacity: 0.12,
-          pointerEvents: "none",
-          zIndex: 1,
-        }}
+        className="absolute right-[-5%] top-1/2 -translate-y-1/2 w-[72%] opacity-[0.12] pointer-events-none z-[1]"
       >
         <IllustrationForgeHero className="w-full h-auto" />
       </div>
 
       {/* vertical accent stripe left */}
       <div
-        className="hero-accent-stripe"
-        style={{
-          position: "absolute",
-          left: 0,
-          top: 0,
-          bottom: 0,
-          width: "3px",
-          background: `linear-gradient(180deg, transparent, ${C.primary}, transparent)`,
-          zIndex: 2,
-        }}
+        className="hero-accent-stripe absolute left-0 top-0 bottom-0 w-[3px] z-[2]"
+        style={{ background: "linear-gradient(180deg, transparent, var(--c-primary), transparent)" }}
       />
 
       {/* Contenu */}
       <div
-        style={{
-          maxWidth: "1280px",
-          margin: "0 auto",
-          position: "relative",
-          zIndex: 3,
-          width: "100%",
-          gap: "3rem",
-          alignItems: "center",
-        }}
-        className="grid grid-cols-1 lg:grid-cols-2 px-4 md:px-8"
+        className="grid grid-cols-1 lg:grid-cols-2 px-4 md:px-8 max-w-[1280px] mx-auto relative z-[3] w-full gap-12 items-center"
       >
         {/* colonne gauche — texte */}
         <div>
           {/* eyebrow */}
-          <div
-            className="hero-eyebrow"
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "0.75rem",
-              marginBottom: "2rem",
-            }}
-          >
-            <Flame
-              style={{ width: "12px", height: "12px", color: C.primary }}
-            />
-            <span
-              style={{
-                fontFamily: C.mono,
-                fontSize: "0.65rem",
-                letterSpacing: "0.25em",
-                color: C.primary,
-                textTransform: "uppercase" as const,
-              }}
-            >
+          <div className="hero-eyebrow flex items-center gap-3 mb-8">
+            <Flame className="w-3 h-3 text-primary" />
+            <span className="font-mono text-[0.65rem] tracking-[0.25em] text-primary uppercase">
               IUT d'Évry-Courcouronnes · Université Paris-Saclay
             </span>
           </div>
 
           {/* main title */}
           <h1
+            className="text-secondary mb-2 tracking-[0.02em]"
             style={{
               fontFamily: "var(--font-outfit, sans-serif)",
               fontSize: "clamp(2.5rem, 5vw, 4.5rem)",
               lineHeight: 0.92,
-              color: C.secondary,
-              marginBottom: "0.5rem",
-              letterSpacing: "0.02em",
             }}
           >
-            <span className="hero-h1-line" style={{ display: "block" }}>
+            <span className="hero-h1-line block">
               Génie
             </span>
-            <span className="hero-h1-line" style={{ display: "block" }}>
+            <span className="hero-h1-line block">
               Mécanique
             </span>
-            <span
-              className="hero-h1-line"
-              style={{ display: "block", color: C.primary }}
-            >
+            <span className="hero-h1-line block text-primary">
               &amp; Productique
             </span>
           </h1>
 
           {/* sub-title tag */}
-          <div
-            className="hero-subtitle"
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "0.5rem",
-              marginBottom: "1.75rem",
-              marginTop: "0.5rem",
-            }}
-          >
-            <div
-              style={{ width: "8px", height: "8px", background: C.accent }}
-            />
-            <span
-              style={{
-                fontFamily: C.mono,
-                fontSize: "0.7rem",
-                letterSpacing: "0.2em",
-                color: C.muted,
-                textTransform: "uppercase" as const,
-              }}
-            >
+          <div className="hero-subtitle inline-flex items-center gap-2 mb-7 mt-2">
+            <div className="w-2 h-2 bg-[var(--c-accent)]" />
+            <span className="font-mono text-[0.7rem] tracking-[0.2em] text-muted uppercase">
               Dept. GMP · BUT · Licence Pro · Alternance
             </span>
           </div>
 
           {/* description */}
           <p
-            className="hero-desc"
-            style={{
-              fontFamily: "var(--font-outfit, sans-serif)",
-              fontWeight: 400,
-              fontSize: "1.1rem",
-              color: C.secondary,
-              lineHeight: 1.65,
-              maxWidth: "480px",
-              marginBottom: "2.5rem",
-              opacity: 0.75,
-            }}
+            className="hero-desc font-normal text-[1.1rem] text-secondary leading-[1.65] max-w-[480px] mb-10 opacity-75"
+            style={{ fontFamily: "var(--font-outfit, sans-serif)" }}
           >
             Formez-vous aux métiers de l'industrie de demain — conception
             assistée par ordinateur, fabrication additive, robotique et méthodes
@@ -287,65 +202,31 @@ export function Hero() {
           </p>
 
           {/* CTAs */}
-          <div
-            style={{
-              display: "flex",
-              gap: "0.75rem",
-              flexWrap: "wrap" as const,
-              marginBottom: "3rem",
-            }}
-          >
+          <div className="flex gap-3 flex-wrap mb-12">
             <button
-              className="hero-cta"
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "0.5rem",
-                padding: "0.75rem 1.75rem",
-                fontFamily: "var(--font-outfit, sans-serif)",
-                fontSize: "1rem",
-                letterSpacing: "0.1em",
-                background: C.primary,
-                color: "white",
-                border: `1px solid ${C.primary}`,
-                cursor: "pointer",
-                transition: "all 0.15s",
-              }}
+              className="hero-cta flex items-center gap-2 py-3 px-7 text-base tracking-[0.1em] bg-primary text-white border border-primary cursor-pointer transition-all"
+              style={{ fontFamily: "var(--font-outfit, sans-serif)" }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.background = "var(--c-primary-hover)";
-                e.currentTarget.style.boxShadow = `3px 3px 0 ${C.accent}`;
+                e.currentTarget.style.boxShadow = "3px 3px 0 var(--c-accent)";
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.background = C.primary;
+                e.currentTarget.style.background = "var(--c-primary)";
                 e.currentTarget.style.boxShadow = "none";
               }}
             >
               Découvrir la formation
-              <ChevronRight style={{ width: "16px", height: "16px" }} />
+              <ChevronRight className="w-4 h-4" />
             </button>
             <button
-              className="hero-cta"
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "0.5rem",
-                padding: "0.75rem 1.75rem",
-                fontFamily: "var(--font-outfit, sans-serif)",
-                fontSize: "1rem",
-                letterSpacing: "0.1em",
-                background: "transparent",
-                color: C.secondary,
-                border: `1px solid ${C.border}`,
-                cursor: "pointer",
-                transition: "all 0.15s",
-              }}
+              className="hero-cta flex items-center gap-2 py-3 px-7 text-base tracking-[0.1em] bg-transparent text-secondary border border-border cursor-pointer transition-all"
+              style={{ fontFamily: "var(--font-outfit, sans-serif)" }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.borderColor = C.secondary;
-                e.currentTarget.style.boxShadow =
-                  "2px 2px 0 var(--c-secondary-30)";
+                e.currentTarget.style.borderColor = "var(--c-secondary)";
+                e.currentTarget.style.boxShadow = "2px 2px 0 var(--c-secondary-30)";
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.borderColor = C.border;
+                e.currentTarget.style.borderColor = "var(--c-border)";
                 e.currentTarget.style.boxShadow = "none";
               }}
             >
@@ -354,15 +235,7 @@ export function Hero() {
           </div>
 
           {/* stats bar */}
-          <div
-            style={{
-              borderTop: `1px solid ${C.border}`,
-              paddingTop: "2rem",
-              display: "flex",
-              gap: "0",
-              flexWrap: "wrap" as const,
-            }}
-          >
+          <div className="border-t border-border pt-8 flex gap-0 flex-wrap">
             {[
               { val: "120+", label: "ÉTUDIANTS/AN" },
               { val: "87%", label: "INSERTION PRO" },
@@ -371,33 +244,16 @@ export function Hero() {
             ].map(({ val, label }, i) => (
               <div
                 key={label}
-                className="hero-stat"
-                style={{
-                  paddingRight: "2rem",
-                  marginRight: "2rem",
-                  borderRight: i < 3 ? `1px solid ${C.border}` : "none",
-                }}
+                className="hero-stat pr-8 mr-8"
+                style={{ borderRight: i < 3 ? "1px solid var(--c-border)" : "none" }}
               >
                 <p
-                  style={{
-                    fontFamily: "var(--font-outfit, sans-serif)",
-                    fontSize: "2.25rem",
-                    color: C.primary,
-                    lineHeight: 1,
-                    letterSpacing: "0.03em",
-                  }}
+                  className="text-primary leading-none tracking-[0.03em]"
+                  style={{ fontFamily: "var(--font-outfit, sans-serif)", fontSize: "2.25rem" }}
                 >
                   {val}
                 </p>
-                <p
-                  style={{
-                    fontFamily: C.mono,
-                    fontSize: "0.6rem",
-                    color: C.muted,
-                    letterSpacing: "0.15em",
-                    marginTop: "0.25rem",
-                  }}
-                >
+                <p className="font-mono text-[0.6rem] text-muted tracking-[0.15em] mt-1">
                   {label}
                 </p>
               </div>
@@ -406,27 +262,16 @@ export function Hero() {
         </div>
 
         {/* colonne droite — photo cadrée */}
-        <div style={{ position: "relative" }} className="hidden lg:block">
+        <div className="relative hidden lg:block">
           <PhotoBlueprint ref={photoBpRef} />
         </div>
       </div>
 
       {/* bottom accent line */}
-      <div
-        style={{
-          position: "absolute",
-          bottom: 0,
-          left: 0,
-          right: 0,
-          display: "flex",
-          zIndex: 3,
-        }}
-      >
-        <div style={{ height: "2px", background: C.primary, width: "80px" }} />
-        <div
-          style={{ height: "2px", background: "var(--c-primary-20)", flex: 1 }}
-        />
-        <div style={{ height: "2px", background: C.primary, width: "80px" }} />
+      <div className="absolute bottom-0 left-0 right-0 flex z-[3]">
+        <div className="h-[2px] bg-primary w-[80px]" />
+        <div className="h-[2px] bg-[var(--c-primary-20)] flex-1" />
+        <div className="h-[2px] bg-primary w-[80px]" />
       </div>
     </section>
   );

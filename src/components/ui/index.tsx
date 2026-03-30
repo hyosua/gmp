@@ -9,17 +9,7 @@ import { C, forgeGrid, scanLines } from "@/lib/forge";
 
 export function Tag({ children }: { children: React.ReactNode }) {
   return (
-    <span
-      style={{
-        fontFamily: C.mono,
-        fontSize: "0.65rem",
-        letterSpacing: "0.08em",
-        color: C.muted,
-        border: `1px solid ${C.border}`,
-        padding: "2px 8px",
-        textTransform: "uppercase" as const,
-      }}
-    >
+    <span className="font-mono text-[0.65rem] tracking-[0.08em] text-muted border border-border px-2 py-[2px] uppercase">
       {children}
     </span>
   );
@@ -31,24 +21,9 @@ export function Tag({ children }: { children: React.ReactNode }) {
 
 export function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
-    <div
-      style={{
-        display: "flex",
-        alignItems: "center",
-        gap: "0.75rem",
-        marginBottom: "1rem",
-      }}
-    >
-      <div style={{ width: "20px", height: "2px", background: C.primary }} />
-      <span
-        style={{
-          fontFamily: C.mono,
-          fontSize: "0.65rem",
-          letterSpacing: "0.25em",
-          color: C.muted,
-          textTransform: "uppercase" as const,
-        }}
-      >
+    <div className="flex items-center gap-3 mb-4">
+      <div className="w-5 h-[2px] bg-primary" />
+      <span className="font-mono text-[0.65rem] tracking-[0.25em] text-muted uppercase">
         {children}
       </span>
     </div>
@@ -70,10 +45,10 @@ export function MonoLabel({ children, color, borderColor, style }: MonoLabelProp
   return (
     <span
       style={{
-        fontFamily: C.mono,
+        fontFamily: "var(--font-geist-mono, monospace)",
         fontSize: "0.6rem",
         letterSpacing: "0.06em",
-        color: color ?? C.muted,
+        color: color ?? "var(--c-muted)",
         whiteSpace: "nowrap",
         ...(borderColor ? { border: `1px solid ${borderColor}`, padding: "2px 8px" } : {}),
         ...style,
@@ -96,17 +71,8 @@ interface IconBoxProps {
 export function IconBox({ children, size = 28 }: IconBoxProps) {
   return (
     <div
-      style={{
-        width: size,
-        height: size,
-        background: "var(--c-primary-15)",
-        border: "1px solid var(--c-primary-30)",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        color: C.primary,
-        flexShrink: 0,
-      }}
+      className="bg-[var(--c-primary-15)] border border-[var(--c-primary-30)] flex items-center justify-center text-primary shrink-0"
+      style={{ width: size, height: size }}
     >
       {children}
     </div>

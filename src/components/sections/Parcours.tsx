@@ -12,7 +12,7 @@ const parcours = [
     code:  "BUT-GMP",
     title: "BUT Génie Mécanique et Productique",
     duration: "3 ans — 180 ECTS",
-    icon: <GraduationCap style={{ width: "20px", height: "20px" }} />,
+    icon: <GraduationCap className="w-5 h-5" />,
     description:
       "Formation universitaire technologique complète, de la conception CAO/FAO à la production en série. Alternance dès la 2ᵉ année. Débouchés : ingénierie, méthodes, qualité.",
     tags: ["CAO/FAO", "Méthodes", "Robotique", "Qualité"],
@@ -22,7 +22,7 @@ const parcours = [
     code:  "LP-PROD",
     title: "Licence Pro Production Industrielle",
     duration: "1 an (Bac+2)",
-    icon: <BarChart3 style={{ width: "20px", height: "20px" }} />,
+    icon: <BarChart3 className="w-5 h-5" />,
     description:
       "Spécialisation rapide pour titulaires d'un BTS/DUT. Accent sur l'optimisation des procédés de fabrication, lean manufacturing et supply chain.",
     tags: ["Lean", "Supply Chain", "ERP", "Gestion prod."],
@@ -32,7 +32,7 @@ const parcours = [
     code:  "ALT-GMP",
     title: "Alternance",
     duration: "BUT 2ᵉ & 3ᵉ année",
-    icon: <Repeat2 style={{ width: "20px", height: "20px" }} />,
+    icon: <Repeat2 className="w-5 h-5" />,
     description:
       "Combinez formation et expérience professionnelle. Rythme 1 semaine IUT / 3 semaines entreprise. Contrat d'apprentissage ou professionnalisation.",
     tags: ["Contrat app.", "Contrat pro", "1 sem. / 3 sem."],
@@ -44,54 +44,35 @@ export function Parcours() {
   return (
     <ForgeSection bg={C.bgDeep} withScanLines>
       {/* header */}
-      <div style={{ marginBottom: "3.5rem" }}>
+      <div className="mb-14">
         <SectionLabel>03 · Formations disponibles</SectionLabel>
         <h2
+          className="text-secondary leading-[0.95] tracking-[0.02em]"
           style={{
             fontFamily: "var(--font-outfit, sans-serif)",
             fontSize: "clamp(2.5rem, 5vw, 4rem)",
-            color: C.secondary,
-            lineHeight: 0.95,
-            letterSpacing: "0.02em",
           }}
         >
           3 parcours,
           <br />
-          <span style={{ color: C.primary }}>une expertise forge</span>
+          <span className="text-primary">une expertise forge</span>
         </h2>
       </div>
 
       {/* cards grid */}
-      <div
-        style={{ gap: "1.5rem" }}
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
-      >
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {parcours.map(({ code, title, duration, icon, description, tags, illustration }) => (
           <ForgeCard key={code} style={{ padding: 0 }}>
             {/* illustration panel */}
-            <div
-              style={{
-                borderBottom: `1px solid ${C.border}`,
-                background: C.bgDeep,
-                overflow: "hidden",
-                padding: "1rem",
-              }}
-            >
+            <div className="border-b border-border bg-bg-deep overflow-hidden p-4">
               {illustration}
             </div>
 
-            <div style={{ padding: "1.75rem" }}>
+            <div className="p-7">
               {/* code + icon */}
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  marginBottom: "1rem",
-                }}
-              >
-                <MonoLabel color={C.muted}>{code}</MonoLabel>
-                <span style={{ color: C.primary }}>{icon}</span>
+              <div className="flex items-center justify-between mb-4">
+                <MonoLabel>{code}</MonoLabel>
+                <span className="text-primary">{icon}</span>
               </div>
 
               {/* duration badge */}
@@ -105,49 +86,30 @@ export function Parcours() {
 
               <h3
                 data-card-title
-                style={{
-                  fontFamily: "var(--font-outfit, sans-serif)",
-                  fontSize: "1.9rem",
-                  letterSpacing: "0.02em",
-                  marginBottom: "0.75rem",
-                  lineHeight: 1.1,
-                  fontWeight: 700,
-                }}
+                className="text-[1.9rem] tracking-[0.02em] mb-3 leading-[1.1] font-bold"
+                style={{ fontFamily: "var(--font-outfit, sans-serif)" }}
               >
                 {title}
               </h3>
               <p
-                style={{
-                  fontFamily: "var(--font-outfit, sans-serif)",
-                  fontSize: "0.9rem",
-                  color: C.muted,
-                  lineHeight: 1.6,
-                  marginBottom: "1.25rem",
-                }}
+                className="text-[0.9rem] text-muted leading-[1.6] mb-5"
+                style={{ fontFamily: "var(--font-outfit, sans-serif)" }}
               >
                 {description}
               </p>
 
               {/* tags */}
-              <div style={{ display: "flex", flexWrap: "wrap" as const, gap: "0.375rem", marginBottom: "1.25rem" }}>
+              <div className="flex flex-wrap gap-[0.375rem] mb-5">
                 {tags.map((t) => <Tag key={t}>{t}</Tag>)}
               </div>
 
               {/* cta link */}
               <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "0.375rem",
-                  color: C.primary,
-                  fontFamily: "var(--font-outfit, sans-serif)",
-                  fontWeight: 600,
-                  fontSize: "0.85rem",
-                  letterSpacing: "0.04em",
-                }}
+                className="flex items-center gap-[0.375rem] text-primary font-semibold text-[0.85rem] tracking-[0.04em]"
+                style={{ fontFamily: "var(--font-outfit, sans-serif)" }}
               >
                 En savoir plus
-                <ChevronRight style={{ width: "14px", height: "14px" }} />
+                <ChevronRight className="w-[14px] h-[14px]" />
               </div>
             </div>
           </ForgeCard>

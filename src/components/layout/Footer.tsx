@@ -1,9 +1,7 @@
 "use client";
 
 import { Cog } from "lucide-react";
-import { C } from "@/lib/forge";
 
-const DARK = "#0A3D67";
 const DARK_DEEP = "#072d4d";
 const DARK_BORDER = "#1A5A8A";
 const TEXT_LIGHT = "#e2e8f0";
@@ -37,18 +35,18 @@ export function Footer() {
       <div
         style={{
           height: "2px",
-          background: `linear-gradient(90deg, ${C.primary}, ${C.accent}, ${C.primary})`,
+          background: `linear-gradient(90deg, var(--c-primary), var(--c-accent), var(--c-primary))`,
         }}
       />
 
       <div
+        className="px-4 md:px-8 py-14"
         style={{
           maxWidth: "1280px",
           margin: "0 auto",
           position: "relative",
           zIndex: 2,
         }}
-        className="px-4 md:px-8 py-14"
       >
         <div
           style={{ gap: "3rem", marginBottom: "3rem" }}
@@ -56,38 +54,20 @@ export function Footer() {
         >
           {/* brand */}
           <div>
-            <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "1rem" }}>
-              <div
-                style={{
-                  width: "30px",
-                  height: "30px",
-                  background: C.primary,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                <Cog style={{ width: "16px", height: "16px", color: "white" }} strokeWidth={2.5} />
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-[30px] h-[30px] bg-primary flex items-center justify-center">
+                <Cog className="w-4 h-4 text-white" strokeWidth={2.5} />
               </div>
               <span
-                style={{
-                  fontFamily: "var(--font-outfit, sans-serif)",
-                  fontSize: "1.75rem",
-                  color: TEXT_LIGHT,
-                  letterSpacing: "0.1em",
-                }}
+                className="font-sans tracking-[0.1em] text-[1.75rem]"
+                style={{ color: TEXT_LIGHT }}
               >
                 GMP
               </span>
             </div>
             <p
-              style={{
-                fontFamily: "var(--font-outfit, sans-serif)",
-                fontSize: "0.875rem",
-                color: TEXT_MUTED,
-                lineHeight: 1.7,
-                maxWidth: "280px",
-              }}
+              className="font-sans text-[0.875rem] leading-[1.7] max-w-[280px]"
+              style={{ color: TEXT_MUTED }}
             >
               Département Génie Mécanique et Productique
               <br />
@@ -99,33 +79,15 @@ export function Footer() {
 
           {/* nav */}
           <div>
-            <p
-              style={{
-                fontFamily: C.mono,
-                fontSize: "0.6rem",
-                letterSpacing: "0.2em",
-                color: C.primary,
-                textTransform: "uppercase" as const,
-                marginBottom: "1rem",
-              }}
-            >
+            <p className="font-mono text-[0.6rem] tracking-[0.2em] text-primary uppercase mb-4">
               Navigation
             </p>
             {["Formation", "Entreprises", "Actualités", "Connexion"].map((l) => (
               <a
                 key={l}
                 href="#"
-                style={{
-                  display: "block",
-                  fontFamily: "var(--font-outfit, sans-serif)",
-                  fontSize: "0.875rem",
-                  color: TEXT_MUTED,
-                  textDecoration: "none",
-                  marginBottom: "0.5rem",
-                  transition: "color 0.15s",
-                }}
-                onMouseEnter={(e) => (e.currentTarget.style.color = C.primary)}
-                onMouseLeave={(e) => (e.currentTarget.style.color = TEXT_MUTED)}
+                className="block font-sans text-[0.875rem] no-underline mb-2 transition-colors hover:text-primary"
+                style={{ color: TEXT_MUTED }}
               >
                 {l}
               </a>
@@ -134,25 +96,12 @@ export function Footer() {
 
           {/* contact */}
           <div>
-            <p
-              style={{
-                fontFamily: C.mono,
-                fontSize: "0.6rem",
-                letterSpacing: "0.2em",
-                color: C.primary,
-                textTransform: "uppercase" as const,
-                marginBottom: "1rem",
-              }}
-            >
+            <p className="font-mono text-[0.6rem] tracking-[0.2em] text-primary uppercase mb-4">
               Contact
             </p>
             <p
-              style={{
-                fontFamily: C.mono,
-                fontSize: "0.72rem",
-                color: TEXT_MUTED,
-                lineHeight: 1.9,
-              }}
+              className="font-mono text-[0.72rem] leading-[1.9]"
+              style={{ color: TEXT_MUTED }}
             >
               23 bd de France
               <br />
@@ -167,27 +116,12 @@ export function Footer() {
 
         {/* cartouche industriel */}
         <div
-          style={{
-            borderTop: `1px solid ${DARK_BORDER}`,
-            paddingTop: "1.5rem",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            flexWrap: "wrap" as const,
-            gap: "0.75rem",
-          }}
+          className="flex items-center justify-between flex-wrap gap-3 pt-6"
+          style={{ borderTop: `1px solid ${DARK_BORDER}` }}
         >
           <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "2rem",
-              fontFamily: C.mono,
-              fontSize: "0.58rem",
-              color: "rgba(226,232,240,0.25)",
-              letterSpacing: "0.15em",
-              textTransform: "uppercase" as const,
-            }}
+            className="flex items-center gap-8 font-mono text-[0.58rem] tracking-[0.15em] uppercase"
+            style={{ color: "rgba(226,232,240,0.25)" }}
           >
             <span>DOC: GMP-WEB-FORGE-2026</span>
             <span>REV: 2.0</span>
@@ -195,12 +129,8 @@ export function Footer() {
             <span>IUT ÉVRY · UNIV. PARIS-SACLAY</span>
           </div>
           <p
-            style={{
-              fontFamily: C.mono,
-              fontSize: "0.58rem",
-              color: "rgba(226,232,240,0.25)",
-              letterSpacing: "0.1em",
-            }}
+            className="font-mono text-[0.58rem] tracking-[0.1em]"
+            style={{ color: "rgba(226,232,240,0.25)" }}
           >
             © 2026 — Tous droits réservés
           </p>

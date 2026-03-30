@@ -19,7 +19,6 @@ import {
   Menu,
   X,
 } from "lucide-react";
-import { C } from "@/lib/forge";
 import { ThemeToggle } from "@/components/layout/ThemeToggle";
 
 type NavItem = {
@@ -57,32 +56,15 @@ function SidebarNavItem({
     <Link
       href={item.href}
       title={collapsed ? item.label : undefined}
-      style={{
-        display: "flex",
-        alignItems: "center",
-        gap: "0.75rem",
-        padding: collapsed ? "0.625rem 0" : "0.625rem 0.875rem",
-        justifyContent: collapsed ? "center" : "flex-start",
-        fontSize: "0.8rem",
-        fontFamily: C.sans,
-        fontWeight: 600,
-        letterSpacing: "0.04em",
-        color: isActive ? C.primary : C.muted,
-        background: isActive ? "var(--c-primary-10)" : "transparent",
-        borderLeft: isActive ? `2px solid ${C.primary}` : "2px solid transparent",
-        textDecoration: "none",
-        transition: "color 0.15s, background 0.15s",
-        whiteSpace: "nowrap",
-        overflow: "hidden",
-      }}
-      onMouseEnter={(e) => {
-        if (!isActive) e.currentTarget.style.color = C.primary;
-      }}
-      onMouseLeave={(e) => {
-        if (!isActive) e.currentTarget.style.color = C.muted;
-      }}
+      className={[
+        "flex items-center gap-3 font-sans font-semibold text-[0.8rem] tracking-[0.04em] no-underline transition-colors duration-150 overflow-hidden whitespace-nowrap border-l-2",
+        collapsed ? "py-[0.625rem] px-0 justify-center" : "py-[0.625rem] px-[0.875rem] justify-start",
+        isActive
+          ? "text-primary border-primary bg-[var(--c-primary-10)]"
+          : "text-muted border-transparent hover:text-primary",
+      ].join(" ")}
     >
-      <Icon size={16} style={{ flexShrink: 0 }} />
+      <Icon size={16} className="shrink-0" />
       {!collapsed && <span>{item.label}</span>}
     </Link>
   );
@@ -97,56 +79,22 @@ function SidebarContent({
 }) {
   return (
     <aside
-      style={{
-        width: collapsed ? "56px" : "240px",
-        minWidth: collapsed ? "56px" : "240px",
-        background: C.bgDeep,
-        borderRight: `2px solid ${C.primary}`,
-        display: "flex",
-        flexDirection: "column",
-        height: "100vh",
-        position: "sticky",
-        top: 0,
-        transition: "width 0.2s, min-width 0.2s",
-        overflow: "hidden",
-      }}
+      className="bg-bg-deep border-r-2 border-primary flex flex-col h-screen sticky top-0 overflow-hidden transition-[width,min-width] duration-200"
+      style={{ width: collapsed ? "56px" : "240px", minWidth: collapsed ? "56px" : "240px" }}
     >
       {/* En-tête logo */}
       <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: collapsed ? "center" : "space-between",
-          padding: collapsed ? "0.875rem 0" : "0.875rem 0.75rem 0.875rem 1rem",
-          borderBottom: `1px solid ${C.border}`,
-          height: "56px",
-          flexShrink: 0,
-        }}
+        className={[
+          "flex items-center border-b border-border h-14 shrink-0",
+          collapsed ? "justify-center py-[0.875rem] px-0" : "justify-between py-[0.875rem] pl-4 pr-3",
+        ].join(" ")}
       >
-        <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
-          <div
-            style={{
-              width: "30px",
-              height: "30px",
-              background: C.primary,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              flexShrink: 0,
-            }}
-          >
+        <div className="flex items-center gap-3">
+          <div className="w-[30px] h-[30px] bg-primary flex items-center justify-center shrink-0">
             <Cog size={16} color="white" strokeWidth={2.5} />
           </div>
           {!collapsed && (
-            <span
-              style={{
-                fontFamily: C.sans,
-                fontSize: "1.2rem",
-                color: C.secondary,
-                letterSpacing: "0.1em",
-                lineHeight: 1,
-              }}
-            >
+            <span className="font-sans text-[1.2rem] text-secondary tracking-[0.1em] leading-none">
               GMP
             </span>
           )}
@@ -155,14 +103,7 @@ function SidebarContent({
           <button
             onClick={() => onCollapse(true)}
             title="Réduire"
-            style={{
-              background: "transparent",
-              border: "none",
-              cursor: "pointer",
-              color: C.muted,
-              display: "flex",
-              padding: "4px",
-            }}
+            className="bg-transparent border-none cursor-pointer text-muted flex p-1 hover:text-primary transition-colors"
           >
             <ChevronLeft size={16} />
           </button>
@@ -170,42 +111,18 @@ function SidebarContent({
       </div>
 
       {/* Navigation */}
-      <nav
-        style={{
-          flex: 1,
-          overflowY: "auto",
-          padding: "0.5rem 0",
-          display: "flex",
-          flexDirection: "column",
-          gap: "2px",
-        }}
-      >
+      <nav className="flex-1 overflow-y-auto py-2 flex flex-col gap-[2px]">
         {mainNav.map((item) => (
           <SidebarNavItem key={item.href} item={item} collapsed={collapsed} />
         ))}
 
         {/* Séparateur admin */}
         {!collapsed ? (
-          <div
-            style={{
-              margin: "0.75rem 0 0.25rem 0.875rem",
-              fontSize: "0.65rem",
-              fontFamily: C.mono,
-              color: C.muted,
-              letterSpacing: "0.1em",
-              textTransform: "uppercase",
-            }}
-          >
+          <div className="mt-3 mb-1 ml-[0.875rem] text-[0.65rem] font-mono text-muted tracking-[0.1em] uppercase">
             Administration
           </div>
         ) : (
-          <div
-            style={{
-              height: "1px",
-              background: C.border,
-              margin: "0.5rem 12px",
-            }}
-          />
+          <div className="h-px bg-border mx-3 my-2" />
         )}
         {adminNav.map((item) => (
           <SidebarNavItem key={item.href} item={item} collapsed={collapsed} />
@@ -213,90 +130,34 @@ function SidebarContent({
       </nav>
 
       {/* Pied : utilisateur + actions */}
-      <div style={{ borderTop: `1px solid ${C.border}`, flexShrink: 0 }}>
+      <div className="border-t border-border shrink-0">
         <div
-          style={{
-            padding: collapsed ? "0.75rem 0" : "0.75rem 1rem",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: collapsed ? "center" : "space-between",
-            gap: "0.5rem",
-          }}
+          className={[
+            "flex items-center gap-2",
+            collapsed ? "py-3 px-0 justify-center" : "py-3 px-4 justify-between",
+          ].join(" ")}
         >
           {!collapsed && (
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "0.5rem",
-                flex: 1,
-                minWidth: 0,
-              }}
-            >
+            <div className="flex items-center gap-2 flex-1 min-w-0">
               {/* Avatar placeholder — à remplacer par session.user */}
-              <div
-                style={{
-                  width: "28px",
-                  height: "28px",
-                  background: C.primary,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  fontSize: "0.65rem",
-                  fontWeight: 700,
-                  color: C.bgDeep,
-                  fontFamily: C.mono,
-                  flexShrink: 0,
-                }}
-              >
+              <div className="w-7 h-7 bg-primary flex items-center justify-center text-[0.65rem] font-bold text-bg-deep font-mono shrink-0">
                 ET
               </div>
-              <div style={{ minWidth: 0 }}>
-                <div
-                  style={{
-                    fontSize: "0.75rem",
-                    fontWeight: 600,
-                    fontFamily: C.sans,
-                    color: C.secondary,
-                    overflow: "hidden",
-                    textOverflow: "ellipsis",
-                    whiteSpace: "nowrap",
-                  }}
-                >
+              <div className="min-w-0">
+                <div className="text-[0.75rem] font-semibold font-sans text-secondary overflow-hidden text-ellipsis whitespace-nowrap">
                   Étudiant
                 </div>
-                <div
-                  style={{
-                    fontSize: "0.6rem",
-                    fontFamily: C.mono,
-                    color: C.muted,
-                    letterSpacing: "0.08em",
-                  }}
-                >
+                <div className="text-[0.6rem] font-mono text-muted tracking-[0.08em]">
                   ETUDIANT
                 </div>
               </div>
             </div>
           )}
-          <div style={{ display: "flex", gap: "2px", alignItems: "center" }}>
+          <div className="flex gap-[2px] items-center">
             <ThemeToggle />
             <button
               title="Déconnexion"
-              style={{
-                background: "transparent",
-                border: "none",
-                cursor: "pointer",
-                color: C.muted,
-                display: "flex",
-                padding: "4px",
-                transition: "color 0.15s",
-              }}
-              onMouseEnter={(e) =>
-                (e.currentTarget.style.color = C.primary)
-              }
-              onMouseLeave={(e) =>
-                (e.currentTarget.style.color = C.muted)
-              }
+              className="bg-transparent border-none cursor-pointer text-muted flex p-1 transition-colors hover:text-primary"
             >
               <LogOut size={14} />
             </button>
@@ -307,17 +168,7 @@ function SidebarContent({
           <button
             onClick={() => onCollapse(false)}
             title="Agrandir"
-            style={{
-              width: "100%",
-              background: "transparent",
-              border: "none",
-              borderTop: `1px solid ${C.border}`,
-              cursor: "pointer",
-              color: C.muted,
-              display: "flex",
-              justifyContent: "center",
-              padding: "0.5rem",
-            }}
+            className="w-full bg-transparent border-none border-t border-border cursor-pointer text-muted flex justify-center py-2 hover:text-primary transition-colors"
           >
             <ChevronRight size={16} />
           </button>
@@ -340,23 +191,8 @@ export function Sidebar() {
 
       {/* Bouton mobile */}
       <button
-        className="md:hidden"
+        className="md:hidden fixed bottom-5 right-5 z-[100] w-12 h-12 bg-primary border-none cursor-pointer flex items-center justify-center shadow-[2px_2px_0_var(--c-accent)]"
         onClick={() => setMobileOpen(true)}
-        style={{
-          position: "fixed",
-          bottom: "1.25rem",
-          right: "1.25rem",
-          zIndex: 100,
-          width: "48px",
-          height: "48px",
-          background: C.primary,
-          border: "none",
-          cursor: "pointer",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          boxShadow: `2px 2px 0 ${C.accent}`,
-        }}
       >
         <Menu size={20} color="white" />
       </button>
@@ -364,30 +200,14 @@ export function Sidebar() {
       {/* Overlay mobile */}
       {mobileOpen && (
         <div
-          className="md:hidden"
-          style={{
-            position: "fixed",
-            inset: 0,
-            zIndex: 99,
-            background: "rgba(0,0,0,0.6)",
-            display: "flex",
-          }}
+          className="md:hidden fixed inset-0 z-[99] bg-black/60 flex"
           onClick={() => setMobileOpen(false)}
         >
-          <div onClick={(e) => e.stopPropagation()} style={{ position: "relative" }}>
+          <div onClick={(e) => e.stopPropagation()} className="relative">
             <SidebarContent collapsed={false} onCollapse={() => {}} />
             <button
               onClick={() => setMobileOpen(false)}
-              style={{
-                position: "absolute",
-                top: "0.75rem",
-                right: "-2.5rem",
-                background: "transparent",
-                border: "none",
-                cursor: "pointer",
-                color: "white",
-                display: "flex",
-              }}
+              className="absolute top-3 -right-10 bg-transparent border-none cursor-pointer text-white flex"
             >
               <X size={20} />
             </button>

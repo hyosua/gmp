@@ -2,7 +2,6 @@
 
 import { useState, useRef } from "react";
 import { Cog, LogIn, ChevronDown } from "lucide-react";
-import { C } from "@/lib/forge";
 import { ThemeToggle } from "@/components/layout/ThemeToggle";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -41,23 +40,6 @@ const links: NavLink[] = [
   { label: "Contact", href: "#contact" },
 ];
 
-const labelStyle = {
-  padding: "0.375rem 0.875rem",
-  fontSize: "0.75rem",
-  fontFamily: C.sans,
-  fontWeight: 600,
-  letterSpacing: "0.08em",
-  textTransform: "uppercase" as const,
-  textDecoration: "none",
-  transition: "color 0.15s",
-  background: "transparent",
-  border: "none",
-  cursor: "pointer",
-  display: "flex",
-  alignItems: "center",
-  gap: "0.25rem",
-};
-
 function NavItem({ link }: { link: NavLink }) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
@@ -68,8 +50,6 @@ function NavItem({ link }: { link: NavLink }) {
     link.href !== "#entreprises" &&
     link.href !== "#contact";
 
-  const color = isActive || open ? C.primary : C.muted;
-
   const handleEnter = () => {
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
     setOpen(true);
@@ -79,17 +59,18 @@ function NavItem({ link }: { link: NavLink }) {
     timeoutRef.current = setTimeout(() => setOpen(false), 120);
   };
 
+  const baseLabelClass =
+    "px-[0.875rem] py-[0.375rem] text-[0.75rem] font-sans font-semibold tracking-[0.08em] uppercase no-underline transition-colors bg-transparent border-none cursor-pointer flex items-center gap-1";
+
   return (
     <div
-      style={{ position: "relative" }}
+      className="relative"
       onMouseEnter={handleEnter}
       onMouseLeave={handleLeave}
     >
       {link.sub ? (
         <button
-          style={{ ...labelStyle, color }}
-          onMouseEnter={(e) => (e.currentTarget.style.color = C.primary)}
-          onMouseLeave={(e) => (e.currentTarget.style.color = color)}
+          className={`${baseLabelClass} ${isActive || open ? "text-primary" : "text-muted"} hover:text-primary`}
         >
           {link.label}
           <ChevronDown
@@ -103,54 +84,19 @@ function NavItem({ link }: { link: NavLink }) {
       ) : (
         <Link
           href={link.href}
-          style={{ ...labelStyle, color }}
-          onMouseEnter={(e) => (e.currentTarget.style.color = C.primary)}
-          onMouseLeave={(e) => (e.currentTarget.style.color = color)}
+          className={`${baseLabelClass} ${isActive ? "text-primary" : "text-muted"} hover:text-primary`}
         >
           {link.label}
         </Link>
       )}
 
       {link.sub && open && (
-        <div
-          style={{
-            position: "absolute",
-            top: "100%",
-            left: 0,
-            minWidth: "200px",
-            background: C.bgCard,
-            border: `1px solid ${C.border}`,
-            borderTop: `2px solid ${C.primary}`,
-            zIndex: 100,
-            boxShadow: `2px 4px 0 ${C.accent}`,
-            paddingTop: "0.25rem",
-            paddingBottom: "0.25rem",
-          }}
-        >
+        <div className="absolute top-full left-0 min-w-[200px] bg-bg-card border border-border border-t-2 border-t-primary z-[100] shadow-[2px_4px_0_var(--c-accent)] py-1">
           {link.sub.map((sub) => (
             <Link
               key={sub.href}
               href={sub.href}
-              style={{
-                display: "block",
-                padding: "0.5rem 1rem",
-                fontSize: "0.75rem",
-                fontFamily: C.sans,
-                fontWeight: 600,
-                letterSpacing: "0.05em",
-                color: C.muted,
-                textDecoration: "none",
-                transition: "color 0.15s, background 0.15s",
-                whiteSpace: "nowrap",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.color = C.primary;
-                e.currentTarget.style.background = C.bgDeep;
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.color = C.muted;
-                e.currentTarget.style.background = "transparent";
-              }}
+              className="block px-4 py-2 text-[0.75rem] font-sans font-semibold tracking-[0.05em] text-muted no-underline transition-colors hover:text-primary hover:bg-bg-deep whitespace-nowrap"
             >
               {sub.label}
             </Link>
@@ -163,108 +109,40 @@ function NavItem({ link }: { link: NavLink }) {
 
 export function Nav() {
   return (
-    <nav
-      style={{
-        background: C.bg,
-        borderBottom: `2px solid ${C.primary}`,
-        position: "sticky",
-        top: 0,
-        zIndex: 50,
-      }}
-    >
+    <nav className="bg-background border-b-2 border-primary sticky top-0 z-50">
       <div
-        style={{
-          maxWidth: "1280px",
-          margin: "0 auto",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          height: "56px",
-        }}
-        className="px-4 md:px-8"
+        className="max-w-[1280px] mx-auto flex items-center justify-between h-14 px-4 md:px-8"
       >
         {/* Logo */}
-        <Link
-          href="/"
-          style={{ display: "flex", alignItems: "center", gap: "0.75rem", textDecoration: "none" }}
-        >
-          <div
-            style={{
-              width: "30px",
-              height: "30px",
-              background: C.primary,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <Cog style={{ width: "16px", height: "16px", color: "white" }} strokeWidth={2.5} />
+        <Link href="/" className="flex items-center gap-3 no-underline">
+          <div className="w-[30px] h-[30px] bg-primary flex items-center justify-center">
+            <Cog className="w-4 h-4 text-white" strokeWidth={2.5} />
           </div>
           <div>
-            <span
-              style={{
-                fontFamily: C.sans,
-                fontSize: "1.5rem",
-                color: C.secondary,
-                letterSpacing: "0.1em",
-                lineHeight: 1,
-              }}
-            >
+            <span className="font-sans text-2xl text-secondary tracking-[0.1em] leading-none">
               GMP
             </span>
-            <span
-              style={{
-                marginLeft: "0.5rem",
-                fontFamily: C.mono,
-                fontSize: "0.65rem",
-                color: C.muted,
-                letterSpacing: "0.1em",
-              }}
-            >
+            <span className="ml-2 font-mono text-[0.65rem] text-muted tracking-[0.1em]">
               IUT d'Évry
             </span>
           </div>
         </Link>
 
         {/* Liens */}
-        <div className="hidden md:flex" style={{ alignItems: "center" }}>
+        <div className="hidden md:flex items-center">
           {links.map((link) => (
             <NavItem key={link.label} link={link} />
           ))}
         </div>
 
         {/* CTA */}
-        <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+        <div className="flex items-center gap-2">
           <ThemeToggle />
           <Link
             href="/dashboard"
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "0.5rem",
-              padding: "0.4rem 1.1rem",
-              fontSize: "0.75rem",
-              fontWeight: 700,
-              fontFamily: C.sans,
-              letterSpacing: "0.12em",
-              background: "transparent",
-              color: C.primary,
-              border: `1px solid ${C.primary}`,
-              textDecoration: "none",
-              transition: "all 0.15s",
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.background = C.primary;
-              e.currentTarget.style.color = C.bgDeep;
-              e.currentTarget.style.boxShadow = `2px 2px 0 ${C.accent}`;
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.background = "transparent";
-              e.currentTarget.style.color = C.primary;
-              e.currentTarget.style.boxShadow = "none";
-            }}
+            className="flex items-center gap-2 px-[1.1rem] py-[0.4rem] text-[0.75rem] font-bold font-sans tracking-[0.12em] bg-transparent text-primary border border-primary no-underline transition-all hover:bg-primary hover:text-bg-deep hover:shadow-[2px_2px_0_var(--c-accent)]"
           >
-            <LogIn style={{ width: "13px", height: "13px" }} />
+            <LogIn className="w-[13px] h-[13px]" />
             CONNEXION
           </Link>
         </div>

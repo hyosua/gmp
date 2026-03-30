@@ -1,115 +1,35 @@
-
-
-
-
-
-
 'use client';
-
-import { C } from "@/lib/forge";
 
 function LieuPage() {
     return (
-        <div style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            minHeight: "100vh",
-            padding: "3rem 1rem",
-            background: C.bg,
-            color: C.secondary
-        }}>
-            <div style={{
-                maxWidth: "1280px",
-                width: "100%"
-            }}>
-                <div style={{
-                    textAlign: "center",
-                    marginBottom: "3rem"
-                }}>
-                    <h1 style={{
-                        fontSize: "3rem",
-                        fontWeight: "bold",
-                        marginBottom: "1.5rem",
-                        color: C.secondary,
-                        fontFamily: "var(--font-outfit, sans-serif)"
-                    }}>Lieux</h1>
-                    <p style={{
-                        fontSize: "1.125rem",
-                        color: C.muted,
-                        maxWidth: "42rem",
-                        margin: "0 auto",
-                        fontFamily: "var(--font-outfit, sans-serif)"
-                    }}>
+        <div className="flex flex-col items-center justify-center min-h-screen py-12 px-4 bg-background text-secondary">
+            <div className="max-w-[1280px] w-full">
+                <div className="text-center mb-12">
+                    <h1 className="text-5xl font-bold mb-6 text-secondary font-sans">Lieux</h1>
+                    <p className="text-lg text-muted max-w-[42rem] mx-auto font-sans">
                         Découvrez les installations modernes de l'IUT d'Évry pour votre formation GMP
                     </p>
                 </div>
 
-                <div style={{
-                    display: "grid",
-                    gridTemplateColumns: "repeat(auto-fit, minmax(350px, 1fr))",
-                    gap: "2rem",
-                    marginBottom: "3rem"
-                }}>
-                    <div style={{
-                        background: C.bg,
-                        padding: "1.5rem",
-                        borderRadius: "0.5rem",
-                        border: `2px solid ${C.primary}`,
-                        boxShadow: `4px 4px 0 ${C.accent}`
-                    }}>
-                        <h2 style={{
-                            fontSize: "1.5rem",
-                            fontWeight: "bold",
-                            marginBottom: "1rem",
-                            color: C.primary,
-                            fontFamily: "var(--font-outfit, sans-serif)",
-                            display: "flex",
-                            alignItems: "center"
-                        }}>
-                            <span style={{ fontSize: "1.875rem", marginRight: "0.75rem" }}>🏫</span>
+                <div className="grid grid-cols-[repeat(auto-fit,minmax(350px,1fr))] gap-8 mb-12">
+                    <div className="bg-background p-6 rounded-lg border-2 border-primary shadow-[4px_4px_0_var(--c-accent)]">
+                        <h2 className="text-2xl font-bold mb-4 text-primary font-sans flex items-center">
+                            <span className="text-3xl mr-3">🏫</span>
                             Campus d'Évry
                         </h2>
-                        <div style={{
-                            display: "flex",
-                            flexDirection: "column",
-                            gap: "0.75rem",
-                            color: C.secondary,
-                            fontFamily: "var(--font-outfit, sans-serif)"
-                        }}>
+                        <div className="flex flex-col gap-3 text-secondary font-sans">
                             <p><strong>Adresse :</strong> 25 cours Monseigneur Romero, 91000 Évry-Courcouronnes</p>
                             <p><strong>Accès :</strong> RER D station Évry-Courcouronnes (15 min de Paris)</p>
                             <p><strong>Environnement :</strong> Campus universitaire moderne en plein cœur de la ville nouvelle d'Évry</p>
                         </div>
                     </div>
 
-                    <div style={{
-                        background: C.bg,
-                        padding: "1.5rem",
-                        borderRadius: "0.5rem",
-                        border: `2px solid ${C.primary}`,
-                        boxShadow: `4px 4px 0 ${C.accent}`
-                    }}>
-                        <h2 style={{
-                            fontSize: "1.5rem",
-                            fontWeight: "bold",
-                            marginBottom: "1rem",
-                            color: C.primary,
-                            fontFamily: "var(--font-outfit, sans-serif)",
-                            display: "flex",
-                            alignItems: "center"
-                        }}>
-                            <span style={{ fontSize: "1.875rem", marginRight: "0.75rem" }}>🔧</span>
+                    <div className="bg-background p-6 rounded-lg border-2 border-primary shadow-[4px_4px_0_var(--c-accent)]">
+                        <h2 className="text-2xl font-bold mb-4 text-primary font-sans flex items-center">
+                            <span className="text-3xl mr-3">🔧</span>
                             Ateliers techniques
                         </h2>
-                        <ul style={{
-                            display: "flex",
-                            flexDirection: "column",
-                            gap: "0.5rem",
-                            color: C.secondary,
-                            fontFamily: "var(--font-outfit, sans-serif)"
-                        }}>
+                        <ul className="flex flex-col gap-2 text-secondary font-sans">
                             <li>• Atelier d'usinage CNC</li>
                             <li>• Laboratoire de métrologie</li>
                             <li>• Salle d'automatisme industriel</li>
@@ -118,32 +38,12 @@ function LieuPage() {
                         </ul>
                     </div>
 
-                    <div style={{
-                        background: C.bg,
-                        padding: "1.5rem",
-                        borderRadius: "0.5rem",
-                        border: `2px solid ${C.primary}`,
-                        boxShadow: `4px 4px 0 ${C.accent}`
-                    }}>
-                        <h2 style={{
-                            fontSize: "1.5rem",
-                            fontWeight: "bold",
-                            marginBottom: "1rem",
-                            color: C.primary,
-                            fontFamily: "var(--font-outfit, sans-serif)",
-                            display: "flex",
-                            alignItems: "center"
-                        }}>
-                            <span style={{ fontSize: "1.875rem", marginRight: "0.75rem" }}>📚</span>
+                    <div className="bg-background p-6 rounded-lg border-2 border-primary shadow-[4px_4px_0_var(--c-accent)]">
+                        <h2 className="text-2xl font-bold mb-4 text-primary font-sans flex items-center">
+                            <span className="text-3xl mr-3">📚</span>
                             Espaces d'étude
                         </h2>
-                        <ul style={{
-                            display: "flex",
-                            flexDirection: "column",
-                            gap: "0.5rem",
-                            color: C.secondary,
-                            fontFamily: "var(--font-outfit, sans-serif)"
-                        }}>
+                        <ul className="flex flex-col gap-2 text-secondary font-sans">
                             <li>• Salles de cours équipées</li>
                             <li>• Bibliothèque universitaire</li>
                             <li>• Salles informatiques</li>
@@ -152,32 +52,12 @@ function LieuPage() {
                         </ul>
                     </div>
 
-                    <div style={{
-                        background: C.bg,
-                        padding: "1.5rem",
-                        borderRadius: "0.5rem",
-                        border: `2px solid ${C.primary}`,
-                        boxShadow: `4px 4px 0 ${C.accent}`
-                    }}>
-                        <h2 style={{
-                            fontSize: "1.5rem",
-                            fontWeight: "bold",
-                            marginBottom: "1rem",
-                            color: C.primary,
-                            fontFamily: "var(--font-outfit, sans-serif)",
-                            display: "flex",
-                            alignItems: "center"
-                        }}>
-                            <span style={{ fontSize: "1.875rem", marginRight: "0.75rem" }}>🏃‍♂️</span>
+                    <div className="bg-background p-6 rounded-lg border-2 border-primary shadow-[4px_4px_0_var(--c-accent)]">
+                        <h2 className="text-2xl font-bold mb-4 text-primary font-sans flex items-center">
+                            <span className="text-3xl mr-3">🏃‍♂️</span>
                             Vie étudiante
                         </h2>
-                        <ul style={{
-                            display: "flex",
-                            flexDirection: "column",
-                            gap: "0.5rem",
-                            color: C.secondary,
-                            fontFamily: "var(--font-outfit, sans-serif)"
-                        }}>
+                        <ul className="flex flex-col gap-2 text-secondary font-sans">
                             <li>• Gymnase et terrains de sport</li>
                             <li>• Associations étudiantes</li>
                             <li>• Restaurant universitaire</li>
@@ -187,31 +67,15 @@ function LieuPage() {
                     </div>
                 </div>
 
-                <div style={{
-                    background: `linear-gradient(90deg, ${C.primary}, ${C.secondary})`,
-                    color: C.bg,
-                    padding: "2rem",
-                    borderRadius: "0.5rem",
-                    textAlign: "center",
-                    fontFamily: "var(--font-outfit, sans-serif)"
-                }}>
-                    <h3 style={{
-                        fontSize: "1.5rem",
-                        fontWeight: "bold",
-                        marginBottom: "1rem"
-                    }}>Un campus connecté</h3>
-                    <p style={{
-                        fontSize: "1.125rem",
-                        marginBottom: "1rem"
-                    }}>
+                <div
+                    className="p-8 rounded-lg text-center font-sans"
+                    style={{ background: "linear-gradient(90deg, var(--c-primary), var(--c-secondary))", color: "var(--c-bg)" }}
+                >
+                    <h3 className="text-2xl font-bold mb-4">Un campus connecté</h3>
+                    <p className="text-lg mb-4">
                         Situé à 30 minutes de Paris, l'IUT d'Évry bénéficie d'une excellente accessibilité
                     </p>
-                    <div style={{
-                        display: "grid",
-                        gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
-                        gap: "1rem",
-                        fontSize: "0.875rem"
-                    }}>
+                    <div className="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-4 text-sm">
                         <div>
                             <strong>🚇 Transport</strong><br />
                             RER D, Bus, Parking gratuit

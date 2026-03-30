@@ -2,7 +2,6 @@
 
 import { forwardRef } from "react";
 import Image from "next/image";
-import { C } from "@/lib/forge";
 
 // Canvas SVG — la photo occupe la région IMG, entourée d'espace technique
 const VB  = { w: 460, h: 390 };
@@ -19,18 +18,16 @@ const CY  = IMG.y + IMG.h / 2;
  *   ref.current.querySelectorAll('.bp-border')  etc.
  */
 export const PhotoBlueprint = forwardRef<HTMLDivElement>((_, ref) => (
-  <div ref={ref} style={{ position: "relative", aspectRatio: `${VB.w}/${VB.h}` }}>
+  <div ref={ref} className="relative" style={{ aspectRatio: `${VB.w}/${VB.h}` }}>
 
     {/* Photo */}
     <div
-      className="bp-photo"
+      className="bp-photo absolute overflow-hidden"
       style={{
-        position: "absolute",
         left:   `${(IMG.x / VB.w) * 100}%`,
         top:    `${(IMG.y / VB.h) * 100}%`,
         width:  `${(IMG.w / VB.w) * 100}%`,
         height: `${(IMG.h / VB.h) * 100}%`,
-        overflow: "hidden",
       }}
     >
       <Image
@@ -40,14 +37,14 @@ export const PhotoBlueprint = forwardRef<HTMLDivElement>((_, ref) => (
         priority
         style={{ objectFit: "cover", filter: "grayscale(100%)" }}
       />
-      <div style={{ position: "absolute", inset: 0, background: "var(--c-photo-overlay)", mixBlendMode: "multiply" }} />
-      <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "80px", background: "linear-gradient(to top, var(--c-bg), transparent)" }} />
+      <div className="absolute inset-0" style={{ background: "var(--c-photo-overlay)", mixBlendMode: "multiply" }} />
+      <div className="absolute bottom-0 left-0 right-0 h-[80px]" style={{ background: "linear-gradient(to top, var(--c-bg), transparent)" }} />
     </div>
 
     {/* SVG blueprint */}
     <svg
       viewBox={`0 0 ${VB.w} ${VB.h}`}
-      style={{ position: "absolute", inset: 0, width: "100%", height: "100%", overflow: "visible", pointerEvents: "none", zIndex: 5 }}
+      className="absolute inset-0 w-full h-full overflow-visible pointer-events-none z-[5]"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
@@ -55,7 +52,7 @@ export const PhotoBlueprint = forwardRef<HTMLDivElement>((_, ref) => (
       <text className="bp-header" x="0" y="14" fontSize="7" fill="var(--c-primary)" fontFamily="monospace" letterSpacing="2.5">
         VUE · ATELIER GMP
       </text>
-      <text className="bp-header" x="0" y="26" fontSize="5.5" fill={C.muted} fontFamily="monospace" letterSpacing="1">
+      <text className="bp-header" x="0" y="26" fontSize="5.5" fill="var(--c-muted)" fontFamily="monospace" letterSpacing="1">
         REF. GMP-STU-001 · DEPT. GÉNIE MÉCANIQUE ET PRODUCTIQUE
       </text>
       <line className="bp-header" x1="0" y1="34" x2={IMG.w} y2="34" stroke="var(--c-primary-20)" strokeWidth="0.5" />
@@ -75,12 +72,12 @@ export const PhotoBlueprint = forwardRef<HTMLDivElement>((_, ref) => (
 
       {/* ── Coins bas ───────────────────────────────────────────── */}
       <g className="bp-corner-bottom">
-        <line x1="-12" y1={IMG.y + IMG.h} x2="-3" y2={IMG.y + IMG.h} stroke={C.muted} strokeWidth="0.8" />
-        <line x1={IMG.x} y1={IMG.y + IMG.h + 3} x2={IMG.x} y2={IMG.y + IMG.h + 12} stroke={C.muted} strokeWidth="0.8" />
+        <line x1="-12" y1={IMG.y + IMG.h} x2="-3" y2={IMG.y + IMG.h} stroke="var(--c-muted)" strokeWidth="0.8" />
+        <line x1={IMG.x} y1={IMG.y + IMG.h + 3} x2={IMG.x} y2={IMG.y + IMG.h + 12} stroke="var(--c-muted)" strokeWidth="0.8" />
       </g>
       <g className="bp-corner-bottom">
-        <line x1={IMG.x + IMG.w + 3} y1={IMG.y + IMG.h} x2={IMG.x + IMG.w + 12} y2={IMG.y + IMG.h} stroke={C.muted} strokeWidth="0.8" />
-        <line x1={IMG.x + IMG.w} y1={IMG.y + IMG.h + 3} x2={IMG.x + IMG.w} y2={IMG.y + IMG.h + 12} stroke={C.muted} strokeWidth="0.8" />
+        <line x1={IMG.x + IMG.w + 3} y1={IMG.y + IMG.h} x2={IMG.x + IMG.w + 12} y2={IMG.y + IMG.h} stroke="var(--c-muted)" strokeWidth="0.8" />
+        <line x1={IMG.x + IMG.w} y1={IMG.y + IMG.h + 3} x2={IMG.x + IMG.w} y2={IMG.y + IMG.h + 12} stroke="var(--c-muted)" strokeWidth="0.8" />
       </g>
 
       {/* ── Graduations horizontales ────────────────────────────── */}
@@ -137,8 +134,8 @@ export const PhotoBlueprint = forwardRef<HTMLDivElement>((_, ref) => (
         <rect x={IMG.x + IMG.w} y={IMG.y + IMG.h} width="60" height="50" fill="var(--c-bg)" fillOpacity="0.92" stroke="var(--c-primary)" strokeWidth="0.7" />
         <line x1={IMG.x + IMG.w} y1={IMG.y + IMG.h + 17} x2={IMG.x + IMG.w + 60} y2={IMG.y + IMG.h + 17} stroke="var(--c-primary)" strokeWidth="0.5" />
         <text x={IMG.x + IMG.w + 30} y={IMG.y + IMG.h + 13} textAnchor="middle" fontSize="5.5" fill="var(--c-primary)" fontFamily="monospace" letterSpacing="0.5">GMP · IUT ÉVRY</text>
-        <text x={IMG.x + IMG.w + 30} y={IMG.y + IMG.h + 28} textAnchor="middle" fontSize="5" fill={C.muted} fontFamily="monospace">PARIS-SACLAY · 2026</text>
-        <text x={IMG.x + IMG.w + 30} y={IMG.y + IMG.h + 39} textAnchor="middle" fontSize="5" fill={C.muted} fontFamily="monospace">REV. A · CONFIDENTIEL</text>
+        <text x={IMG.x + IMG.w + 30} y={IMG.y + IMG.h + 28} textAnchor="middle" fontSize="5" fill="var(--c-muted)" fontFamily="monospace">PARIS-SACLAY · 2026</text>
+        <text x={IMG.x + IMG.w + 30} y={IMG.y + IMG.h + 39} textAnchor="middle" fontSize="5" fill="var(--c-muted)" fontFamily="monospace">REV. A · CONFIDENTIEL</text>
       </g>
     </svg>
   </div>
