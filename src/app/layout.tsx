@@ -2,8 +2,6 @@ import type { Metadata } from "next";
 import { Outfit, Geist_Mono } from "next/font/google";
 import { cookies } from "next/headers";
 import "./globals.css";
-import { Nav } from "@/components/layout/Nav";
-import { Footer } from "@/components/layout/Footer";
 
 const outfit = Outfit({
   variable: "--font-outfit",
@@ -35,13 +33,7 @@ export default async function RootLayout({
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col">
-        <Nav />
-
-
         {children}
-
-
-        <Footer />
       </body>
     </html>
   );
