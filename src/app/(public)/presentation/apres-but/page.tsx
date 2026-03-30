@@ -13,7 +13,7 @@ function ApresButPage() {
 
                 <div className="grid grid-cols-[repeat(auto-fit,minmax(350px,1fr))] gap-8 mb-12">
                     <div className="bg-background p-6 rounded-lg border-2 border-primary shadow-[4px_4px_0_var(--c-accent)]">
-                        <h2 className="text-2xl font-bold mb-4 text-primary font-sans">💼 Insertion professionnelle</h2>
+                        <h2 className="text-2xl font-bold mb-4 text-primary font-sans">Insertion professionnelle</h2>
                         <div className="flex flex-col gap-4">
                             <div className="bg-secondary/[0.125] p-4 rounded-lg">
                                 <p className="text-secondary font-semibold font-sans">Taux d&rsquo;insertion : 95%</p>
@@ -30,7 +30,7 @@ function ApresButPage() {
                     </div>
 
                     <div className="bg-background p-6 rounded-lg border-2 border-primary shadow-[4px_4px_0_var(--c-accent)]">
-                        <h2 className="text-2xl font-bold mb-4 text-primary font-sans">📈 Évolution de carrière</h2>
+                        <h2 className="text-2xl font-bold mb-4 text-primary font-sans">Évolution de carrière</h2>
                         <div className="flex flex-col gap-3">
                             <div className="border-l-4 border-primary pl-4">
                                 <h4 className="font-semibold text-primary font-sans">Après 2-3 ans d&rsquo;expérience</h4>
@@ -55,7 +55,7 @@ function ApresButPage() {
                     <h3 className="text-2xl font-bold mb-6 text-center">Poursuite d&rsquo;études</h3>
                     <div className="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-6">
                         <div className="bg-white/10 p-4 rounded-lg">
-                            <h4 className="font-bold mb-2 text-lg">🎓 Masters professionnels</h4>
+                            <h4 className="font-bold mb-2 text-lg">Masters professionnels</h4>
                             <ul className="text-sm flex flex-col gap-1">
                                 <li>• Master Productique</li>
                                 <li>• Master Qualité</li>
@@ -64,7 +64,7 @@ function ApresButPage() {
                             </ul>
                         </div>
                         <div className="bg-white/10 p-4 rounded-lg">
-                            <h4 className="font-bold mb-2 text-lg">🏫 Écoles d&rsquo;ingénieurs</h4>
+                            <h4 className="font-bold mb-2 text-lg">Écoles d&rsquo;ingénieurs</h4>
                             <ul className="text-sm flex flex-col gap-1">
                                 <li>• Arts et Métiers</li>
                                 <li>• CentraleSupélec</li>
@@ -73,7 +73,7 @@ function ApresButPage() {
                             </ul>
                         </div>
                         <div className="bg-white/10 p-4 rounded-lg">
-                            <h4 className="font-bold mb-2 text-lg">💼 MBA et formations</h4>
+                            <h4 className="font-bold mb-2 text-lg">MBA et formations</h4>
                             <ul className="text-sm flex flex-col gap-1">
                                 <li>• MBA Management Industriel</li>
                                 <li>• Executive MBA</li>
@@ -96,7 +96,6 @@ function ApresButPage() {
                     </div>
 
                     <div className="bg-background p-6 rounded-lg border-2 border-primary shadow-[4px_4px_0_var(--c-accent)] text-center">
-                        <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4 text-2xl font-bold text-background">📍</div>
                         <h3 className="text-xl font-bold mb-3 text-primary font-sans">Mobilité</h3>
                         <div className="text-secondary font-sans">
                             <p className="font-semibold">France entière</p>
@@ -106,7 +105,6 @@ function ApresButPage() {
                     </div>
 
                     <div className="bg-background p-6 rounded-lg border-2 border-primary shadow-[4px_4px_0_var(--c-accent)] text-center">
-                        <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4 text-2xl font-bold text-background">🚀</div>
                         <h3 className="text-xl font-bold mb-3 text-primary font-sans">Évolution</h3>
                         <div className="text-secondary font-sans">
                             <p className="font-semibold">Création d&rsquo;entreprise</p>

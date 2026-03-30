@@ -14,7 +14,6 @@ function LieuPage() {
                 <div className="grid grid-cols-[repeat(auto-fit,minmax(350px,1fr))] gap-8 mb-12">
                     <div className="bg-background p-6 rounded-lg border-2 border-primary shadow-[4px_4px_0_var(--c-accent)]">
                         <h2 className="text-2xl font-bold mb-4 text-primary font-sans flex items-center">
-                            <span className="text-3xl mr-3">🏫</span>
                             Campus d&rsquo;Évry
                         </h2>
                         <div className="flex flex-col gap-3 text-secondary font-sans">
@@ -26,7 +25,6 @@ function LieuPage() {
 
                     <div className="bg-background p-6 rounded-lg border-2 border-primary shadow-[4px_4px_0_var(--c-accent)]">
                         <h2 className="text-2xl font-bold mb-4 text-primary font-sans flex items-center">
-                            <span className="text-3xl mr-3">🔧</span>
                             Ateliers techniques
                         </h2>
                         <ul className="flex flex-col gap-2 text-secondary font-sans">
@@ -40,7 +38,6 @@ function LieuPage() {
 
                     <div className="bg-background p-6 rounded-lg border-2 border-primary shadow-[4px_4px_0_var(--c-accent)]">
                         <h2 className="text-2xl font-bold mb-4 text-primary font-sans flex items-center">
-                            <span className="text-3xl mr-3">📚</span>
                             Espaces d&rsquo;étude
                         </h2>
                         <ul className="flex flex-col gap-2 text-secondary font-sans">
@@ -54,7 +51,6 @@ function LieuPage() {
 
                     <div className="bg-background p-6 rounded-lg border-2 border-primary shadow-[4px_4px_0_var(--c-accent)]">
                         <h2 className="text-2xl font-bold mb-4 text-primary font-sans flex items-center">
-                            <span className="text-3xl mr-3">🏃‍♂️</span>
                             Vie étudiante
                         </h2>
                         <ul className="flex flex-col gap-2 text-secondary font-sans">

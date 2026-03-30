@@ -13,7 +13,7 @@ function ButGmpPage() {
 
                 <div className="grid grid-cols-[repeat(auto-fit,minmax(350px,1fr))] gap-8 mb-12">
                     <div className="bg-background p-6 rounded-lg border-2 border-primary shadow-[4px_4px_0_var(--c-accent)]">
-                        <h2 className="text-2xl font-bold mb-4 text-primary font-sans">🎯 Objectif principal</h2>
+                        <h2 className="text-2xl font-bold mb-4 text-primary font-sans">Objectif principal</h2>
                         <p className="text-secondary mb-4 font-sans">
                             Former des techniciens supérieurs capables de concevoir, réaliser et optimiser des systèmes mécaniques et de production industrielle.
                         </p>
@@ -25,7 +25,7 @@ function ButGmpPage() {
                     </div>
 
                     <div className="bg-background p-6 rounded-lg border-2 border-primary shadow-[4px_4px_0_var(--c-accent)]">
-                        <h2 className="text-2xl font-bold mb-4 text-primary font-sans">💼 Compétences visées</h2>
+                        <h2 className="text-2xl font-bold mb-4 text-primary font-sans">Compétences visées</h2>
                         <ul className="flex flex-col gap-2 text-secondary font-sans">
                             <li>• Concevoir des systèmes mécaniques</li>
                             <li>• Gérer la production industrielle</li>
@@ -43,22 +43,18 @@ function ButGmpPage() {
                     <h3 className="text-2xl font-bold mb-6 text-center">Les 4 piliers de la formation</h3>
                     <div className="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-6">
                         <div className="text-center">
-                            <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-3 text-2xl">⚙️</div>
                             <h4 className="font-bold mb-2 text-lg">Mécanique</h4>
                             <p className="text-sm">Conception et calcul</p>
                         </div>
                         <div className="text-center">
-                            <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-3 text-2xl">🏭</div>
                             <h4 className="font-bold mb-2 text-lg">Production</h4>
                             <p className="text-sm">Industrialisation</p>
                         </div>
                         <div className="text-center">
-                            <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-3 text-2xl">🔧</div>
                             <h4 className="font-bold mb-2 text-lg">Maintenance</h4>
                             <p className="text-sm">Fiabilité système</p>
                         </div>
                         <div className="text-center">
-                            <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-3 text-2xl">📊</div>
                             <h4 className="font-bold mb-2 text-lg">Qualité</h4>
                             <p className="text-sm">Management QSE</p>
                         </div>

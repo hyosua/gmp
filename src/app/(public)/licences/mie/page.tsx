@@ -13,7 +13,7 @@ function MIEPage() {
 
                 <div className="grid grid-cols-[repeat(auto-fit,minmax(350px,1fr))] gap-8 mb-12">
                     <div className="bg-background p-6 rounded-lg border-2 border-primary shadow-[4px_4px_0_var(--c-accent)]">
-                        <h2 className="text-2xl font-bold mb-4 text-primary font-sans">🎯 Objectifs de la formation</h2>
+                        <h2 className="text-2xl font-bold mb-4 text-primary font-sans">Objectifs de la formation</h2>
                         <ul className="flex flex-col gap-2 text-secondary font-sans">
                             <li>• Acquérir des compétences en maintenance préventive et curative</li>
                             <li>• Maîtriser les technologies de maintenance industrielle</li>
@@ -24,7 +24,7 @@ function MIEPage() {
                     </div>
 
                     <div className="bg-background p-6 rounded-lg border-2 border-primary shadow-[4px_4px_0_var(--c-accent)]">
-                        <h2 className="text-2xl font-bold mb-4 text-primary font-sans">📚 Programme d&rsquo;études</h2>
+                        <h2 className="text-2xl font-bold mb-4 text-primary font-sans">Programme d&rsquo;études</h2>
                         <div className="flex flex-col gap-3 text-secondary font-sans">
                             <div>
                                 <h4 className="font-semibold text-primary">Semestre 1 : Bases techniques</h4>
@@ -49,22 +49,18 @@ function MIEPage() {
                     <h3 className="text-2xl font-bold mb-6 text-center">Compétences développées</h3>
                     <div className="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-6">
                         <div className="bg-white/10 p-4 rounded-lg text-center">
-                            <div className="text-3xl mb-2">🔧</div>
                             <h4 className="font-bold mb-2 text-lg">Maintenance</h4>
                             <p className="text-sm">Préventive et curative</p>
                         </div>
                         <div className="bg-white/10 p-4 rounded-lg text-center">
-                            <div className="text-3xl mb-2">⚡</div>
                             <h4 className="font-bold mb-2 text-lg">Électrotechnique</h4>
                             <p className="text-sm">Équipements électriques</p>
                         </div>
                         <div className="bg-white/10 p-4 rounded-lg text-center">
-                            <div className="text-3xl mb-2">🤖</div>
                             <h4 className="font-bold mb-2 text-lg">Automatisme</h4>
                             <p className="text-sm">Systèmes automatisés</p>
                         </div>
                         <div className="bg-white/10 p-4 rounded-lg text-center">
-                            <div className="text-3xl mb-2">📊</div>
                             <h4 className="font-bold mb-2 text-lg">Qualité</h4>
                             <p className="text-sm">Management QSE</p>
                         </div>
@@ -73,7 +69,7 @@ function MIEPage() {
 
                 <div className="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-6">
                     <div className="bg-background p-6 rounded-lg border-2 border-primary shadow-[4px_4px_0_var(--c-accent)]">
-                        <h3 className="text-xl font-bold mb-4 text-primary font-sans">💼 Débouchés professionnels</h3>
+                        <h3 className="text-xl font-bold mb-4 text-primary font-sans">Débouchés professionnels</h3>
                         <ul className="flex flex-col gap-2 text-secondary font-sans">
                             <li>• Technicien(ne) de maintenance industrielle</li>
                             <li>• Responsable de maintenance</li>
@@ -84,7 +80,7 @@ function MIEPage() {
                     </div>
 
                     <div className="bg-background p-6 rounded-lg border-2 border-primary shadow-[4px_4px_0_var(--c-accent)]">
-                        <h3 className="text-xl font-bold mb-4 text-primary font-sans">🏢 Secteurs d&rsquo;activité</h3>
+                        <h3 className="text-xl font-bold mb-4 text-primary font-sans">Secteurs d&rsquo;activité</h3>
                         <ul className="flex flex-col gap-2 text-secondary font-sans">
                             <li>• Industrie manufacturière</li>
                             <li>• Énergie et utilities</li>

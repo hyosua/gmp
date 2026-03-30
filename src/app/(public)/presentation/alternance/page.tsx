@@ -13,7 +13,7 @@ function AlternancePage() {
 
                 <div className="grid grid-cols-[repeat(auto-fit,minmax(350px,1fr))] gap-8 mb-12">
                     <div className="bg-background p-6 rounded-lg border-2 border-primary shadow-[4px_4px_0_var(--c-accent)]">
-                        <h2 className="text-2xl font-bold mb-4 text-primary font-sans">📅 Rythme d&rsquo;alternance</h2>
+                        <h2 className="text-2xl font-bold mb-4 text-primary font-sans">Rythme d&rsquo;alternance</h2>
                         <div className="flex flex-col gap-3">
                             <div className="flex justify-between items-center p-3 bg-primary/[0.125] rounded">
                                 <span className="font-semibold font-sans">Semaines 1-2</span>
@@ -35,7 +35,7 @@ function AlternancePage() {
                     </div>
 
                     <div className="bg-background p-6 rounded-lg border-2 border-primary shadow-[4px_4px_0_var(--c-accent)]">
-                        <h2 className="text-2xl font-bold mb-4 text-primary font-sans">💼 Avantages de l&rsquo;alternance</h2>
+                        <h2 className="text-2xl font-bold mb-4 text-primary font-sans">Avantages de l&rsquo;alternance</h2>
                         <ul className="flex flex-col gap-3 text-secondary font-sans">
                             <li className="flex items-start">
                                 <span className="text-secondary mr-2">✓</span>
@@ -87,7 +87,7 @@ function AlternancePage() {
 
                 <div className="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-6">
                     <div className="bg-background p-6 rounded-lg border-2 border-primary shadow-[4px_4px_0_var(--c-accent)]">
-                        <h3 className="text-xl font-bold mb-4 text-primary font-sans">📊 Statistiques 2024</h3>
+                        <h3 className="text-xl font-bold mb-4 text-primary font-sans">Statistiques 2024</h3>
                         <div className="flex flex-col gap-2 text-secondary font-sans">
                             <p><strong>Taux d&rsquo;insertion :</strong> 98%</p>
                             <p><strong>Contrats signés :</strong> 85% des étudiants</p>
@@ -97,7 +97,7 @@ function AlternancePage() {
                     </div>
 
                     <div className="bg-background p-6 rounded-lg border-2 border-primary shadow-[4px_4px_0_var(--c-accent)]">
-                        <h3 className="text-xl font-bold mb-4 text-primary font-sans">🏢 Secteurs recruteurs</h3>
+                        <h3 className="text-xl font-bold mb-4 text-primary font-sans">Secteurs recruteurs</h3>
                         <ul className="flex flex-col gap-2 text-secondary font-sans">
                             <li>• Industrie automobile</li>
                             <li>• Aéronautique et spatial</li>

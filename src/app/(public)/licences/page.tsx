@@ -17,7 +17,6 @@ function LicencesPage() {
                     <Link href="/licences/mie" className="no-underline">
                         <div className="bg-background p-6 rounded-lg border-2 border-primary shadow-[4px_4px_0_var(--c-accent)] cursor-pointer transition-transform duration-200 h-full hover:-translate-y-1">
                             <div className="flex items-center mb-4">
-                                <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center mr-4 text-2xl text-background">🔧</div>
                                 <h2 className="text-2xl font-bold text-primary font-sans">Licence MIE</h2>
                             </div>
                             <h3 className="text-lg font-semibold mb-3 text-secondary font-sans">Maintenance Industrielle et Équipements</h3>
@@ -35,7 +34,6 @@ function LicencesPage() {
                     <Link href="/licences/mief" className="no-underline">
                         <div className="bg-background p-6 rounded-lg border-2 border-primary shadow-[4px_4px_0_var(--c-accent)] cursor-pointer transition-transform duration-200 h-full hover:-translate-y-1">
                             <div className="flex items-center mb-4">
-                                <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center mr-4 text-2xl text-background">🚂</div>
                                 <h2 className="text-2xl font-bold text-primary font-sans">Licence MIEF</h2>
                             </div>
                             <h3 className="text-lg font-semibold mb-3 text-secondary font-sans">Maintenance Industrielle et Équipements Ferroviaires</h3>
@@ -53,7 +51,6 @@ function LicencesPage() {
                     <Link href="/licences/mri" className="no-underline">
                         <div className="bg-background p-6 rounded-lg border-2 border-primary shadow-[4px_4px_0_var(--c-accent)] cursor-pointer transition-transform duration-200 h-full hover:-translate-y-1">
                             <div className="flex items-center mb-4">
-                                <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center mr-4 text-2xl text-background">🔄</div>
                                 <h2 className="text-2xl font-bold text-primary font-sans">Licence MRI</h2>
                             </div>
                             <h3 className="text-lg font-semibold mb-3 text-secondary font-sans">Maintenance et Réparation Industrielle</h3>
@@ -79,19 +76,19 @@ function LicencesPage() {
                     </p>
                     <div className="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-4 text-sm">
                         <div>
-                            <strong>📅 Durée</strong><br />
+                            <strong>Durée</strong><br />
                             1 an (2 semestres + stage)
                         </div>
                         <div>
-                            <strong>🎓 Diplôme</strong><br />
+                            <strong>Diplôme</strong><br />
                             Licence Professionnelle
                         </div>
                         <div>
-                            <strong>💼 Alternance</strong><br />
+                            <strong>Alternance</strong><br />
                             Possible en contrat pro
                         </div>
                         <div>
-                            <strong>📈 Niveau</strong><br />
+                            <strong>Niveau</strong><br />
                             Bac+4 (180 ECTS)
                         </div>
                     </div>
