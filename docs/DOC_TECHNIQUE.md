@@ -31,8 +31,7 @@ Ce document est la reference technique pour le developpement et la maintenance d
 
 ## 2. Authentification et Securite
 
-### 2.1 Flux d'authentification
-
+### 2.1 Flux d'authentification (Connexion)
 1. L'utilisateur soumet ses identifiants via `src/components/auth/LoginForm.tsx`.
 2. La Server Action `authenticate` (`src/lib/actions/auth.ts`) appelle `signIn` d'Auth.js.
 3. Le provider `Credentials` dans `src/lib/auth.ts` :
@@ -42,7 +41,13 @@ Ce document est la reference technique pour le developpement et la maintenance d
 4. Le callback `jwt` stocke le role dans le token.
 5. Le callback `session` rend le role disponible cote client et serveur.
 
-### 2.2 Controle d'Acces Base sur les Roles (RBAC)
+### 2.2 Flux de deconnexion
+Pour garantir une redirection fiable et eviter les erreurs de communication serveur ("Unexpected response"), la deconnexion est geree cote client :
+1. L'utilisateur clique sur un bouton de deconnexion (`LogoutButton.tsx` ou `Sidebar.tsx`).
+2. La fonction `signOut` de `next-auth/react` est appelee avec `callbackUrl: '/'`.
+3. La session est detruite et le navigateur est redirige vers la page d'accueil.
+
+### 2.3 Controle d'Acces Base sur les Roles (RBAC)
 
 Le middleware (`src/middleware.ts`) agit comme un pare-feu avant le rendu des pages.
 

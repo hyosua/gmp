@@ -1,25 +1,21 @@
 'use client';
 
-import { logout } from '@/lib/actions/auth';
-import { useTransition } from 'react';
-import { Loader2 } from 'lucide-react';
+import { LogOut } from 'lucide-react';
+import { signOut } from 'next-auth/react';
 
 export default function LogoutButton() {
-  const [isPending, startTransition] = useTransition();
-
-  const handleLogout = () => {
-    startTransition(async () => {
-      await logout();
-    });
+  const handleLogout = async () => {
+    // signOut de next-auth/react est la méthode la plus fiable côté client
+    await signOut({ callbackUrl: '/' });
   };
 
   return (
     <button
       onClick={handleLogout}
-      disabled={isPending}
       className="forge-btn forge-btn-ghost text-sm uppercase flex items-center gap-2"
     >
-      {isPending ? <Loader2 className="w-4 h-4 animate-spin" /> : 'Se déconnecter'}
+      <LogOut size={14} />
+      Se déconnecter
     </button>
   );
 }

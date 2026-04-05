@@ -22,7 +22,7 @@ import {
 } from "lucide-react";
 import { ThemeToggle } from "@/components/layout/ThemeToggle";
 import { Session } from "next-auth";
-import { logout } from "@/lib/actions/auth";
+import { signOut } from "next-auth/react";
 
 type NavItem = {
   label: string;
@@ -88,7 +88,7 @@ function SidebarContent({
 
   const handleLogout = () => {
     startTransition(async () => {
-      await logout();
+      await signOut({ callbackUrl: '/' });
     });
   };
 
