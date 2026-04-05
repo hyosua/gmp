@@ -1,6 +1,10 @@
 "use client";
 
-import type { CSSProperties, HTMLAttributes, ButtonHTMLAttributes } from "react";
+import type {
+  CSSProperties,
+  HTMLAttributes,
+  ButtonHTMLAttributes,
+} from "react";
 import { C, forgeGrid, scanLines } from "@/lib/forge";
 
 // ---------------------------------------------------------------------------
@@ -41,7 +45,12 @@ interface MonoLabelProps {
   style?: CSSProperties;
 }
 
-export function MonoLabel({ children, color, borderColor, style }: MonoLabelProps) {
+export function MonoLabel({
+  children,
+  color,
+  borderColor,
+  style,
+}: MonoLabelProps) {
   return (
     <span
       style={{
@@ -50,7 +59,9 @@ export function MonoLabel({ children, color, borderColor, style }: MonoLabelProp
         letterSpacing: "0.06em",
         color: color ?? "var(--c-muted)",
         whiteSpace: "nowrap",
-        ...(borderColor ? { border: `1px solid ${borderColor}`, padding: "2px 8px" } : {}),
+        ...(borderColor
+          ? { border: `1px solid ${borderColor}`, padding: "2px 8px" }
+          : {}),
         ...style,
       }}
     >
@@ -87,7 +98,11 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: "primary" | "ghost";
 }
 
-export function Button({ variant = "primary", className, ...props }: ButtonProps) {
+export function Button({
+  variant = "primary",
+  className,
+  ...props
+}: ButtonProps) {
   return (
     <button
       className={`forge-btn forge-btn-${variant}${className ? ` ${className}` : ""}`}
@@ -103,14 +118,186 @@ export function Button({ variant = "primary", className, ...props }: ButtonProps
 // sur l'élément titre et ne PAS lui mettre de `color` inline (le CSS gère ça).
 // ---------------------------------------------------------------------------
 
-export function ForgeCard({ className, style, children, ...props }: HTMLAttributes<HTMLDivElement>) {
+export function ForgeCard({
+  className,
+  style,
+  children,
+  ...props
+}: HTMLAttributes<HTMLDivElement>) {
+  const mono: CSSProperties = {
+    fontFamily: "var(--font-geist-mono, monospace)",
+    fontSize: "0.42rem",
+    letterSpacing: "0.15em",
+    color: "var(--c-muted)",
+    opacity: 0.3,
+    whiteSpace: "nowrap",
+    userSelect: "none",
+  };
+
   return (
     <div
-      className={`forge-card${className ? ` ${className}` : ""}`}
-      style={{ padding: "1.5rem", ...style }}
-      {...props}
+      className="relative"
+      style={{ paddingTop: "1.25rem", paddingLeft: "1.5rem" }}
     >
-      {children}
+      {/* ── Ligne de cote horizontale (L) ── */}
+      <div
+        className="absolute pointer-events-none"
+        style={{
+          top: 4,
+          left: "1.5rem",
+          right: 0,
+          height: 1,
+          borderTop: "0.5px solid var(--c-primary)",
+          opacity: 0.2,
+        }}
+      >
+        <span
+          className="absolute left-0 top-1/2 block"
+          style={{
+            width: 1,
+            height: 8,
+            background: "var(--c-primary)",
+            transform: "translate(-50%, -50%)",
+          }}
+        />
+        <span
+          className="absolute right-0 top-1/2 block"
+          style={{
+            width: 1,
+            height: 8,
+            background: "var(--c-primary)",
+            transform: "translate(50%, -50%)",
+          }}
+        />
+        <span
+          className="absolute left-1/2 bottom-full"
+          style={{ ...mono, transform: "translateX(-50%)", marginBottom: 2 }}
+        >
+          L
+        </span>
+      </div>
+
+      {/* ── Ligne de cote verticale (H) ── */}
+      <div
+        className="absolute pointer-events-none"
+        style={{
+          left: 7,
+          top: "1.25rem",
+          bottom: 0,
+          width: 1,
+          borderLeft: "0.5px solid var(--c-primary)",
+          opacity: 0.2,
+        }}
+      >
+        <span
+          className="absolute top-0 left-1/2 block"
+          style={{
+            height: 1,
+            width: 8,
+            background: "var(--c-primary)",
+            transform: "translate(-50%, -50%)",
+          }}
+        />
+        <span
+          className="absolute bottom-0 left-1/2 block"
+          style={{
+            height: 1,
+            width: 8,
+            background: "var(--c-primary)",
+            transform: "translate(-50%, 50%)",
+          }}
+        />
+        <span
+          className="absolute top-1/2 right-full"
+          style={{
+            ...mono,
+            marginRight: 2,
+            writingMode: "vertical-rl",
+            transform: "translateY(-50%) rotate(180deg)",
+          }}
+        >
+          H
+        </span>
+      </div>
+
+      {/* ── Lignes d'attache — coin haut-gauche ── */}
+      <div
+        className="absolute pointer-events-none"
+        style={{
+          top: 4,
+          left: "1.5rem",
+          width: "0.5px",
+          height: "1.25rem",
+          background: "var(--c-primary)",
+          opacity: 0.12,
+        }}
+      />
+      <div
+        className="absolute pointer-events-none"
+        style={{
+          top: "1.25rem",
+          left: 7,
+          height: "0.5px",
+          width: "1.5rem",
+          background: "var(--c-primary)",
+          opacity: 0.12,
+        }}
+      />
+
+      {/* ── La carte ── */}
+      <div
+        className={`forge-card relative${className ? ` ${className}` : ""}`}
+        style={{ padding: "1.5rem", ...style }}
+        {...props}
+      >
+        {/* Axes de symétrie — dash-dot (norme ISO) */}
+        <svg
+          className="absolute inset-0 w-full h-full pointer-events-none"
+          style={{ opacity: 0.06 }}
+          aria-hidden="true"
+        >
+          <line
+            x1="50%"
+            y1="0"
+            x2="50%"
+            y2="100%"
+            stroke="var(--c-primary)"
+            strokeWidth="0.5"
+            strokeDasharray="8 3 2 3"
+          />
+          <line
+            x1="0"
+            y1="50%"
+            x2="100%"
+            y2="50%"
+            stroke="var(--c-primary)"
+            strokeWidth="0.5"
+            strokeDasharray="8 3 2 3"
+          />
+        </svg>
+
+        {/* Marques de coin */}
+        <span
+          className="pointer-events-none absolute inset-0"
+          aria-hidden="true"
+        >
+          <span className="absolute top-[6px] left-[6px] block w-3 h-3 border-t border-l border-primary opacity-20" />
+          <span className="absolute top-[6px] right-[6px] block w-3 h-3 border-t border-r border-primary opacity-20" />
+          <span className="absolute bottom-[6px] left-[6px] block w-3 h-3 border-b border-l border-primary opacity-20" />
+          <span className="absolute bottom-[6px] right-[6px] block w-3 h-3 border-b border-r border-primary opacity-20" />
+        </span>
+
+        {/* Cartouche bas-droite */}
+        <span
+          className="pointer-events-none select-none absolute bottom-[7px] right-8"
+          style={{ ...mono }}
+          aria-hidden="true"
+        >
+          ±0.05 ISO
+        </span>
+
+        {children}
+      </div>
     </div>
   );
 }

@@ -61,7 +61,9 @@ function SidebarNavItem({
       title={collapsed ? item.label : undefined}
       className={[
         "flex items-center gap-3 font-sans font-semibold text-[0.8rem] tracking-[0.04em] no-underline transition-colors duration-150 overflow-hidden whitespace-nowrap border-l-2",
-        collapsed ? "py-[0.625rem] px-0 justify-center" : "py-[0.625rem] px-[0.875rem] justify-start",
+        collapsed
+          ? "py-[0.625rem] px-0 justify-center"
+          : "py-[0.625rem] px-[0.875rem] justify-start",
         isActive
           ? "text-primary border-primary bg-[var(--c-primary-10)]"
           : "text-muted border-transparent hover:text-primary",
@@ -84,27 +86,39 @@ function SidebarContent({
 }) {
   const [isPending, startTransition] = useTransition();
   const user = session?.user;
-  const initials = user?.name ? user.name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2) : '??';
+  const initials = user?.name
+    ? user.name
+        .split(" ")
+        .map((n) => n[0])
+        .join("")
+        .toUpperCase()
+        .slice(0, 2)
+    : "??";
 
   const handleLogout = () => {
     startTransition(async () => {
-      await signOut({ callbackUrl: '/' });
+      await signOut({ callbackUrl: "/" });
     });
   };
 
   return (
     <aside
       className="bg-bg-deep border-r-2 border-primary flex flex-col h-screen sticky top-0 overflow-hidden transition-[width,min-width] duration-200"
-      style={{ width: collapsed ? "56px" : "240px", minWidth: collapsed ? "56px" : "240px" }}
+      style={{
+        width: collapsed ? "56px" : "240px",
+        minWidth: collapsed ? "56px" : "240px",
+      }}
     >
       {/* En-tête logo */}
       <div
         className={[
           "flex items-center border-b border-border h-14 shrink-0",
-          collapsed ? "justify-center py-[0.875rem] px-0" : "justify-between py-[0.875rem] pl-4 pr-3",
+          collapsed
+            ? "justify-center py-[0.875rem] px-0"
+            : "justify-between py-[0.875rem] pl-4 pr-3",
         ].join(" ")}
       >
-        <div className="flex items-center gap-3">
+        <Link href="/" className="flex items-center gap-3 no-underline">
           <div className="w-[30px] h-[30px] bg-primary flex items-center justify-center shrink-0">
             <Cog size={16} color="white" strokeWidth={2.5} />
           </div>
@@ -113,7 +127,7 @@ function SidebarContent({
               GMP
             </span>
           )}
-        </div>
+        </Link>
         {!collapsed && (
           <button
             onClick={() => onCollapse(true)}
@@ -149,7 +163,9 @@ function SidebarContent({
         <div
           className={[
             "flex items-center gap-2",
-            collapsed ? "py-3 px-0 justify-center" : "py-3 px-4 justify-between",
+            collapsed
+              ? "py-3 px-0 justify-center"
+              : "py-3 px-4 justify-between",
           ].join(" ")}
         >
           {!collapsed && (
@@ -175,7 +191,11 @@ function SidebarContent({
               disabled={isPending}
               className="bg-transparent border-none cursor-pointer text-muted flex p-1 transition-colors hover:text-primary"
             >
-              {isPending ? <Loader2 size={14} className="animate-spin" /> : <LogOut size={14} />}
+              {isPending ? (
+                <Loader2 size={14} className="animate-spin" />
+              ) : (
+                <LogOut size={14} />
+              )}
             </button>
           </div>
         </div>
@@ -202,7 +222,11 @@ export function Sidebar({ session }: { session: Session | null }) {
     <>
       {/* Desktop */}
       <div className="hidden md:block">
-        <SidebarContent collapsed={collapsed} onCollapse={setCollapsed} session={session} />
+        <SidebarContent
+          collapsed={collapsed}
+          onCollapse={setCollapsed}
+          session={session}
+        />
       </div>
 
       {/* Bouton mobile */}
@@ -220,7 +244,11 @@ export function Sidebar({ session }: { session: Session | null }) {
           onClick={() => setMobileOpen(false)}
         >
           <div onClick={(e) => e.stopPropagation()} className="relative">
-            <SidebarContent collapsed={false} onCollapse={() => {}} session={session} />
+            <SidebarContent
+              collapsed={false}
+              onCollapse={() => {}}
+              session={session}
+            />
             <button
               onClick={() => setMobileOpen(false)}
               className="absolute top-3 -right-10 bg-transparent border-none cursor-pointer text-white flex"
