@@ -107,9 +107,7 @@ function NavItem({ link }: { link: NavLink }) {
 export function Nav() {
   return (
     <nav className="bg-background border-b-2 border-primary sticky top-0 z-50">
-      <div
-        className="max-w-[1280px] mx-auto flex items-center justify-between h-14 px-4 md:px-8"
-      >
+      <div className="max-w-[1280px] mx-auto flex items-center justify-between h-14 px-4 md:px-8">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-3 no-underline">
           <div className="w-[30px] h-[30px] bg-primary flex items-center justify-center">
@@ -136,7 +134,7 @@ export function Nav() {
         <div className="flex items-center gap-2">
           <ThemeToggle />
           <Link
-            href="/dashboard"
+            href="/connexion"
             className="flex items-center gap-2 px-[1.1rem] py-[0.4rem] text-[0.75rem] font-bold font-sans tracking-[0.12em] bg-transparent text-primary border border-primary no-underline transition-all hover:bg-primary hover:text-bg-deep hover:shadow-[2px_2px_0_var(--c-accent)]"
           >
             <LogIn className="w-[13px] h-[13px]" />
