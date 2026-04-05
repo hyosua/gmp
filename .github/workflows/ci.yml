@@ -1,4 +1,4 @@
-name: Continuous Integration
+name: Continuous Integration & Security
 
 on:
   push:
@@ -7,9 +7,39 @@ on:
     branches: [ main ]
 
 jobs:
-  build:
+  # 1. Job de scan de secrets (Gitleaks)
+  secret-scanning:
+    name: Secret Scanning
     runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Gitleaks Scan
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+  # 2. Job de SAST (CodeQL)
+  sast:
+    name: SAST (CodeQL)
+    runs-on: ubuntu-latest
+    permissions:
+      security-events: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: javascript-typescript
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
+
+  # 3. Job de Build, Lint & SCA
+  build-and-test:
+    name: Build, Lint & SCA
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -22,6 +52,9 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
+
+      - name: SCA (Software Composition Analysis)
+        run: npm audit --audit-level=high
 
       - name: Check Lint
         run: npm run lint

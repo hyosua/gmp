@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "prepare": "husky",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",
@@ -32,11 +34,23 @@
     "dotenv": "^17.4.0",
     "eslint": "^9",
     "eslint-config-next": "16.2.1",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.4.0",
+    "prettier": "^3.8.1",
     "prisma": "^7.6.0",
     "tailwindcss": "^4",
     "typescript": "^5"
   },
   "prisma": {
     "seed": "npx tsx prisma/seed.ts"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{css,md,json}": [
+      "prettier --write"
+    ]
   }
 }
