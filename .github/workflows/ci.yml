@@ -1,0 +1,73 @@
+name: Continuous Integration & Security
+
+on:
+  push:
+    branches: [ main, feat/** ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  # 1. Scan de secrets (Gitleaks)
+  secret-scanning:
+    name: Secret Scanning
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Gitleaks Scan
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  # 2. SAST (CodeQL)
+  sast:
+    name: SAST (CodeQL)
+    runs-on: ubuntu-latest
+    permissions:
+      security-events: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: javascript-typescript
+      - name: Autobuild
+        uses: github/codeql-action/autobuild@v3
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
+
+  # 3. Build, Lint & SCA
+  build-and-test:
+    name: Build, Lint & SCA
+    runs-on: ubuntu-latest
+    env:
+      HUSKY: 0
+      DATABASE_URL: postgresql://postgres:postgres@localhost:5432/gmp
+      AUTH_SECRET: dummy-secret-for-ci-build-only
+      NEXTAUTH_URL: http://localhost:3000
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Generate Prisma Client
+        run: npx prisma generate
+
+      - name: SCA (Software Composition Analysis)
+        run: npm audit --audit-level=high
+        continue-on-error: true
+
+      - name: Check Lint
+        run: npm run lint
+
+      - name: Build project
+        run: npm run build
