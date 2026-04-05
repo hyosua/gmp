@@ -4,9 +4,17 @@ import { authConfig } from './auth.config';
 import { prisma } from './prisma';
 import bcrypt from 'bcryptjs';
 
+/**
+ * Configuration de l'authentification NextAuth.
+ * Expose les utilitaires `auth`, `signIn`, `signOut` et `handlers` pour l'ensemble de l'application.
+ */
 export const { auth, signIn, signOut, handlers } = NextAuth({
   ...authConfig,
   providers: [
+    /**
+     * Fournisseur par identifiants (Email/Password).
+     * Vérifie l'utilisateur dans la base de données via Prisma et compare les mots de passe hachés.
+     */
     Credentials({
       name: 'Credentials',
       credentials: {

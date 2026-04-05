@@ -1,0 +1,15 @@
+{
+  "entryPoints": ["src/lib"],
+  "entryPointStrategy": "expand",
+  "out": "docs/technical-reference",
+  "plugin": [],
+  "theme": "default",
+  "name": "API et Reference Technique - Projet GMP",
+  "includeVersion": true,
+  "readme": "docs/API.md",
+  "excludeExternals": true,
+  "excludePrivate": true,
+  "excludeInternal": true,
+  "hideGenerator": true,
+  "lang": "en"
+}

@@ -3,6 +3,14 @@
 import { signIn, signOut } from '@/lib/auth';
 import { AuthError } from 'next-auth';
 
+/**
+ * Authentifie un utilisateur via ses identifiants (email/mot de passe).
+ * 
+ * @param prevState - L'état précédent renvoyé par l'action (utilisé avec useFormState).
+ * @param formData - Les données du formulaire contenant 'email' et 'password'.
+ * @returns Un message d'erreur en cas d'échec, ou redirige l'utilisateur en cas de succès.
+ * @throws Ré-émet les erreurs de redirection d'Auth.js pour qu'elles soient gérées par Next.js.
+ */
 export async function authenticate(
   prevState: string | undefined,
   formData: FormData,
@@ -27,6 +35,9 @@ export async function authenticate(
   }
 }
 
+/**
+ * Déconnecte l'utilisateur actuel et le redirige vers la page d'accueil.
+ */
 export async function logout() {
   await signOut({ redirectTo: '/' });
 }
