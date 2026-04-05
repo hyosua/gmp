@@ -1,10 +1,12 @@
 "use client";
 
 import { useState, useRef } from "react";
-import { Cog, LogIn, ChevronDown } from "lucide-react";
+import { Cog, LogIn, ChevronDown, User as UserIcon } from "lucide-react";
 import { ThemeToggle } from "@/components/layout/ThemeToggle";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { Session } from "next-auth";
+import LogoutButton from "@/components/auth/LogoutButton";
 
 type SubLink = { label: string; href: string };
 
@@ -104,12 +106,21 @@ function NavItem({ link }: { link: NavLink }) {
   );
 }
 
-export function Nav() {
+export function Nav({ session }: { session: Session | null }) {
+  const isLoggedIn = !!session?.user;
+  const role = session?.user?.role;
+
+  const getDashboardHref = () => {
+    if (role === 'ETUDIANT') return '/espace-etudiant';
+    if (role === 'ENSEIGNANT') return '/espace-enseignant';
+    if (role === 'ENTREPRISE') return '/espace-entreprise';
+    if (role === 'ADMIN') return '/admin';
+    return '/';
+  };
+
   return (
     <nav className="bg-background border-b-2 border-primary sticky top-0 z-50">
-      <div
-        className="max-w-[1280px] mx-auto flex items-center justify-between h-14 px-4 md:px-8"
-      >
+      <div className="max-w-[1280px] mx-auto flex items-center justify-between h-14 px-4 md:px-8">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-3 no-underline">
           <div className="w-[30px] h-[30px] bg-primary flex items-center justify-center">
@@ -135,13 +146,27 @@ export function Nav() {
         {/* CTA */}
         <div className="flex items-center gap-2">
           <ThemeToggle />
-          <Link
-            href="/dashboard"
-            className="flex items-center gap-2 px-[1.1rem] py-[0.4rem] text-[0.75rem] font-bold font-sans tracking-[0.12em] bg-transparent text-primary border border-primary no-underline transition-all hover:bg-primary hover:text-bg-deep hover:shadow-[2px_2px_0_var(--c-accent)]"
-          >
-            <LogIn className="w-[13px] h-[13px]" />
-            CONNEXION
-          </Link>
+          
+          {isLoggedIn ? (
+            <div className="flex items-center gap-4">
+              <Link
+                href={getDashboardHref()}
+                className="flex items-center gap-2 px-[1.1rem] py-[0.4rem] text-[0.75rem] font-bold font-sans tracking-[0.12em] bg-transparent text-primary border border-primary no-underline transition-all hover:bg-primary hover:text-bg-deep hover:shadow-[2px_2px_0_var(--c-accent)]"
+              >
+                <UserIcon className="w-[13px] h-[13px]" />
+                ESPACE PERSO
+              </Link>
+              <LogoutButton />
+            </div>
+          ) : (
+            <Link
+              href="/connexion"
+              className="flex items-center gap-2 px-[1.1rem] py-[0.4rem] text-[0.75rem] font-bold font-sans tracking-[0.12em] bg-transparent text-primary border border-primary no-underline transition-all hover:bg-primary hover:text-bg-deep hover:shadow-[2px_2px_0_var(--c-accent)]"
+            >
+              <LogIn className="w-[13px] h-[13px]" />
+              CONNEXION
+            </Link>
+          )}
         </div>
       </div>
     </nav>
