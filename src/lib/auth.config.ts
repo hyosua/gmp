@@ -20,11 +20,13 @@ export const authConfig = {
         return false; // Redirect unauthenticated users to login page
       } else if (isLoggedIn && nextUrl.pathname === '/connexion') {
         const role = auth.user.role as Role;
+        console.log(`[AUTH] User ${auth.user.email} logged in with role ${role}. Redirecting...`);
         let redirectUrl = '/';
         if (role === 'ETUDIANT') redirectUrl = '/espace-etudiant';
         else if (role === 'ENSEIGNANT') redirectUrl = '/espace-enseignant';
         else if (role === 'ENTREPRISE') redirectUrl = '/espace-entreprise';
         else if (role === 'ADMIN') redirectUrl = '/admin';
+        console.log(`[AUTH] Target URL: ${redirectUrl}`);
         return Response.redirect(new URL(redirectUrl, nextUrl));
       }
       return true;
