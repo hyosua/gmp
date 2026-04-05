@@ -9,19 +9,36 @@ export default auth((req) => {
   const isLoggedIn = !!req.auth;
   const role = req.auth?.user?.role;
 
-  // Protect spaces based on role
+  // 1. Unauthenticated users: redirect to login if trying to access dashboard/admin
+  const isDashboardRoute = nextUrl.pathname.startsWith('/espace-') || nextUrl.pathname.startsWith('/admin');
+  if (isDashboardRoute && !isLoggedIn) {
+    return NextResponse.redirect(new URL('/connexion', nextUrl));
+  }
+
+  // 2. Authenticated users: protect spaces based on role
   if (isLoggedIn) {
-    if (nextUrl.pathname.startsWith('/espace-etudiant') && role !== 'ETUDIANT') {
-      return NextResponse.redirect(new URL(getRolePath(role), nextUrl));
+    const rolePaths = {
+      ETUDIANT: '/espace-etudiant',
+      ENSEIGNANT: '/espace-enseignant',
+      ENTREPRISE: '/espace-entreprise',
+      ADMIN: '/admin',
+    };
+
+    const targetPath = getRolePath(role);
+
+    // If user is on /connexion, redirect to their home
+    if (nextUrl.pathname === '/connexion') {
+      return NextResponse.redirect(new URL(targetPath, nextUrl));
     }
-    if (nextUrl.pathname.startsWith('/espace-enseignant') && role !== 'ENSEIGNANT') {
-      return NextResponse.redirect(new URL(getRolePath(role), nextUrl));
-    }
-    if (nextUrl.pathname.startsWith('/espace-entreprise') && role !== 'ENTREPRISE') {
-      return NextResponse.redirect(new URL(getRolePath(role), nextUrl));
-    }
-    if (nextUrl.pathname.startsWith('/admin') && role !== 'ADMIN') {
-      return NextResponse.redirect(new URL(getRolePath(role), nextUrl));
+
+    // Check if user is trying to access a different role's space
+    const isAccessingOtherSpace = Object.entries(rolePaths).some(([r, path]) => {
+      return r !== role && nextUrl.pathname.startsWith(path);
+    });
+
+    if (isAccessingOtherSpace) {
+      console.log(`[AUTH] Unauthorized access attempt by ${role} to ${nextUrl.pathname}. Redirecting to ${targetPath}`);
+      return NextResponse.redirect(new URL(targetPath, nextUrl));
     }
   }
 

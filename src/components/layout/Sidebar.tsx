@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import {
@@ -18,8 +18,11 @@ import {
   Cog,
   Menu,
   X,
+  Loader2,
 } from "lucide-react";
 import { ThemeToggle } from "@/components/layout/ThemeToggle";
+import { Session } from "next-auth";
+import { logout } from "@/lib/actions/auth";
 
 type NavItem = {
   label: string;
@@ -73,10 +76,22 @@ function SidebarNavItem({
 function SidebarContent({
   collapsed,
   onCollapse,
+  session,
 }: {
   collapsed: boolean;
   onCollapse: (v: boolean) => void;
+  session: Session | null;
 }) {
+  const [isPending, startTransition] = useTransition();
+  const user = session?.user;
+  const initials = user?.name ? user.name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2) : '??';
+
+  const handleLogout = () => {
+    startTransition(async () => {
+      await logout();
+    });
+  };
+
   return (
     <aside
       className="bg-bg-deep border-r-2 border-primary flex flex-col h-screen sticky top-0 overflow-hidden transition-[width,min-width] duration-200"
@@ -139,16 +154,15 @@ function SidebarContent({
         >
           {!collapsed && (
             <div className="flex items-center gap-2 flex-1 min-w-0">
-              {/* Avatar placeholder — à remplacer par session.user */}
               <div className="w-7 h-7 bg-primary flex items-center justify-center text-[0.65rem] font-bold text-bg-deep font-mono shrink-0">
-                ET
+                {initials}
               </div>
               <div className="min-w-0">
                 <div className="text-[0.75rem] font-semibold font-sans text-secondary overflow-hidden text-ellipsis whitespace-nowrap">
-                  Étudiant
+                  {user?.name || "Utilisateur"}
                 </div>
                 <div className="text-[0.6rem] font-mono text-muted tracking-[0.08em]">
-                  ETUDIANT
+                  {user?.role || "RÔLE"}
                 </div>
               </div>
             </div>
@@ -157,9 +171,11 @@ function SidebarContent({
             <ThemeToggle />
             <button
               title="Déconnexion"
+              onClick={handleLogout}
+              disabled={isPending}
               className="bg-transparent border-none cursor-pointer text-muted flex p-1 transition-colors hover:text-primary"
             >
-              <LogOut size={14} />
+              {isPending ? <Loader2 size={14} className="animate-spin" /> : <LogOut size={14} />}
             </button>
           </div>
         </div>
@@ -178,7 +194,7 @@ function SidebarContent({
   );
 }
 
-export function Sidebar() {
+export function Sidebar({ session }: { session: Session | null }) {
   const [collapsed, setCollapsed] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -186,7 +202,7 @@ export function Sidebar() {
     <>
       {/* Desktop */}
       <div className="hidden md:block">
-        <SidebarContent collapsed={collapsed} onCollapse={setCollapsed} />
+        <SidebarContent collapsed={collapsed} onCollapse={setCollapsed} session={session} />
       </div>
 
       {/* Bouton mobile */}
@@ -204,7 +220,7 @@ export function Sidebar() {
           onClick={() => setMobileOpen(false)}
         >
           <div onClick={(e) => e.stopPropagation()} className="relative">
-            <SidebarContent collapsed={false} onCollapse={() => {}} />
+            <SidebarContent collapsed={false} onCollapse={() => {}} session={session} />
             <button
               onClick={() => setMobileOpen(false)}
               className="absolute top-3 -right-10 bg-transparent border-none cursor-pointer text-white flex"
