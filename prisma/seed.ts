@@ -1,7 +1,12 @@
+import 'dotenv/config'
 import { PrismaClient, Role } from '@prisma/client'
+import { PrismaPg } from '@prisma/adapter-pg'
+import { Pool } from 'pg'
 import bcrypt from 'bcryptjs'
 
-const prisma = new PrismaClient()
+const pool = new Pool({ connectionString: process.env.DATABASE_URL })
+const adapter = new PrismaPg(pool)
+const prisma = new PrismaClient({ adapter })
 
 async function main() {
   const password = await bcrypt.hash('gmp', 10)
@@ -13,7 +18,7 @@ async function main() {
     { email: 'admin@test.com', role: Role.ADMIN, nom: 'Admin', prenom: 'Boss' },
   ]
 
-  console.log('--- Initialisation des utilisateurs de test ---')
+  console.log('--- Initialisation des utilisateurs de test (Prisma 7 Adapter) ---')
   for (const u of testUsers) {
     await prisma.user.upsert({
       where: { email: u.email },
@@ -32,9 +37,10 @@ async function main() {
 
 main()
   .catch((e) => {
-    console.error(e)
+    console.error('Seed error:', e)
     process.exit(1)
   })
   .finally(async () => {
     await prisma.$disconnect()
+    pool.end()
   })
