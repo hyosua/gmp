@@ -1,5 +1,6 @@
 "use client";
 
+import { useRef, useState, useEffect } from "react";
 import type {
   CSSProperties,
   HTMLAttributes,
@@ -124,11 +125,24 @@ export function ForgeCard({
   children,
   ...props
 }: HTMLAttributes<HTMLDivElement>) {
+  const cardRef = useRef<HTMLDivElement>(null);
+  const [dims, setDims] = useState({ w: 0, h: 0 });
+
+  useEffect(() => {
+    if (!cardRef.current) return;
+    const ro = new ResizeObserver(([entry]) => {
+      const { width, height } = entry.contentRect;
+      setDims({ w: Math.round(width), h: Math.round(height) });
+    });
+    ro.observe(cardRef.current);
+    return () => ro.disconnect();
+  }, []);
+
   const mono: CSSProperties = {
     fontFamily: "var(--font-geist-mono, monospace)",
-    fontSize: "0.42rem",
-    letterSpacing: "0.15em",
-    color: "var(--c-muted)",
+    fontSize: "0.62rem",
+    letterSpacing: "0.20em",
+    color: "var(--c-primary)",
     opacity: 0.3,
     whiteSpace: "nowrap",
     userSelect: "none",
@@ -137,115 +151,33 @@ export function ForgeCard({
   return (
     <div
       className="relative"
-      style={{ paddingTop: "1.25rem", paddingLeft: "1.5rem" }}
+      style={{ paddingTop: "1.5rem", paddingLeft: "1.5rem" }}
     >
-      {/* ── Ligne de cote horizontale (L) ── */}
-      <div
-        className="absolute pointer-events-none"
-        style={{
-          top: 4,
-          left: "1.5rem",
-          right: 0,
-          height: 1,
-          borderTop: "0.5px solid var(--c-primary)",
-          opacity: 0.2,
-        }}
+      {/* Largeur — au-dessus de la carte, centrée */}
+      <span
+        className="pointer-events-none select-none absolute top-0 left-1/2"
+        style={{ ...mono, transform: "translateX(-50%)" }}
+        aria-hidden="true"
       >
-        <span
-          className="absolute left-0 top-1/2 block"
-          style={{
-            width: 1,
-            height: 8,
-            background: "var(--c-primary)",
-            transform: "translate(-50%, -50%)",
-          }}
-        />
-        <span
-          className="absolute right-0 top-1/2 block"
-          style={{
-            width: 1,
-            height: 8,
-            background: "var(--c-primary)",
-            transform: "translate(50%, -50%)",
-          }}
-        />
-        <span
-          className="absolute left-1/2 bottom-full"
-          style={{ ...mono, transform: "translateX(-50%)", marginBottom: 2 }}
-        >
-          L
-        </span>
-      </div>
+        {dims.w || "—"}
+      </span>
 
-      {/* ── Ligne de cote verticale (H) ── */}
-      <div
-        className="absolute pointer-events-none"
+      {/* Hauteur — à gauche de la carte, verticale */}
+      <span
+        className="pointer-events-none select-none absolute top-1/2 left-0"
         style={{
-          left: 7,
-          top: "1.25rem",
-          bottom: 0,
-          width: 1,
-          borderLeft: "0.5px solid var(--c-primary)",
-          opacity: 0.2,
+          ...mono,
+          writingMode: "vertical-rl",
+          transform: "translateY(-50%) rotate(180deg)",
         }}
+        aria-hidden="true"
       >
-        <span
-          className="absolute top-0 left-1/2 block"
-          style={{
-            height: 1,
-            width: 8,
-            background: "var(--c-primary)",
-            transform: "translate(-50%, -50%)",
-          }}
-        />
-        <span
-          className="absolute bottom-0 left-1/2 block"
-          style={{
-            height: 1,
-            width: 8,
-            background: "var(--c-primary)",
-            transform: "translate(-50%, 50%)",
-          }}
-        />
-        <span
-          className="absolute top-1/2 right-full"
-          style={{
-            ...mono,
-            marginRight: 2,
-            writingMode: "vertical-rl",
-            transform: "translateY(-50%) rotate(180deg)",
-          }}
-        >
-          H
-        </span>
-      </div>
-
-      {/* ── Lignes d'attache — coin haut-gauche ── */}
-      <div
-        className="absolute pointer-events-none"
-        style={{
-          top: 4,
-          left: "1.5rem",
-          width: "0.5px",
-          height: "1.25rem",
-          background: "var(--c-primary)",
-          opacity: 0.12,
-        }}
-      />
-      <div
-        className="absolute pointer-events-none"
-        style={{
-          top: "1.25rem",
-          left: 7,
-          height: "0.5px",
-          width: "1.5rem",
-          background: "var(--c-primary)",
-          opacity: 0.12,
-        }}
-      />
+        {dims.h || "—"}
+      </span>
 
       {/* ── La carte ── */}
       <div
+        ref={cardRef}
         className={`forge-card relative${className ? ` ${className}` : ""}`}
         style={{ padding: "1.5rem", ...style }}
         {...props}
@@ -287,15 +219,6 @@ export function ForgeCard({
           <span className="absolute bottom-[6px] right-[6px] block w-3 h-3 border-b border-r border-primary opacity-20" />
         </span>
 
-        {/* Cartouche bas-droite */}
-        <span
-          className="pointer-events-none select-none absolute bottom-[7px] right-8"
-          style={{ ...mono }}
-          aria-hidden="true"
-        >
-          ±0.05 ISO
-        </span>
-
         {children}
       </div>
     </div>
@@ -326,8 +249,6 @@ export function ForgeSection({
       className={`forge-section${className ? ` ${className}` : ""}`}
       style={{ background: bg ?? C.bg }}
     >
-      <div style={forgeGrid} />
-      {withScanLines && <div style={scanLines} />}
       <div className={`forge-container px-4 md:px-8 ${innerClassName}`}>
         {children}
       </div>
