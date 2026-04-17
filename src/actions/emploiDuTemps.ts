@@ -91,10 +91,6 @@ export async function createCreneau(
   return { success: true, creneaux };
 }
 
-type MutationResult<T> =
-  | ({ success: true } & T)
-  | { success: false; error: "UNAUTHORIZED" };
-
 export async function updateCreneau(
   id: string,
   enseignantId: string,
@@ -115,7 +111,7 @@ export async function updateCreneau(
   | { success: false; error: "UNAUTHORIZED" }
 > {
   const existing = await prisma.emploiDuTemps.findUnique({ where: { id } });
-  if (!existing || existing.enseignantId !== enseignantId) {
+  if (!existing?.enseignantId || existing.enseignantId !== enseignantId) {
     return { success: false, error: "UNAUTHORIZED" };
   }
 
@@ -133,7 +129,7 @@ export async function deleteCreneau(
   enseignantId: string,
 ): Promise<{ success: true } | { success: false; error: "UNAUTHORIZED" }> {
   const existing = await prisma.emploiDuTemps.findUnique({ where: { id } });
-  if (!existing || existing.enseignantId !== enseignantId) {
+  if (!existing?.enseignantId || existing.enseignantId !== enseignantId) {
     return { success: false, error: "UNAUTHORIZED" };
   }
 
