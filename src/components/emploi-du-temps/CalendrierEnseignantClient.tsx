@@ -76,9 +76,10 @@ export default function CalendrierEnseignantClient({
       <CalendrierSemaine
         creneaux={initialCreneaux}
         dateDebut={dateDebut}
+        currentUserId={enseignantId}
         onCellClick={handleCellClick}
         onEventClick={handleEventClick}
-      />
+      />{" "}
       {isModalOpen && selectedCreneau && (
         <CreneauModal
           onClose={() => setIsModalOpen(false)}

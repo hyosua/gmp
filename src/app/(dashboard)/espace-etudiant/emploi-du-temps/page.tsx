@@ -63,7 +63,11 @@ export default async function PageEmploiDuTempsEtudiant({
       <NavigationSemaine dateDebut={dateDebut} />
 
       <div className="mt-8">
-        <CalendrierSemaine creneaux={creneaux} dateDebut={dateDebut} />
+        <CalendrierSemaine
+          creneaux={creneaux}
+          dateDebut={dateDebut}
+          currentUserId={session.user.id}
+        />
       </div>
 
       <div className="mt-6 flex items-center gap-4 text-[10px] font-mono text-muted uppercase">
