@@ -12,5 +12,8 @@ beforeEach(async () => {
   await prismaTest.groupe.deleteMany();
   await prismaTest.uE.deleteMany();
   await prismaTest.resetToken.deleteMany();
+  await prismaTest.supportDeCours.deleteMany();
+  await prismaTest.projetTuteure.deleteMany();
+  await prismaTest.offreAlternance.deleteMany();
   await prismaTest.user.deleteMany();
 });

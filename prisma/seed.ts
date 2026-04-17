@@ -28,6 +28,7 @@ async function main() {
     "supportDeCours",
     "projetTuteure",
     "offreAlternance",
+    "matiereEnseignant",
     "matiere",
     "uE",
     "user",
@@ -160,6 +161,23 @@ async function main() {
   }
   const matieres = await prisma.matiere.findMany();
 
+  console.log("--- Affectation des Matières aux Enseignants ---");
+  for (let i = 0; i < enseignants.length; i++) {
+    // Chaque enseignant aura 2 matières
+    await prisma.matiereEnseignant.create({
+      data: {
+        enseignantId: enseignants[i].id,
+        matiereId: matieres[(i * 2) % matieres.length].id,
+      },
+    });
+    await prisma.matiereEnseignant.create({
+      data: {
+        enseignantId: enseignants[i].id,
+        matiereId: matieres[(i * 2 + 1) % matieres.length].id,
+      },
+    });
+  }
+
   console.log("--- Création des Notes ---");
   for (let i = 0; i < 5; i++) {
     await prisma.note.create({
@@ -187,6 +205,7 @@ async function main() {
         intitule: `Cours de ${matieres[i % matieres.length].nom}`,
         groupeId: groupes[i % groupes.length].id,
         enseignantId: enseignants[i % enseignants.length].id,
+        matiereId: matieres[i % matieres.length].id,
       },
     });
   }

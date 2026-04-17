@@ -33,8 +33,8 @@ interface CreneauModalProps {
     groupeId?: string;
     recurrent?: boolean;
     recurrenceFin?: Date | string;
-    matiere?: { id: string };
-    groupe?: { id: string };
+    matiere?: { id: string; nom: string; code: string } | null;
+    groupe?: { id: string; nom: string; type: string } | null;
   };
   matieres: Matiere[];
   groupes: Groupe[];

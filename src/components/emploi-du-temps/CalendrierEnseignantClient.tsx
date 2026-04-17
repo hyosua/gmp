@@ -74,15 +74,15 @@ export default function CalendrierEnseignantClient({
   return (
     <>
       <CalendrierSemaine
-        creneaux={initialCreneaux as unknown as any[]} 
+        creneaux={initialCreneaux}
+        dateDebut={dateDebut}
         onCellClick={handleCellClick}
-        onEventClick={handleEventClick as unknown as (creneau: any) => void}
+        onEventClick={handleEventClick}
       />
-
       {isModalOpen && selectedCreneau && (
         <CreneauModal
           onClose={() => setIsModalOpen(false)}
-          creneauInitial={selectedCreneau as any}
+          creneauInitial={selectedCreneau}
           matieres={matieres}
           groupes={groupes}
           enseignantId={enseignantId}

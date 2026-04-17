@@ -3,6 +3,9 @@
 import React from "react";
 import { forgeGrid, scanLines } from "@/lib/forge";
 
+import { addDays, format, startOfWeek } from "date-fns";
+import { fr } from "date-fns/locale";
+
 interface Creneau {
   id: string;
   jour: string; // 'lundi', 'mardi', etc.
@@ -10,9 +13,9 @@ interface Creneau {
   heureFin: string; // '10:00'
   salle: string;
   intitule: string;
-  enseignant: { nom: string; prenom: string };
-  matiere?: { nom: string; code: string } | null;
-  groupe: { nom: string; type: string };
+  enseignant: { id: string; nom: string; prenom: string };
+  matiere?: { id: string; nom: string; code: string } | null;
+  groupe: { id: string; nom: string; type: string };
 }
 
 interface CalendrierSemaineProps {
@@ -27,6 +30,7 @@ const HEURES = Array.from({ length: 13 }, (_, i) => i + 8); // 8h à 20h
 
 export default function CalendrierSemaine({
   creneaux,
+  dateDebut,
   onCellClick,
   onEventClick,
 }: CalendrierSemaineProps) {
@@ -41,6 +45,8 @@ export default function CalendrierSemaine({
     const index = JOURS.indexOf(jour.toLowerCase());
     return index !== -1 ? index + 2 : -1;
   };
+
+  const start = startOfWeek(dateDebut, { weekStartsOn: 1 });
 
   return (
     <div className="forge-card relative overflow-hidden rounded-lg border border-border bg-bg-card p-4 shadow-xl">
@@ -61,15 +67,21 @@ export default function CalendrierSemaine({
         ))}
 
         {/* En-têtes : Jours (ligne 1) */}
-        {JOURS.map((j, idx) => (
-          <div
-            key={j}
-            className="flex items-center justify-center border-b border-border bg-bg-card/95 py-2 text-xs font-bold uppercase text-secondary tracking-widest"
-            style={{ gridRow: 1, gridColumn: idx + 2 }}
-          >
-            {j}
-          </div>
-        ))}
+        {JOURS.map((j, idx) => {
+          const dayDate = addDays(start, idx);
+          return (
+            <div
+              key={j}
+              className="flex flex-col items-center justify-center border-b border-border bg-bg-card/95 py-2 text-xs font-bold uppercase text-secondary tracking-widest leading-none"
+              style={{ gridRow: 1, gridColumn: idx + 2 }}
+            >
+              <span className="mb-1">{j}</span>
+              <span className="text-[10px] font-mono text-muted">
+                {format(dayDate, "dd/MM", { locale: fr })}
+              </span>
+            </div>
+          );
+        })}
 
         {/* Cellules cliquables (uniquement si onCellClick est fourni) */}
         {onCellClick &&

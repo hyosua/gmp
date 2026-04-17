@@ -17,7 +17,7 @@ type CreateCreneauData = {
   intitule: string;
   groupeId: string;
   enseignantId: string;
-  matiereId?: string;
+  matiereId: string;
   recurrent: boolean;
   recurrenceFin?: Date;
 };
@@ -104,6 +104,7 @@ export async function updateCreneau(
       | "intitule"
       | "matiereId"
       | "groupeId"
+      | "recurrenceFin"
     >
   >,
 ): Promise<
