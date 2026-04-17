@@ -88,11 +88,14 @@ export default function CreneauModal({
           router.refresh();
           onClose();
         } else {
-          setError(
-            res.error === "UNAUTHORIZED"
-              ? "Non autorisé"
-              : "Erreur lors de la modification",
-          );
+          const errorMsg =
+            {
+              CONFLIT_SALLE: "La salle est déjà occupée !",
+              CONFLIT_ENSEIGNANT: "Vous avez déjà un cours sur ce créneau !",
+              CONFLIT_GROUPE: "Ce groupe a déjà un cours sur ce créneau !",
+              UNAUTHORIZED: "Non autorisé",
+            }[res.error] || "Erreur lors de la modification";
+          setError(errorMsg);
         }
       } else if (!isEditing) {
         const res = await createCreneau({
@@ -107,11 +110,14 @@ export default function CreneauModal({
           router.refresh();
           onClose();
         } else {
-          setError(
-            res.error === "CONFLIT_SALLE"
-              ? "CONFLIT : La salle est déjà occupée !"
-              : "Erreur lors de la création",
-          );
+          const errorMsg =
+            {
+              CONFLIT_SALLE: "La salle est déjà occupée !",
+              CONFLIT_ENSEIGNANT: "Vous avez déjà un cours sur ce créneau !",
+              CONFLIT_GROUPE: "Ce groupe a déjà un cours sur ce créneau !",
+              UNAUTHORIZED: "Non autorisé",
+            }[res.error] || "Erreur lors de la création";
+          setError(errorMsg);
         }
       }
     } catch {

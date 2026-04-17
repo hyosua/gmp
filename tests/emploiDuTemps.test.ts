@@ -167,6 +167,88 @@ describe("createCreneau", () => {
     expect(result.error).toBe("CONFLIT_SALLE");
   });
 
+  it("retourne CONFLIT_ENSEIGNANT si l'enseignant est déjà occupé ailleurs", async () => {
+    const { enseignant, groupe, matiere } = await createFixtures();
+    const autreGroupe = await prismaTest.groupe.create({
+      data: { nom: "TD2", type: "TD", anneeScolaire: "2025-2026" },
+    });
+    const lundi = new Date("2025-09-01");
+
+    await createCreneau({
+      semaine: lundi,
+      jour: "lundi",
+      heureDebut: "08:00",
+      heureFin: "10:00",
+      salle: "A101",
+      intitule: "RDM",
+      groupeId: groupe.id,
+      enseignantId: enseignant.id,
+      matiereId: matiere.id,
+      recurrent: false,
+    });
+
+    const result = await createCreneau({
+      semaine: lundi,
+      jour: "lundi",
+      heureDebut: "09:00", // Chevauchement
+      heureFin: "11:00",
+      salle: "B202", // Autre salle
+      intitule: "RDM",
+      groupeId: autreGroupe.id, // Autre groupe
+      enseignantId: enseignant.id, // Même enseignant
+      matiereId: matiere.id,
+      recurrent: false,
+    });
+
+    expect(result.success).toBe(false);
+    if (result.success) return;
+    expect(result.error).toBe("CONFLIT_ENSEIGNANT");
+  });
+
+  it("retourne CONFLIT_GROUPE si le groupe a déjà un cours ailleurs", async () => {
+    const { enseignant, groupe, matiere } = await createFixtures();
+    const autreEnseignant = await prismaTest.user.create({
+      data: {
+        email: "autre@prof.fr",
+        password: "hash",
+        nom: "Martin",
+        prenom: "Paul",
+        role: "ENSEIGNANT",
+      },
+    });
+    const lundi = new Date("2025-09-01");
+
+    await createCreneau({
+      semaine: lundi,
+      jour: "lundi",
+      heureDebut: "08:00",
+      heureFin: "10:00",
+      salle: "A101",
+      intitule: "RDM",
+      groupeId: groupe.id,
+      enseignantId: enseignant.id,
+      matiereId: matiere.id,
+      recurrent: false,
+    });
+
+    const result = await createCreneau({
+      semaine: lundi,
+      jour: "lundi",
+      heureDebut: "09:00", // Chevauchement
+      heureFin: "11:00",
+      salle: "B202", // Autre salle
+      intitule: "RDM",
+      groupeId: groupe.id, // Même groupe
+      enseignantId: autreEnseignant.id, // Autre prof
+      matiereId: matiere.id,
+      recurrent: false,
+    });
+
+    expect(result.success).toBe(false);
+    if (result.success) return;
+    expect(result.error).toBe("CONFLIT_GROUPE");
+  });
+
   it("génère N occurrences pour un créneau récurrent", async () => {
     const { enseignant, groupe, matiere } = await createFixtures();
     const lundi = new Date("2025-09-01");
@@ -287,6 +369,52 @@ describe("updateCreneau", () => {
     expect(result.success).toBe(true);
     if (!result.success) return;
     expect(result.creneau.salle).toBe("B202");
+  });
+
+  it("empêche la mise à jour si elle crée un conflit de salle", async () => {
+    const { enseignant, groupe, matiere } = await createFixtures();
+    const lundi = new Date("2025-09-01");
+
+    // Créneau 1
+    const c1 = await createCreneau({
+      semaine: lundi,
+      jour: "lundi",
+      heureDebut: "08:00",
+      heureFin: "10:00",
+      salle: "A101",
+      intitule: "Cours 1",
+      groupeId: groupe.id,
+      enseignantId: enseignant.id,
+      matiereId: matiere.id,
+      recurrent: false,
+    });
+
+    // Créneau 2 (autre salle)
+    const c2 = await createCreneau({
+      semaine: lundi,
+      jour: "lundi",
+      heureDebut: "10:00",
+      heureFin: "12:00",
+      salle: "B202",
+      intitule: "Cours 2",
+      groupeId: groupe.id,
+      enseignantId: enseignant.id,
+      matiereId: matiere.id,
+      recurrent: false,
+    });
+
+    if (!c1.success || !c2.success) throw new Error("setup failed");
+
+    // Tenter de déplacer c2 sur l'horaire de c1 dans la même salle
+    const result = await updateCreneau(c2.creneaux[0].id, enseignant.id, {
+      heureDebut: "08:00",
+      heureFin: "10:00",
+      salle: "A101",
+    });
+
+    expect(result.success).toBe(false);
+    if (result.success) return;
+    expect(result.error).toBe("CONFLIT_SALLE");
   });
 
   it("refuse la mise à jour si l'enseignant n'est pas le propriétaire", async () => {
