@@ -249,6 +249,8 @@ export function ForgeSection({
       className={`forge-section${className ? ` ${className}` : ""}`}
       style={{ background: bg ?? C.bg }}
     >
+      <div style={forgeGrid} />
+      {withScanLines && <div style={scanLines} />}
       <div className={`forge-container px-4 md:px-8 ${innerClassName}`}>
         {children}
       </div>

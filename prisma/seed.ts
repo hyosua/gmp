@@ -28,6 +28,7 @@ async function main() {
     "supportDeCours",
     "projetTuteure",
     "offreAlternance",
+    "matiereEnseignant",
     "matiere",
     "uE",
     "user",
@@ -160,6 +161,23 @@ async function main() {
   }
   const matieres = await prisma.matiere.findMany();
 
+  console.log("--- Affectation des Matières aux Enseignants ---");
+  for (let i = 0; i < enseignants.length; i++) {
+    // Chaque enseignant aura 2 matières
+    await prisma.matiereEnseignant.create({
+      data: {
+        enseignantId: enseignants[i].id,
+        matiereId: matieres[(i * 2) % matieres.length].id,
+      },
+    });
+    await prisma.matiereEnseignant.create({
+      data: {
+        enseignantId: enseignants[i].id,
+        matiereId: matieres[(i * 2 + 1) % matieres.length].id,
+      },
+    });
+  }
+
   console.log("--- Création des Notes ---");
   for (let i = 0; i < 5; i++) {
     await prisma.note.create({
@@ -175,11 +193,16 @@ async function main() {
   }
 
   console.log("--- Création des Emplois du Temps ---");
-  const jours = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi"];
+  const jours = ["lundi", "mardi", "mercredi", "jeudi", "vendredi"];
+  const startOfThisWeek = new Date();
+  const day = startOfThisWeek.getUTCDay() || 7; // Lundi=1, Dimanche=7
+  startOfThisWeek.setUTCDate(startOfThisWeek.getUTCDate() - day + 1);
+  startOfThisWeek.setUTCHours(0, 0, 0, 0);
+
   for (let i = 0; i < 5; i++) {
     await prisma.emploiDuTemps.create({
       data: {
-        semaine: new Date(),
+        semaine: startOfThisWeek,
         jour: jours[i],
         heureDebut: "08:30",
         heureFin: "10:30",
@@ -187,6 +210,7 @@ async function main() {
         intitule: `Cours de ${matieres[i % matieres.length].nom}`,
         groupeId: groupes[i % groupes.length].id,
         enseignantId: enseignants[i % enseignants.length].id,
+        matiereId: matieres[i % matieres.length].id,
       },
     });
   }

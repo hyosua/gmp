@@ -4,62 +4,88 @@ MCD - Site web département GMP
 ENTITES ET ATTRIBUTS
 ---------------------
 
-UTILISATEUR
-  - id_utilisateur (clé)
-  - email
+UTILISATEUR (User)
+  - id_utilisateur (cuid)
+  - email (unique)
   - mot_de_passe
   - nom
   - prenom
   - role (ETUDIANT | ENSEIGNANT | ENTREPRISE | ADMIN)
-  - parcours (SIMULATION_REALITE_VIRTUELLE | CONCEPTION_PRODUCTION_DURABLE | NON_DEFINI)
+  - actif (Boolean, par défaut true)
+  - parcours (SIMULATION_REALITE_VIRTUELLE | CONCEPTION_PRODUCTION_DURABLE | LP_MIE | LP_MIEF | LP_MRI | NON_DEFINI)
   - type_formation (INITIALE | ALTERNANCE)
+  - annee_promotion (Int, par défaut 1)
+  - promesse_embauche (Boolean, par défaut false)
+  - date_creation (DateTime)
+  - date_mise_a_jour (DateTime)
 
-GROUPE
-  - id_groupe (clé)
+RESET_TOKEN (ResetToken)
+  - id_token (cuid)
+  - token (unique)
+  - date_expiration (DateTime)
+
+GROUPE (Groupe)
+  - id_groupe (cuid)
   - nom (ex: "TD1", "TP2A", "Promo BUT2")
   - type (CM | TD | TP)
+  - annee_scolaire (String)
 
-MATIERE
-  - id_matiere (clé)
+UE (UE - Unité d'Enseignement)
+  - id_ue (cuid)
   - nom
-  - code
+  - code (unique)
+  - coefficient (Float)
 
-NOTE
-  - id_note (clé)
-  - valeur (0-20)
-  - date_depot
+MATIERE (Matiere)
+  - id_matiere (cuid)
+  - nom
+  - code (unique)
 
-EMPLOI_DU_TEMPS
-  - id_creneau (clé)
-  - jour
-  - heure_debut
-  - heure_fin
+NOTE (Note)
+  - id_note (cuid)
+  - valeur (Float)
+  - semestre (Int)
+  - annee (Int)
+  - date_depot (DateTime)
+
+EMPLOI_DU_TEMPS (EmploiDuTemps)
+  - id_creneau (cuid)
+  - semaine (DateTime)
+  - jour (String)
+  - heure_debut (String)
+  - heure_fin (String)
   - salle
   - intitule
+  - recurrent (Boolean)
+  - recurrence_fin (DateTime, optionnel)
 
-SUPPORT_COURS
-  - id_support (clé)
+SUPPORT_COURS (SupportDeCours)
+  - id_support (cuid)
   - titre
   - chemin_fichier
   - taille
-  - date_depot
+  - date_depot (DateTime)
 
-PROJET_TUTEURE
-  - id_projet (clé)
+PROJET_TUTEURE (ProjetTuteure)
+  - id_projet (cuid)
   - titre
   - description
-  - prerequis
-  - nb_etudiants
-  - date_creation
+  - prerequis (optionnel)
+  - nb_etudiants (Int, par défaut 1)
+  - statut (PENDING | PUBLISHED | REJECTED)
+  - date_creation (DateTime)
+  - date_mise_a_jour (DateTime)
 
-OFFRE_ALTERNANCE
-  - id_offre (clé)
+OFFRE_ALTERNANCE (OffreAlternance)
+  - id_offre (cuid)
   - poste
   - description
   - duree
-  - remuneration
-  - prerequis
-  - date_creation
+  - remuneration (optionnel)
+  - prerequis (optionnel)
+  - statut (PENDING | PUBLISHED | REJECTED)
+  - date_creation (DateTime)
+  - date_mise_a_jour (DateTime)
 
 
 ASSOCIATIONS
@@ -73,9 +99,13 @@ DEPOSER_NOTE
   - UTILISATEUR (enseignant) 1,n <---> 1,1 NOTE
   - Un enseignant dépose plusieurs notes
 
-CONCERNER
+CONCERNER_NOTE
   - NOTE 1,1 <---> 1,n MATIERE
   - Une note concerne une matière
+
+POSSEDER_UE
+  - UE 1,n <---> 1,1 MATIERE
+  - Une UE regroupe plusieurs matières
 
 APPARTENIR
   - UTILISATEUR (étudiant) 1,n <---> 1,n GROUPE
@@ -85,9 +115,17 @@ PLANIFIER
   - GROUPE 1,n <---> 1,1 EMPLOI_DU_TEMPS
   - Un groupe a plusieurs créneaux
 
-ENSEIGNER
+ENSEIGNER_CRENEAU
   - UTILISATEUR (enseignant) 1,n <---> 1,1 EMPLOI_DU_TEMPS
-  - Un enseignant est assigné à plusieurs créneaux
+  - Un enseignant est assigné à plusieurs créneaux d'EDT
+
+LIER_MATIERE
+  - MATIERE 1,n <---> 0,1 EMPLOI_DU_TEMPS
+  - Un créneau peut être spécifiquement lié à une matière
+
+HABILITER_ENSEIGNANT (MatiereEnseignant)
+  - UTILISATEUR (enseignant) 1,n <---> 1,n MATIERE
+  - Un enseignant est habilité à enseigner certaines matières (relation n-n)
 
 DEPOSER_SUPPORT
   - UTILISATEUR (enseignant) 1,n <---> 1,1 SUPPORT_COURS
@@ -101,15 +139,17 @@ PROPOSER_OFFRE
   - UTILISATEUR (entreprise) 1,n <---> 1,1 OFFRE_ALTERNANCE
   - Une entreprise propose plusieurs offres d'alternance
 
+REINITIALISER
+  - UTILISATEUR 1,1 <---> 1,n RESET_TOKEN
+  - Un utilisateur peut avoir plusieurs jetons de réinitialisation
 
-NOTES LOOPING
--------------
 
-- UTILISATEUR est une entité unique avec attribut role (pas de sous-entités)
-- Les attributs parcours et type_formation ne concernent que les étudiants (null pour les autres rôles)
-- NOTE est une entité à part entière (pas une association) car elle a ses propres attributs
-- RECEVOIR et DEPOSER_NOTE partent toutes deux de UTILISATEUR vers NOTE
-  => préciser les rôles "étudiant" et "enseignant" sur les pattes dans Looping
-- APPARTENIR est une association n,n entre UTILISATEUR et GROUPE (table de jointure en SQL)
-- EMPLOI_DU_TEMPS est lié à GROUPE (pas à UTILISATEUR directement)
-  => un étudiant voit les créneaux de ses groupes, un enseignant voit les créneaux où il est assigné
+NOTES LOOPING / PRISMA
+-----------------------
+
+- UTILISATEUR centralise tous les rôles avec RBAC via l'attribut role.
+- UE est l'unité structurante parente des MATIERES (relation 1-n).
+- NOTE est une entité pivot avec ses propres attributs de contexte (semestre, annee).
+- HABILITER_ENSEIGNANT (table MatiereEnseignant) définit les compétences pédagogiques.
+- EMPLOI_DU_TEMPS est lié à la fois au GROUPE (pour l'affichage étudiant), à l'ENSEIGNANT, et optionnellement à la MATIERE.
+- STATUT (PENDING, etc.) permet un workflow de validation admin pour les contenus externes.

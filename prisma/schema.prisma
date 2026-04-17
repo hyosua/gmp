@@ -62,6 +62,7 @@ model User {
   offres           OffreAlternance[]
   groupes          Groupe[]          @relation("GroupeEtudiants")
   resetTokens      ResetToken[]
+  matieres         MatiereEnseignant[]
 }
 
 model ResetToken {
@@ -99,7 +100,18 @@ model Matiere {
   ue    UE     @relation(fields: [ueId], references: [id])
   ueId  String
 
-  notes Note[]
+  notes            Note[]
+  enseignants      MatiereEnseignant[]
+  emploisDuTemps   EmploiDuTemps[]
+}
+
+model MatiereEnseignant {
+  enseignant   User    @relation(fields: [enseignantId], references: [id])
+  enseignantId String
+  matiere      Matiere @relation(fields: [matiereId], references: [id])
+  matiereId    String
+
+  @@id([enseignantId, matiereId])
 }
 
 model Note {
@@ -120,19 +132,24 @@ model Note {
 }
 
 model EmploiDuTemps {
-  id         String   @id @default(cuid())
-  semaine    DateTime
-  jour       String
-  heureDebut String
-  heureFin   String
-  salle      String
-  intitule   String
+  id            String    @id @default(cuid())
+  semaine       DateTime
+  jour          String
+  heureDebut    String
+  heureFin      String
+  salle         String
+  intitule      String
+  recurrent     Boolean   @default(false)
+  recurrenceFin DateTime?
 
-  groupe       Groupe @relation(fields: [groupeId], references: [id])
+  groupe       Groupe  @relation(fields: [groupeId], references: [id])
   groupeId     String
 
-  enseignant   User   @relation(fields: [enseignantId], references: [id])
+  enseignant   User    @relation(fields: [enseignantId], references: [id])
   enseignantId String
+
+  matiere      Matiere @relation(fields: [matiereId], references: [id])
+  matiereId    String
 }
 
 model SupportDeCours {
