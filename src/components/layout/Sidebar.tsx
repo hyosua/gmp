@@ -30,19 +30,94 @@ type NavItem = {
   icon: React.ElementType;
 };
 
-const mainNav: NavItem[] = [
-  { label: "Tableau de bord", href: "/dashboard", icon: LayoutDashboard },
-  { label: "Notes", href: "/dashboard/notes", icon: BookOpen },
-  { label: "Emploi du temps", href: "/dashboard/edt", icon: Calendar },
-  { label: "Cours", href: "/dashboard/cours", icon: GraduationCap },
-  { label: "Projets tuteurés", href: "/dashboard/projets", icon: FolderOpen },
-  { label: "Offres", href: "/dashboard/offres", icon: Briefcase },
+const adminNav: NavItem[] = [
+  { label: "Utilisateurs", href: "/admin", icon: Users },
+  { label: "Paramètres", href: "/admin/settings", icon: Settings },
 ];
 
-const adminNav: NavItem[] = [
-  { label: "Utilisateurs", href: "/dashboard/admin/users", icon: Users },
-  { label: "Paramètres", href: "/dashboard/admin/settings", icon: Settings },
-];
+function getNavigation(role?: string): NavItem[] {
+  switch (role) {
+    case "ETUDIANT":
+      return [
+        {
+          label: "Tableau de bord",
+          href: "/espace-etudiant",
+          icon: LayoutDashboard,
+        },
+        {
+          label: "Emploi du temps",
+          href: "/espace-etudiant/emploi-du-temps",
+          icon: Calendar,
+        },
+        { label: "Notes", href: "/espace-etudiant/notes", icon: BookOpen },
+        {
+          label: "Supports de cours",
+          href: "/espace-etudiant/supports-de-cours",
+          icon: GraduationCap,
+        },
+        {
+          label: "Projets tuteurés",
+          href: "/espace-etudiant/projets-tuteurs",
+          icon: FolderOpen,
+        },
+        {
+          label: "Offres",
+          href: "/espace-etudiant/offres-alternance",
+          icon: Briefcase,
+        },
+      ];
+    case "ENSEIGNANT":
+      return [
+        {
+          label: "Tableau de bord",
+          href: "/espace-enseignant",
+          icon: LayoutDashboard,
+        },
+        {
+          label: "Emploi du temps",
+          href: "/espace-enseignant/emploi-du-temps",
+          icon: Calendar,
+        },
+        {
+          label: "Saisie des notes",
+          href: "/espace-enseignant/notes",
+          icon: BookOpen,
+        },
+        {
+          label: "Dépôt de cours",
+          href: "/espace-enseignant/supports-de-cours",
+          icon: GraduationCap,
+        },
+      ];
+    case "ENTREPRISE":
+      return [
+        {
+          label: "Tableau de bord",
+          href: "/espace-entreprise",
+          icon: LayoutDashboard,
+        },
+        {
+          label: "Projets tuteurés",
+          href: "/espace-entreprise/projets-tuteurs",
+          icon: FolderOpen,
+        },
+        {
+          label: "Offres alternance",
+          href: "/espace-entreprise/offres-alternance",
+          icon: Briefcase,
+        },
+      ];
+    case "ADMIN":
+      return [
+        { label: "Tableau de bord", href: "/admin", icon: LayoutDashboard },
+        ...adminNav,
+      ];
+    default:
+      return [
+        { label: "Tableau de bord", href: "/dashboard", icon: LayoutDashboard },
+      ];
+  }
+}
 
 function SidebarNavItem({
   item,
@@ -52,7 +127,14 @@ function SidebarNavItem({
   collapsed: boolean;
 }) {
   const pathname = usePathname();
-  const isActive = pathname === item.href;
+  const isActive =
+    pathname === item.href ||
+    (item.href !== "/dashboard" &&
+      item.href !== "/admin" &&
+      item.href !== "/espace-etudiant" &&
+      item.href !== "/espace-enseignant" &&
+      item.href !== "/espace-entreprise" &&
+      pathname.startsWith(item.href));
   const Icon = item.icon;
 
   return (
@@ -86,6 +168,7 @@ function SidebarContent({
 }) {
   const [isPending, startTransition] = useTransition();
   const user = session?.user;
+  const navItems = getNavigation(user?.role);
   const initials = user?.name
     ? user.name
         .split(" ")
@@ -141,21 +224,31 @@ function SidebarContent({
 
       {/* Navigation */}
       <nav className="flex-1 overflow-y-auto py-2 flex flex-col gap-[2px]">
-        {mainNav.map((item) => (
+        {navItems.map((item) => (
           <SidebarNavItem key={item.href} item={item} collapsed={collapsed} />
         ))}
 
-        {/* Séparateur admin */}
-        {!collapsed ? (
-          <div className="mt-3 mb-1 ml-[0.875rem] text-[0.65rem] font-mono text-muted tracking-[0.1em] uppercase">
-            Administration
-          </div>
-        ) : (
-          <div className="h-px bg-border mx-3 my-2" />
+        {/* Section Administration uniquement pour ADMIN */}
+        {user?.role === "ADMIN" && (
+          <>
+            {!collapsed ? (
+              <div className="mt-3 mb-1 ml-[0.875rem] text-[0.65rem] font-mono text-muted tracking-[0.1em] uppercase">
+                Système
+              </div>
+            ) : (
+              <div className="h-px bg-border mx-3 my-2" />
+            )}
+            {adminNav
+              .filter((item) => item.label !== "Tableau de bord")
+              .map((item) => (
+                <SidebarNavItem
+                  key={item.href}
+                  item={item}
+                  collapsed={collapsed}
+                />
+              ))}
+          </>
         )}
-        {adminNav.map((item) => (
-          <SidebarNavItem key={item.href} item={item} collapsed={collapsed} />
-        ))}
       </nav>
 
       {/* Pied : utilisateur + actions */}
