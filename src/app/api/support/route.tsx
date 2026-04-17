@@ -19,7 +19,7 @@ export async function POST(req: Request) {
 
   const dossier = path.join(
     process.cwd(),
-    "src/app/(dashboard)/dashboard/cours/support",
+    "public/support",
   );
 
   const fichiers = await readdir(dossier);
@@ -37,7 +37,7 @@ export async function POST(req: Request) {
     const cours = await prisma.supportDeCours.create({
       data: {
         titre: nom,
-        cheminFichier: `src/app/(dashboard)/dashboard/cours/support${chemin}`,
+        cheminFichier: `public/support${chemin}`,
         taille: tailles,
         enseignantId: "cmo2xtsya0001covurps87zi5",
       },
@@ -48,7 +48,7 @@ export async function POST(req: Request) {
 
     const filePath = path.join(
       process.cwd(),
-      "src/app/(dashboard)/dashboard/cours/support",
+      "public/support",
       nom,
     );
 
