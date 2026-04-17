@@ -193,11 +193,16 @@ async function main() {
   }
 
   console.log("--- Création des Emplois du Temps ---");
-  const jours = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi"];
+  const jours = ["lundi", "mardi", "mercredi", "jeudi", "vendredi"];
+  const startOfThisWeek = new Date();
+  const day = startOfThisWeek.getUTCDay() || 7; // Lundi=1, Dimanche=7
+  startOfThisWeek.setUTCDate(startOfThisWeek.getUTCDate() - day + 1);
+  startOfThisWeek.setUTCHours(0, 0, 0, 0);
+
   for (let i = 0; i < 5; i++) {
     await prisma.emploiDuTemps.create({
       data: {
-        semaine: new Date(),
+        semaine: startOfThisWeek,
         jour: jours[i],
         heureDebut: "08:30",
         heureFin: "10:30",
