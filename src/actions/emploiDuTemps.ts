@@ -24,7 +24,14 @@ type CreateCreneauData = {
 
 type CreateCreneauResult =
   | { success: true; creneaux: { id: string; salle: string; semaine: Date }[] }
-  | { success: false; error: "CONFLIT_SALLE" | "UNAUTHORIZED" };
+  | {
+      success: false;
+      error:
+        | "CONFLIT_SALLE"
+        | "CONFLIT_ENSEIGNANT"
+        | "CONFLIT_GROUPE"
+        | "UNAUTHORIZED";
+    };
 
 export async function createCreneau(
   data: CreateCreneauData,
@@ -37,6 +44,8 @@ export async function createCreneau(
     salle,
     recurrent,
     recurrenceFin,
+    enseignantId,
+    groupeId,
     ...rest
   } = data;
 
@@ -56,18 +65,28 @@ export async function createCreneau(
     const fin = new Date(debut);
     fin.setUTCDate(fin.getUTCDate() + 7);
 
-    const conflit = await prisma.emploiDuTemps.findFirst({
-      where: {
-        salle,
-        jour,
-        semaine: { gte: debut, lt: fin },
-        AND: [
-          { heureDebut: { lt: heureFin } },
-          { heureFin: { gt: heureDebut } },
-        ],
-      },
+    // Vérifier les conflits
+    const baseFilter = {
+      jour,
+      semaine: { gte: debut, lt: fin },
+      AND: [{ heureDebut: { lt: heureFin } }, { heureFin: { gt: heureDebut } }],
+    };
+
+    const conflitSalle = await prisma.emploiDuTemps.findFirst({
+      where: { salle, ...baseFilter },
     });
-    if (conflit) return { success: false, error: "CONFLIT_SALLE" };
+    if (conflitSalle) return { success: false, error: "CONFLIT_SALLE" };
+
+    const conflitEnseignant = await prisma.emploiDuTemps.findFirst({
+      where: { enseignantId, ...baseFilter },
+    });
+    if (conflitEnseignant)
+      return { success: false, error: "CONFLIT_ENSEIGNANT" };
+
+    const conflitGroupe = await prisma.emploiDuTemps.findFirst({
+      where: { groupeId, ...baseFilter },
+    });
+    if (conflitGroupe) return { success: false, error: "CONFLIT_GROUPE" };
   }
 
   const creneaux = await prisma.$transaction(
@@ -81,6 +100,8 @@ export async function createCreneau(
           salle,
           recurrent,
           recurrenceFin: recurrenceFin ?? null,
+          enseignantId,
+          groupeId,
           ...rest,
         },
         select: { id: true, salle: true, semaine: true },
@@ -109,12 +130,53 @@ export async function updateCreneau(
   >,
 ): Promise<
   | { success: true; creneau: { id: string; salle: string } }
-  | { success: false; error: "UNAUTHORIZED" }
+  | {
+      success: false;
+      error:
+        | "UNAUTHORIZED"
+        | "CONFLIT_SALLE"
+        | "CONFLIT_ENSEIGNANT"
+        | "CONFLIT_GROUPE";
+    }
 > {
   const existing = await prisma.emploiDuTemps.findUnique({ where: { id } });
   if (!existing?.enseignantId || existing.enseignantId !== enseignantId) {
     return { success: false, error: "UNAUTHORIZED" };
   }
+
+  // Si on modifie les horaires, la salle ou le groupe, on vérifie les conflits
+  const jour = data.jour || existing.jour;
+  const heureDebut = data.heureDebut || existing.heureDebut;
+  const heureFin = data.heureFin || existing.heureFin;
+  const salle = data.salle || existing.salle;
+  const groupeId = data.groupeId || existing.groupeId;
+
+  const debut = new Date(existing.semaine);
+  debut.setUTCHours(0, 0, 0, 0);
+  const fin = new Date(debut);
+  fin.setUTCDate(fin.getUTCDate() + 7);
+
+  const baseFilter = {
+    id: { not: id }, // Exclure le créneau actuel
+    jour,
+    semaine: { gte: debut, lt: fin },
+    AND: [{ heureDebut: { lt: heureFin } }, { heureFin: { gt: heureDebut } }],
+  };
+
+  const conflitSalle = await prisma.emploiDuTemps.findFirst({
+    where: { salle, ...baseFilter },
+  });
+  if (conflitSalle) return { success: false, error: "CONFLIT_SALLE" };
+
+  const conflitEnseignant = await prisma.emploiDuTemps.findFirst({
+    where: { enseignantId, ...baseFilter },
+  });
+  if (conflitEnseignant) return { success: false, error: "CONFLIT_ENSEIGNANT" };
+
+  const conflitGroupe = await prisma.emploiDuTemps.findFirst({
+    where: { groupeId, ...baseFilter },
+  });
+  if (conflitGroupe) return { success: false, error: "CONFLIT_GROUPE" };
 
   const creneau = await prisma.emploiDuTemps.update({
     where: { id },
