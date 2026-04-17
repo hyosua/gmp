@@ -46,7 +46,9 @@ export default async function PageEmploiDuTempsEtudiant({
   // 4. Formater pour le composant (s'assurer que les types correspondent)
   const creneaux = creneauxRaw.map((c) => ({
     ...c,
-    matiere: c.matiere ? { nom: c.matiere.nom, code: c.matiere.code } : null,
+    matiere: c.matiere
+      ? { id: c.matiere.id, nom: c.matiere.nom, code: c.matiere.code }
+      : null,
   }));
 
   return (

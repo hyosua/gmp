@@ -205,6 +205,7 @@ describe("createCreneau", () => {
       intitule: "Autre cours",
       groupeId: groupe.id,
       enseignantId: enseignant.id,
+      matiereId: matiere.id,
       recurrent: false,
     });
 
@@ -264,7 +265,7 @@ describe("createCreneau", () => {
 
 describe("updateCreneau", () => {
   it("met à jour la salle d'un créneau existant", async () => {
-    const { enseignant, groupe } = await createFixtures();
+    const { enseignant, groupe, matiere } = await createFixtures();
     const created = await createCreneau({
       semaine: new Date("2025-09-01"),
       jour: "lundi",
@@ -274,6 +275,7 @@ describe("updateCreneau", () => {
       intitule: "RDM",
       groupeId: groupe.id,
       enseignantId: enseignant.id,
+      matiereId: matiere.id,
       recurrent: false,
     });
     if (!created.success) throw new Error("setup failed");
@@ -288,7 +290,7 @@ describe("updateCreneau", () => {
   });
 
   it("refuse la mise à jour si l'enseignant n'est pas le propriétaire", async () => {
-    const { enseignant, groupe } = await createFixtures();
+    const { enseignant, groupe, matiere } = await createFixtures();
     const autreEnseignant = await prismaTest.user.create({
       data: {
         email: "autre@gmp.fr",
@@ -308,6 +310,7 @@ describe("updateCreneau", () => {
       intitule: "RDM",
       groupeId: groupe.id,
       enseignantId: enseignant.id,
+      matiereId: matiere.id,
       recurrent: false,
     });
     if (!created.success) throw new Error("setup failed");
@@ -326,7 +329,7 @@ describe("updateCreneau", () => {
 
 describe("deleteCreneau", () => {
   it("supprime un créneau dont on est propriétaire", async () => {
-    const { enseignant, groupe } = await createFixtures();
+    const { enseignant, groupe, matiere } = await createFixtures();
     const created = await createCreneau({
       semaine: new Date("2025-09-01"),
       jour: "lundi",
@@ -336,6 +339,7 @@ describe("deleteCreneau", () => {
       intitule: "RDM",
       groupeId: groupe.id,
       enseignantId: enseignant.id,
+      matiereId: matiere.id,
       recurrent: false,
     });
     if (!created.success) throw new Error("setup failed");
@@ -348,7 +352,7 @@ describe("deleteCreneau", () => {
   });
 
   it("refuse la suppression si l'enseignant n'est pas le propriétaire", async () => {
-    const { enseignant, groupe } = await createFixtures();
+    const { enseignant, groupe, matiere } = await createFixtures();
     const imposteur = await prismaTest.user.create({
       data: {
         email: "imposteur@gmp.fr",
@@ -368,6 +372,7 @@ describe("deleteCreneau", () => {
       intitule: "RDM",
       groupeId: groupe.id,
       enseignantId: enseignant.id,
+      matiereId: matiere.id,
       recurrent: false,
     });
     if (!created.success) throw new Error("setup failed");
