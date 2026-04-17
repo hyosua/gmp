@@ -21,6 +21,7 @@ interface Creneau {
 interface CalendrierSemaineProps {
   creneaux: Creneau[];
   dateDebut: Date;
+  currentUserId?: string;
   onCellClick?: (jour: string, heure: string) => void;
   onEventClick?: (creneau: Creneau) => void;
 }
@@ -31,6 +32,7 @@ const HEURES = Array.from({ length: 13 }, (_, i) => i + 8); // 8h à 20h
 export default function CalendrierSemaine({
   creneaux,
   dateDebut,
+  currentUserId,
   onCellClick,
   onEventClick,
 }: CalendrierSemaineProps) {
@@ -93,13 +95,21 @@ export default function CalendrierSemaine({
                   <button
                     key={`${j}-${heure}`}
                     onClick={() => onCellClick(j, heure)}
-                    className="hover:bg-primary/5 transition-colors z-0"
+                    className="group relative hover:bg-primary/20 transition-all z-0 border border-transparent hover:border-primary/50 hover:shadow-[inset_0_0_20px_rgba(var(--c-primary-rgb),0.15)]"
                     style={{
                       gridRow: getGridRow(heure),
                       gridColumn: colIdx + 2,
                     }}
                     title={`Réserver le ${j} à ${heure}`}
-                  />
+                  >
+                    {/* Feedback visuel au hover accentué */}
+                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 flex items-center justify-center pointer-events-none">
+                      <div className="w-[calc(100%-4px)] h-[calc(100%-4px)] border-2 border-dashed border-primary/40 scale-95 group-hover:scale-100 transition-all duration-200" />
+                      <span className="text-[14px] font-black text-primary/40">
+                        +
+                      </span>
+                    </div>
+                  </button>
                 );
               }),
             ),
@@ -119,6 +129,7 @@ export default function CalendrierSemaine({
           const rowStart = getGridRow(c.heureDebut);
           const rowEnd = getGridRow(c.heureFin);
           const col = getGridCol(c.jour);
+          const isMine = currentUserId === c.enseignant.id;
 
           if (col === -1) return null;
 
@@ -126,17 +137,34 @@ export default function CalendrierSemaine({
             <div
               key={c.id}
               onClick={() => onEventClick?.(c)}
-              className={`group relative flex flex-col overflow-hidden border border-primary/40 bg-primary/5 p-2 transition-all hover:bg-primary/10 hover:shadow-[0_0_15px_rgba(var(--c-primary-rgb),0.2)] ${onEventClick ? "cursor-pointer" : ""}`}
+              className={`group relative flex flex-col overflow-hidden border transition-all ${
+                isMine
+                  ? "border-primary bg-primary/10 shadow-[0_0_25px_rgba(var(--c-primary-rgb),0.2)] z-30"
+                  : "border-secondary/40 bg-secondary/5 z-20"
+              } p-2 ${
+                isMine
+                  ? "hover:bg-primary/20 hover:shadow-[0_0_30px_rgba(var(--c-primary-rgb),0.3)]"
+                  : "hover:bg-secondary/10 hover:shadow-[0_0_20px_var(--c-secondary-25)]"
+              } ${onEventClick ? "cursor-pointer" : ""}`}
               style={{
                 gridRow: `${rowStart} / ${rowEnd}`,
                 gridColumn: col,
-                zIndex: 20,
               }}
             >
-              <div className="absolute top-0 left-0 h-full w-1 bg-primary shadow-[0_0_8px_var(--c-primary)]" />
+              <div
+                className={`absolute top-0 left-0 h-full w-1 ${
+                  isMine
+                    ? "bg-primary shadow-[0_0_12px_var(--c-primary)] w-1.5"
+                    : "bg-secondary shadow-[0_0_8px_var(--c-secondary)]"
+                }`}
+              />
 
-              <div className="flex justify-between items-start mb-1">
-                <span className="text-[10px] font-black uppercase tracking-widest text-primary truncate pr-1">
+              <div className="flex justify-between items-start mb-1 relative z-10">
+                <span
+                  className={`text-[10px] font-black uppercase tracking-widest truncate pr-1 ${
+                    isMine ? "text-primary" : "text-secondary"
+                  }`}
+                >
                   {c.matiere?.code || c.intitule}
                 </span>
                 <span className="text-[9px] font-mono text-muted">
@@ -144,11 +172,17 @@ export default function CalendrierSemaine({
                 </span>
               </div>
 
-              <span className="truncate text-[11px] font-bold text-secondary mb-1">
+              <span
+                className={`truncate text-[11px] font-bold text-secondary mb-1 relative z-10 ${
+                  isMine
+                    ? "underline decoration-primary/30 underline-offset-4"
+                    : ""
+                }`}
+              >
                 {c.matiere?.nom || c.intitule}
               </span>
 
-              <div className="mt-auto flex flex-wrap gap-1 text-[9px] font-mono text-muted uppercase">
+              <div className="mt-auto flex flex-wrap gap-1 text-[9px] font-mono text-muted uppercase relative z-10">
                 <span className="border border-border/50 px-1 bg-bg-card/50">
                   {c.salle}
                 </span>
@@ -157,7 +191,7 @@ export default function CalendrierSemaine({
                 </span>
               </div>
 
-              <div className="mt-1 text-[9px] italic text-muted truncate border-t border-border/20 pt-1">
+              <div className="mt-1 text-[9px] italic text-muted truncate border-t border-border/20 pt-1 relative z-10">
                 {c.enseignant.prenom[0]}. {c.enseignant.nom}
               </div>
             </div>
