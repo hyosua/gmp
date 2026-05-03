@@ -31,8 +31,6 @@ interface CreneauModalProps {
     intitule?: string;
     matiereId?: string;
     groupeId?: string;
-    recurrent?: boolean;
-    recurrenceFin?: Date | string;
     matiere?: { id: string; nom: string; code: string } | null;
     groupe?: { id: string; nom: string; type: string } | null;
   };
@@ -47,7 +45,6 @@ export default function CreneauModal({
   creneauInitial,
   matieres,
   groupes,
-  enseignantId,
   semaine,
 }: CreneauModalProps) {
   const router = useRouter();
@@ -64,10 +61,6 @@ export default function CreneauModal({
     heureDebut: creneauInitial.heureDebut || "08:00",
     heureFin: creneauInitial.heureFin || "10:00",
     intitule: creneauInitial.intitule || "",
-    recurrent: creneauInitial.recurrent || false,
-    recurrenceFin: creneauInitial.recurrenceFin
-      ? new Date(creneauInitial.recurrenceFin).toISOString().split("T")[0]
-      : "",
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -77,12 +70,15 @@ export default function CreneauModal({
 
     try {
       if (isEditing && creneauInitial.id) {
-        const res = await updateCreneau(creneauInitial.id, enseignantId, {
-          ...formData,
-          // Conversion de la date si présente
-          recurrenceFin: formData.recurrenceFin
-            ? new Date(formData.recurrenceFin)
-            : undefined,
+        const res = await updateCreneau(creneauInitial.id, {
+          semaine,
+          jour: formData.jour,
+          heureDebut: formData.heureDebut,
+          heureFin: formData.heureFin,
+          salle: formData.salle,
+          intitule: formData.intitule,
+          groupeId: formData.groupeId,
+          matiereId: formData.matiereId,
         });
         if (res.success) {
           router.refresh();
@@ -99,12 +95,14 @@ export default function CreneauModal({
         }
       } else if (!isEditing) {
         const res = await createCreneau({
-          ...formData,
           semaine,
-          enseignantId,
-          recurrenceFin: formData.recurrenceFin
-            ? new Date(formData.recurrenceFin)
-            : undefined,
+          jour: formData.jour,
+          heureDebut: formData.heureDebut,
+          heureFin: formData.heureFin,
+          salle: formData.salle,
+          intitule: formData.intitule,
+          groupeId: formData.groupeId,
+          matiereId: formData.matiereId,
         });
         if (res.success) {
           router.refresh();
@@ -135,7 +133,7 @@ export default function CreneauModal({
       return;
     setLoading(true);
     try {
-      const res = await deleteCreneau(creneauInitial.id, enseignantId);
+      const res = await deleteCreneau(creneauInitial.id);
       if (res.success) {
         router.refresh();
         onClose();
@@ -263,45 +261,6 @@ export default function CreneauModal({
               />
             </div>
           </div>
-
-          {/* Récurrence */}
-          {!isEditing && (
-            <div className="pt-4 border-t border-border/50 space-y-4">
-              <label className="flex items-center gap-2 cursor-pointer group">
-                <input
-                  type="checkbox"
-                  checked={formData.recurrent}
-                  onChange={(e) =>
-                    setFormData({ ...formData, recurrent: e.target.checked })
-                  }
-                  className="w-4 h-4 rounded border-border text-primary focus:ring-primary bg-bg-deep"
-                />
-                <span className="text-xs font-bold uppercase text-muted group-hover:text-secondary transition-colors">
-                  Répéter chaque semaine
-                </span>
-              </label>
-
-              {formData.recurrent && (
-                <div className="space-y-1 animate-in fade-in slide-in-from-top-1">
-                  <label className="text-[10px] font-mono text-muted uppercase">
-                    Jusqu&apos;au
-                  </label>
-                  <input
-                    required
-                    type="date"
-                    value={formData.recurrenceFin}
-                    onChange={(e) =>
-                      setFormData({
-                        ...formData,
-                        recurrenceFin: e.target.value,
-                      })
-                    }
-                    className="w-full bg-bg-deep border border-border p-2 text-sm text-secondary focus:border-primary outline-none"
-                  />
-                </div>
-              )}
-            </div>
-          )}
 
           {/* Boutons d'action */}
           <div className="flex gap-3 pt-6">
