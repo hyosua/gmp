@@ -206,7 +206,7 @@ async function main() {
         jour: jours[i],
         heureDebut: "08:30",
         heureFin: "10:30",
-        salle: `Salle ${100 + i}`,
+        salle: `${100 + i}`,
         intitule: `Cours de ${matieres[i % matieres.length].nom}`,
         groupeId: groupes[i % groupes.length].id,
         enseignantId: enseignants[i % enseignants.length].id,

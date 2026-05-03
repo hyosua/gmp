@@ -41,13 +41,14 @@ export async function createCreneau(
     jour,
     heureDebut,
     heureFin,
-    salle,
+    salle: salleRaw,
     recurrent,
     recurrenceFin,
     enseignantId,
     groupeId,
     ...rest
   } = data;
+  const salle = salleRaw.trim().toUpperCase();
 
   const semaines: Date[] = [semaine];
   if (recurrent && recurrenceFin) {
@@ -148,7 +149,7 @@ export async function updateCreneau(
   const jour = data.jour || existing.jour;
   const heureDebut = data.heureDebut || existing.heureDebut;
   const heureFin = data.heureFin || existing.heureFin;
-  const salle = data.salle || existing.salle;
+  const salle = (data.salle ?? existing.salle).trim().toUpperCase();
   const groupeId = data.groupeId || existing.groupeId;
 
   const debut = new Date(existing.semaine);
@@ -180,7 +181,7 @@ export async function updateCreneau(
 
   const creneau = await prisma.emploiDuTemps.update({
     where: { id },
-    data,
+    data: { ...data, ...(data.salle !== undefined && { salle }) },
     select: { id: true, salle: true },
   });
 
