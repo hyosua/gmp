@@ -36,10 +36,10 @@ export default function CalendrierSemaine({
   onCellClick,
   onEventClick,
 }: CalendrierSemaineProps) {
-  // Calcul de la position dans la grille CSS (8h = ligne 2, 1h = 4 spans de 15min)
+  // Calcul de la position dans la grille CSS (8h = ligne 2, 1h = 2 spans de 30min)
   const getGridRow = (time: string) => {
     const [h, m] = time.split(":").map(Number);
-    const row = (h - 8) * 4 + 2 + Math.floor(m / 15);
+    const row = (h - 8) * 4 + Math.floor(m / 15) + 2;
     return Math.max(2, Math.min(row, 50)); // Sécurité pour rester dans la grille (8h-20h)
   };
 
@@ -89,15 +89,16 @@ export default function CalendrierSemaine({
         {onCellClick &&
           JOURS.map((j, colIdx) =>
             HEURES.map((h) =>
-              [0, 15, 30, 45].map((m) => {
+              [0, 30].map((m) => {
                 const heure = `${h.toString().padStart(2, "0")}:${m.toString().padStart(2, "0")}`;
+                const rowStart = getGridRow(heure);
                 return (
                   <button
                     key={`${j}-${heure}`}
                     onClick={() => onCellClick(j, heure)}
                     className="group relative hover:bg-primary/20 transition-all z-0 border border-transparent hover:border-primary/50 hover:shadow-[inset_0_0_20px_rgba(var(--c-primary-rgb),0.15)]"
                     style={{
-                      gridRow: getGridRow(heure),
+                      gridRow: `${rowStart} / span 2`,
                       gridColumn: colIdx + 2,
                     }}
                     title={`Réserver le ${j} à ${heure}`}
