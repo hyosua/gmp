@@ -7,7 +7,12 @@ type ConflitResult =
   | "CONFLIT_SALLE"
   | "CONFLIT_ENSEIGNANT"
   | "CONFLIT_GROUPE"
+  | "HORAIRES_INVALIDES"
   | null;
+
+function horairesValides(heureDebut: string, heureFin: string): boolean {
+  return heureDebut < heureFin;
+}
 
 type VerifierConflitsParams = {
   semaine: Date;
@@ -97,6 +102,9 @@ export async function createCreneau(data: CreateCreneauData) {
   const enseignantId = session.user.id;
   const salle = data.salle.trim().toUpperCase();
 
+  if (!horairesValides(data.heureDebut, data.heureFin))
+    return { success: false, error: "HORAIRES_INVALIDES" } as const;
+
   const conflit = await verifierConflits({ ...data, salle, enseignantId });
   if (conflit) return { success: false, error: conflit } as const;
 
@@ -141,6 +149,9 @@ export async function updateCreneau(id: string, data: UpdateCreneauData) {
     salle: (data.salle ?? existing.salle).trim().toUpperCase(),
     groupeId: data.groupeId ?? existing.groupeId,
   };
+
+  if (!horairesValides(merged.heureDebut, merged.heureFin))
+    return { success: false, error: "HORAIRES_INVALIDES" } as const;
 
   const conflit = await verifierConflits({
     ...merged,

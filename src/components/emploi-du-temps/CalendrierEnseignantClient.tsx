@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import CalendrierSemaine from "./CalendrierSemaine";
 import CreneauModal from "./CreneauModal";
+import { AlertTriangle } from "lucide-react";
 
 interface Matiere {
   id: string;
@@ -46,6 +47,13 @@ export default function CalendrierEnseignantClient({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedCreneau, setSelectedCreneau] =
     useState<Partial<BaseCreneau> | null>(null);
+  const [ownershipError, setOwnershipError] = useState(false);
+
+  useEffect(() => {
+    if (!ownershipError) return;
+    const t = setTimeout(() => setOwnershipError(false), 3000);
+    return () => clearTimeout(t);
+  }, [ownershipError]);
 
   const handleCellClick = (jour: string, heure: string) => {
     // Calculer l'heure de fin par défaut (heure + 2h)
@@ -62,9 +70,8 @@ export default function CalendrierEnseignantClient({
   };
 
   const handleEventClick = (creneau: BaseCreneau) => {
-    // On ne permet la modification que si on est l'enseignant auteur
     if (creneau.enseignant.id !== enseignantId) {
-      alert("Vous ne pouvez modifier que vos propres créneaux.");
+      setOwnershipError(true);
       return;
     }
     setSelectedCreneau(creneau);
@@ -73,6 +80,12 @@ export default function CalendrierEnseignantClient({
 
   return (
     <>
+      {ownershipError && (
+        <div className="fixed top-4 right-4 z-[200] flex items-center gap-2 px-4 py-3 bg-bg-card border border-error/50 text-error text-xs font-bold uppercase shadow-xl">
+          <AlertTriangle className="w-4 h-4 shrink-0" />
+          Vous ne pouvez modifier que vos propres créneaux.
+        </div>
+      )}
       <CalendrierSemaine
         creneaux={initialCreneaux}
         dateDebut={dateDebut}

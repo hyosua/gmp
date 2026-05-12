@@ -89,6 +89,8 @@ export default function CreneauModal({
               CONFLIT_SALLE: "La salle est déjà occupée !",
               CONFLIT_ENSEIGNANT: "Vous avez déjà un cours sur ce créneau !",
               CONFLIT_GROUPE: "Ce groupe a déjà un cours sur ce créneau !",
+              HORAIRES_INVALIDES:
+                "L'heure de fin doit être après l'heure de début.",
               UNAUTHORIZED: "Non autorisé",
             }[res.error] || "Erreur lors de la modification";
           setError(errorMsg);
@@ -113,6 +115,8 @@ export default function CreneauModal({
               CONFLIT_SALLE: "La salle est déjà occupée !",
               CONFLIT_ENSEIGNANT: "Vous avez déjà un cours sur ce créneau !",
               CONFLIT_GROUPE: "Ce groupe a déjà un cours sur ce créneau !",
+              HORAIRES_INVALIDES:
+                "L'heure de fin doit être après l'heure de début.",
               UNAUTHORIZED: "Non autorisé",
             }[res.error] || "Erreur lors de la création";
           setError(errorMsg);
@@ -161,7 +165,7 @@ export default function CreneauModal({
 
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
           {error && (
-            <div className="flex items-center gap-2 p-3 bg-red-500/10 border border-red-500/50 text-red-500 text-xs font-bold uppercase mb-4">
+            <div className="flex items-center gap-2 p-3 bg-error/10 border border-error/50 text-error text-xs font-bold uppercase mb-4">
               <AlertTriangle className="w-4 h-4" />
               {error}
             </div>
@@ -269,7 +273,7 @@ export default function CreneauModal({
                 type="button"
                 onClick={handleDelete}
                 disabled={loading}
-                className="flex items-center gap-2 px-4 py-2 border border-red-500/50 text-red-500 text-xs font-black uppercase hover:bg-red-500/10 transition-all disabled:opacity-50"
+                className="flex items-center gap-2 px-4 py-2 border border-error/50 text-error text-xs font-black uppercase hover:bg-error/10 transition-all disabled:opacity-50"
               >
                 <Trash2 className="w-4 h-4" />
                 Supprimer
