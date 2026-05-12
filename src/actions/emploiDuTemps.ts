@@ -189,7 +189,7 @@ export async function getCreneauxSemaine(
   return prisma.emploiDuTemps.findMany({
     where: {
       semaine: { gte: debut, lt: fin },
-      ...(groupeIds?.length ? { groupeId: { in: groupeIds } } : {}),
+      ...(groupeIds !== undefined ? { groupeId: { in: groupeIds } } : {}),
     },
     include: {
       enseignant: { select: { id: true, nom: true, prenom: true } },
