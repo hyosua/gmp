@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import CalendrierSemaine from "./CalendrierSemaine";
+import CalendrierJour from "./CalendrierJour";
 import CreneauModal from "./CreneauModal";
 import { AlertTriangle } from "lucide-react";
 
@@ -86,13 +87,24 @@ export default function CalendrierEnseignantClient({
           Vous ne pouvez modifier que vos propres créneaux.
         </div>
       )}
-      <CalendrierSemaine
-        creneaux={initialCreneaux}
-        dateDebut={dateDebut}
-        currentUserId={enseignantId}
-        onCellClick={handleCellClick}
-        onEventClick={handleEventClick}
-      />{" "}
+      <div className="hidden md:block">
+        <CalendrierSemaine
+          creneaux={initialCreneaux}
+          dateDebut={dateDebut}
+          currentUserId={enseignantId}
+          onCellClick={handleCellClick}
+          onEventClick={handleEventClick}
+        />
+      </div>
+      <div className="md:hidden">
+        <CalendrierJour
+          creneaux={initialCreneaux}
+          dateDebut={dateDebut}
+          currentUserId={enseignantId}
+          onCellClick={handleCellClick}
+          onEventClick={handleEventClick}
+        />
+      </div>
       {isModalOpen && selectedCreneau && (
         <CreneauModal
           onClose={() => setIsModalOpen(false)}

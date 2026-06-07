@@ -2,6 +2,7 @@ import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { getCreneauxSemaine } from "@/actions/emploiDuTemps";
 import CalendrierSemaine from "@/components/emploi-du-temps/CalendrierSemaine";
+import CalendrierJour from "@/components/emploi-du-temps/CalendrierJour";
 import NavigationSemaine from "@/components/emploi-du-temps/NavigationSemaine";
 import { startOfWeek, parseISO, isValid } from "date-fns";
 import { redirect } from "next/navigation";
@@ -62,8 +63,15 @@ export default async function PageEmploiDuTempsEtudiant({
 
       <NavigationSemaine dateDebut={dateDebut} />
 
-      <div className="mt-8">
+      <div className="mt-8 hidden md:block">
         <CalendrierSemaine
+          creneaux={creneaux}
+          dateDebut={dateDebut}
+          currentUserId={session.user.id}
+        />
+      </div>
+      <div className="mt-8 md:hidden">
+        <CalendrierJour
           creneaux={creneaux}
           dateDebut={dateDebut}
           currentUserId={session.user.id}
