@@ -116,21 +116,22 @@ async function main() {
   });
 
   console.log("--- Création des Groupes ---");
+  // 1 CM (tous les étudiants), 2 TD, 2 TP — chaque étudiant dans 1 groupe par type
+  const groupesData = [
+    { nom: "CM1", type: TypeGroupe.CM, etudiants: etudiants },
+    { nom: "TD1", type: TypeGroupe.TD, etudiants: etudiants.slice(0, 3) },
+    { nom: "TD2", type: TypeGroupe.TD, etudiants: etudiants.slice(3) },
+    { nom: "TP1", type: TypeGroupe.TP, etudiants: etudiants.slice(0, 2) },
+    { nom: "TP2", type: TypeGroupe.TP, etudiants: etudiants.slice(2) },
+  ];
   const groupes = [];
-  for (let i = 1; i <= 5; i++) {
+  for (const { nom, type, etudiants: membres } of groupesData) {
     const groupe = await prisma.groupe.create({
       data: {
-        nom: `Groupe ${i}`,
-        type:
-          i % 3 === 0
-            ? TypeGroupe.CM
-            : i % 3 === 1
-              ? TypeGroupe.TD
-              : TypeGroupe.TP,
+        nom,
+        type,
         anneeScolaire: "2025-2026",
-        etudiants: {
-          connect: etudiants.map((e) => ({ id: e.id })),
-        },
+        etudiants: { connect: membres.map((e) => ({ id: e.id })) },
       },
     });
     groupes.push(groupe);
