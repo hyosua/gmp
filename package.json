@@ -10,7 +10,8 @@
     "prepare": "husky",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "db:reset": "prisma migrate reset --force && npx tsx prisma/seed.ts"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",
@@ -43,6 +44,7 @@
     "prettier": "^3.8.1",
     "prisma": "^7.6.0",
     "tailwindcss": "^4",
+    "tsx": "^4.22.4",
     "typedoc": "^0.28.18",
     "typescript": "^5",
     "vite-tsconfig-paths": "^6.1.1",
