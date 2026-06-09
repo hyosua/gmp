@@ -17,6 +17,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "GMP — IUT d'Évry",
   description: "Département Génie Mécanique et Productique, IUT d'Évry",
+  icons: {
+    icon: "/favicon.png",
+  },
 };
 
 export default async function RootLayout({

@@ -229,17 +229,43 @@ async function main() {
   }
 
   console.log("--- Création des Projets Tuteurés ---");
-  for (let i = 1; i <= 5; i++) {
-    await prisma.projetTuteure.create({
-      data: {
-        titre: `Projet Industriel ${i}`,
-        description: `Description détaillée du projet ${i} pour les étudiants de GMP.`,
-        prerequis: "Connaissances en CAO et mécanique.",
-        nbEtudiants: (i % 4) + 2,
-        statut: i % 2 === 0 ? Statut.PUBLISHED : Statut.PENDING,
-        entrepriseId: entreprises[i % entreprises.length].id,
-      },
-    });
+  const projetsData = [
+    {
+      titre: "De la maquette numérique au prototype physique",
+      description:
+        "SAE de 1ère année : concevoir une maquette numérique sous logiciel CAO puis la concrétiser en prototype physique via des procédés de fabrication adaptés (impression 3D, usinage). L'étudiant suit l'intégralité du cycle de conception-fabrication.",
+      prerequis:
+        "Bases en CAO (SolidWorks ou équivalent), notions de dessin technique.",
+      nbEtudiants: 1,
+      statut: Statut.PUBLISHED,
+      entrepriseId: entreprises[0].id,
+    },
+    {
+      titre:
+        "Répondre, dans un cadre collaboratif, à un besoin de nature industrielle sur l'ensemble du cycle de vie",
+      description:
+        "SAE de 2e année : en équipe, analyser un besoin industriel réel, proposer une solution technique intégrant les contraintes de conception, de fabrication et de maintenance sur l'ensemble du cycle de vie du produit.",
+      prerequis:
+        "Maîtrise des outils CAO/FAO, connaissances en analyse fonctionnelle et gestion de projet.",
+      nbEtudiants: 1,
+      statut: Statut.PUBLISHED,
+      entrepriseId: entreprises[1].id,
+    },
+    {
+      titre:
+        "Fournir, en autonomie, une solution fonctionnelle et optimisée répondant à une demande industrielle sur l'ensemble du cycle de vie",
+      description:
+        "SAE de 3e année : en totale autonomie, répondre à une commande industrielle complexe en livrant une solution complète, documentée et optimisée (coût, performance, durabilité) couvrant l'ensemble du cycle de vie du produit.",
+      prerequis:
+        "Maîtrise avancée de la CAO/FAO, expérience en gestion de projet industriel, connaissances en optimisation et analyse de cycle de vie.",
+      nbEtudiants: 1,
+      statut: Statut.PENDING,
+      entrepriseId: entreprises[2].id,
+    },
+  ];
+
+  for (const data of projetsData) {
+    await prisma.projetTuteure.create({ data });
   }
 
   console.log("--- Création des Offres d'Alternance ---");
