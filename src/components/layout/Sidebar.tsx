@@ -52,7 +52,7 @@ function getNavigation(role?: string): NavItem[] {
         { label: "Notes", href: "/espace-etudiant/notes", icon: BookOpen },
         {
           label: "Supports de cours",
-          href: "/espace-etudiant/supports-de-cours",
+          href: "/dashboard/cours",
           icon: GraduationCap,
         },
         {
@@ -62,7 +62,7 @@ function getNavigation(role?: string): NavItem[] {
         },
         {
           label: "Offres",
-          href: "/espace-etudiant/offres-alternance",
+          href: "/espace-etudiant/offres",
           icon: Briefcase,
         },
       ];
@@ -85,7 +85,7 @@ function getNavigation(role?: string): NavItem[] {
         },
         {
           label: "Dépôt de cours",
-          href: "/espace-enseignant/supports-de-cours",
+          href: "/dashboard/cours",
           icon: GraduationCap,
         },
       ];
@@ -103,7 +103,7 @@ function getNavigation(role?: string): NavItem[] {
         },
         {
           label: "Offres alternance",
-          href: "/espace-entreprise/offres-alternance",
+          href: "/espace-entreprise/offres",
           icon: Briefcase,
         },
       ];
@@ -127,14 +127,16 @@ function SidebarNavItem({
   collapsed: boolean;
 }) {
   const pathname = usePathname();
+  const exactMatchOnly = [
+    "/dashboard",
+    "/admin",
+    "/espace-etudiant",
+    "/espace-enseignant",
+    "/espace-entreprise",
+  ];
   const isActive =
     pathname === item.href ||
-    (item.href !== "/dashboard" &&
-      item.href !== "/admin" &&
-      item.href !== "/espace-etudiant" &&
-      item.href !== "/espace-enseignant" &&
-      item.href !== "/espace-entreprise" &&
-      pathname.startsWith(item.href));
+    (!exactMatchOnly.includes(item.href) && pathname.startsWith(item.href));
   const Icon = item.icon;
 
   return (
