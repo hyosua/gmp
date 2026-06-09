@@ -7,6 +7,7 @@ export default function LogoutButton() {
   const handleLogout = async () => {
     // signOut de next-auth/react est la méthode la plus fiable côté client
     await signOut({ callbackUrl: '/' });
+    sessionStorage.clear()
   };
 
   return (
