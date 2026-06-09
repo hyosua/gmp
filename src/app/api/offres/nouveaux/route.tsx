@@ -15,6 +15,14 @@ export async function POST(request: Request) {
     const duree = nouveaux.get("duree") || ''
 
 
+    const entreprise2 = await prisma.offreAlternance.findMany({
+  where: { entrepriseId: entreprise.toString() },
+});
+
+if (!entreprise2) {
+  throw new Error("Entreprise introuvable");
+}
+
 
     try {
 

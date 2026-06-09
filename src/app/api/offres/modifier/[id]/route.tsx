@@ -4,7 +4,7 @@ import type { NextRequest } from "next/server";
 
 export async function PATCH(
   request: NextRequest,
-  context: { params: { id: string } },
+  context: { params: Promise<{ id: string }> },
 ) {
   const { id } = await context.params;
 
@@ -12,23 +12,14 @@ export async function PATCH(
 
   const poste = formData.get("poste") || "";
   const description = formData.get("description") || "";
-  const remuneration = formData.get("remuneration") || "";
-  const prerequis = formData.get("prerequis") || "";
 
-  try {
-    const offres = await prisma.offreAlternance.update({
-      where: { id },
-      data: {
-        poste: poste.toString(),
-        description: description.toString(),
-        remuneration: remuneration.toString(),
-        prerequis: prerequis.toString(),
-      },
-    });
+  const offre = await prisma.offreAlternance.update({
+    where: { id: id.toString() },
+    data: {
+      poste: poste.toString(),
+      description: description.toString(),
+    },
+  });
 
-    return NextResponse.json(offres);
-  } catch (ex) {
-    console.log(ex);
-    return NextResponse.json(ex, { status: 500 });
-  }
+  return NextResponse.json(offre);
 }

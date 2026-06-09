@@ -1,5 +1,6 @@
 'use client'
 
+import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 
 type Offre = {
@@ -12,14 +13,15 @@ type Offre = {
     duree: string
     statut?: string
     createdAt?: string
-    updatedAt ?: string
+    updatedAt?: string
 }
 
 export default function Offres() {
 
     const [offres, setOffres] = useState<Offre[]>([])
-    const [choix , setChoix] = useState<String>()
-        // 👉 mode UI : liste | create | edit
+    const [choix, setChoix] = useState<String>()
+    const routeur = useRouter()
+    // 👉 mode UI : liste | create | edit
     const [mode, setMode] = useState<"list" | "create" | "edit">("list")
 
     const [nouveaux, setNouveaux] = useState<Offre>({
@@ -27,7 +29,7 @@ export default function Offres() {
         description: '',
         remuneration: '',
         prerequis: '',
-        entreprise: 'cmo31p00q000bpovupja8ppm5',
+        entreprise: sessionStorage.getItem("id")?.toString() || '',
         duree: ''
     })
 
@@ -36,6 +38,21 @@ export default function Offres() {
             const data = await fetch("/api/offres")
             const json = await data.json()
             setOffres(json)
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
+    async function getUser() {
+        try {
+            const data = await fetch("/api/session")
+            const json = await data.json();
+
+            sessionStorage.setItem("id", json.user.id)
+            sessionStorage.setItem("name", json.user.name)
+            sessionStorage.setItem("role", json.user.role)
+            sessionStorage.setItem("email", json.user.email)
+            console.log(json.user)
         } catch (err) {
             console.log(err)
         }
@@ -87,7 +104,13 @@ export default function Offres() {
     }
 
     useEffect(() => {
-       void getOffres()
+        void getOffres()
+        getUser()
+
+        if (sessionStorage.getItem("role") != "ENTREPRISE") {
+            console.log(sessionStorage.getItem("id"), "SESION")
+            routeur.push("/")
+        }
     }, [])
     // eslint-disable-next-line react-hooks/exhaustive-deps
 
@@ -99,32 +122,35 @@ export default function Offres() {
             {/* 🔵 TABLEAU */}
             {mode === "list" && (
                 <table style={{ width: "100%", borderCollapse: "collapse" }}>
-                    <tbody>
+                    <thead className="bg-primary text-bg-card">
                         <tr>
-                            <th>Poste</th>
-                            <th>Description</th>
-                            <th>Durée</th>
-                            <th>Rémunération</th>
-                            <th>Prérequis</th>
-                            <th>Statut</th>
-                            <th>Créé le</th>
-                            <th>Modifiée le</th>
-                            <th>Action</th>
+                            <th className="p-3 text-left">Poste</th>
+                            <th className="p-3 text-left">Description</th>
+                            <th className="p-3 text-left">Durée</th>
+                            <th className="p-3 text-left">Rémunération</th>
+                            <th className="p-3 text-left">Prérequis</th>
+                            <th className="p-3 text-left">Statut</th>
+                            <th className="p-3 text-left">Créé le</th>
+                            <th className="p-3 text-left">Modifiée le</th>
+                            <th className="p-3 text-left">Action</th>
                         </tr>
+                    </thead>
+                    <tbody>
 
                         {offres.map((o, i) => (
-                            <tr key={i} style={{ textAlign: "center" }}>
-                                <td>{o.poste}</td>
-                                <td>{o.description}</td>
-                                <td>{o.duree}</td>
-                                <td>{o.remuneration}</td>
-                                <td>{o.prerequis}</td>
-                                <td>{o.statut}</td>
-                                <td>{o.createdAt}</td>
-                                <td>{o.updatedAt}</td>
+                            <tr key={i} className="border-t border-border" style={{ textAlign: "center" }}>
+                                <td className="p-3">{o.poste}</td>
+                                <td className="p-3">{o.description}</td>
+                                <td className="p-3">{o.duree}</td>
+                                <td className="p-3">{o.remuneration}</td>
+                                <td className="p-3">{o.prerequis}</td>
+                                <td className="p-3">{o.statut}</td>
+                                <td className="p-3">{o.createdAt}</td>
+                                <td className="p-3">{o.updatedAt}</td>
 
-                                <td>
+                                <td className="p-3">
                                     <button
+                                    className="forge-btn-primary"
                                         onClick={() => {
                                             setNouveaux(o)
                                             setMode("edit")
@@ -152,9 +178,9 @@ export default function Offres() {
 
                         <tbody>
 
-                            <tr>
+                            <tr className="border-t border-border">
                                 <td>Poste</td>
-                                <td>
+                                <td className="p-3">
                                     <input
                                         value={nouveaux.poste}
                                         onChange={(e) =>
@@ -164,9 +190,9 @@ export default function Offres() {
                                 </td>
                             </tr>
 
-                            <tr>
+                            <tr className="border-t border-border">
                                 <td>Description</td>
-                                <td>
+                                <td className="p-3">
                                     <textarea
                                         value={nouveaux.description}
                                         onChange={(e) =>
@@ -176,9 +202,9 @@ export default function Offres() {
                                 </td>
                             </tr>
 
-                            <tr>
+                            <tr className="border-t border-border">
                                 <td>Durée</td>
-                                <td>
+                                <td className="p-3">
                                     <input
                                         value={nouveaux.duree}
                                         onChange={(e) =>
@@ -188,9 +214,9 @@ export default function Offres() {
                                 </td>
                             </tr>
 
-                            <tr>
+                            <tr className="border-t border-border" >
                                 <td>Rémunération</td>
-                                <td>
+                                <td className="p-3">
                                     <input
                                         value={nouveaux.remuneration}
                                         onChange={(e) =>
@@ -200,9 +226,9 @@ export default function Offres() {
                                 </td>
                             </tr>
 
-                            <tr>
+                            <tr className="border-t border-border">
                                 <td>Prérequis</td>
-                                <td>
+                                <td className="p-3">
                                     <textarea
                                         value={nouveaux.prerequis}
                                         onChange={(e) =>
@@ -212,7 +238,7 @@ export default function Offres() {
                                 </td>
                             </tr>
 
-                            <tr>
+                            <tr className="border-t border-border">
                                 <td colSpan={2} style={{ textAlign: "center" }}>
 
                                     <button onClick={NewOffres}>
@@ -237,6 +263,7 @@ export default function Offres() {
             {/* 🔵 BOUTON AJOUT */}
             {mode === "list" && (
                 <button
+                className="forge-btn-primary"
                     onClick={() => {
                         setNouveaux({
                             poste: '',

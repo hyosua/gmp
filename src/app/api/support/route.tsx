@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { readdir } from "fs/promises";
-
+import { auth } from "@/lib/auth";
 import { writeFile } from "fs/promises";
 import path from "path";
 
@@ -12,6 +12,8 @@ export async function POST(req: Request) {
   const fichier = body.get("fichier") as File;
   const chemin = body.get("chemin") as string;
   const tailles = Number(body.get("taille"));
+  const session = await auth();
+  
 
   if (!fichier) {
     return NextResponse.json({ error: "Pas de fichier" }, { status: 400 });
@@ -39,7 +41,7 @@ export async function POST(req: Request) {
         titre: nom,
         cheminFichier: `public/support${chemin}`,
         taille: tailles,
-        enseignantId: "cmo2xtsya0001covurps87zi5",
+        enseignantId: session?.user.id.toString() || '',
       },
     });
 
