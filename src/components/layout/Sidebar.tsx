@@ -11,7 +11,6 @@ import {
   FolderOpen,
   Briefcase,
   Users,
-  Settings,
   LogOut,
   ChevronLeft,
   ChevronRight,
@@ -31,13 +30,13 @@ type NavItem = {
 };
 
 const adminNav: NavItem[] = [
-  { label: "Utilisateurs", href: "/admin", icon: Users },
+  { label: "Utilisateurs", href: "/admin/utilisateurs", icon: Users },
   {
     label: "Projets tuteurés",
     href: "/admin/projets-tuteurs",
     icon: FolderOpen,
   },
-  { label: "Paramètres", href: "/admin/settings", icon: Settings },
+  { label: "Offres alternance", href: "/admin/offres", icon: Briefcase },
 ];
 
 function getNavigation(role?: string): NavItem[] {
@@ -115,7 +114,6 @@ function getNavigation(role?: string): NavItem[] {
     case "ADMIN":
       return [
         { label: "Tableau de bord", href: "/admin", icon: LayoutDashboard },
-        ...adminNav,
       ];
     default:
       return [
