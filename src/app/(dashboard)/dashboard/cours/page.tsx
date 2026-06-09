@@ -77,27 +77,36 @@ function PageCours() {
     <div style={{ textAlign: "center" }}>
       <h1>Bienvenue sur la page cours</h1>
       <h2>Vous pouvez déposer vos cours sur la plateforme</h2>
-      <table border={1}>
-        <thead>
+      <table border={1} style={{
+                        width: "100%",
+                        borderCollapse: "collapse",
+                        border: "2px solid #4a90e2"
+                    }}>
+        <thead className="bg-primary text-bg-card">
           <tr>
-            <th>fichier :</th>
-            <th>Action</th>
+            <th className="p-3 text-left">fichier :</th>
+            <th className="p-3 text-left">Action</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>
-              <input type="file" onChange={handlefile} />
+          <tr className="border-t border-border" style={{ textAlign: "center" }}>
+            <td className="p-3">
+              <input   type="file" onChange={handlefile} />
             </td>
-            <td>
-              <button type="submit" onClick={() => setButton(true)}>
+            <td className="p-3">
+              <button className="forge-btn-primary" type="submit" onClick={() => setButton(true)}>
                 Envoyer
               </button>
             </td>
           </tr>
         </tbody>
       </table>
-      <table border={1}>
+      <table border={1} style={{
+                        width: "100%",
+                        borderCollapse: "collapse",
+                        border: "2px solid #4a90e2",
+                        top: "200px"
+                    }}>
         <thead>
           <tr>
             <th>Titre</th>
@@ -107,8 +116,8 @@ function PageCours() {
         <tbody>
           {cours.map((item, index) => (
             <tr key={index}>
-              <td><a href={`/support/${item.titre}`}>{item.titre}</a></td>
-              <td>{item.dateDepot}</td>
+              <td className="p-3"><a href={`/support/${item.titre}`}>{item.titre}</a></td>
+              <td className="p-3">{item.dateDepot}</td>
             </tr>
           ))}
         </tbody>
