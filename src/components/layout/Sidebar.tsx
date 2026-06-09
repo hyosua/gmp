@@ -32,6 +32,11 @@ type NavItem = {
 
 const adminNav: NavItem[] = [
   { label: "Utilisateurs", href: "/admin", icon: Users },
+  {
+    label: "Projets tuteurés",
+    href: "/admin/projets-tuteurs",
+    icon: FolderOpen,
+  },
   { label: "Paramètres", href: "/admin/settings", icon: Settings },
 ];
 
