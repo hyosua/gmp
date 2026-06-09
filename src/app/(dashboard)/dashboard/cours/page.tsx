@@ -40,6 +40,21 @@ function PageCours() {
     }
   }
 
+
+  async function getUser() {
+    try {
+      const data = await fetch("/api/session")
+      const json = await data.json();
+
+      sessionStorage.setItem("id", json.user.id)
+      sessionStorage.setItem("name", json.user.name)
+      sessionStorage.setItem("role", json.user.role)
+      sessionStorage.setItem("email", json.user.email)
+      console.log(json.user)
+    } catch (err) {
+      console.log(err)
+    }
+  }
   useEffect(() => {
     if (!button) return;
 
@@ -66,6 +81,7 @@ function PageCours() {
 
   useEffect(() => {
     GetCours();
+    getUser();
   }, []);
 
   // Ajoute un useEffect pour loguer cours après mise à jour
@@ -77,11 +93,11 @@ function PageCours() {
     <div style={{ textAlign: "center" }}>
       <h1>Bienvenue sur la page cours</h1>
       <h2>Vous pouvez déposer vos cours sur la plateforme</h2>
-      <table border={1} style={{
-                        width: "100%",
-                        borderCollapse: "collapse",
-                        border: "2px solid #4a90e2"
-                    }}>
+      {sessionStorage.getItem("role") == "ENSEIGNANT" && <table border={1} style={{
+        width: "100%",
+        borderCollapse: "collapse",
+        border: "2px solid #4a90e2"
+      }}>
         <thead className="bg-primary text-bg-card">
           <tr>
             <th className="p-3 text-left">fichier :</th>
@@ -91,7 +107,7 @@ function PageCours() {
         <tbody>
           <tr className="border-t border-border" style={{ textAlign: "center" }}>
             <td className="p-3">
-              <input   type="file" onChange={handlefile} />
+              <input type="file" onChange={handlefile} />
             </td>
             <td className="p-3">
               <button className="forge-btn-primary" type="submit" onClick={() => setButton(true)}>
@@ -100,13 +116,13 @@ function PageCours() {
             </td>
           </tr>
         </tbody>
-      </table>
+      </table>}
       <table border={1} style={{
-                        width: "100%",
-                        borderCollapse: "collapse",
-                        border: "2px solid #4a90e2",
-                        top: "200px"
-                    }}>
+        width: "100%",
+        borderCollapse: "collapse",
+        border: "2px solid #4a90e2",
+        top: "200px"
+      }}>
         <thead>
           <tr>
             <th>Titre</th>
