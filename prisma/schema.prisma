@@ -148,8 +148,8 @@ model EmploiDuTemps {
   enseignant   User    @relation(fields: [enseignantId], references: [id])
   enseignantId String
 
-  matiere      Matiere? @relation(fields: [matiereId], references: [id])
-  matiereId    String?
+  matiere      Matiere @relation(fields: [matiereId], references: [id])
+  matiereId    String
 }
 
 model SupportDeCours {

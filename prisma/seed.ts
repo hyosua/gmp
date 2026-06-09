@@ -28,6 +28,7 @@ async function main() {
     "supportDeCours",
     "projetTuteure",
     "offreAlternance",
+    "matiereEnseignant",
     "matiere",
     "uE",
     "user",
@@ -115,21 +116,22 @@ async function main() {
   });
 
   console.log("--- Création des Groupes ---");
+  // 1 CM (tous les étudiants), 2 TD, 2 TP — chaque étudiant dans 1 groupe par type
+  const groupesData = [
+    { nom: "CM1", type: TypeGroupe.CM, etudiants: etudiants },
+    { nom: "TD1", type: TypeGroupe.TD, etudiants: etudiants.slice(0, 3) },
+    { nom: "TD2", type: TypeGroupe.TD, etudiants: etudiants.slice(3) },
+    { nom: "TP1", type: TypeGroupe.TP, etudiants: etudiants.slice(0, 2) },
+    { nom: "TP2", type: TypeGroupe.TP, etudiants: etudiants.slice(2) },
+  ];
   const groupes = [];
-  for (let i = 1; i <= 5; i++) {
+  for (const { nom, type, etudiants: membres } of groupesData) {
     const groupe = await prisma.groupe.create({
       data: {
-        nom: `Groupe ${i}`,
-        type:
-          i % 3 === 0
-            ? TypeGroupe.CM
-            : i % 3 === 1
-              ? TypeGroupe.TD
-              : TypeGroupe.TP,
+        nom,
+        type,
         anneeScolaire: "2025-2026",
-        etudiants: {
-          connect: etudiants.map((e) => ({ id: e.id })),
-        },
+        etudiants: { connect: membres.map((e) => ({ id: e.id })) },
       },
     });
     groupes.push(groupe);
@@ -160,6 +162,23 @@ async function main() {
   }
   const matieres = await prisma.matiere.findMany();
 
+  console.log("--- Affectation des Matières aux Enseignants ---");
+  for (let i = 0; i < enseignants.length; i++) {
+    // Chaque enseignant aura 2 matières
+    await prisma.matiereEnseignant.create({
+      data: {
+        enseignantId: enseignants[i].id,
+        matiereId: matieres[(i * 2) % matieres.length].id,
+      },
+    });
+    await prisma.matiereEnseignant.create({
+      data: {
+        enseignantId: enseignants[i].id,
+        matiereId: matieres[(i * 2 + 1) % matieres.length].id,
+      },
+    });
+  }
+
   console.log("--- Création des Notes ---");
   for (let i = 0; i < 5; i++) {
     await prisma.note.create({
@@ -175,18 +194,24 @@ async function main() {
   }
 
   console.log("--- Création des Emplois du Temps ---");
-  const jours = ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi"];
+  const jours = ["lundi", "mardi", "mercredi", "jeudi", "vendredi"];
+  const startOfThisWeek = new Date();
+  const day = startOfThisWeek.getUTCDay() || 7; // Lundi=1, Dimanche=7
+  startOfThisWeek.setUTCDate(startOfThisWeek.getUTCDate() - day + 1);
+  startOfThisWeek.setUTCHours(0, 0, 0, 0);
+
   for (let i = 0; i < 5; i++) {
     await prisma.emploiDuTemps.create({
       data: {
-        semaine: new Date(),
+        semaine: startOfThisWeek,
         jour: jours[i],
         heureDebut: "08:30",
         heureFin: "10:30",
-        salle: `Salle ${100 + i}`,
+        salle: `${100 + i}`,
         intitule: `Cours de ${matieres[i % matieres.length].nom}`,
         groupeId: groupes[i % groupes.length].id,
         enseignantId: enseignants[i % enseignants.length].id,
+        matiereId: matieres[i % matieres.length].id,
       },
     });
   }

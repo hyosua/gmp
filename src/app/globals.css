@@ -6,65 +6,71 @@
    ═══════════════════════════════════════════════════════ */
 
 :root {
-  --c-bg:        #f8fafc;
-  --c-bg-deep:   #f1f5f9;
-  --c-bg-card:   #ffffff;
-  --c-primary:   #0d9488;
+  --c-bg: #f8fafc;
+  --c-bg-deep: #f1f5f9;
+  --c-bg-card: #ffffff;
+  --c-primary: #0d9488;
   --c-secondary: #171717;
-  --c-accent:    #f59e0b;
-  --c-border:    #e2e8f0;
-  --c-muted:     #81adc8;
+  --c-accent: #f59e0b;
+  --c-border: #e2e8f0;
+  --c-muted: #81adc8;
   --c-primary-hover: #0f766e;
-  --c-photo-overlay: rgba(13,148,136,0.55);
-  --c-grid-color:    rgba(13,148,136,0.07);
-  --c-grid-color-sm: rgba(13,148,136,0.03);
+  --c-photo-overlay: rgba(13, 148, 136, 0.55);
+  --c-grid-color: rgba(13, 148, 136, 0.07);
+  --c-grid-color-sm: rgba(13, 148, 136, 0.03);
   --c-scanlines: repeating-linear-gradient(
     0deg,
-    transparent, transparent 3px,
-    rgba(0,0,0,0.006) 3px, rgba(0,0,0,0.006) 4px
+    transparent,
+    transparent 3px,
+    rgba(0, 0, 0, 0.006) 3px,
+    rgba(0, 0, 0, 0.006) 4px
   );
   /* Variants semi-transparents */
-  --c-primary-15:   rgba(13,148,136,0.08);
-  --c-primary-20:   rgba(13,148,136,0.13);
-  --c-primary-30:   rgba(13,148,136,0.19);
-  --c-accent-30:    rgba(245,158,11,0.19);
-  --c-accent-40:    rgba(245,158,11,0.25);
-  --c-secondary-25: rgba(23,23,23,0.15);
-  --c-secondary-30: rgba(23,23,23,0.19);
-  --c-secondary-40: rgba(23,23,23,0.25);
-  --c-secondary-80: rgba(23,23,23,0.50);
-  --c-secondary-90: rgba(23,23,23,0.56);
+  --c-primary-15: rgba(13, 148, 136, 0.08);
+  --c-primary-20: rgba(13, 148, 136, 0.13);
+  --c-primary-30: rgba(13, 148, 136, 0.19);
+  --c-accent-30: rgba(245, 158, 11, 0.19);
+  --c-accent-40: rgba(245, 158, 11, 0.25);
+  --c-secondary-25: rgba(23, 23, 23, 0.15);
+  --c-secondary-30: rgba(23, 23, 23, 0.19);
+  --c-secondary-40: rgba(23, 23, 23, 0.25);
+  --c-secondary-80: rgba(23, 23, 23, 0.5);
+  --c-secondary-90: rgba(23, 23, 23, 0.56);
+  --c-error: #dc2626;
 }
 
 .dark {
-  --c-bg:        #001429;
-  --c-bg-deep:   #000f20;
-  --c-bg-card:   #00213d;
+  --c-bg: #001429;
+  --c-bg-deep: #000f20;
+  --c-bg-card: #00213d;
   --c-bg-bright: #063b65;
-  --c-primary:   #F29400;
+  --c-primary: #f29400;
   --c-secondary: #d1e4ff;
-  --c-accent:    #fbbf24;
-  --c-border:    #544434;
-  --c-muted:     #a28d7a;
+  --c-accent: #fbbf24;
+  --c-border: #544434;
+  --c-muted: #a28d7a;
   --c-primary-hover: #d98200;
-  --c-photo-overlay: rgba(242,148,0,0.45);
-  --c-grid-color:    rgba(242,148,0,0.06);
-  --c-grid-color-sm: rgba(242,148,0,0.025);
+  --c-photo-overlay: rgba(242, 148, 0, 0.45);
+  --c-grid-color: rgba(242, 148, 0, 0.06);
+  --c-grid-color-sm: rgba(242, 148, 0, 0.025);
   --c-scanlines: repeating-linear-gradient(
     0deg,
-    transparent, transparent 3px,
-    rgba(255,255,255,0.012) 3px, rgba(255,255,255,0.012) 4px
+    transparent,
+    transparent 3px,
+    rgba(255, 255, 255, 0.012) 3px,
+    rgba(255, 255, 255, 0.012) 4px
   );
-  --c-primary-15:   rgba(242,148,0,0.08);
-  --c-primary-20:   rgba(242,148,0,0.13);
-  --c-primary-30:   rgba(242,148,0,0.19);
-  --c-accent-30:    rgba(251,191,36,0.19);
-  --c-accent-40:    rgba(251,191,36,0.25);
-  --c-secondary-25: rgba(226,232,240,0.15);
-  --c-secondary-30: rgba(226,232,240,0.19);
-  --c-secondary-40: rgba(226,232,240,0.25);
-  --c-secondary-80: rgba(226,232,240,0.50);
-  --c-secondary-90: rgba(226,232,240,0.56);
+  --c-primary-15: rgba(242, 148, 0, 0.08);
+  --c-primary-20: rgba(242, 148, 0, 0.13);
+  --c-primary-30: rgba(242, 148, 0, 0.19);
+  --c-accent-30: rgba(251, 191, 36, 0.19);
+  --c-accent-40: rgba(251, 191, 36, 0.25);
+  --c-secondary-25: rgba(226, 232, 240, 0.15);
+  --c-secondary-30: rgba(226, 232, 240, 0.19);
+  --c-secondary-40: rgba(226, 232, 240, 0.25);
+  --c-secondary-80: rgba(226, 232, 240, 0.5);
+  --c-secondary-90: rgba(226, 232, 240, 0.56);
+  --c-error: #f87171;
 }
 
 /* ═══════════════════════════════════════════════════════
@@ -73,20 +79,21 @@
    ═══════════════════════════════════════════════════════ */
 
 @theme inline {
-  --color-background:    var(--c-bg);
-  --color-foreground:    var(--c-secondary);
-  --font-sans:           var(--font-outfit);
-  --font-mono:           var(--font-geist-mono);
+  --color-background: var(--c-bg);
+  --color-foreground: var(--c-secondary);
+  --font-sans: var(--font-outfit);
+  --font-mono: var(--font-geist-mono);
 
-  --color-primary:       var(--c-primary);
+  --color-primary: var(--c-primary);
   --color-primary-hover: var(--c-primary-hover);
-  --color-secondary:     var(--c-secondary);
-  --color-accent:        var(--c-accent);
-  --color-muted:         var(--c-muted);
-  --color-border:        var(--c-border);
-  --color-bg-card:       var(--c-bg-card);
-  --color-bg-deep:       var(--c-bg-deep);
-  --color-bg-bright:     var(--c-bg-bright);
+  --color-secondary: var(--c-secondary);
+  --color-accent: var(--c-accent);
+  --color-muted: var(--c-muted);
+  --color-border: var(--c-border);
+  --color-bg-card: var(--c-bg-card);
+  --color-bg-deep: var(--c-bg-deep);
+  --color-bg-bright: var(--c-bg-bright);
+  --color-error: var(--c-error);
 }
 
 body {
@@ -118,7 +125,9 @@ body {
 .forge-card {
   border: 1px solid var(--c-border);
   background: var(--c-bg-card);
-  transition: border-color 0.15s, box-shadow 0.15s;
+  transition:
+    border-color 0.15s,
+    box-shadow 0.15s;
 }
 .forge-card:hover {
   border-color: var(--c-primary);
@@ -145,7 +154,11 @@ body {
   letter-spacing: 0.1em;
   border: 1px solid transparent;
   cursor: pointer;
-  transition: background 0.15s, box-shadow 0.15s, border-color 0.15s, color 0.15s;
+  transition:
+    background 0.15s,
+    box-shadow 0.15s,
+    border-color 0.15s,
+    color 0.15s;
 }
 
 .forge-btn-primary {
@@ -161,7 +174,7 @@ body {
 .forge-btn-ghost {
   background: transparent;
   color: var(--c-secondary);
-  border-color: var(--c-border);
+  border: 1px solid var(--c-border);
 }
 .forge-btn-ghost:hover {
   border-color: var(--c-primary);

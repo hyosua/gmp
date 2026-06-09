@@ -10,13 +10,15 @@
     "prepare": "husky",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "db:reset": "prisma migrate reset --force && npx tsx prisma/seed.ts"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",
     "@prisma/adapter-pg": "^7.6.0",
     "@prisma/client": "^7.6.0",
     "bcryptjs": "^3.0.3",
+    "date-fns": "^4.1.0",
     "gsap": "^3.14.2",
     "lucide-react": "^1.7.0",
     "next": "16.2.1",
@@ -42,6 +44,7 @@
     "prettier": "^3.8.1",
     "prisma": "^7.6.0",
     "tailwindcss": "^4",
+    "tsx": "^4.22.4",
     "typedoc": "^0.28.18",
     "typescript": "^5",
     "vite-tsconfig-paths": "^6.1.1",

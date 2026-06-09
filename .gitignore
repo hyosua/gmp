@@ -49,5 +49,5 @@ next-env.d.ts
 
 /src/generated/prisma
 *.json
-*.json
 *.pdf
+.vscode/

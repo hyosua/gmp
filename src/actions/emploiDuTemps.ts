@@ -1,12 +1,74 @@
 "use server";
 
 import { prisma } from "@/lib/prisma";
+import { auth } from "@/lib/auth";
 
-const creneauInclude = {
-  enseignant: { select: { id: true, nom: true, prenom: true } },
-  groupe: { select: { id: true, nom: true, type: true } },
-  matiere: { select: { id: true, nom: true, code: true } },
-} as const;
+type ConflitResult =
+  | "CONFLIT_SALLE"
+  | "CONFLIT_ENSEIGNANT"
+  | "CONFLIT_GROUPE"
+  | "HORAIRES_INVALIDES"
+  | null;
+
+function horairesValides(heureDebut: string, heureFin: string): boolean {
+  return heureDebut < heureFin;
+}
+
+type VerifierConflitsParams = {
+  semaine: Date;
+  jour: string;
+  heureDebut: string;
+  heureFin: string;
+  salle: string;
+  enseignantId: string;
+  groupeId: string;
+  excludeId?: string;
+};
+
+async function verifierConflits(
+  params: VerifierConflitsParams,
+): Promise<ConflitResult> {
+  const {
+    semaine,
+    jour,
+    heureDebut,
+    heureFin,
+    salle,
+    enseignantId,
+    groupeId,
+    excludeId,
+  } = params;
+
+  const debutSemaine = new Date(semaine);
+  debutSemaine.setUTCHours(0, 0, 0, 0);
+
+  const finSemaine = new Date(debutSemaine);
+  finSemaine.setUTCDate(finSemaine.getUTCDate() + 7);
+
+  const filtre = {
+    jour,
+    semaine: { gte: debutSemaine, lt: finSemaine },
+    AND: [{ heureDebut: { lt: heureFin } }, { heureFin: { gt: heureDebut } }],
+    ...(excludeId && { id: { not: excludeId } }),
+  };
+
+  const salleOccupee = await prisma.emploiDuTemps.findFirst({
+    where: { salle, ...filtre },
+  });
+  if (salleOccupee) return "CONFLIT_SALLE";
+
+  const profOccupe = await prisma.emploiDuTemps.findFirst({
+    where: { enseignantId, ...filtre },
+  });
+  if (profOccupe) return "CONFLIT_ENSEIGNANT";
+
+  const groupeOccupe = await prisma.emploiDuTemps.findFirst({
+    where: { groupeId, ...filtre },
+  });
+  if (groupeOccupe) return "CONFLIT_GROUPE";
+
+  return null;
+}
 
 type CreateCreneauData = {
   semaine: Date;
@@ -16,129 +78,113 @@ type CreateCreneauData = {
   salle: string;
   intitule: string;
   groupeId: string;
-  enseignantId: string;
-  matiereId?: string;
-  recurrent: boolean;
-  recurrenceFin?: Date;
+  matiereId: string;
 };
 
-type CreateCreneauResult =
-  | { success: true; creneaux: { id: string; salle: string; semaine: Date }[] }
-  | { success: false; error: "CONFLIT_SALLE" | "UNAUTHORIZED" };
+type UpdateCreneauData = {
+  semaine?: Date;
+  jour?: string;
+  heureDebut?: string;
+  heureFin?: string;
+  salle?: string;
+  intitule?: string;
+  groupeId?: string;
+  matiereId?: string;
+};
 
-export async function createCreneau(
-  data: CreateCreneauData,
-): Promise<CreateCreneauResult> {
-  const {
-    semaine,
-    jour,
-    heureDebut,
-    heureFin,
-    salle,
-    recurrent,
-    recurrenceFin,
-    ...rest
-  } = data;
+export async function createCreneau(data: CreateCreneauData) {
+  const session = await auth();
 
-  const semaines: Date[] = [semaine];
-  if (recurrent && recurrenceFin) {
-    const cursor = new Date(semaine);
-    while (true) {
-      cursor.setUTCDate(cursor.getUTCDate() + 7);
-      if (cursor > recurrenceFin) break;
-      semaines.push(new Date(cursor));
-    }
+  if (!session?.user?.id || session.user.role !== "ENSEIGNANT") {
+    return { success: false, error: "UNAUTHORIZED" } as const;
   }
 
-  for (const s of semaines) {
-    const debut = new Date(s);
-    debut.setUTCHours(0, 0, 0, 0);
-    const fin = new Date(debut);
-    fin.setUTCDate(fin.getUTCDate() + 7);
+  const enseignantId = session.user.id;
+  const salle = data.salle.trim().toUpperCase();
 
-    const conflit = await prisma.emploiDuTemps.findFirst({
-      where: {
-        salle,
-        jour,
-        semaine: { gte: debut, lt: fin },
-        AND: [
-          { heureDebut: { lt: heureFin } },
-          { heureFin: { gt: heureDebut } },
-        ],
-      },
-    });
-    if (conflit) return { success: false, error: "CONFLIT_SALLE" };
-  }
+  if (!horairesValides(data.heureDebut, data.heureFin))
+    return { success: false, error: "HORAIRES_INVALIDES" } as const;
 
-  const creneaux = await prisma.$transaction(
-    semaines.map((s) =>
-      prisma.emploiDuTemps.create({
-        data: {
-          semaine: s,
-          jour,
-          heureDebut,
-          heureFin,
-          salle,
-          recurrent,
-          recurrenceFin: recurrenceFin ?? null,
-          ...rest,
-        },
-        select: { id: true, salle: true, semaine: true },
-      }),
-    ),
-  );
+  const conflit = await verifierConflits({ ...data, salle, enseignantId });
+  if (conflit) return { success: false, error: conflit } as const;
 
-  return { success: true, creneaux };
+  const creneau = await prisma.emploiDuTemps.create({
+    data: {
+      semaine: data.semaine,
+      jour: data.jour,
+      heureDebut: data.heureDebut,
+      heureFin: data.heureFin,
+      salle,
+      intitule: data.intitule,
+      groupeId: data.groupeId,
+      matiereId: data.matiereId,
+      enseignantId,
+    },
+    select: { id: true, salle: true, semaine: true },
+  });
+
+  return { success: true, creneau } as const;
 }
 
-type MutationResult<T> =
-  | ({ success: true } & T)
-  | { success: false; error: "UNAUTHORIZED" };
+export async function updateCreneau(id: string, data: UpdateCreneauData) {
+  const session = await auth();
 
-export async function updateCreneau(
-  id: string,
-  enseignantId: string,
-  data: Partial<
-    Pick<
-      CreateCreneauData,
-      | "salle"
-      | "heureDebut"
-      | "heureFin"
-      | "jour"
-      | "intitule"
-      | "matiereId"
-      | "groupeId"
-    >
-  >,
-): Promise<
-  | { success: true; creneau: { id: string; salle: string } }
-  | { success: false; error: "UNAUTHORIZED" }
-> {
+  if (!session?.user?.id || session.user.role !== "ENSEIGNANT") {
+    return { success: false, error: "UNAUTHORIZED" } as const;
+  }
+
+  const enseignantId = session.user.id;
+
   const existing = await prisma.emploiDuTemps.findUnique({ where: { id } });
   if (!existing || existing.enseignantId !== enseignantId) {
-    return { success: false, error: "UNAUTHORIZED" };
+    return { success: false, error: "UNAUTHORIZED" } as const;
   }
+
+  // Fusionner avec les valeurs existantes pour la vérification de conflits
+  const merged = {
+    semaine: data.semaine ?? existing.semaine,
+    jour: data.jour ?? existing.jour,
+    heureDebut: data.heureDebut ?? existing.heureDebut,
+    heureFin: data.heureFin ?? existing.heureFin,
+    salle: (data.salle ?? existing.salle).trim().toUpperCase(),
+    groupeId: data.groupeId ?? existing.groupeId,
+  };
+
+  if (!horairesValides(merged.heureDebut, merged.heureFin))
+    return { success: false, error: "HORAIRES_INVALIDES" } as const;
+
+  const conflit = await verifierConflits({
+    ...merged,
+    enseignantId,
+    excludeId: id,
+  });
+  if (conflit) return { success: false, error: conflit } as const;
 
   const creneau = await prisma.emploiDuTemps.update({
     where: { id },
-    data,
+    data: { ...data, salle: merged.salle },
     select: { id: true, salle: true },
   });
 
-  return { success: true, creneau };
+  return { success: true, creneau } as const;
 }
 
-export async function deleteCreneau(
-  id: string,
-  enseignantId: string,
-): Promise<{ success: true } | { success: false; error: "UNAUTHORIZED" }> {
+export async function deleteCreneau(id: string) {
+  const session = await auth();
+
+  if (!session?.user?.id || session.user.role !== "ENSEIGNANT") {
+    return { success: false, error: "UNAUTHORIZED" } as const;
+  }
+
+  const enseignantId = session.user.id;
+
   const existing = await prisma.emploiDuTemps.findUnique({ where: { id } });
   if (!existing || existing.enseignantId !== enseignantId) {
-    return { success: false, error: "UNAUTHORIZED" };
+    return { success: false, error: "UNAUTHORIZED" } as const;
   }
 
   await prisma.emploiDuTemps.delete({ where: { id } });
-  return { success: true };
+  return { success: true } as const;
 }
 
 export async function getCreneauxSemaine(
@@ -147,15 +193,20 @@ export async function getCreneauxSemaine(
 ) {
   const debut = new Date(dateDebut);
   debut.setUTCHours(0, 0, 0, 0);
+
   const fin = new Date(debut);
   fin.setUTCDate(fin.getUTCDate() + 7);
 
   return prisma.emploiDuTemps.findMany({
     where: {
       semaine: { gte: debut, lt: fin },
-      ...(groupeIds?.length ? { groupeId: { in: groupeIds } } : {}),
+      ...(groupeIds !== undefined ? { groupeId: { in: groupeIds } } : {}),
     },
-    include: creneauInclude,
+    include: {
+      enseignant: { select: { id: true, nom: true, prenom: true } },
+      groupe: { select: { id: true, nom: true, type: true } },
+      matiere: { select: { id: true, nom: true, code: true } },
+    },
     orderBy: [{ jour: "asc" }, { heureDebut: "asc" }],
   });
 }

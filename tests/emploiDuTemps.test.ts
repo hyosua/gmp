@@ -1,4 +1,5 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, vi } from "vitest";
+import type { Session } from "next-auth";
 import { prismaTest } from "./prismaTest";
 import {
   getCreneauxSemaine,
@@ -6,6 +7,25 @@ import {
   updateCreneau,
   deleteCreneau,
 } from "@/actions/emploiDuTemps";
+
+// Mock du module auth — les actions appellent auth() en interne
+vi.mock("@/lib/auth", () => ({
+  auth: vi.fn(),
+}));
+
+import { auth } from "@/lib/auth";
+
+// NextAuth type auth() avec des surcharges complexes — on caste via unknown
+type SimpleMock = { mockResolvedValue(v: Session | null): void };
+const mockedAuth = auth as unknown as SimpleMock;
+
+// Helper : simule un enseignant connecté
+function mockSession(userId: string) {
+  mockedAuth.mockResolvedValue({
+    user: { id: userId, role: "ENSEIGNANT", email: null, name: null },
+    expires: new Date(Date.now() + 3600000).toISOString(),
+  });
+}
 
 async function createFixtures() {
   const ue = await prismaTest.uE.create({
@@ -33,7 +53,7 @@ describe("getCreneauxSemaine", () => {
   it("retourne les créneaux de la semaine demandée", async () => {
     const { enseignant, groupe, matiere } = await createFixtures();
 
-    const lundi = new Date("2025-09-01"); // lundi semaine 1
+    const lundi = new Date("2025-09-01");
     await prismaTest.emploiDuTemps.create({
       data: {
         semaine: lundi,
@@ -48,7 +68,7 @@ describe("getCreneauxSemaine", () => {
       },
     });
 
-    const autreLundi = new Date("2025-09-08"); // semaine suivante
+    const autreLundi = new Date("2025-09-08");
     await prismaTest.emploiDuTemps.create({
       data: {
         semaine: autreLundi,
@@ -103,7 +123,7 @@ describe("getCreneauxSemaine", () => {
           heureDebut: "10:00",
           heureFin: "12:00",
           salle: "B202",
-          intitule: "RDM",
+          intitule: "Math",
           groupeId: autreGroupe.id,
           enseignantId: enseignant.id,
           matiereId: matiere.id,
@@ -119,10 +139,11 @@ describe("getCreneauxSemaine", () => {
 });
 
 describe("createCreneau", () => {
-  it("crée un créneau ponctuel et le retourne", async () => {
+  it("crée un créneau et le retourne", async () => {
     const { enseignant, groupe, matiere } = await createFixtures();
-    const lundi = new Date("2025-09-01");
+    mockSession(enseignant.id);
 
+    const lundi = new Date("2025-09-01");
     const result = await createCreneau({
       semaine: lundi,
       jour: "lundi",
@@ -131,21 +152,39 @@ describe("createCreneau", () => {
       salle: "A101",
       intitule: "RDM",
       groupeId: groupe.id,
-      enseignantId: enseignant.id,
       matiereId: matiere.id,
-      recurrent: false,
     });
 
     expect(result.success).toBe(true);
     if (!result.success) return;
-    expect(result.creneaux).toHaveLength(1);
-    expect(result.creneaux[0].salle).toBe("A101");
+    expect(result.creneau.salle).toBe("A101");
   });
 
-  it("retourne CONFLIT_SALLE si la salle est déjà occupée au même créneau", async () => {
-    const { enseignant, groupe, matiere } = await createFixtures();
-    const lundi = new Date("2025-09-01");
+  it("retourne UNAUTHORIZED si pas connecté", async () => {
+    mockedAuth.mockResolvedValue(null);
+    const { groupe, matiere } = await createFixtures();
 
+    const result = await createCreneau({
+      semaine: new Date("2025-09-01"),
+      jour: "lundi",
+      heureDebut: "08:00",
+      heureFin: "10:00",
+      salle: "A101",
+      intitule: "RDM",
+      groupeId: groupe.id,
+      matiereId: matiere.id,
+    });
+
+    expect(result.success).toBe(false);
+    if (result.success) return;
+    expect(result.error).toBe("UNAUTHORIZED");
+  });
+
+  it("retourne CONFLIT_SALLE si la salle est déjà occupée", async () => {
+    const { enseignant, groupe, matiere } = await createFixtures();
+    mockSession(enseignant.id);
+
+    const lundi = new Date("2025-09-01");
     const data = {
       semaine: lundi,
       jour: "lundi",
@@ -154,9 +193,7 @@ describe("createCreneau", () => {
       salle: "A101",
       intitule: "RDM",
       groupeId: groupe.id,
-      enseignantId: enseignant.id,
       matiereId: matiere.id,
-      recurrent: false,
     };
 
     await createCreneau(data);
@@ -167,49 +204,16 @@ describe("createCreneau", () => {
     expect(result.error).toBe("CONFLIT_SALLE");
   });
 
-  it("génère N occurrences pour un créneau récurrent", async () => {
+  it("retourne CONFLIT_ENSEIGNANT si l'enseignant est déjà occupé ailleurs", async () => {
     const { enseignant, groupe, matiere } = await createFixtures();
-    const lundi = new Date("2025-09-01");
-    const fin = new Date("2025-09-22"); // 4 lundis : 1, 8, 15, 22 sept
+    mockSession(enseignant.id);
 
-    const result = await createCreneau({
-      semaine: lundi,
-      jour: "lundi",
-      heureDebut: "08:00",
-      heureFin: "10:00",
-      salle: "A101",
-      intitule: "RDM",
-      groupeId: groupe.id,
-      enseignantId: enseignant.id,
-      matiereId: matiere.id,
-      recurrent: true,
-      recurrenceFin: fin,
+    const autreGroupe = await prismaTest.groupe.create({
+      data: { nom: "TD2", type: "TD", anneeScolaire: "2025-2026" },
     });
-
-    expect(result.success).toBe(true);
-    if (!result.success) return;
-    expect(result.creneaux).toHaveLength(4);
-  });
-
-  it("détecte un conflit sur une occurrence récurrente", async () => {
-    const { enseignant, groupe, matiere } = await createFixtures();
     const lundi = new Date("2025-09-01");
 
-    // créneau ponctuel sur la 3e semaine
     await createCreneau({
-      semaine: new Date("2025-09-15"),
-      jour: "lundi",
-      heureDebut: "08:00",
-      heureFin: "10:00",
-      salle: "A101",
-      intitule: "Autre cours",
-      groupeId: groupe.id,
-      enseignantId: enseignant.id,
-      recurrent: false,
-    });
-
-    // créneau récurrent qui passe par la même salle/horaire
-    const result = await createCreneau({
       semaine: lundi,
       jour: "lundi",
       heureDebut: "08:00",
@@ -217,19 +221,71 @@ describe("createCreneau", () => {
       salle: "A101",
       intitule: "RDM",
       groupeId: groupe.id,
-      enseignantId: enseignant.id,
       matiereId: matiere.id,
-      recurrent: true,
-      recurrenceFin: new Date("2025-09-22"),
+    });
+
+    const result = await createCreneau({
+      semaine: lundi,
+      jour: "lundi",
+      heureDebut: "09:00",
+      heureFin: "11:00",
+      salle: "B202",
+      intitule: "RDM",
+      groupeId: autreGroupe.id,
+      matiereId: matiere.id,
     });
 
     expect(result.success).toBe(false);
     if (result.success) return;
-    expect(result.error).toBe("CONFLIT_SALLE");
+    expect(result.error).toBe("CONFLIT_ENSEIGNANT");
+  });
+
+  it("retourne CONFLIT_GROUPE si le groupe a déjà un cours", async () => {
+    const { enseignant, groupe, matiere } = await createFixtures();
+    const autreEnseignant = await prismaTest.user.create({
+      data: {
+        email: "autre@prof.fr",
+        password: "hash",
+        nom: "Martin",
+        prenom: "Paul",
+        role: "ENSEIGNANT",
+      },
+    });
+    const lundi = new Date("2025-09-01");
+
+    mockSession(enseignant.id);
+    await createCreneau({
+      semaine: lundi,
+      jour: "lundi",
+      heureDebut: "08:00",
+      heureFin: "10:00",
+      salle: "A101",
+      intitule: "RDM",
+      groupeId: groupe.id,
+      matiereId: matiere.id,
+    });
+
+    mockSession(autreEnseignant.id);
+    const result = await createCreneau({
+      semaine: lundi,
+      jour: "lundi",
+      heureDebut: "09:00",
+      heureFin: "11:00",
+      salle: "B202",
+      intitule: "RDM",
+      groupeId: groupe.id,
+      matiereId: matiere.id,
+    });
+
+    expect(result.success).toBe(false);
+    if (result.success) return;
+    expect(result.error).toBe("CONFLIT_GROUPE");
   });
 
   it("ne détecte pas de conflit si les horaires ne se chevauchent pas", async () => {
     const { enseignant, groupe, matiere } = await createFixtures();
+    mockSession(enseignant.id);
+
     const lundi = new Date("2025-09-01");
 
     await createCreneau({
@@ -240,9 +296,7 @@ describe("createCreneau", () => {
       salle: "A101",
       intitule: "RDM",
       groupeId: groupe.id,
-      enseignantId: enseignant.id,
       matiereId: matiere.id,
-      recurrent: false,
     });
 
     const result = await createCreneau({
@@ -253,9 +307,7 @@ describe("createCreneau", () => {
       salle: "A101",
       intitule: "RDM",
       groupeId: groupe.id,
-      enseignantId: enseignant.id,
       matiereId: matiere.id,
-      recurrent: false,
     });
 
     expect(result.success).toBe(true);
@@ -264,7 +316,9 @@ describe("createCreneau", () => {
 
 describe("updateCreneau", () => {
   it("met à jour la salle d'un créneau existant", async () => {
-    const { enseignant, groupe } = await createFixtures();
+    const { enseignant, groupe, matiere } = await createFixtures();
+    mockSession(enseignant.id);
+
     const created = await createCreneau({
       semaine: new Date("2025-09-01"),
       jour: "lundi",
@@ -273,22 +327,64 @@ describe("updateCreneau", () => {
       salle: "A101",
       intitule: "RDM",
       groupeId: groupe.id,
-      enseignantId: enseignant.id,
-      recurrent: false,
+      matiereId: matiere.id,
     });
     if (!created.success) throw new Error("setup failed");
 
-    const result = await updateCreneau(created.creneaux[0].id, enseignant.id, {
-      salle: "B202",
-    });
+    const result = await updateCreneau(created.creneau.id, { salle: "B202" });
 
     expect(result.success).toBe(true);
     if (!result.success) return;
     expect(result.creneau.salle).toBe("B202");
   });
 
+  it("empêche la mise à jour si elle crée un conflit de salle", async () => {
+    const { enseignant, groupe, matiere } = await createFixtures();
+    mockSession(enseignant.id);
+
+    const lundi = new Date("2025-09-01");
+
+    const c1 = await createCreneau({
+      semaine: lundi,
+      jour: "lundi",
+      heureDebut: "08:00",
+      heureFin: "10:00",
+      salle: "A101",
+      intitule: "Cours 1",
+      groupeId: groupe.id,
+      matiereId: matiere.id,
+    });
+
+    const autreGroupe = await prismaTest.groupe.create({
+      data: { nom: "TD2", type: "TD", anneeScolaire: "2025-2026" },
+    });
+
+    const c2 = await createCreneau({
+      semaine: lundi,
+      jour: "lundi",
+      heureDebut: "10:00",
+      heureFin: "12:00",
+      salle: "B202",
+      intitule: "Cours 2",
+      groupeId: autreGroupe.id,
+      matiereId: matiere.id,
+    });
+
+    if (!c1.success || !c2.success) throw new Error("setup failed");
+
+    const result = await updateCreneau(c2.creneau.id, {
+      heureDebut: "08:00",
+      heureFin: "10:00",
+      salle: "A101",
+    });
+
+    expect(result.success).toBe(false);
+    if (result.success) return;
+    expect(result.error).toBe("CONFLIT_SALLE");
+  });
+
   it("refuse la mise à jour si l'enseignant n'est pas le propriétaire", async () => {
-    const { enseignant, groupe } = await createFixtures();
+    const { enseignant, groupe, matiere } = await createFixtures();
     const autreEnseignant = await prismaTest.user.create({
       data: {
         email: "autre@gmp.fr",
@@ -299,6 +395,7 @@ describe("updateCreneau", () => {
       },
     });
 
+    mockSession(enseignant.id);
     const created = await createCreneau({
       semaine: new Date("2025-09-01"),
       jour: "lundi",
@@ -307,16 +404,13 @@ describe("updateCreneau", () => {
       salle: "A101",
       intitule: "RDM",
       groupeId: groupe.id,
-      enseignantId: enseignant.id,
-      recurrent: false,
+      matiereId: matiere.id,
     });
     if (!created.success) throw new Error("setup failed");
 
-    const result = await updateCreneau(
-      created.creneaux[0].id,
-      autreEnseignant.id,
-      { salle: "B202" },
-    );
+    // Changer de session : autre enseignant tente la modif
+    mockSession(autreEnseignant.id);
+    const result = await updateCreneau(created.creneau.id, { salle: "B202" });
 
     expect(result.success).toBe(false);
     if (result.success) return;
@@ -326,7 +420,9 @@ describe("updateCreneau", () => {
 
 describe("deleteCreneau", () => {
   it("supprime un créneau dont on est propriétaire", async () => {
-    const { enseignant, groupe } = await createFixtures();
+    const { enseignant, groupe, matiere } = await createFixtures();
+    mockSession(enseignant.id);
+
     const created = await createCreneau({
       semaine: new Date("2025-09-01"),
       jour: "lundi",
@@ -335,12 +431,11 @@ describe("deleteCreneau", () => {
       salle: "A101",
       intitule: "RDM",
       groupeId: groupe.id,
-      enseignantId: enseignant.id,
-      recurrent: false,
+      matiereId: matiere.id,
     });
     if (!created.success) throw new Error("setup failed");
 
-    const result = await deleteCreneau(created.creneaux[0].id, enseignant.id);
+    const result = await deleteCreneau(created.creneau.id);
 
     expect(result.success).toBe(true);
     const remaining = await prismaTest.emploiDuTemps.findMany();
@@ -348,7 +443,7 @@ describe("deleteCreneau", () => {
   });
 
   it("refuse la suppression si l'enseignant n'est pas le propriétaire", async () => {
-    const { enseignant, groupe } = await createFixtures();
+    const { enseignant, groupe, matiere } = await createFixtures();
     const imposteur = await prismaTest.user.create({
       data: {
         email: "imposteur@gmp.fr",
@@ -359,6 +454,7 @@ describe("deleteCreneau", () => {
       },
     });
 
+    mockSession(enseignant.id);
     const created = await createCreneau({
       semaine: new Date("2025-09-01"),
       jour: "lundi",
@@ -367,12 +463,13 @@ describe("deleteCreneau", () => {
       salle: "A101",
       intitule: "RDM",
       groupeId: groupe.id,
-      enseignantId: enseignant.id,
-      recurrent: false,
+      matiereId: matiere.id,
     });
     if (!created.success) throw new Error("setup failed");
 
-    const result = await deleteCreneau(created.creneaux[0].id, imposteur.id);
+    // L'imposteur tente de supprimer
+    mockSession(imposteur.id);
+    const result = await deleteCreneau(created.creneau.id);
 
     expect(result.success).toBe(false);
     if (result.success) return;
