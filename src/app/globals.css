@@ -174,7 +174,7 @@ body {
 .forge-btn-ghost {
   background: transparent;
   color: var(--c-secondary);
-  border-color: var(--c-border);
+  border: 1px solid var(--c-border);
 }
 .forge-btn-ghost:hover {
   border-color: var(--c-primary);
