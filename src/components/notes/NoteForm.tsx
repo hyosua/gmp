@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import { TypeGroupe } from "@prisma/client";
 import { Save } from "lucide-react";
 
@@ -36,7 +36,7 @@ export default function NoteForm({
     noteAEditer?.semestre ? String(noteAEditer.semestre) : "",
   );
 
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const form = e.currentTarget;
     const formData = new FormData(form);
