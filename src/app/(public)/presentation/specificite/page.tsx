@@ -1,4 +1,16 @@
-"use client";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Spécificités",
+  description:
+    "Les spécificités du BUT GMP à l'IUT d'Évry : double compétence, laboratoires modernes et partenariats industriels.",
+  openGraph: {
+    title: "Spécificités | GMP - IUT d'Évry",
+    description:
+      "Ce qui distingue la formation GMP de l'IUT d'Évry : équipements, partenaires, pédagogie.",
+    url: "/presentation/specificite",
+  },
+};
 
 const cards = [
   {
@@ -62,10 +74,22 @@ export default function SpecificitePage() {
           </h3>
           <div className="grid grid-cols-[repeat(auto-fit,minmax(240px,1fr))] gap-6">
             {[
-              { title: "Excellence académique", desc: "Formation reconnue et appréciée par les entreprises du secteur industriel" },
-              { title: "Réseau professionnel", desc: "Plus de 200 entreprises partenaires dans la région Île-de-France" },
-              { title: "Recherche & Innovation", desc: "Laboratoires de recherche intégrés aux enseignements" },
-              { title: "Poursuite d&rsquo;études", desc: "Possibilité d&rsquo;intégrer des masters ou écoles d&rsquo;ingénieurs" },
+              {
+                title: "Excellence académique",
+                desc: "Formation reconnue et appréciée par les entreprises du secteur industriel",
+              },
+              {
+                title: "Réseau professionnel",
+                desc: "Plus de 200 entreprises partenaires dans la région Île-de-France",
+              },
+              {
+                title: "Recherche & Innovation",
+                desc: "Laboratoires de recherche intégrés aux enseignements",
+              },
+              {
+                title: "Poursuite d&rsquo;études",
+                desc: "Possibilité d&rsquo;intégrer des masters ou écoles d&rsquo;ingénieurs",
+              },
             ].map(({ title, desc }) => (
               <div key={title}>
                 <h4 className="font-bold mb-2 text-secondary font-sans text-sm">

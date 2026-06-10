@@ -1,6 +1,17 @@
-"use client";
-
+import type { Metadata } from "next";
 import Link from "next/link";
+
+export const metadata: Metadata = {
+  title: "Présentation",
+  description:
+    "Découvrez le département Génie Mécanique et Productique de l'IUT d'Évry : programme, spécificités, alternance, lieux et débouchés.",
+  openGraph: {
+    title: "Présentation | GMP - IUT d'Évry",
+    description:
+      "Programme, spécificités, alternance, lieux et débouchés du BUT GMP à l'IUT d'Évry.",
+    url: "/presentation",
+  },
+};
 
 const links = [
   { label: "Programme", href: "/presentation/programme" },
@@ -19,7 +30,8 @@ export default function PresentationPage() {
           Présentation
         </h1>
         <p className="text-base text-muted mb-10 font-sans">
-          Découvrez le département Génie Mécanique et Productique de l&rsquo;IUT d&rsquo;Évry
+          Découvrez le département Génie Mécanique et Productique de l&rsquo;IUT
+          d&rsquo;Évry
         </p>
 
         <div className="grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-4">
