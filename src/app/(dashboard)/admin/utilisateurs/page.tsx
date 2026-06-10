@@ -237,13 +237,13 @@ export default function AdminUtilisateurs() {
           Aucun {ROLE_LABELS[onglet].toLowerCase().slice(0, -1)}.
         </div>
       ) : (
-        <div className="forge-card overflow-x-auto">
+        <div className="forge-card overflow-x-auto p-0">
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b border-border text-muted font-mono text-xs uppercase tracking-widest">
-                <th className="text-left py-2 pr-4 font-normal">Nom</th>
-                <th className="text-left py-2 pr-4 font-normal">Email</th>
-                <th className="text-left py-2 pr-4 font-normal">Statut</th>
+                <th className="text-left py-3 px-4 font-normal">Nom</th>
+                <th className="text-left py-3 px-4 font-normal">Email</th>
+                <th className="text-left py-3 px-4 font-normal">Statut</th>
               </tr>
             </thead>
             <tbody>
@@ -253,13 +253,13 @@ export default function AdminUtilisateurs() {
                   className="border-b border-border last:border-0 cursor-pointer hover:bg-[var(--c-primary-10)] transition-colors"
                   onClick={() => setSelectionne(user)}
                 >
-                  <td className="py-2 pr-4 text-secondary font-semibold">
+                  <td className="py-3 px-4 text-secondary font-semibold">
                     {user.prenom} {user.nom}
                   </td>
-                  <td className="py-2 pr-4 text-muted">{user.email}</td>
-                  <td className="py-2">
+                  <td className="py-3 px-4 text-muted">{user.email}</td>
+                  <td className="py-3 px-4">
                     <span
-                      className="font-mono text-xs px-2 py-0.5"
+                      className="font-mono text-xs px-2.5 py-1"
                       style={
                         user.actif
                           ? {
@@ -289,7 +289,7 @@ export default function AdminUtilisateurs() {
           onClick={fermerImport}
         >
           <div
-            className="forge-card w-full max-w-2xl flex flex-col gap-4 max-h-[90vh] overflow-y-auto"
+            className="forge-card w-full max-w-2xl flex flex-col gap-5 max-h-[90vh] overflow-y-auto"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-center justify-between">
@@ -351,20 +351,20 @@ export default function AdminUtilisateurs() {
                     <p className="text-muted text-xs font-mono">
                       {lignesCSV.length} ligne(s) détectée(s)
                     </p>
-                    <div className="overflow-x-auto max-h-48 border border-border">
+                    <div className="overflow-x-auto max-h-48 border border-border p-0">
                       <table className="w-full text-xs">
                         <thead>
                           <tr className="border-b border-border text-muted font-mono uppercase tracking-widest">
-                            <th className="text-left py-1 px-2 font-normal">
+                            <th className="text-left py-2 px-3 font-normal">
                               Email
                             </th>
-                            <th className="text-left py-1 px-2 font-normal">
+                            <th className="text-left py-2 px-3 font-normal">
                               Nom
                             </th>
-                            <th className="text-left py-1 px-2 font-normal">
+                            <th className="text-left py-2 px-3 font-normal">
                               Prénom
                             </th>
-                            <th className="text-left py-1 px-2 font-normal">
+                            <th className="text-left py-2 px-3 font-normal">
                               Rôle
                             </th>
                           </tr>
@@ -375,14 +375,18 @@ export default function AdminUtilisateurs() {
                               key={i}
                               className="border-b border-border last:border-0"
                             >
-                              <td className="py-1 px-2 text-secondary">
+                              <td className="py-2.5 px-3 text-secondary">
                                 {l.email}
                               </td>
-                              <td className="py-1 px-2 text-muted">{l.nom}</td>
-                              <td className="py-1 px-2 text-muted">
+                              <td className="py-2.5 px-3 text-muted">
+                                {l.nom}
+                              </td>
+                              <td className="py-2.5 px-3 text-muted">
                                 {l.prenom}
                               </td>
-                              <td className="py-1 px-2 font-mono">{l.role}</td>
+                              <td className="py-2.5 px-3 font-mono">
+                                {l.role}
+                              </td>
                             </tr>
                           ))}
                         </tbody>
@@ -417,17 +421,17 @@ export default function AdminUtilisateurs() {
                     Exporter CSV
                   </button>
                 </div>
-                <div className="overflow-x-auto max-h-64 border border-border">
+                <div className="overflow-x-auto max-h-64 border border-border p-0">
                   <table className="w-full text-xs">
                     <thead>
                       <tr className="border-b border-border text-muted font-mono uppercase tracking-widest">
-                        <th className="text-left py-1 px-2 font-normal">
+                        <th className="text-left py-2 px-3 font-normal">
                           Email
                         </th>
-                        <th className="text-left py-1 px-2 font-normal">
+                        <th className="text-left py-2 px-3 font-normal">
                           Statut
                         </th>
-                        <th className="text-left py-1 px-2 font-normal">
+                        <th className="text-left py-2 px-3 font-normal">
                           Mot de passe
                         </th>
                       </tr>
@@ -438,12 +442,12 @@ export default function AdminUtilisateurs() {
                           key={i}
                           className="border-b border-border last:border-0"
                         >
-                          <td className="py-1 px-2 text-secondary">
+                          <td className="py-2.5 px-3 text-secondary">
                             {r.email}
                           </td>
-                          <td className="py-1 px-2">
+                          <td className="py-2.5 px-3">
                             <span
-                              className="font-mono px-1.5 py-0.5"
+                              className="font-mono px-2 py-1"
                               style={
                                 r.statut === "créé"
                                   ? {
@@ -459,7 +463,7 @@ export default function AdminUtilisateurs() {
                               {r.statut}
                             </span>
                           </td>
-                          <td className="py-1 px-2 font-mono text-secondary">
+                          <td className="py-2.5 px-3 font-mono text-secondary">
                             {r.motDePasse ?? (
                               <span className="text-muted italic">
                                 {r.message}
@@ -493,7 +497,7 @@ export default function AdminUtilisateurs() {
           onClick={() => setSelectionne(null)}
         >
           <div
-            className="forge-card w-full max-w-md flex flex-col gap-4"
+            className="forge-card w-full max-w-md flex flex-col gap-5"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-start justify-between">
@@ -513,9 +517,9 @@ export default function AdminUtilisateurs() {
               </button>
             </div>
 
-            <div className="grid grid-cols-2 gap-3 text-xs">
+            <div className="grid grid-cols-2 gap-4 text-xs">
               <div>
-                <p className="text-muted font-mono uppercase tracking-widest mb-1">
+                <p className="text-muted font-mono uppercase tracking-widest mb-1.5">
                   Rôle
                 </p>
                 <p className="text-secondary">
@@ -523,11 +527,11 @@ export default function AdminUtilisateurs() {
                 </p>
               </div>
               <div>
-                <p className="text-muted font-mono uppercase tracking-widest mb-1">
+                <p className="text-muted font-mono uppercase tracking-widest mb-1.5">
                   Statut
                 </p>
                 <span
-                  className="font-mono text-xs px-2 py-0.5"
+                  className="font-mono text-xs px-2.5 py-1"
                   style={
                     selectionne.actif
                       ? {
@@ -546,7 +550,7 @@ export default function AdminUtilisateurs() {
               {selectionne.role === "ETUDIANT" && (
                 <>
                   <div>
-                    <p className="text-muted font-mono uppercase tracking-widest mb-1">
+                    <p className="text-muted font-mono uppercase tracking-widest mb-1.5">
                       Parcours
                     </p>
                     <p className="text-secondary">
@@ -555,7 +559,7 @@ export default function AdminUtilisateurs() {
                     </p>
                   </div>
                   <div>
-                    <p className="text-muted font-mono uppercase tracking-widest mb-1">
+                    <p className="text-muted font-mono uppercase tracking-widest mb-1.5">
                       Formation
                     </p>
                     <p className="text-secondary">
@@ -565,7 +569,7 @@ export default function AdminUtilisateurs() {
                     </p>
                   </div>
                   <div>
-                    <p className="text-muted font-mono uppercase tracking-widest mb-1">
+                    <p className="text-muted font-mono uppercase tracking-widest mb-1.5">
                       Promo
                     </p>
                     <p className="text-secondary">
@@ -575,7 +579,7 @@ export default function AdminUtilisateurs() {
                 </>
               )}
               <div>
-                <p className="text-muted font-mono uppercase tracking-widest mb-1">
+                <p className="text-muted font-mono uppercase tracking-widest mb-1.5">
                   Inscrit le
                 </p>
                 <p className="text-secondary">

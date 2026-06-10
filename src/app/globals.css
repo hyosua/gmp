@@ -125,6 +125,7 @@ body {
 .forge-card {
   border: 1px solid var(--c-border);
   background: var(--c-bg-card);
+  padding: 1.5rem;
   transition:
     border-color 0.15s,
     box-shadow 0.15s;
@@ -144,14 +145,16 @@ body {
 }
 
 /* Boutons */
-.forge-btn {
+.forge-btn,
+.forge-btn-primary,
+.forge-btn-ghost {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 0.75rem 1.75rem;
+  padding: 0.625rem 1.25rem;
   font-family: var(--font-outfit, sans-serif);
-  font-size: 1rem;
-  letter-spacing: 0.1em;
+  font-size: 0.875rem;
+  letter-spacing: 0.05em;
   border: 1px solid transparent;
   cursor: pointer;
   transition:
@@ -174,7 +177,7 @@ body {
 .forge-btn-ghost {
   background: transparent;
   color: var(--c-secondary);
-  border: 1px solid var(--c-border);
+  border-color: var(--c-border);
 }
 .forge-btn-ghost:hover {
   border-color: var(--c-primary);
