@@ -178,15 +178,16 @@ model ProjetTuteure {
 }
 
 model OffreAlternance {
-  id           String   @id @default(cuid())
+  id           String    @id @default(cuid())
   poste        String
   description  String
   duree        String
   remuneration String?
   prerequis    String?
-  statut       Statut   @default(PENDING)
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  parcours     Parcours?
+  statut       Statut    @default(PENDING)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
 
   entreprise   User   @relation(fields: [entrepriseId], references: [id])
   entrepriseId String

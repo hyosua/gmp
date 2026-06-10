@@ -12,6 +12,15 @@ type Projet = {
   statut: string;
 };
 
+const PARCOURS_OPTIONS = [
+  { value: "", label: "Tous parcours" },
+  { value: "SIMULATION_REALITE_VIRTUELLE", label: "SRV" },
+  { value: "CONCEPTION_PRODUCTION_DURABLE", label: "CPD" },
+  { value: "LP_MIE", label: "LP MIE" },
+  { value: "LP_MIEF", label: "LP MIEF" },
+  { value: "LP_MRI", label: "LP MRI" },
+];
+
 type Offre = {
   id: string;
   poste: string;
@@ -19,6 +28,7 @@ type Offre = {
   duree: string;
   remuneration: string;
   prerequis: string;
+  parcours: string | null;
   statut: string;
 };
 
@@ -65,6 +75,7 @@ const offreVide = (): OffreForm => ({
   duree: "",
   remuneration: "",
   prerequis: "",
+  parcours: "",
 });
 
 export default function DashboardEntreprise() {
@@ -144,6 +155,7 @@ export default function DashboardEntreprise() {
     body.append("duree", form.duree);
     body.append("remuneration", form.remuneration);
     body.append("prerequis", form.prerequis);
+    body.append("parcours", form.parcours ?? "");
     body.append("entreprise", session?.user?.id ?? "");
     const res = await fetch(
       mode === "edit" ? `/api/offres/modifier/${id}` : "/api/offres/nouveaux",
@@ -287,6 +299,7 @@ export default function DashboardEntreprise() {
                           duree: o.duree,
                           remuneration: o.remuneration,
                           prerequis: o.prerequis,
+                          parcours: o.parcours,
                         },
                       });
                     }}
@@ -388,8 +401,8 @@ export default function DashboardEntreprise() {
           <div className="forge-card w-full max-w-lg flex flex-col gap-4">
             <h3 className="text-secondary font-mono text-sm uppercase tracking-widest">
               {offreModal.mode === "edit"
-                ? "Modifier l&apos;offre"
-                : "Nouvelle offre d&apos;alternance"}
+                ? "Modifier l'offre"
+                : "Nouvelle offre d'alternance"}
             </h3>
             {erreurOffre && (
               <p className="text-xs" style={{ color: "var(--c-error)" }}>
@@ -434,6 +447,27 @@ export default function DashboardEntreprise() {
                 )}
               </div>
             ))}
+            <div>
+              <label className="block text-muted font-mono text-xs mb-1 uppercase">
+                Parcours ciblé
+              </label>
+              <select
+                className="w-full bg-bg-card border border-primary text-secondary p-2 text-sm"
+                value={offreModal.form.parcours ?? ""}
+                onChange={(e) =>
+                  setOffreModal({
+                    ...offreModal,
+                    form: { ...offreModal.form, parcours: e.target.value },
+                  })
+                }
+              >
+                {PARCOURS_OPTIONS.map((p) => (
+                  <option key={p.value} value={p.value}>
+                    {p.label}
+                  </option>
+                ))}
+              </select>
+            </div>
             <div className="flex gap-3 pt-2">
               <button
                 className="forge-btn-primary flex-1"

@@ -269,14 +269,54 @@ async function main() {
   }
 
   console.log("--- Création des Offres d'Alternance ---");
-  for (let i = 1; i <= 5; i++) {
+  const offresData = [
+    {
+      parcours: Parcours.CONCEPTION_PRODUCTION_DURABLE,
+      poste: "Apprenti Technicien CAO/FAO",
+      description:
+        "Conception de pièces mécaniques sous SolidWorks et programmation CN.",
+      remuneration: "900€/mois",
+    },
+    {
+      parcours: Parcours.SIMULATION_REALITE_VIRTUELLE,
+      poste: "Apprenti Ingénieur Simulation",
+      description:
+        "Développement de modèles de simulation pour des systèmes mécaniques complexes.",
+      remuneration: "1000€/mois",
+    },
+    {
+      parcours: Parcours.LP_MIE,
+      poste: "Apprenti Contrôle Qualité",
+      description:
+        "Suivi de la qualité en production, métrologie et rédaction de rapports d'audit.",
+      remuneration: "1050€/mois",
+    },
+    {
+      parcours: Parcours.LP_MIEF,
+      poste: "Apprenti Méthodes Industrielles",
+      description:
+        "Optimisation des process de fabrication et rédaction de gammes opératoires.",
+      remuneration: "1100€/mois",
+    },
+    {
+      parcours: Parcours.LP_MRI,
+      poste: "Apprenti Maintenance Robotique",
+      description:
+        "Maintenance préventive et corrective de robots industriels en cellule flexible.",
+      remuneration: "1050€/mois",
+    },
+  ];
+
+  for (let i = 0; i < offresData.length; i++) {
+    const { parcours, poste, description, remuneration } = offresData[i];
     await prisma.offreAlternance.create({
       data: {
-        poste: `Apprenti Ingénieur Mécanique ${i}`,
-        description: `Offre d'alternance chez Entreprise${i} pour un poste de conception.`,
+        poste,
+        description,
         duree: "1 an",
-        remuneration: "Selon profil",
+        remuneration,
         prerequis: "Bac+2 en génie mécanique.",
+        parcours,
         statut: Statut.PUBLISHED,
         entrepriseId: entreprises[i % entreprises.length].id,
       },
