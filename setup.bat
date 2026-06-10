@@ -43,6 +43,12 @@ echo --- Installation des dependances ---
 call npm install
 if errorlevel 1 ( echo ERREUR lors de npm install & pause & exit /b 1 )
 
+REM Génération du client Prisma
+echo.
+echo --- Generation du client Prisma ---
+call npx prisma generate
+if errorlevel 1 ( echo ERREUR lors de prisma generate & pause & exit /b 1 )
+
 REM Base de données
 echo.
 echo --- Creation de la base de donnees ---

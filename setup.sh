@@ -37,6 +37,11 @@ echo ""
 echo "--- Installation des dépendances ---"
 npm install
 
+# Génération du client Prisma
+echo ""
+echo "--- Génération du client Prisma ---"
+npx prisma generate
+
 # Base de données
 echo ""
 echo "--- Création de la base de données ---"
