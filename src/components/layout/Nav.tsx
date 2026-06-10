@@ -160,7 +160,7 @@ export function Nav({ session }: { session: Session | null }) {
             </div>
           ) : (
             <Link
-              href="/connexion"
+              href="/categorie_connexion"
               className="flex items-center gap-2 px-[1.1rem] py-[0.4rem] text-[0.75rem] font-bold font-sans tracking-[0.12em] bg-transparent text-primary border border-primary no-underline transition-all hover:bg-primary hover:text-bg-deep hover:shadow-[2px_2px_0_var(--c-accent)]"
             >
               <LogIn className="w-[13px] h-[13px]" />
