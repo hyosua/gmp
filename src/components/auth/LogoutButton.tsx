@@ -1,13 +1,11 @@
-'use client';
+"use client";
 
-import { LogOut } from 'lucide-react';
-import { signOut } from 'next-auth/react';
+import { LogOut } from "lucide-react";
+import { signOut } from "next-auth/react";
 
 export default function LogoutButton() {
   const handleLogout = async () => {
-    // signOut de next-auth/react est la méthode la plus fiable côté client
-    await signOut({ callbackUrl: '/' });
-    sessionStorage.clear()
+    await signOut({ callbackUrl: "/" });
   };
 
   return (
