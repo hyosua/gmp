@@ -32,6 +32,11 @@ type NavItem = {
 const adminNav: NavItem[] = [
   { label: "Utilisateurs", href: "/admin/utilisateurs", icon: Users },
   {
+    label: "Emploi du temps",
+    href: "/admin/emploi-du-temps",
+    icon: Calendar,
+  },
+  {
     label: "Projets tuteurés",
     href: "/admin/projets-tuteurs",
     icon: FolderOpen,
