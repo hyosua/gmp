@@ -100,7 +100,7 @@ setup.bat
 bash setup.sh
 ```
 
-Le script demande le mot de passe PostgreSQL, configure tout automatiquement (dépendances, base de données, données de démo) et affiche un récapitulatif à la fin.
+Le script demande le mot de passe PostgreSQL que vous avez défini à l'étape 2, configure tout automatiquement (dépendances, base de données, données de démo) et affiche un récapitulatif à la fin.
 
 ---
 
