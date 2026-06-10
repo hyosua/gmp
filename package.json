@@ -11,7 +11,8 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
-    "db:reset": "prisma migrate reset --force && npx tsx prisma/seed.ts"
+    "db:reset": "prisma migrate reset --force && npx tsx prisma/seed.ts",
+    "manual": "tsx scripts/generate-manual.ts"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",
@@ -26,7 +27,8 @@
     "pg": "^8.20.0",
     "react": "19.2.4",
     "react-dom": "19.2.4",
-    "resend": "^6.9.4"
+    "resend": "^6.9.4",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
@@ -41,6 +43,7 @@
     "eslint-config-next": "16.2.1",
     "husky": "^9.1.7",
     "lint-staged": "^16.4.0",
+    "playwright": "^1.60.0",
     "prettier": "^3.8.1",
     "prisma": "^7.6.0",
     "tailwindcss": "^4",
