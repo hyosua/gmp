@@ -99,7 +99,7 @@ function getNavigation(role?: string): NavItem[] {
         },
         {
           label: "Projets tuteurés",
-          href: "/espace-etudiant/projets-tuteurs",
+          href: "/espace-enseignant/projets-tuteurs",
           icon: FolderOpen,
         },
       ];

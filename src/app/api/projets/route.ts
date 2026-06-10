@@ -17,7 +17,7 @@ export async function GET() {
     return NextResponse.json(projets);
   }
 
-  // ETUDIANT et ADMIN voient les projets publiés avec les infos de l'entreprise
+  // ETUDIANT, ENSEIGNANT et ADMIN voient les projets publiés avec les infos de l'entreprise
   const projets = await prisma.projetTuteure.findMany({
     where: { statut: "PUBLISHED" },
     orderBy: { createdAt: "desc" },
