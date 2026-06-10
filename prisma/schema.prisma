@@ -164,14 +164,15 @@ model SupportDeCours {
 }
 
 model ProjetTuteure {
-  id          String   @id @default(cuid())
+  id          String    @id @default(cuid())
   titre       String
   description String
   prerequis   String?
-  nbEtudiants Int      @default(1)
-  statut      Statut   @default(PENDING)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  nbEtudiants Int       @default(1)
+  parcours    Parcours?
+  statut      Statut    @default(PENDING)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 
   entreprise   User   @relation(fields: [entrepriseId], references: [id])
   entrepriseId String

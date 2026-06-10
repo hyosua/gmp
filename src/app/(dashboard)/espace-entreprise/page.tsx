@@ -9,6 +9,7 @@ type Projet = {
   description: string;
   prerequis: string | null;
   nbEtudiants: number;
+  parcours: string | null;
   statut: string;
 };
 
@@ -68,6 +69,7 @@ const projetVide = (): ProjetForm => ({
   description: "",
   prerequis: "",
   nbEtudiants: 1,
+  parcours: "",
 });
 const offreVide = (): OffreForm => ({
   poste: "",
@@ -126,6 +128,7 @@ export default function DashboardEntreprise() {
     body.append("description", form.description);
     body.append("prerequis", form.prerequis ?? "");
     body.append("nbEtudiants", String(form.nbEtudiants));
+    body.append("parcours", form.parcours ?? "");
     const res = await fetch(
       mode === "edit" ? `/api/projets/modifier/${id}` : "/api/projets/nouveaux",
       { method: mode === "edit" ? "PATCH" : "POST", body },
@@ -228,6 +231,7 @@ export default function DashboardEntreprise() {
                           description: p.description,
                           prerequis: p.prerequis ?? "",
                           nbEtudiants: p.nbEtudiants,
+                          parcours: p.parcours ?? "",
                         },
                       });
                     }}
@@ -376,6 +380,27 @@ export default function DashboardEntreprise() {
                   })
                 }
               />
+            </div>
+            <div>
+              <label className="block text-muted font-mono text-xs mb-1 uppercase">
+                Parcours ciblé
+              </label>
+              <select
+                className="w-full bg-bg-card border border-primary text-secondary p-2 text-sm"
+                value={projetModal.form.parcours ?? ""}
+                onChange={(e) =>
+                  setProjetModal({
+                    ...projetModal,
+                    form: { ...projetModal.form, parcours: e.target.value },
+                  })
+                }
+              >
+                {PARCOURS_OPTIONS.map((p) => (
+                  <option key={p.value} value={p.value}>
+                    {p.label}
+                  </option>
+                ))}
+              </select>
             </div>
             <div className="flex gap-3 pt-2">
               <button

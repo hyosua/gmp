@@ -237,6 +237,7 @@ async function main() {
       prerequis:
         "Bases en CAO (SolidWorks ou équivalent), notions de dessin technique.",
       nbEtudiants: 1,
+      parcours: Parcours.CONCEPTION_PRODUCTION_DURABLE,
       statut: Statut.PUBLISHED,
       entrepriseId: entreprises[0].id,
     },
@@ -247,7 +248,8 @@ async function main() {
         "SAE de 2e année : en équipe, analyser un besoin industriel réel, proposer une solution technique intégrant les contraintes de conception, de fabrication et de maintenance sur l'ensemble du cycle de vie du produit.",
       prerequis:
         "Maîtrise des outils CAO/FAO, connaissances en analyse fonctionnelle et gestion de projet.",
-      nbEtudiants: 1,
+      nbEtudiants: 2,
+      parcours: Parcours.SIMULATION_REALITE_VIRTUELLE,
       statut: Statut.PUBLISHED,
       entrepriseId: entreprises[1].id,
     },
@@ -259,6 +261,7 @@ async function main() {
       prerequis:
         "Maîtrise avancée de la CAO/FAO, expérience en gestion de projet industriel, connaissances en optimisation et analyse de cycle de vie.",
       nbEtudiants: 1,
+      parcours: Parcours.LP_MIE,
       statut: Statut.PENDING,
       entrepriseId: entreprises[2].id,
     },

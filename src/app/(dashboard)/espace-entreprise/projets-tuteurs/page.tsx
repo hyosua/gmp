@@ -2,12 +2,22 @@
 
 import { useEffect, useState } from "react";
 
+const PARCOURS_OPTIONS = [
+  { value: "", label: "Tous parcours" },
+  { value: "SIMULATION_REALITE_VIRTUELLE", label: "SRV" },
+  { value: "CONCEPTION_PRODUCTION_DURABLE", label: "CPD" },
+  { value: "LP_MIE", label: "LP MIE" },
+  { value: "LP_MIEF", label: "LP MIEF" },
+  { value: "LP_MRI", label: "LP MRI" },
+];
+
 type Projet = {
   id: string;
   titre: string;
   description: string;
   prerequis: string | null;
   nbEtudiants: number;
+  parcours: string | null;
   statut: string;
   createdAt: string;
   updatedAt: string;
@@ -46,6 +56,7 @@ const vide = (): Omit<Projet, "id" | "statut" | "createdAt" | "updatedAt"> => ({
   description: "",
   prerequis: "",
   nbEtudiants: 1,
+  parcours: "",
 });
 
 export default function ProjetsTuteursEntreprise() {
@@ -80,6 +91,7 @@ export default function ProjetsTuteursEntreprise() {
       description: p.description,
       prerequis: p.prerequis ?? "",
       nbEtudiants: p.nbEtudiants,
+      parcours: p.parcours ?? "",
     });
     setEditId(p.id);
     setErreur("");
@@ -93,6 +105,7 @@ export default function ProjetsTuteursEntreprise() {
     body.append("description", form.description);
     body.append("prerequis", form.prerequis ?? "");
     body.append("nbEtudiants", String(form.nbEtudiants));
+    body.append("parcours", form.parcours ?? "");
 
     const url =
       mode === "edit"
@@ -177,6 +190,23 @@ export default function ProjetsTuteursEntreprise() {
             />
           </div>
 
+          <div>
+            <label className="block text-secondary text-xs font-mono mb-1">
+              PARCOURS CIBLÉ
+            </label>
+            <select
+              className="w-full bg-bg-card border border-primary text-secondary p-2 text-sm"
+              value={form.parcours ?? ""}
+              onChange={(e) => setForm({ ...form, parcours: e.target.value })}
+            >
+              {PARCOURS_OPTIONS.map((p) => (
+                <option key={p.value} value={p.value}>
+                  {p.label}
+                </option>
+              ))}
+            </select>
+          </div>
+
           <div className="flex gap-3 pt-2">
             <button className="forge-btn-primary flex-1" onClick={soumettre}>
               {mode === "edit" ? "Modifier" : "Créer"}
@@ -213,6 +243,7 @@ export default function ProjetsTuteursEntreprise() {
               <th className="p-3 text-left text-sm">Titre</th>
               <th className="p-3 text-left text-sm">Description</th>
               <th className="p-3 text-left text-sm">Nb étudiants</th>
+              <th className="p-3 text-left text-sm">Parcours</th>
               <th className="p-3 text-left text-sm">Statut</th>
               <th className="p-3 text-left text-sm">Actions</th>
             </tr>
@@ -226,6 +257,10 @@ export default function ProjetsTuteursEntreprise() {
                 </td>
                 <td className="p-3 text-sm text-secondary text-center">
                   {p.nbEtudiants}
+                </td>
+                <td className="p-3 text-sm text-secondary">
+                  {PARCOURS_OPTIONS.find((o) => o.value === p.parcours)
+                    ?.label ?? "-"}
                 </td>
                 <td className="p-3 text-sm">
                   <StatutBadge statut={p.statut} />

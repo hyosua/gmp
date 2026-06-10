@@ -2,6 +2,15 @@
 
 import { useEffect, useState } from "react";
 
+const PARCOURS_OPTIONS = [
+  { value: "", label: "Tous les parcours" },
+  { value: "SIMULATION_REALITE_VIRTUELLE", label: "SRV" },
+  { value: "CONCEPTION_PRODUCTION_DURABLE", label: "CPD" },
+  { value: "LP_MIE", label: "LP MIE" },
+  { value: "LP_MIEF", label: "LP MIEF" },
+  { value: "LP_MRI", label: "LP MRI" },
+];
+
 type Entreprise = {
   nom: string;
   prenom: string;
@@ -14,6 +23,7 @@ type Projet = {
   description: string;
   prerequis: string | null;
   nbEtudiants: number;
+  parcours: string | null;
   createdAt: string;
   entreprise: Entreprise;
 };
@@ -21,6 +31,7 @@ type Projet = {
 export default function ProjetsTuteursEtudiant() {
   const [projets, setProjets] = useState<Projet[]>([]);
   const [ouvert, setOuvert] = useState<string | null>(null);
+  const [filtreParcours, setFiltreParcours] = useState("");
 
   useEffect(() => {
     fetch("/api/projets")
@@ -28,31 +39,72 @@ export default function ProjetsTuteursEtudiant() {
       .then(setProjets);
   }, []);
 
+  const projetsVisibles = filtreParcours
+    ? projets.filter((p) => p.parcours === filtreParcours)
+    : projets;
+
   return (
     <div className="forge-container py-8">
       <h1 className="text-secondary font-mono text-xl mb-6">
         Projets tuteurés disponibles
       </h1>
 
-      {projets.length === 0 ? (
+      <div className="flex items-center gap-3 mb-6">
+        <label className="text-muted text-sm font-semibold">Parcours :</label>
+        <select
+          className="p-2 border border-border bg-bg-card text-secondary rounded"
+          value={filtreParcours}
+          onChange={(e) => setFiltreParcours(e.target.value)}
+        >
+          {PARCOURS_OPTIONS.map((p) => (
+            <option key={p.value} value={p.value}>
+              {p.label}
+            </option>
+          ))}
+        </select>
+        {filtreParcours && (
+          <button
+            className="forge-btn-ghost text-sm"
+            onClick={() => setFiltreParcours("")}
+          >
+            Réinitialiser
+          </button>
+        )}
+      </div>
+
+      {projetsVisibles.length === 0 ? (
         <div className="forge-card text-muted text-sm text-center py-8">
-          Aucun projet disponible pour le moment.
+          Aucun projet disponible pour ce parcours.
         </div>
       ) : (
         <div className="flex flex-col gap-3">
-          {projets.map((p) => (
+          {projetsVisibles.map((p) => (
             <div key={p.id} className="forge-card">
               <button
                 className="w-full text-left flex items-center justify-between bg-transparent border-none cursor-pointer"
                 onClick={() => setOuvert(ouvert === p.id ? null : p.id)}
               >
-                <div>
+                <div className="flex items-center gap-3">
                   <span className="text-secondary font-semibold text-sm">
                     {p.titre}
                   </span>
-                  <span className="ml-3 text-muted text-xs font-mono">
+                  <span className="text-muted text-xs font-mono">
                     {p.entreprise.nom} {p.entreprise.prenom}
                   </span>
+                  {p.parcours && (
+                    <span
+                      className="font-mono text-xs px-2 py-0.5"
+                      style={{
+                        backgroundColor: "var(--c-primary-15)",
+                        color: "var(--c-primary)",
+                      }}
+                    >
+                      {
+                        PARCOURS_OPTIONS.find((o) => o.value === p.parcours)
+                          ?.label
+                      }
+                    </span>
+                  )}
                 </div>
                 <span className="text-muted text-xs font-mono">
                   {p.nbEtudiants} étudiant{p.nbEtudiants > 1 ? "s" : ""}{" "}

@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+import { Parcours } from "@prisma/client";
 
 export async function PATCH(
   request: NextRequest,
@@ -32,6 +33,7 @@ export async function PATCH(
     formData.get("nbEtudiants")?.toString() ?? String(existant.nbEtudiants),
     10,
   );
+  const parcoursRaw = formData.get("parcours")?.toString() ?? "";
 
   const projet = await prisma.projetTuteure.update({
     where: { id },
@@ -40,6 +42,7 @@ export async function PATCH(
       description,
       prerequis: prerequis || null,
       nbEtudiants: isNaN(nbEtudiants) ? existant.nbEtudiants : nbEtudiants,
+      parcours: parcoursRaw ? (parcoursRaw as Parcours) : null,
     },
   });
 
