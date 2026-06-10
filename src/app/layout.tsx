@@ -15,11 +15,22 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "GMP — IUT d'Évry",
-  description: "Département Génie Mécanique et Productique, IUT d'Évry",
-  icons: {
-    icon: "/favicon.png",
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000",
+  ),
+  title: {
+    default: "GMP - IUT d'Évry",
+    template: "%s | GMP - IUT d'Évry",
   },
+  description:
+    "Département Génie Mécanique et Productique de l'IUT d'Évry-Courcouronnes. Formation BUT GMP, licences professionnelles, alternance.",
+  icons: { icon: "/favicon.png" },
+  openGraph: {
+    siteName: "GMP - IUT d'Évry",
+    type: "website",
+    locale: "fr_FR",
+  },
+  robots: { index: true, follow: true },
 };
 
 export default async function RootLayout({
