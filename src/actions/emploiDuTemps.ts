@@ -190,6 +190,7 @@ export async function deleteCreneau(id: string) {
 export async function getCreneauxSemaine(
   dateDebut: Date,
   groupeIds?: string[],
+  enseignantId?: string,
 ) {
   const debut = new Date(dateDebut);
   debut.setUTCHours(0, 0, 0, 0);
@@ -201,6 +202,7 @@ export async function getCreneauxSemaine(
     where: {
       semaine: { gte: debut, lt: fin },
       ...(groupeIds !== undefined ? { groupeId: { in: groupeIds } } : {}),
+      ...(enseignantId !== undefined ? { enseignantId } : {}),
     },
     include: {
       enseignant: { select: { id: true, nom: true, prenom: true } },

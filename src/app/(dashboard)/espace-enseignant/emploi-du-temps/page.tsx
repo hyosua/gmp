@@ -43,8 +43,7 @@ export default async function PageEmploiDuTempsEnseignant({
     prisma.groupe.findMany({
       orderBy: { nom: "asc" },
     }),
-    // Créneaux de la semaine (pour tout le monde, afin de voir les occupations de salle)
-    getCreneauxSemaine(dateDebut),
+    getCreneauxSemaine(dateDebut, undefined, session.user.id),
   ]);
 
   // 3. Formater les créneaux pour l'affichage
