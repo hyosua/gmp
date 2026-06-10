@@ -1,128 +1,169 @@
 "use client";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
 
-function PageCours() {
-  const [file, setFile] = useState<File>();
-  const [button, setButton] = useState<boolean>(false);
-  const [cours, setCours] = useState<any[]>([]); // Initialise comme tableau
-  const routeur = useRouter()
+type SupportDeCours = {
+  id: string;
+  titre: string;
+  cheminFichier: string;
+  taille: number;
+  dateDepot: string;
+};
 
-  const handlefile = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files.length > 0) {
-      setFile(e.target.files[0]);
-    }
-  };
-  async function Envoie() {
-    const fich = {
-      nom: file?.name,
-      fichier: file,
-    };
-    if (!file) return;
-    const formData = new FormData();
-    formData.append("nom", fich.nom || "");
-    formData.append("fichier", fich.fichier || "");
-    formData.append("chemin", `/${fich.nom}`);
-    formData.append("taille", file.size.toString() || "");
+function formatTaille(octets: number): string {
+  if (octets < 1024) return `${octets} o`;
+  if (octets < 1024 * 1024) return `${(octets / 1024).toFixed(1)} Ko`;
+  return `${(octets / (1024 * 1024)).toFixed(1)} Mo`;
+}
 
-    const fichier2 = await fetch("/api/support", {
-      method: "POST",
-      body: formData,
-    });
+function formatDate(iso: string): string {
+  return new Date(iso).toLocaleDateString("fr-FR", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+  });
+}
 
-    if (fichier2.ok) {
-      alert("Ajout éffectuer avec succès")
-      routeur.refresh()
+export default function PageCours() {
+  const [file, setFile] = useState<File | null>(null);
+  const [envoi, setEnvoi] = useState(false);
+  const [cours, setCours] = useState<SupportDeCours[]>([]);
+  const [chargement, setChargement] = useState(true);
+  const routeur = useRouter();
+  const { data: session } = useSession();
+  const peutDeposer =
+    session?.user?.role === "ENSEIGNANT" || session?.user?.role === "ADMIN";
 
-      return await fichier2.text();
-    } else {
-      console.log("erreur", fichier2.text());
-    }
-  }
-
-  useEffect(() => {
-    if (!button) return;
-
-    const run = async () => {
-      await Envoie();
-      setButton(false);
-    };
-
-    run();
-  }, [button, Envoie]);
-
-
-  async function GetCours() {
+  async function charger() {
     try {
-      const fichier2 = await fetch("/api/support/cours", {
-        method: "GET"
-      });
-      const json = await fichier2.json();
-      setCours(json); // Suppose que json est un tableau
-    } catch (ex) {
-      console.log(ex);
+      const res = await fetch("/api/support/cours");
+      const json = await res.json();
+      setCours(Array.isArray(json) ? json : []);
+    } catch {
+      setCours([]);
+    } finally {
+      setChargement(false);
     }
   }
 
   useEffect(() => {
-    GetCours();
+    charger();
   }, []);
 
-  // Ajoute un useEffect pour loguer cours après mise à jour
-  useEffect(() => {
-    console.log(cours);
-  }, [cours]);
+  async function envoyer() {
+    if (!file) return;
+    setEnvoi(true);
+    const formData = new FormData();
+    formData.append("nom", file.name);
+    formData.append("fichier", file);
+    formData.append("chemin", `/${file.name}`);
+    formData.append("taille", file.size.toString());
+
+    const res = await fetch("/api/support", { method: "POST", body: formData });
+    if (res.ok) {
+      setFile(null);
+      routeur.refresh();
+      await charger();
+    }
+    setEnvoi(false);
+  }
 
   return (
-    <div style={{ textAlign: "center" }}>
-      <h1>Bienvenue sur la page cours</h1>
-      <h2>Vous pouvez déposer vos cours sur la plateforme</h2>
-      <table border={1} style={{
-                        width: "100%",
-                        borderCollapse: "collapse",
-                        border: "2px solid #4a90e2"
-                    }}>
-        <thead className="bg-primary text-bg-card">
-          <tr>
-            <th className="p-3 text-left">fichier :</th>
-            <th className="p-3 text-left">Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr className="border-t border-border" style={{ textAlign: "center" }}>
-            <td className="p-3">
-              <input   type="file" onChange={handlefile} />
-            </td>
-            <td className="p-3">
-              <button className="forge-btn-primary" type="submit" onClick={() => setButton(true)}>
-                Envoyer
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <table border={1} style={{
-                        width: "100%",
-                        borderCollapse: "collapse",
-                        border: "2px solid #4a90e2",
-                        top: "200px"
-                    }}>
-        <thead>
-          <tr>
-            <th>Titre</th>
-            <th>Date de dépot</th>
-          </tr>
-        </thead>
-        <tbody>
-          {cours.map((item, index) => (
-            <tr key={index}>
-              <td className="p-3"><a href={`/support/${item.titre}`}>{item.titre}</a></td>
-              <td className="p-3">{item.dateDepot}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+    <div className="forge-container py-8">
+      <h1 className="text-secondary font-mono text-xl mb-2">
+        Supports de cours
+      </h1>
+      <p className="text-muted text-sm mb-8">
+        {peutDeposer
+          ? "Déposez et consultez les supports pédagogiques."
+          : "Consultez les supports mis à disposition par vos enseignants."}
+      </p>
+
+      {peutDeposer && (
+        <div className="forge-card mb-8">
+          <p className="text-muted font-mono text-xs mb-4">
+            DÉPOSER UN FICHIER
+          </p>
+          <div className="flex items-center gap-4 flex-wrap">
+            <label className="flex-1 min-w-48">
+              <div
+                className="border border-border rounded px-4 py-3 text-sm text-muted cursor-pointer hover:border-primary transition-colors"
+                style={{ borderStyle: "dashed" }}
+              >
+                {file ? (
+                  <span className="text-secondary">{file.name}</span>
+                ) : (
+                  <span>Choisir un fichier…</span>
+                )}
+              </div>
+              <input
+                type="file"
+                className="hidden"
+                onChange={(e) => setFile(e.target.files?.[0] ?? null)}
+              />
+            </label>
+            {file && (
+              <span className="text-muted text-xs font-mono">
+                {formatTaille(file.size)}
+              </span>
+            )}
+            <button
+              className="forge-btn-primary text-sm"
+              disabled={!file || envoi}
+              onClick={envoyer}
+            >
+              {envoi ? "Envoi…" : "Déposer"}
+            </button>
+          </div>
+        </div>
+      )}
+
+      <div className="forge-card rounded-lg overflow-hidden">
+        {chargement ? (
+          <div className="text-muted text-sm text-center py-10">
+            Chargement…
+          </div>
+        ) : cours.length === 0 ? (
+          <div className="text-muted text-sm text-center py-10">
+            Aucun support disponible pour le moment.
+          </div>
+        ) : (
+          <table className="w-full text-sm">
+            <thead className="bg-primary text-bg-card">
+              <tr>
+                <th className="p-3 text-left font-mono text-xs">FICHIER</th>
+                <th className="p-3 text-left font-mono text-xs">TAILLE</th>
+                <th className="p-3 text-left font-mono text-xs">DATE</th>
+                <th className="p-3 text-left font-mono text-xs">ACTION</th>
+              </tr>
+            </thead>
+            <tbody>
+              {cours.map((item) => (
+                <tr key={item.id} className="border-t border-border">
+                  <td className="p-3 text-secondary">{item.titre}</td>
+                  <td className="p-3 text-muted font-mono text-xs">
+                    {formatTaille(item.taille)}
+                  </td>
+                  <td className="p-3 text-muted text-xs">
+                    {formatDate(item.dateDepot)}
+                  </td>
+                  <td className="p-3">
+                    <a
+                      href={`/${item.cheminFichier.replace(/^public\//, "")}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="forge-btn-ghost text-xs px-2 py-1"
+                    >
+                      Télécharger
+                    </a>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+      </div>
     </div>
   );
 }
-export default PageCours;

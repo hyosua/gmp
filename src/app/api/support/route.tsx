@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { readdir } from "fs/promises";
+import { readdir, mkdir } from "fs/promises";
 import { auth } from "@/lib/auth";
 import { writeFile } from "fs/promises";
 import path from "path";
@@ -13,17 +13,21 @@ export async function POST(req: Request) {
   const chemin = body.get("chemin") as string;
   const tailles = Number(body.get("taille"));
   const session = await auth();
-  
+
+  if (
+    !session?.user ||
+    (session.user.role !== "ENSEIGNANT" && session.user.role !== "ADMIN")
+  ) {
+    return NextResponse.json({ error: "Non autorisé" }, { status: 403 });
+  }
 
   if (!fichier) {
     return NextResponse.json({ error: "Pas de fichier" }, { status: 400 });
   }
 
-  const dossier = path.join(
-    process.cwd(),
-    "public/support",
-  );
+  const dossier = path.join(process.cwd(), "public/support");
 
+  await mkdir(dossier, { recursive: true });
   const fichiers = await readdir(dossier);
   let compteur = 1;
 
@@ -41,18 +45,14 @@ export async function POST(req: Request) {
         titre: nom,
         cheminFichier: `public/support${chemin}`,
         taille: tailles,
-        enseignantId: session?.user.id.toString() || '',
+        enseignantId: session?.user.id.toString() || "",
       },
     });
 
     const bytes = await fichier.arrayBuffer();
     const buffer = Buffer.from(bytes);
 
-    const filePath = path.join(
-      process.cwd(),
-      "public/support",
-      nom,
-    );
+    const filePath = path.join(process.cwd(), "public/support", nom);
 
     await writeFile(filePath, buffer);
 
