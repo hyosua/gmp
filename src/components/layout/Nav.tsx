@@ -38,8 +38,8 @@ const links: NavLink[] = [
       { label: "Licence MRI", href: "/licences/mri" },
     ],
   },
-  { label: "Entreprises", href: "#entreprises" },
-  { label: "Contact", href: "#contact" },
+  { label: "Entreprises", href: "/entreprises" },
+  { label: "Contact", href: "/contact" },
 ];
 
 function NavItem({ link }: { link: NavLink }) {
