@@ -1,9 +1,0 @@
-email,nom,prenom,role,parcours,typeFormation,anneePromotion
-alice.martin@etudiant.fr,Martin,Alice,ETUDIANT,SIMULATION_REALITE_VIRTUELLE,INITIALE,1
-bob.dupont@etudiant.fr,Dupont,Bob,ETUDIANT,CONCEPTION_PRODUCTION_DURABLE,ALTERNANCE,2
-clara.leroy@etudiant.fr,Leroy,Clara,ETUDIANT,NON_DEFINI,INITIALE,1
-david.moreau@etudiant.fr,Moreau,David,ETUDIANT,LP_MIE,INITIALE,3
-emma.bernard@etudiant.fr,Bernard,Emma,ETUDIANT,LP_MIEF,ALTERNANCE,3
-fabrice.petit@enseignant.fr,Petit,Fabrice,ENSEIGNANT,,,
-genevieve.thomas@enseignant.fr,Thomas,Geneviève,ENSEIGNANT,,,
-acme-industrie@entreprise.fr,ACME Industrie,Contact,ENTREPRISE,,,

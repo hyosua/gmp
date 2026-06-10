@@ -24,6 +24,11 @@
 .DS_Store
 *.pem
 
+# docs generated/temp
+docs/technical-reference/
+docs/templates/__pycache__/
+docs/.~lock.*#
+
 # claude / agents
 CLAUDE.md
 GEMINI.md
