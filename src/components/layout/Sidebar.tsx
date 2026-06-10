@@ -97,6 +97,11 @@ function getNavigation(role?: string): NavItem[] {
           href: "/dashboard/cours",
           icon: GraduationCap,
         },
+        {
+          label: "Projets tuteurés",
+          href: "/espace-etudiant/projets-tuteurs",
+          icon: FolderOpen,
+        },
       ];
     case "ENTREPRISE":
       return [
