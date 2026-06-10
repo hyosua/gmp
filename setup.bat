@@ -46,15 +46,15 @@ if errorlevel 1 ( echo ERREUR lors de npm install & pause & exit /b 1 )
 REM Base de données
 echo.
 echo --- Creation de la base de donnees ---
-for /f "tokens=3 delims=:@" %%a in ('findstr "DATABASE_URL" .env') do set PG_PASS=%%a
-set PGPASSWORD=%PG_PASS%
+set PGPASSWORD=%PG_PASSWORD%
 createdb -U postgres gmp 2>nul && echo Base 'gmp' creee. || echo Base 'gmp' deja existante, on continue.
 
-REM Migrations + seed
+REM Restauration du dump
 echo.
-echo --- Migration et donnees de demo ---
-call npm run db:reset
-if errorlevel 1 ( echo ERREUR lors du setup de la base & pause & exit /b 1 )
+echo --- Chargement des donnees de demo ---
+psql -U postgres gmp < scripts\dump.sql >nul 2>&1
+if errorlevel 1 ( echo ERREUR lors du chargement du dump & pause & exit /b 1 )
+echo Donnees chargees.
 
 echo.
 echo === Installation terminee ===

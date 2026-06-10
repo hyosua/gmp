@@ -40,13 +40,12 @@ npm install
 # Base de données
 echo ""
 echo "--- Création de la base de données ---"
-PG_PASS=$(grep DATABASE_URL .env | sed 's/.*postgres:\(.*\)@localhost.*/\1/')
-PGPASSWORD="$PG_PASS" createdb -U postgres gmp 2>/dev/null && echo "Base 'gmp' créée." || echo "Base 'gmp' déjà existante, on continue."
+PGPASSWORD="$PG_PASSWORD" createdb -U postgres gmp 2>/dev/null && echo "Base 'gmp' créée." || echo "Base 'gmp' déjà existante, on continue."
 
-# Migrations + seed
+# Restauration du dump (données de démo incluses)
 echo ""
-echo "--- Migration et données de démo ---"
-npm run db:reset
+echo "--- Chargement des données de démo ---"
+PGPASSWORD="$PG_PASSWORD" psql -U postgres gmp < scripts/dump.sql > /dev/null 2>&1 && echo "Données chargées." || echo "Erreur lors du chargement du dump."
 
 echo ""
 echo "=== Installation terminée ==="
