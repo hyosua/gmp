@@ -12,6 +12,7 @@ export async function POST(req: Request) {
   const fichier = body.get("fichier") as File;
   const chemin = body.get("chemin") as string;
   const tailles = Number(body.get("taille"));
+  const matiereId = (body.get("matiereId") as string) || undefined;
   const session = await auth();
 
   if (
@@ -23,6 +24,23 @@ export async function POST(req: Request) {
 
   if (!fichier) {
     return NextResponse.json({ error: "Pas de fichier" }, { status: 400 });
+  }
+
+  if (matiereId && session.user.role === "ENSEIGNANT") {
+    const assignation = await prisma.matiereEnseignant.findUnique({
+      where: {
+        enseignantId_matiereId: {
+          enseignantId: session.user.id.toString(),
+          matiereId,
+        },
+      },
+    });
+    if (!assignation) {
+      return NextResponse.json(
+        { error: "Matière non assignée à cet enseignant" },
+        { status: 403 },
+      );
+    }
   }
 
   const dossier = path.join(process.cwd(), "public/support");
@@ -46,6 +64,7 @@ export async function POST(req: Request) {
         cheminFichier: `public/support${chemin}`,
         taille: tailles,
         enseignantId: session?.user.id.toString() || "",
+        ...(matiereId ? { matiereId } : {}),
       },
     });
 

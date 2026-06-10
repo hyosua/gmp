@@ -42,6 +42,7 @@ const adminNav: NavItem[] = [
     icon: FolderOpen,
   },
   { label: "Offres alternance", href: "/admin/offres", icon: Briefcase },
+  { label: "Supports de cours", href: "/admin/supports", icon: GraduationCap },
 ];
 
 function getNavigation(role?: string): NavItem[] {

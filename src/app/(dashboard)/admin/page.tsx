@@ -1,7 +1,7 @@
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import Link from "next/link";
-import { Users, FolderOpen, Briefcase } from "lucide-react";
+import { Users, FolderOpen, Briefcase, GraduationCap } from "lucide-react";
 import { Metadata } from "next";
 
 export const metadata: Metadata = { title: "Administration | GMP" };
@@ -16,12 +16,14 @@ export default async function AdminDashboard() {
     offresPending,
     projetsPublished,
     offresPublished,
+    totalSupports,
   ] = await Promise.all([
     prisma.user.groupBy({ by: ["role"], _count: true }),
     prisma.projetTuteure.count({ where: { statut: "PENDING" } }),
     prisma.offreAlternance.count({ where: { statut: "PENDING" } }),
     prisma.projetTuteure.count({ where: { statut: "PUBLISHED" } }),
     prisma.offreAlternance.count({ where: { statut: "PUBLISHED" } }),
+    prisma.supportDeCours.count(),
   ]);
 
   const userCounts = Object.fromEntries(
@@ -116,6 +118,23 @@ export default async function AdminDashboard() {
             className="forge-btn-ghost text-xs text-center mt-auto"
           >
             Modérer les offres →
+          </Link>
+        </div>
+        {/* Supports de cours */}
+        <div className="forge-card flex flex-col gap-4">
+          <div className="flex items-center gap-2 text-muted font-mono text-xs uppercase tracking-widest">
+            <GraduationCap size={14} />
+            Supports de cours
+          </div>
+          <div className="text-3xl font-mono font-bold text-secondary">
+            {totalSupports}
+            <span className="text-base font-normal text-muted"> déposés</span>
+          </div>
+          <Link
+            href="/admin/supports"
+            className="forge-btn-ghost text-xs text-center mt-auto"
+          >
+            Gérer les supports →
           </Link>
         </div>
       </div>

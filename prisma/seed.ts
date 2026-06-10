@@ -218,12 +218,14 @@ async function main() {
 
   console.log("--- Création des Supports de Cours ---");
   for (let i = 1; i <= 5; i++) {
+    const matiere = matieres[i % matieres.length];
     await prisma.supportDeCours.create({
       data: {
-        titre: `Support ${i} - ${matieres[i % matieres.length].nom}`,
+        titre: `Support ${i} - ${matiere.nom}`,
         cheminFichier: `/uploads/support${i}.pdf`,
         taille: 1024 * i,
         enseignantId: enseignants[i % enseignants.length].id,
+        matiereId: matiere.id,
       },
     });
   }

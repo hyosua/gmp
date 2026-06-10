@@ -2,12 +2,15 @@
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
+type Matiere = { id: string; nom: string; code: string };
+
 type SupportDeCours = {
   id: string;
   titre: string;
   cheminFichier: string;
   taille: number;
   dateDepot: string;
+  matiere: Matiere | null;
 };
 
 function formatTaille(octets: number): string {
@@ -24,16 +27,29 @@ function formatDate(iso: string): string {
   });
 }
 
-export default function CoursClient({ peutDeposer }: { peutDeposer: boolean }) {
+export default function CoursClient({
+  peutDeposer,
+  peutSupprimer = false,
+}: {
+  peutDeposer: boolean;
+  peutSupprimer?: boolean;
+}) {
   const [file, setFile] = useState<File | null>(null);
   const [envoi, setEnvoi] = useState(false);
   const [cours, setCours] = useState<SupportDeCours[]>([]);
+  const [matieres, setMatieres] = useState<Matiere[]>([]);
+  const [filtreMatiere, setFiltreMatiere] = useState<string>("");
+  const [matiereDepot, setMatiereDepot] = useState<string>("");
   const [chargement, setChargement] = useState(true);
+  const [suppression, setSuppression] = useState<string | null>(null);
   const routeur = useRouter();
 
-  async function charger() {
+  async function charger(matiereId?: string) {
     try {
-      const res = await fetch("/api/support/cours");
+      const url = matiereId
+        ? `/api/support/cours?matiereId=${matiereId}`
+        : "/api/support/cours";
+      const res = await fetch(url);
       const json = await res.json();
       setCours(Array.isArray(json) ? json : []);
     } catch {
@@ -43,9 +59,33 @@ export default function CoursClient({ peutDeposer }: { peutDeposer: boolean }) {
     }
   }
 
+  async function chargerMatieres() {
+    try {
+      const res = await fetch("/api/matieres");
+      const json = await res.json();
+      setMatieres(Array.isArray(json) ? json : []);
+    } catch {
+      setMatieres([]);
+    }
+  }
+
   useEffect(() => {
     charger();
+    chargerMatieres();
   }, []);
+
+  function changerFiltre(matiereId: string) {
+    setFiltreMatiere(matiereId);
+    setChargement(true);
+    charger(matiereId || undefined);
+  }
+
+  async function supprimer(id: string) {
+    setSuppression(id);
+    await fetch(`/api/support/${id}`, { method: "DELETE" });
+    await charger(filtreMatiere || undefined);
+    setSuppression(null);
+  }
 
   async function envoyer() {
     if (!file) return;
@@ -55,12 +95,14 @@ export default function CoursClient({ peutDeposer }: { peutDeposer: boolean }) {
     formData.append("fichier", file);
     formData.append("chemin", `/${file.name}`);
     formData.append("taille", file.size.toString());
+    if (matiereDepot) formData.append("matiereId", matiereDepot);
 
     const res = await fetch("/api/support", { method: "POST", body: formData });
     if (res.ok) {
       setFile(null);
+      setMatiereDepot("");
       routeur.refresh();
-      await charger();
+      await charger(filtreMatiere || undefined);
     }
     setEnvoi(false);
   }
@@ -82,6 +124,18 @@ export default function CoursClient({ peutDeposer }: { peutDeposer: boolean }) {
             DÉPOSER UN FICHIER
           </p>
           <div className="flex items-center gap-4 flex-wrap">
+            <select
+              className="border border-border rounded px-3 py-2 text-sm text-secondary bg-transparent min-w-40"
+              value={matiereDepot}
+              onChange={(e) => setMatiereDepot(e.target.value)}
+            >
+              <option value="">Matière (optionnel)</option>
+              {matieres.map((m) => (
+                <option key={m.id} value={m.id}>
+                  {m.code} - {m.nom}
+                </option>
+              ))}
+            </select>
             <label className="flex-1 min-w-48">
               <div
                 className="border border-border rounded px-4 py-3 text-sm text-muted cursor-pointer hover:border-primary transition-colors"
@@ -115,6 +169,24 @@ export default function CoursClient({ peutDeposer }: { peutDeposer: boolean }) {
         </div>
       )}
 
+      <div className="mb-4 flex items-center gap-3">
+        <span className="text-muted font-mono text-xs">
+          FILTRER PAR MATIÈRE
+        </span>
+        <select
+          className="border border-border rounded px-3 py-2 text-sm text-secondary bg-transparent"
+          value={filtreMatiere}
+          onChange={(e) => changerFiltre(e.target.value)}
+        >
+          <option value="">Toutes les matières</option>
+          {matieres.map((m) => (
+            <option key={m.id} value={m.id}>
+              {m.code} - {m.nom}
+            </option>
+          ))}
+        </select>
+      </div>
+
       <div className="forge-card rounded-lg overflow-hidden">
         {chargement ? (
           <div className="text-muted text-sm text-center py-10">
@@ -129,22 +201,26 @@ export default function CoursClient({ peutDeposer }: { peutDeposer: boolean }) {
             <thead className="bg-primary text-bg-card">
               <tr>
                 <th className="p-3 text-left font-mono text-xs">FICHIER</th>
+                <th className="p-3 text-left font-mono text-xs">MATIÈRE</th>
                 <th className="p-3 text-left font-mono text-xs">TAILLE</th>
                 <th className="p-3 text-left font-mono text-xs">DATE</th>
-                <th className="p-3 text-left font-mono text-xs">ACTION</th>
+                <th className="p-3 text-left font-mono text-xs">ACTIONS</th>
               </tr>
             </thead>
             <tbody>
               {cours.map((item) => (
                 <tr key={item.id} className="border-t border-border">
                   <td className="p-3 text-secondary">{item.titre}</td>
+                  <td className="p-3 text-muted text-xs font-mono">
+                    {item.matiere ? item.matiere.code : "-"}
+                  </td>
                   <td className="p-3 text-muted font-mono text-xs">
                     {formatTaille(item.taille)}
                   </td>
                   <td className="p-3 text-muted text-xs">
                     {formatDate(item.dateDepot)}
                   </td>
-                  <td className="p-3">
+                  <td className="p-3 flex items-center gap-2">
                     <a
                       href={`/${item.cheminFichier.replace(/^public\//, "")}`}
                       target="_blank"
@@ -153,6 +229,16 @@ export default function CoursClient({ peutDeposer }: { peutDeposer: boolean }) {
                     >
                       Télécharger
                     </a>
+                    {peutSupprimer && (
+                      <button
+                        className="forge-btn-ghost text-xs px-2 py-1"
+                        style={{ color: "var(--c-error)" }}
+                        disabled={suppression === item.id}
+                        onClick={() => supprimer(item.id)}
+                      >
+                        {suppression === item.id ? "…" : "Supprimer"}
+                      </button>
+                    )}
                   </td>
                 </tr>
               ))}

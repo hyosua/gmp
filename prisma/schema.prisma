@@ -103,6 +103,7 @@ model Matiere {
   notes            Note[]
   enseignants      MatiereEnseignant[]
   emploisDuTemps   EmploiDuTemps[]
+  supports         SupportDeCours[]
 }
 
 model MatiereEnseignant {
@@ -159,8 +160,11 @@ model SupportDeCours {
   taille        Int
   dateDepot     DateTime @default(now())
 
-  enseignant   User   @relation(fields: [enseignantId], references: [id])
+  enseignant   User    @relation(fields: [enseignantId], references: [id])
   enseignantId String
+
+  matiere   Matiere? @relation(fields: [matiereId], references: [id])
+  matiereId String?
 }
 
 model ProjetTuteure {
