@@ -1,5 +1,5 @@
 import NoteForm from "@/components/notes/NoteForm";
-import { createNote, deleteNote, updateNote } from "@/lib/actions/notes";
+import { createNote, deleteNote, updateNote } from "@/actions/notes";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { redirect } from "next/navigation";

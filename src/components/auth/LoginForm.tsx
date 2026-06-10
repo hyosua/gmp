@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { authenticate } from '@/lib/actions/auth';
-import { useActionState } from 'react';
-import { Loader2 } from 'lucide-react';
+import { authenticate } from "@/actions/auth";
+import { useActionState } from "react";
+import { Loader2 } from "lucide-react";
 
 export default function LoginForm() {
   const [errorMessage, formAction, isPending] = useActionState(
@@ -13,7 +13,10 @@ export default function LoginForm() {
   return (
     <form action={formAction} className="space-y-4">
       <div>
-        <label htmlFor="email" className="block text-sm font-medium mb-1 text-secondary">
+        <label
+          htmlFor="email"
+          className="block text-sm font-medium mb-1 text-secondary"
+        >
           Email
         </label>
         <input
@@ -26,7 +29,10 @@ export default function LoginForm() {
         />
       </div>
       <div>
-        <label htmlFor="password" className="block text-sm font-medium mb-1 text-secondary">
+        <label
+          htmlFor="password"
+          className="block text-sm font-medium mb-1 text-secondary"
+        >
           Mot de passe
         </label>
         <input
@@ -39,16 +45,18 @@ export default function LoginForm() {
         />
       </div>
 
-      {errorMessage && (
-        <p className="text-sm text-red-500">{errorMessage}</p>
-      )}
+      {errorMessage && <p className="text-sm text-red-500">{errorMessage}</p>}
 
       <button
         type="submit"
         disabled={isPending}
         className="forge-btn forge-btn-primary w-full justify-center"
       >
-        {isPending ? <Loader2 className="w-4 h-4 animate-spin" /> : 'SE CONNECTER'}
+        {isPending ? (
+          <Loader2 className="w-4 h-4 animate-spin" />
+        ) : (
+          "SE CONNECTER"
+        )}
       </button>
     </form>
   );
