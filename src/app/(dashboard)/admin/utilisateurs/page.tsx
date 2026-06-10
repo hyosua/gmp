@@ -34,13 +34,28 @@ type ResultatImport = {
   message?: string;
 };
 
-const ROLES = ["ETUDIANT", "ENSEIGNANT", "ENTREPRISE"] as const;
+const ROLES = ["ETUDIANT", "ENSEIGNANT", "ENTREPRISE", "ADMIN"] as const;
 type RoleFilter = (typeof ROLES)[number];
+
+const TOUS_LES_ROLES = [
+  "ETUDIANT",
+  "ENSEIGNANT",
+  "ENTREPRISE",
+  "ADMIN",
+] as const;
 
 const ROLE_LABELS: Record<string, string> = {
   ETUDIANT: "Étudiants",
   ENSEIGNANT: "Enseignants",
   ENTREPRISE: "Entreprises",
+  ADMIN: "Admin",
+};
+
+const ROLE_LABELS_SINGULIER: Record<string, string> = {
+  ETUDIANT: "Étudiant",
+  ENSEIGNANT: "Enseignant",
+  ENTREPRISE: "Entreprise",
+  ADMIN: "Admin",
 };
 
 const PARCOURS_LABELS: Record<string, string> = {
@@ -180,6 +195,18 @@ export default function AdminUtilisateurs() {
     setLignesCSV([]);
     setResultats([]);
     if (fileRef.current) fileRef.current.value = "";
+  }
+
+  async function changeRole(user: User, role: string) {
+    setLoading(true);
+    await fetch(`/api/admin/utilisateurs/${user.id}/role`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ role }),
+    });
+    await charger();
+    setSelectionne((prev) => (prev?.id === user.id ? { ...prev, role } : prev));
+    setLoading(false);
   }
 
   async function toggleActif(user: User) {
@@ -522,9 +549,18 @@ export default function AdminUtilisateurs() {
                 <p className="text-muted font-mono uppercase tracking-widest mb-1.5">
                   Rôle
                 </p>
-                <p className="text-secondary">
-                  {ROLE_LABELS[selectionne.role] ?? selectionne.role}
-                </p>
+                <select
+                  value={selectionne.role}
+                  disabled={loading}
+                  onChange={(e) => changeRole(selectionne, e.target.value)}
+                  className="bg-bg-card text-secondary border border-border font-mono text-xs px-2 py-1 cursor-pointer"
+                >
+                  {TOUS_LES_ROLES.map((r) => (
+                    <option key={r} value={r}>
+                      {ROLE_LABELS_SINGULIER[r]}
+                    </option>
+                  ))}
+                </select>
               </div>
               <div>
                 <p className="text-muted font-mono uppercase tracking-widest mb-1.5">
