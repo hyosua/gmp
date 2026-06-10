@@ -1,6 +1,14 @@
 # Site web — Département GMP
 
-Site institutionnel du département Génie Mécanique et Productique (IUT d'Évry).
+Site institutionnel du département Génie Mécanique et Productique (IUT d'Évry-Courcouronnes).
+
+## Fonctionnalités
+
+- **Page publique** : accueil, présentation des formations (BUT GMP, licences pro, alternance), partenariats entreprises, contact
+- **Espace etudiant** : emploi du temps, notes, offres d'alternance et projets tuteurés
+- **Espace enseignant** : emploi du temps, saisie des notes, dépôt de supports de cours
+- **Espace entreprise** : dépôt d'offres d'alternance et de projets tuteurés
+- **Administration** : gestion des utilisateurs, des offres, des projets, de l'emploi du temps
 
 ## Sommaire
 
@@ -11,12 +19,13 @@ Site institutionnel du département Génie Mécanique et Productique (IUT d'Évr
 - [Configuration](#configuration)
 - [Base de données](#base-de-données)
 - [Lancer le projet](#lancer-le-projet)
+- [Contribuer](#contribuer)
 - [Mettre à jour le schéma Prisma](#mettre-à-jour-le-schéma-prisma)
 - [Commandes utiles](#commandes-utiles)
 
 ## Stack
 
-Next.js 16 · TypeScript · Tailwind CSS · PostgreSQL · Prisma · Auth.js v5
+Next.js 16 · TypeScript · Tailwind CSS 4 · PostgreSQL · Prisma 7 · Auth.js v5 · Resend
 
 ## Prérequis
 
@@ -72,8 +81,10 @@ Remplir les valeurs :
 ```env
 DATABASE_URL="postgresql://postgres:VOTRE_MOT_DE_PASSE@localhost:5432/gmp?schema=public"
 AUTH_SECRET=""
+NEXT_PUBLIC_APP_URL="http://localhost:3000"
 RESEND_API_KEY=""
 RESEND_FROM="noreply@votre-domaine.fr"
+PRISMA_LOG_QUERIES=false
 ```
 
 Remplacer `VOTRE_MOT_DE_PASSE` par le mot de passe choisi lors de l'installation PostgreSQL.
@@ -121,6 +132,14 @@ npm run dev
 
 Ouvrir [http://localhost:3000](http://localhost:3000)
 
+## Contribuer
+
+- Ne jamais commiter directement sur `main` - toujours passer par une branche et une PR
+- Format des commits : Conventional Commits **en français**, < 72 caractères
+  - Types : `feat`, `fix`, `docs`, `style`, `refactor`, `chore`, `test`
+  - Exemple : `feat(etudiant): afficher les notes par semestre`
+- Le build doit passer avant d'ouvrir une PR : `npm run build`
+
 ## Mettre à jour le schéma Prisma
 
 Quand le schéma Prisma change (nouvelle migration dans `prisma/migrations/`), appliquer les changements :
@@ -144,9 +163,12 @@ npx prisma migrate reset
 
 ## Commandes utiles
 
-| Commande                 | Description              |
-| ------------------------ | ------------------------ |
-| `npm run dev`            | Serveur de développement |
-| `npm run build`          | Build de production      |
-| `npx prisma migrate dev` | Appliquer les migrations |
-| `npx prisma studio`      | Interface visuelle BDD   |
+| Commande                 | Description                         |
+| ------------------------ | ----------------------------------- |
+| `npm run dev`            | Serveur de développement            |
+| `npm run build`          | Build de production                 |
+| `npm run lint`           | Vérifier le code (ESLint)           |
+| `npm run typecheck`      | Vérifier les types TypeScript       |
+| `npm run db:reset`       | Reinitialiser la BDD avec les seeds |
+| `npx prisma migrate dev` | Appliquer les migrations en attente |
+| `npx prisma studio`      | Interface visuelle BDD              |
