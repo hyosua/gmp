@@ -1,7 +1,16 @@
 "use client";
 
+import Link from "next/link";
 import { Building2, MapPin, Shield, Wrench, Zap } from "lucide-react";
-import { Tag, SectionLabel, MonoLabel, IconBox, Button, ForgeCard, ForgeSection } from "@/components/ui";
+import {
+  Tag,
+  SectionLabel,
+  MonoLabel,
+  IconBox,
+  Button,
+  ForgeCard,
+  ForgeSection,
+} from "@/components/ui";
 
 const offres = [
   {
@@ -67,9 +76,18 @@ export function Entreprises() {
           {/* benefits */}
           <div className="mb-8">
             {[
-              { icon: <Shield className="w-[14px] h-[14px]" />, text: "Étudiants formés aux normes industrielles" },
-              { icon: <Wrench className="w-[14px] h-[14px]" />, text: "Maîtrise des outils CAO/FAO & ERP" },
-              { icon: <Zap className="w-[14px] h-[14px]" />, text: "Réseau IUT · 40+ entreprises partenaires" },
+              {
+                icon: <Shield className="w-[14px] h-[14px]" />,
+                text: "Étudiants formés aux normes industrielles",
+              },
+              {
+                icon: <Wrench className="w-[14px] h-[14px]" />,
+                text: "Maîtrise des outils CAO/FAO & ERP",
+              },
+              {
+                icon: <Zap className="w-[14px] h-[14px]" />,
+                text: "Réseau IUT · 40+ entreprises partenaires",
+              },
             ].map(({ icon, text }) => (
               <div key={text} className="flex items-center gap-3 mb-3">
                 <IconBox>{icon}</IconBox>
@@ -83,60 +101,78 @@ export function Entreprises() {
             ))}
           </div>
 
-          <Button>
-            <Building2 className="w-[14px] h-[14px]" />
-            Déposer une offre
-          </Button>
+          <Link href="/espace-entreprise">
+            <Button>
+              <Building2 className="w-[14px] h-[14px]" />
+              Déposer une offre
+            </Button>
+          </Link>
         </div>
 
         {/* right — offer cards */}
         <div className="flex flex-col gap-4">
-          {offres.map(({ company, location, type, title, description, tags, start }) => (
-            <ForgeCard key={company} style={{ cursor: "pointer" }}>
-              <div className="flex items-start justify-between mb-[0.875rem]">
-                <div className="flex items-center gap-3">
-                  <IconBox size={34}>
-                    <Building2 className="w-[14px] h-[14px]" />
-                  </IconBox>
-                  <div>
-                    <p
-                      className="font-bold text-[0.875rem] text-secondary"
-                      style={{ fontFamily: "var(--font-outfit, sans-serif)" }}
-                    >
-                      {company}
-                    </p>
-                    <MonoLabel style={{ display: "flex", alignItems: "center", gap: "4px" }}>
-                      <MapPin className="w-[9px] h-[9px]" /> {location}
-                    </MonoLabel>
+          {offres.map(
+            ({ company, location, type, title, description, tags, start }) => (
+              <ForgeCard key={company} style={{ cursor: "pointer" }}>
+                <div className="flex items-start justify-between mb-[0.875rem]">
+                  <div className="flex items-center gap-3">
+                    <IconBox size={34}>
+                      <Building2 className="w-[14px] h-[14px]" />
+                    </IconBox>
+                    <div>
+                      <p
+                        className="font-bold text-[0.875rem] text-secondary"
+                        style={{ fontFamily: "var(--font-outfit, sans-serif)" }}
+                      >
+                        {company}
+                      </p>
+                      <MonoLabel
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "4px",
+                        }}
+                      >
+                        <MapPin className="w-[9px] h-[9px]" /> {location}
+                      </MonoLabel>
+                    </div>
                   </div>
+                  <MonoLabel
+                    color="var(--c-accent)"
+                    borderColor="var(--c-accent-30)"
+                    style={{ padding: "2px 8px", whiteSpace: "nowrap" }}
+                  >
+                    {type}
+                  </MonoLabel>
                 </div>
-                <MonoLabel color="var(--c-accent)" borderColor="var(--c-accent-30)" style={{ padding: "2px 8px", whiteSpace: "nowrap" }}>
-                  {type}
-                </MonoLabel>
-              </div>
 
-              <p
-                data-card-title
-                className="font-semibold text-[0.9rem] mb-2"
-                style={{ fontFamily: "var(--font-outfit, sans-serif)" }}
-              >
-                {title}
-              </p>
-              <p
-                className="text-[0.8rem] text-muted leading-[1.55] mb-4"
-                style={{ fontFamily: "var(--font-outfit, sans-serif)" }}
-              >
-                {description}
-              </p>
+                <p
+                  data-card-title
+                  className="font-semibold text-[0.9rem] mb-2"
+                  style={{ fontFamily: "var(--font-outfit, sans-serif)" }}
+                >
+                  {title}
+                </p>
+                <p
+                  className="text-[0.8rem] text-muted leading-[1.55] mb-4"
+                  style={{ fontFamily: "var(--font-outfit, sans-serif)" }}
+                >
+                  {description}
+                </p>
 
-              <div className="flex items-center justify-between">
-                <div className="flex gap-[0.375rem] flex-wrap">
-                  {tags.map((t) => <Tag key={t}>{t}</Tag>)}
+                <div className="flex items-center justify-between">
+                  <div className="flex gap-[0.375rem] flex-wrap">
+                    {tags.map((t) => (
+                      <Tag key={t}>{t}</Tag>
+                    ))}
+                  </div>
+                  <MonoLabel style={{ whiteSpace: "nowrap" }}>
+                    {start}
+                  </MonoLabel>
                 </div>
-                <MonoLabel style={{ whiteSpace: "nowrap" }}>{start}</MonoLabel>
-              </div>
-            </ForgeCard>
-          ))}
+              </ForgeCard>
+            ),
+          )}
         </div>
       </div>
     </ForgeSection>

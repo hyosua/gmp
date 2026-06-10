@@ -1,17 +1,4 @@
 export default function ContactPage() {
-  const responsables = [
-    {
-      titre: "Chef de département",
-      nom: "Fanny JOBE",
-    },
-    {
-      titre: "Responsable des études",
-      nom: "Sylvain HALOUIS",
-      tel: "01 69 47 73 45",
-      href: "tel:+33169477345",
-    },
-  ];
-
   const gestionnaires = [
     {
       nom: "Brigitte BEGARIN",
@@ -34,33 +21,29 @@ export default function ContactPage() {
   ];
 
   return (
-    <section className="forge-section text-center" >
+    <section className="forge-section text-center">
       <div className="forge-container px-6">
         <div className="mb-12">
           <p className="mb-2 text-sm uppercase tracking-[0.25em] text-primary">
             GMP EVRY
           </p>
 
-          <h1 className="mb-4 text-4xl font-bold">
-            Nous contacter
-          </h1>
+          <h1 className="mb-4 text-4xl font-bold">Nous contacter</h1>
 
           <p>
-            Retrouvez les contacts administratifs et pédagogiques du département GMP.
+            Retrouvez les contacts administratifs et pédagogiques du département
+            GMP.
           </p>
         </div>
 
         <div className="grid gap-6 lg:grid-cols-2">
-
           {/* Chef de département */}
           <div className="forge-card">
             <h2 data-card-title className="mb-6 text-xl font-semibold">
               Chef de département
             </h2>
 
-            <p className="text-lg font-medium">
-              Fanny JOBE
-            </p>
+            <p className="text-lg font-medium">Fanny JOBE</p>
           </div>
 
           {/* Responsable des études */}
@@ -70,9 +53,7 @@ export default function ContactPage() {
             </h2>
 
             <div>
-              <p className="font-medium">
-                Sylvain HALOUIS
-              </p>
+              <p className="font-medium">Sylvain HALOUIS</p>
 
               <a
                 href="tel:+33169477345"
@@ -90,7 +71,6 @@ export default function ContactPage() {
             </h2>
 
             <div className="grid gap-6 md:grid-cols-3">
-
               <div>
                 <h3 className="mb-2 font-medium">
                   1ère année formation initiale
@@ -115,13 +95,10 @@ export default function ContactPage() {
               </div>
 
               <div>
-                <h3 className="mb-2 font-medium">
-                  Formation en alternance
-                </h3>
+                <h3 className="mb-2 font-medium">Formation en alternance</h3>
 
                 <p>Nilyan PRONE</p>
               </div>
-
             </div>
           </div>
 
@@ -132,9 +109,7 @@ export default function ContactPage() {
             </h2>
 
             <div className="mb-8 rounded border border-border bg-primary/5 p-4">
-              <p className="mb-2 font-medium">
-                Secrétariat
-              </p>
+              <p className="mb-2 font-medium">Secrétariat</p>
 
               <a
                 href="mailto:secretariat-gmp@univ-evry.fr"
@@ -147,13 +122,9 @@ export default function ContactPage() {
             <div className="grid gap-6 md:grid-cols-3">
               {gestionnaires.map((personne) => (
                 <div key={personne.nom}>
-                  <h3 className="font-medium">
-                    {personne.nom}
-                  </h3>
+                  <h3 className="font-medium">{personne.nom}</h3>
 
-                  <p className="text-muted">
-                    {personne.role}
-                  </p>
+                  <p className="text-muted">{personne.role}</p>
 
                   <a
                     href={personne.href}
@@ -165,7 +136,6 @@ export default function ContactPage() {
               ))}
             </div>
           </div>
-
         </div>
       </div>
     </section>

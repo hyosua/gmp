@@ -30,7 +30,7 @@ export async function createNote(formData: FormData) {
     throw new Error("L'étudiant et la matière sont requis.");
   }
 
-  const note = await prisma.note.create({
+  await prisma.note.create({
     data: {
       etudiantId,
       enseignantId,

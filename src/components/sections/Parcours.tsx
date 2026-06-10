@@ -1,14 +1,22 @@
 "use client";
 
+import Link from "next/link";
 import { ChevronRight, GraduationCap, BarChart3, Repeat2 } from "lucide-react";
-import { Tag, SectionLabel, MonoLabel, ForgeCard, ForgeSection } from "@/components/ui";
+import {
+  Tag,
+  SectionLabel,
+  MonoLabel,
+  ForgeCard,
+  ForgeSection,
+} from "@/components/ui";
 import { IllustrationCNC } from "@/components/illustrations/IllustrationCNC";
 import { IllustrationChaine } from "@/components/illustrations/IllustrationChaine";
 import { IllustrationEngrenages } from "@/components/illustrations/IllustrationEngrenages";
 
 const parcours = [
   {
-    code:  "BUT-GMP",
+    code: "BUT-GMP",
+    href: "/presentation/but-gmp",
     title: "BUT Génie Mécanique et Productique",
     duration: "3 ans — 180 ECTS",
     icon: <GraduationCap className="w-5 h-5" />,
@@ -18,7 +26,8 @@ const parcours = [
     illustration: <IllustrationCNC className="w-full h-36" />,
   },
   {
-    code:  "LP-PROD",
+    code: "LP-PROD",
+    href: "/licences",
     title: "Licence Pro Production Industrielle",
     duration: "1 an (Bac+2)",
     icon: <BarChart3 className="w-5 h-5" />,
@@ -28,7 +37,8 @@ const parcours = [
     illustration: <IllustrationChaine className="w-full h-36" />,
   },
   {
-    code:  "ALT-GMP",
+    code: "ALT-GMP",
+    href: "/presentation/alternance",
     title: "Alternance",
     duration: "BUT 2ᵉ & 3ᵉ année",
     icon: <Repeat2 className="w-5 h-5" />,
@@ -57,56 +67,68 @@ export function Parcours() {
 
       {/* cards grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {parcours.map(({ code, title, duration, icon, description, tags, illustration }) => (
-          <ForgeCard key={code} style={{ padding: 0 }}>
-            {/* illustration panel */}
-            <div className="border-b border-border bg-bg-deep overflow-hidden p-4">
-              {illustration}
-            </div>
-
-            <div className="p-7">
-              {/* code + icon */}
-              <div className="flex items-center justify-between mb-4">
-                <MonoLabel>{code}</MonoLabel>
-                <span className="text-primary">{icon}</span>
+        {parcours.map(
+          ({
+            code,
+            href,
+            title,
+            duration,
+            icon,
+            description,
+            tags,
+            illustration,
+          }) => (
+            <ForgeCard key={code} style={{ padding: 0 }}>
+              {/* illustration panel */}
+              <div className="border-b border-border bg-bg-deep overflow-hidden p-4">
+                {illustration}
               </div>
 
-              {/* duration badge */}
-              <MonoLabel
-                color="var(--c-accent)"
-                borderColor="var(--c-accent-40)"
-                style={{ display: "inline-block", marginBottom: "0.875rem" }}
-              >
-                {duration}
-              </MonoLabel>
+              <div className="p-7">
+                {/* code + icon */}
+                <div className="flex items-center justify-between mb-4">
+                  <MonoLabel>{code}</MonoLabel>
+                  <span className="text-primary">{icon}</span>
+                </div>
 
-              <h3
-                data-card-title
-                className="font-sans text-[1.9rem] tracking-[0.02em] mb-3 leading-[1.1] font-bold"
-              >
-                {title}
-              </h3>
-              <p
-                className="font-sans text-[0.9rem] text-muted leading-[1.6] mb-5"
-              >
-                {description}
-              </p>
+                {/* duration badge */}
+                <MonoLabel
+                  color="var(--c-accent)"
+                  borderColor="var(--c-accent-40)"
+                  style={{ display: "inline-block", marginBottom: "0.875rem" }}
+                >
+                  {duration}
+                </MonoLabel>
 
-              {/* tags */}
-              <div className="flex flex-wrap gap-[0.375rem] mb-5">
-                {tags.map((t) => <Tag key={t}>{t}</Tag>)}
+                <h3
+                  data-card-title
+                  className="font-sans text-[1.9rem] tracking-[0.02em] mb-3 leading-[1.1] font-bold"
+                >
+                  {title}
+                </h3>
+                <p className="font-sans text-[0.9rem] text-muted leading-[1.6] mb-5">
+                  {description}
+                </p>
+
+                {/* tags */}
+                <div className="flex flex-wrap gap-[0.375rem] mb-5">
+                  {tags.map((t) => (
+                    <Tag key={t}>{t}</Tag>
+                  ))}
+                </div>
+
+                {/* cta link */}
+                <Link
+                  href={href}
+                  className="font-sans flex items-center gap-[0.375rem] text-primary font-semibold text-[0.85rem] tracking-[0.04em] hover:underline"
+                >
+                  En savoir plus
+                  <ChevronRight className="w-[14px] h-[14px]" />
+                </Link>
               </div>
-
-              {/* cta link */}
-              <div
-                className="font-sans flex items-center gap-[0.375rem] text-primary font-semibold text-[0.85rem] tracking-[0.04em]"
-              >
-                En savoir plus
-                <ChevronRight className="w-[14px] h-[14px]" />
-              </div>
-            </div>
-          </ForgeCard>
-        ))}
+            </ForgeCard>
+          ),
+        )}
       </div>
     </ForgeSection>
   );

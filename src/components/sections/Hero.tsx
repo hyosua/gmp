@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef } from "react";
+import { useRouter } from "next/navigation";
 import { ChevronRight, Flame } from "lucide-react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
@@ -9,6 +10,7 @@ import { IllustrationForgeHero } from "@/components/illustrations/IllustrationFo
 import { PhotoBlueprint } from "@/components/sections/PhotoBlueprint";
 
 export function Hero() {
+  const router = useRouter();
   const heroRef = useRef<HTMLElement>(null);
   const bgSvgRef = useRef<HTMLDivElement>(null);
   const photoBpRef = useRef<HTMLDivElement>(null);
@@ -84,9 +86,17 @@ export function Hero() {
           0.55,
         )
         .to(".hero-subtitle", { autoAlpha: 1, y: 0, duration: 0.45 }, 0.75)
-        .to(".hero-desc",     { autoAlpha: 1, y: 0, duration: 0.45 }, 0.88)
-        .to(".hero-cta",      { autoAlpha: 1, y: 0, duration: 0.4, stagger: 0.1 }, 1.0)
-        .to(".hero-stat",     { autoAlpha: 1, y: 0, duration: 0.4, stagger: 0.07 }, 1.1);
+        .to(".hero-desc", { autoAlpha: 1, y: 0, duration: 0.45 }, 0.88)
+        .to(
+          ".hero-cta",
+          { autoAlpha: 1, y: 0, duration: 0.4, stagger: 0.1 },
+          1.0,
+        )
+        .to(
+          ".hero-stat",
+          { autoAlpha: 1, y: 0, duration: 0.4, stagger: 0.07 },
+          1.1,
+        );
 
       // ── 2. SVG arrière-plan — apparaît en un bloc doux ──────────────────────
       if (bgSvg) {
@@ -145,13 +155,14 @@ export function Hero() {
       {/* vertical accent stripe left */}
       <div
         className="hero-accent-stripe absolute left-0 top-0 bottom-0 w-[3px] z-[2]"
-        style={{ background: "linear-gradient(180deg, transparent, var(--c-primary), transparent)" }}
+        style={{
+          background:
+            "linear-gradient(180deg, transparent, var(--c-primary), transparent)",
+        }}
       />
 
       {/* Contenu */}
-      <div
-        className="grid grid-cols-1 lg:grid-cols-2 px-4 md:px-8 max-w-[1280px] mx-auto relative z-[3] w-full gap-12 items-center"
-      >
+      <div className="grid grid-cols-1 lg:grid-cols-2 px-4 md:px-8 max-w-[1280px] mx-auto relative z-[3] w-full gap-12 items-center">
         {/* colonne gauche — texte */}
         <div>
           {/* eyebrow */}
@@ -167,12 +178,8 @@ export function Hero() {
             className="font-sans text-secondary mb-2 tracking-[0.02em]"
             style={{ fontSize: "clamp(2.5rem, 5vw, 4.5rem)", lineHeight: 0.92 }}
           >
-            <span className="hero-h1-line block">
-              Génie
-            </span>
-            <span className="hero-h1-line block">
-              Mécanique
-            </span>
+            <span className="hero-h1-line block">Génie</span>
+            <span className="hero-h1-line block">Mécanique</span>
             <span className="hero-h1-line block text-primary">
               &amp; Productique
             </span>
@@ -187,9 +194,7 @@ export function Hero() {
           </div>
 
           {/* description */}
-          <p
-            className="hero-desc font-sans font-normal text-[1.1rem] text-secondary leading-[1.65] max-w-[480px] mb-10 opacity-75"
-          >
+          <p className="hero-desc font-sans font-normal text-[1.1rem] text-secondary leading-[1.65] max-w-[480px] mb-10 opacity-75">
             Formez-vous aux métiers de l&rsquo;industrie de demain — conception
             assistée par ordinateur, fabrication additive, robotique et méthodes
             de production dans un département à taille humaine, au cœur de
@@ -200,6 +205,7 @@ export function Hero() {
           <div className="flex gap-3 flex-wrap mb-12">
             <button
               className="hero-cta font-sans flex items-center gap-2 py-3 px-7 text-base tracking-[0.1em] bg-primary text-white border border-primary cursor-pointer transition-all"
+              onClick={() => router.push("/presentation/but-gmp")}
               onMouseEnter={(e) => {
                 e.currentTarget.style.background = "var(--c-primary-hover)";
                 e.currentTarget.style.boxShadow = "3px 3px 0 var(--c-accent)";
@@ -214,9 +220,11 @@ export function Hero() {
             </button>
             <button
               className="hero-cta font-sans flex items-center gap-2 py-3 px-7 text-base tracking-[0.1em] bg-transparent text-secondary border border-border cursor-pointer transition-all"
+              onClick={() => router.push("/entreprises")}
               onMouseEnter={(e) => {
                 e.currentTarget.style.borderColor = "var(--c-secondary)";
-                e.currentTarget.style.boxShadow = "2px 2px 0 var(--c-secondary-30)";
+                e.currentTarget.style.boxShadow =
+                  "2px 2px 0 var(--c-secondary-30)";
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.borderColor = "var(--c-border)";
@@ -239,9 +247,7 @@ export function Hero() {
                 key={label}
                 className={`hero-stat pr-8 mr-8 ${i < 3 ? "border-r border-border" : ""}`}
               >
-                <p
-                  className="font-sans text-primary leading-none tracking-[0.03em] text-[2.25rem]"
-                >
+                <p className="font-sans text-primary leading-none tracking-[0.03em] text-[2.25rem]">
                   {val}
                 </p>
                 <p className="font-mono text-[0.6rem] text-muted tracking-[0.15em] mt-1">
