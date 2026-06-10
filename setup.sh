@@ -9,9 +9,9 @@ if ! command -v node &>/dev/null; then
   exit 1
 fi
 
-if ! command -v createdb &>/dev/null; then
-  echo "ERREUR : PostgreSQL n'est pas installé ou n'est pas dans le PATH."
-  echo "Télécharger sur https://www.enterprisedb.com/downloads/postgres-postgresql-downloads"
+if ! command -v psql &>/dev/null; then
+  echo "ERREUR : PostgreSQL n'est pas installé."
+  echo "  Ubuntu/Debian : sudo apt install postgresql"
   exit 1
 fi
 
@@ -32,26 +32,53 @@ if [ -z "$PG_PORT" ]; then
   PG_PORT=${PG_PORT:-5432}
 fi
 
-# Création du .env si absent
+# Création de l'utilisateur PostgreSQL dédié
+echo ""
+echo "--- Création de l'utilisateur et de la base de données ---"
+echo "(Le mot de passe demandé ci-dessous est celui de votre session Linux, pas PostgreSQL)"
+sudo -u postgres psql -p "$PG_PORT" -q <<'EOF'
+DO $$ BEGIN
+  IF NOT EXISTS (SELECT FROM pg_catalog.pg_roles WHERE rolname = 'gmp') THEN
+    CREATE USER gmp WITH PASSWORD 'gmp';
+  END IF;
+END $$;
+EOF
+
+sudo -u postgres createdb -p "$PG_PORT" -O gmp gmp 2>/dev/null \
+  && echo "Base 'gmp' créée." \
+  || echo "Base 'gmp' déjà existante, on continue."
+
+# Chargement des données de démo
+echo ""
+echo "--- Chargement des données de démo ---"
+sudo -u postgres psql -p "$PG_PORT" -q gmp < scripts/dump.sql > /dev/null 2>&1 \
+  && echo "Données chargées." \
+  || echo "Erreur lors du chargement du dump."
+
+# Permissions pour l'utilisateur gmp
+sudo -u postgres psql -p "$PG_PORT" -q gmp <<'EOF'
+GRANT ALL ON ALL TABLES IN SCHEMA public TO gmp;
+GRANT ALL ON ALL SEQUENCES IN SCHEMA public TO gmp;
+GRANT ALL ON ALL FUNCTIONS IN SCHEMA public TO gmp;
+GRANT USAGE ON SCHEMA public TO gmp;
+EOF
+
+# Création du .env
 if [ ! -f .env ]; then
   echo ""
-  echo "--- Configuration de la base de données ---"
-  read -rp  "Utilisateur PostgreSQL [postgres] : " PG_USER
-  PG_USER=${PG_USER:-postgres}
-  read -rsp "Mot de passe PostgreSQL (utilisateur $PG_USER) : " PG_PASSWORD
-  echo ""
-
+  echo "--- Configuration ---"
   AUTH_SECRET=$(node -e "console.log(require('crypto').randomBytes(32).toString('hex'))")
-
-  sed "s/postgres:VOTRE_MOT_DE_PASSE/${PG_USER}:${PG_PASSWORD}/g" .env.example \
-    | sed "s/:5432\//:${PG_PORT}\//g" > .env
-  sed -i "s/your-auth-secret/$AUTH_SECRET/g" .env
-
+  cat > .env <<ENVEOF
+DATABASE_URL="postgresql://gmp:gmp@localhost:${PG_PORT}/gmp?schema=public"
+AUTH_SECRET="${AUTH_SECRET}"
+NEXT_PUBLIC_APP_URL="http://localhost:3000"
+RESEND_API_KEY=""
+RESEND_FROM=""
+PRISMA_LOG_QUERIES=false
+ENVEOF
   echo ".env créé."
 else
   echo ".env déjà présent, on continue."
-  PG_USER=$(grep DATABASE_URL .env | sed 's|.*://\([^:]*\):.*|\1|')
-  PG_PASSWORD=$(grep DATABASE_URL .env | sed 's|.*://[^:]*:\([^@]*\)@.*|\1|')
 fi
 
 # Dépendances
@@ -64,20 +91,14 @@ echo ""
 echo "--- Génération du client Prisma ---"
 npx prisma generate
 
-# Base de données
+# Application des migrations manquantes (sécurité)
 echo ""
-echo "--- Création de la base de données ---"
-PGPASSWORD="$PG_PASSWORD" createdb -U "$PG_USER" -h localhost -p "$PG_PORT" gmp 2>/dev/null && echo "Base 'gmp' créée." || echo "Base 'gmp' déjà existante, on continue."
-
-# Restauration du dump (données de démo incluses)
-echo ""
-echo "--- Chargement des données de démo ---"
-PGPASSWORD="$PG_PASSWORD" psql -U "$PG_USER" -h localhost -p "$PG_PORT" gmp < scripts/dump.sql > /dev/null 2>&1 && echo "Données chargées." || echo "Erreur lors du chargement du dump."
+echo "--- Vérification du schéma ---"
+npx prisma migrate deploy
 
 echo ""
 echo "=== Installation terminée ==="
 echo ""
-echo "Lancer le projet : npm run dev"
 echo "Ouvrir : http://localhost:3000"
 echo ""
 echo "Comptes de démo (mot de passe : gmp) :"
@@ -85,3 +106,5 @@ echo "  admin@test.com       - Administrateur"
 echo "  enseignant1@test.com - Enseignant"
 echo "  etudiant1@test.com   - Etudiant"
 echo "  entreprise1@test.com - Entreprise"
+echo ""
+npm run dev

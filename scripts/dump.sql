@@ -2,7 +2,7 @@
 -- PostgreSQL database dump
 --
 
-\restrict Xn0hTvgY9CtaUB82dScPTz7bzREz9XxvP9tjXWHzQNlGYwgQ0Sr2gRCOmOYKtFc
+\restrict nqSPrlcdtxZRMh1l4c7ZrqXLBpxbk9z2mbRARIkBOe0GKzp854ADRgYoEZgAde9
 
 -- Dumped from database version 16.14 (Ubuntu 16.14-0ubuntu0.24.04.1)
 -- Dumped by pg_dump version 16.14 (Ubuntu 16.14-0ubuntu0.24.04.1)
@@ -108,7 +108,7 @@ CREATE TABLE public."EmploiDuTemps" (
     "groupeId" text NOT NULL,
     "enseignantId" text NOT NULL,
     semaine timestamp(3) without time zone NOT NULL,
-    "matiereId" text,
+    "matiereId" text NOT NULL,
     "recurrenceFin" timestamp(3) without time zone,
     recurrent boolean DEFAULT false NOT NULL
 );
@@ -178,7 +178,8 @@ CREATE TABLE public."OffreAlternance" (
     "createdAt" timestamp(3) without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
     "updatedAt" timestamp(3) without time zone NOT NULL,
     "entrepriseId" text NOT NULL,
-    statut public."Statut" DEFAULT 'PENDING'::public."Statut" NOT NULL
+    statut public."Statut" DEFAULT 'PENDING'::public."Statut" NOT NULL,
+    parcours public."Parcours"
 );
 
 
@@ -195,7 +196,8 @@ CREATE TABLE public."ProjetTuteure" (
     "createdAt" timestamp(3) without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
     "updatedAt" timestamp(3) without time zone NOT NULL,
     "entrepriseId" text NOT NULL,
-    statut public."Statut" DEFAULT 'PENDING'::public."Statut" NOT NULL
+    statut public."Statut" DEFAULT 'PENDING'::public."Statut" NOT NULL,
+    parcours public."Parcours"
 );
 
 
@@ -221,7 +223,8 @@ CREATE TABLE public."SupportDeCours" (
     "cheminFichier" text NOT NULL,
     taille integer NOT NULL,
     "dateDepot" timestamp(3) without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    "enseignantId" text NOT NULL
+    "enseignantId" text NOT NULL,
+    "matiereId" text
 );
 
 
@@ -289,12 +292,11 @@ CREATE TABLE public._prisma_migrations (
 --
 
 COPY public."EmploiDuTemps" (id, jour, "heureDebut", "heureFin", salle, intitule, "groupeId", "enseignantId", semaine, "matiereId", "recurrenceFin", recurrent) FROM stdin;
-cmq7n22w90015852ewmcrkyeq	lundi	08:30	10:30	100	Cours de Matière 1.1	cmq7n22sz000g852ejy69ircm	cmq7n22rn0005852e75sp912c	2026-06-08 00:00:00	cmq7n22ui000m852eg91yx3xz	\N	f
-cmq7n22wb0016852end9ahh3i	mardi	08:30	10:30	101	Cours de Matière 1.2	cmq7n22tb000h852e7p554ihg	cmq7n22rp0006852ep7xrxujf	2026-06-08 00:00:00	cmq7n22ul000n852elywzqv5c	\N	f
-cmq7n22wd0017852ey6j1yvnp	mercredi	08:30	10:30	102	Cours de Matière 2.1	cmq7n22tx000i852ez364pgd9	cmq7n22rr0007852e2sy3odx5	2026-06-08 00:00:00	cmq7n22up000p852e1qcjzavh	\N	f
-cmq7n22we0018852erel1spp7	jeudi	08:30	10:30	103	Cours de Matière 2.2	cmq7n22u4000j852e5i8glhon	cmq7n22rs0008852er7f175g3	2026-06-08 00:00:00	cmq7n22ur000q852ezgstv4ad	\N	f
-cmq7n22wg0019852ebhgxfapz	vendredi	08:30	10:30	104	Cours de Matière 3.1	cmq7n22ua000k852ew6bc4at0	cmq7n22ru0009852egc22kdew	2026-06-08 00:00:00	cmq7n22uu000s852e3jjk1xve	\N	f
-cmq7rdc410000dp2edsszo97h	lundi	08:00	10:00	109		cmq7n22ua000k852ew6bc4at0	cmq7n22rr0007852e2sy3odx5	2026-06-07 22:00:00	cmq7n22uv000t852eejasodms	\N	f
+cmq866lc000156d2evutxbp57	lundi	08:30	10:30	100	Cours de Matière 1.1	cmq866l8p000g6d2e6uiv9n3x	cmq866l6y00056d2eakshwd6v	2026-06-08 00:00:00	cmq866lac000m6d2egg0wois5	\N	f
+cmq866lc300166d2eoufz9fy5	mardi	08:30	10:30	101	Cours de Matière 1.2	cmq866l9h000h6d2eiv1to15k	cmq866l7100066d2e7novk4zt	2026-06-08 00:00:00	cmq866laf000n6d2e25txglmq	\N	f
+cmq866lc600176d2e1e5rmev7	mercredi	08:30	10:30	102	Cours de Matière 2.1	cmq866l9o000i6d2es8ecrrg3	cmq866l7300076d2e6utdg4dp	2026-06-08 00:00:00	cmq866lal000p6d2edtcr2dii	\N	f
+cmq866lc800186d2e0gtind7q	jeudi	08:30	10:30	103	Cours de Matière 2.2	cmq866l9v000j6d2em6dlvzw7	cmq866l7500086d2evuhxmg2f	2026-06-08 00:00:00	cmq866lan000q6d2ecdmfrk1l	\N	f
+cmq866lcn00196d2e5xa7p1c0	vendredi	08:30	10:30	104	Cours de Matière 3.1	cmq866la2000k6d2evhx4omc3	cmq866l7i00096d2eb7q3c34v	2026-06-08 00:00:00	cmq866lar000s6d2emaiglvpd	\N	f
 \.
 
 
@@ -303,11 +305,11 @@ cmq7rdc410000dp2edsszo97h	lundi	08:00	10:00	109		cmq7n22ua000k852ew6bc4at0	cmq7n
 --
 
 COPY public."Groupe" (id, nom, type, "anneeScolaire") FROM stdin;
-cmq7n22sz000g852ejy69ircm	CM1	CM	2025-2026
-cmq7n22tb000h852e7p554ihg	TD1	TD	2025-2026
-cmq7n22tx000i852ez364pgd9	TD2	TD	2025-2026
-cmq7n22u4000j852e5i8glhon	TP1	TP	2025-2026
-cmq7n22ua000k852ew6bc4at0	TP2	TP	2025-2026
+cmq866l8p000g6d2e6uiv9n3x	CM1	CM	2025-2026
+cmq866l9h000h6d2eiv1to15k	TD1	TD	2025-2026
+cmq866l9o000i6d2es8ecrrg3	TD2	TD	2025-2026
+cmq866l9v000j6d2em6dlvzw7	TP1	TP	2025-2026
+cmq866la2000k6d2evhx4omc3	TP2	TP	2025-2026
 \.
 
 
@@ -316,16 +318,16 @@ cmq7n22ua000k852ew6bc4at0	TP2	TP	2025-2026
 --
 
 COPY public."Matiere" (id, nom, code, "ueId") FROM stdin;
-cmq7n22ui000m852eg91yx3xz	Matière 1.1	MAT11	cmq7n22uf000l852eraecd012
-cmq7n22ul000n852elywzqv5c	Matière 1.2	MAT12	cmq7n22uf000l852eraecd012
-cmq7n22up000p852e1qcjzavh	Matière 2.1	MAT21	cmq7n22un000o852eynpivozy
-cmq7n22ur000q852ezgstv4ad	Matière 2.2	MAT22	cmq7n22un000o852eynpivozy
-cmq7n22uu000s852e3jjk1xve	Matière 3.1	MAT31	cmq7n22us000r852evq0va6cy
-cmq7n22uv000t852eejasodms	Matière 3.2	MAT32	cmq7n22us000r852evq0va6cy
-cmq7n22uy000v852evqbd46wi	Matière 4.1	MAT41	cmq7n22ux000u852eed5lg0jx
-cmq7n22v0000w852eahdd7hzj	Matière 4.2	MAT42	cmq7n22ux000u852eed5lg0jx
-cmq7n22v3000y852ew81gn2f0	Matière 5.1	MAT51	cmq7n22v2000x852e76ii2jes
-cmq7n22v5000z852e007rb7bx	Matière 5.2	MAT52	cmq7n22v2000x852e76ii2jes
+cmq866lac000m6d2egg0wois5	Matière 1.1	MAT11	cmq866la8000l6d2ea3ufc263
+cmq866laf000n6d2e25txglmq	Matière 1.2	MAT12	cmq866la8000l6d2ea3ufc263
+cmq866lal000p6d2edtcr2dii	Matière 2.1	MAT21	cmq866laj000o6d2esfmn7ab7
+cmq866lan000q6d2ecdmfrk1l	Matière 2.2	MAT22	cmq866laj000o6d2esfmn7ab7
+cmq866lar000s6d2emaiglvpd	Matière 3.1	MAT31	cmq866lap000r6d2ejmxwjylq
+cmq866las000t6d2e22gwzhq8	Matière 3.2	MAT32	cmq866lap000r6d2ejmxwjylq
+cmq866law000v6d2e0pdo1001	Matière 4.1	MAT41	cmq866lau000u6d2eh2q0py3i
+cmq866lax000w6d2eskqowqbd	Matière 4.2	MAT42	cmq866lau000u6d2eh2q0py3i
+cmq866lb0000y6d2ehmztlm8p	Matière 5.1	MAT51	cmq866laz000x6d2e2lc8qzmk
+cmq866lb2000z6d2eeyfu55fq	Matière 5.2	MAT52	cmq866laz000x6d2e2lc8qzmk
 \.
 
 
@@ -334,16 +336,16 @@ cmq7n22v5000z852e007rb7bx	Matière 5.2	MAT52	cmq7n22v2000x852e76ii2jes
 --
 
 COPY public."MatiereEnseignant" ("enseignantId", "matiereId") FROM stdin;
-cmq7n22rn0005852e75sp912c	cmq7n22ui000m852eg91yx3xz
-cmq7n22rn0005852e75sp912c	cmq7n22ul000n852elywzqv5c
-cmq7n22rp0006852ep7xrxujf	cmq7n22up000p852e1qcjzavh
-cmq7n22rp0006852ep7xrxujf	cmq7n22ur000q852ezgstv4ad
-cmq7n22rr0007852e2sy3odx5	cmq7n22uu000s852e3jjk1xve
-cmq7n22rr0007852e2sy3odx5	cmq7n22uv000t852eejasodms
-cmq7n22rs0008852er7f175g3	cmq7n22uy000v852evqbd46wi
-cmq7n22rs0008852er7f175g3	cmq7n22v0000w852eahdd7hzj
-cmq7n22ru0009852egc22kdew	cmq7n22v3000y852ew81gn2f0
-cmq7n22ru0009852egc22kdew	cmq7n22v5000z852e007rb7bx
+cmq866l6y00056d2eakshwd6v	cmq866lac000m6d2egg0wois5
+cmq866l6y00056d2eakshwd6v	cmq866laf000n6d2e25txglmq
+cmq866l7100066d2e7novk4zt	cmq866lal000p6d2edtcr2dii
+cmq866l7100066d2e7novk4zt	cmq866lan000q6d2ecdmfrk1l
+cmq866l7300076d2e6utdg4dp	cmq866lar000s6d2emaiglvpd
+cmq866l7300076d2e6utdg4dp	cmq866las000t6d2e22gwzhq8
+cmq866l7500086d2evuhxmg2f	cmq866law000v6d2e0pdo1001
+cmq866l7500086d2evuhxmg2f	cmq866lax000w6d2eskqowqbd
+cmq866l7i00096d2eb7q3c34v	cmq866lb0000y6d2ehmztlm8p
+cmq866l7i00096d2eb7q3c34v	cmq866lb2000z6d2eeyfu55fq
 \.
 
 
@@ -352,11 +354,11 @@ cmq7n22ru0009852egc22kdew	cmq7n22v5000z852e007rb7bx
 --
 
 COPY public."Note" (id, valeur, "dateDepot", "etudiantId", "enseignantId", "matiereId", annee, semestre) FROM stdin;
-cmq7n22vy0010852eavozk4k8	10.102749229412497	2026-06-10 05:39:02.302	cmq7n22q50000852esca862dt	cmq7n22rn0005852e75sp912c	cmq7n22ui000m852eg91yx3xz	2025	1
-cmq7n22w00011852ews7lvm7i	12.360924473912254	2026-06-10 05:39:02.304	cmq7n22qh0001852e5559ivtn	cmq7n22rp0006852ep7xrxujf	cmq7n22ul000n852elywzqv5c	2025	2
-cmq7n22w20012852etfcpzoet	15.800202626418036	2026-06-10 05:39:02.306	cmq7n22rf0002852ei4o2boqx	cmq7n22rr0007852e2sy3odx5	cmq7n22up000p852e1qcjzavh	2025	3
-cmq7n22w40013852eelt4n0n1	19.827343036319277	2026-06-10 05:39:02.308	cmq7n22ri0003852esy2k7w4b	cmq7n22rs0008852er7f175g3	cmq7n22ur000q852ezgstv4ad	2025	4
-cmq7n22w60014852ec3jxmklk	14.995293298613877	2026-06-10 05:39:02.31	cmq7n22rk0004852exi91hm7y	cmq7n22ru0009852egc22kdew	cmq7n22uu000s852e3jjk1xve	2025	5
+cmq866lbp00106d2edzaz5h9r	13.505085814980326	2026-06-10 14:34:25.525	cmq866l6500006d2esoa5hff5	cmq866l6y00056d2eakshwd6v	cmq866lac000m6d2egg0wois5	2025	1
+cmq866lbr00116d2e06p1c20o	19.42210639201375	2026-06-10 14:34:25.527	cmq866l6j00016d2eucn92z2d	cmq866l7100066d2e7novk4zt	cmq866laf000n6d2e25txglmq	2025	2
+cmq866lbt00126d2etnw7w3fi	16.846805790827762	2026-06-10 14:34:25.529	cmq866l6n00026d2e7kl3trjt	cmq866l7300076d2e6utdg4dp	cmq866lal000p6d2edtcr2dii	2025	3
+cmq866lbv00136d2etsiy95l2	10.74251430939913	2026-06-10 14:34:25.531	cmq866l6r00036d2ex93x9c8w	cmq866l7500086d2evuhxmg2f	cmq866lan000q6d2ecdmfrk1l	2025	4
+cmq866lbx00146d2e52zweewd	15.773435835972139	2026-06-10 14:34:25.533	cmq866l6u00046d2ero4c9ofb	cmq866l7i00096d2eb7q3c34v	cmq866lar000s6d2emaiglvpd	2025	5
 \.
 
 
@@ -364,14 +366,12 @@ cmq7n22w60014852ec3jxmklk	14.995293298613877	2026-06-10 05:39:02.31	cmq7n22rk000
 -- Data for Name: OffreAlternance; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public."OffreAlternance" (id, poste, description, duree, remuneration, prerequis, "createdAt", "updatedAt", "entrepriseId", statut) FROM stdin;
-cmq7n22wx001i852ezk7ufhdu	Apprenti Ingénieur Mécanique 1	Offre d'alternance chez Entreprise1 pour un poste de conception.	1 an	Selon profil	Bac+2 en génie mécanique.	2026-06-10 05:39:02.337	2026-06-10 05:39:02.337	cmq7n22s0000b852e41bf85of	PUBLISHED
-cmq7n22wy001j852ex1kz4f8p	Apprenti Ingénieur Mécanique 2	Offre d'alternance chez Entreprise2 pour un poste de conception.	1 an	Selon profil	Bac+2 en génie mécanique.	2026-06-10 05:39:02.338	2026-06-10 05:39:02.338	cmq7n22s1000c852ery3lgd66	PUBLISHED
-cmq7n22x0001k852efpy3oviv	Apprenti Ingénieur Mécanique 3	Offre d'alternance chez Entreprise3 pour un poste de conception.	1 an	Selon profil	Bac+2 en génie mécanique.	2026-06-10 05:39:02.34	2026-06-10 05:39:02.34	cmq7n22s3000d852e7x9wjc1k	PUBLISHED
-cmq7n22x2001l852euwlc7pc9	Apprenti Ingénieur Mécanique 4	Offre d'alternance chez Entreprise4 pour un poste de conception.	1 an	Selon profil	Bac+2 en génie mécanique.	2026-06-10 05:39:02.342	2026-06-10 05:39:02.342	cmq7n22s5000e852eqsu6wcca	PUBLISHED
-cmq7n22x4001m852ed3ah36tc	Apprenti Ingénieur Mécanique 5	Offre d'alternance chez Entreprise5 pour un poste de conception.	1 an	Selon profil	Bac+2 en génie mécanique.	2026-06-10 05:39:02.344	2026-06-10 05:39:02.344	cmq7n22ry000a852e0ezm0nm3	PUBLISHED
-cmq7u3uuo0000hz2ei9bbgicl	test	test description	9	899	non	2026-06-10 08:56:22.512	2026-06-10 08:56:22.512	cmq7n22s0000b852e41bf85of	PENDING
-cmq7uit1k0001hz2egdu76tzw	Un poste	une description	8 mois	900	aucun	2026-06-10 09:08:00.008	2026-06-10 09:08:00.008	cmq7n22s0000b852e41bf85of	PENDING
+COPY public."OffreAlternance" (id, poste, description, duree, remuneration, prerequis, "createdAt", "updatedAt", "entrepriseId", statut, parcours) FROM stdin;
+cmq866ld7001i6d2et2myaw9y	Apprenti Technicien CAO/FAO	Conception de pièces mécaniques sous SolidWorks et programmation CN.	1 an	900€/mois	Bac+2 en génie mécanique.	2026-06-10 14:34:25.579	2026-06-10 14:34:25.579	cmq866l7m000a6d2e0d07xd0w	PUBLISHED	CONCEPTION_PRODUCTION_DURABLE
+cmq866lda001j6d2e82nytmu4	Apprenti Ingénieur Simulation	Développement de modèles de simulation pour des systèmes mécaniques complexes.	1 an	1000€/mois	Bac+2 en génie mécanique.	2026-06-10 14:34:25.582	2026-06-10 14:34:25.582	cmq866l7o000b6d2en4kqunga	PUBLISHED	SIMULATION_REALITE_VIRTUELLE
+cmq866ldd001k6d2ejybgonmw	Apprenti Contrôle Qualité	Suivi de la qualité en production, métrologie et rédaction de rapports d'audit.	1 an	1050€/mois	Bac+2 en génie mécanique.	2026-06-10 14:34:25.585	2026-06-10 14:34:25.585	cmq866l7q000c6d2ejrfhbydn	PUBLISHED	LP_MIE
+cmq866ldg001l6d2eeebjtkgo	Apprenti Méthodes Industrielles	Optimisation des process de fabrication et rédaction de gammes opératoires.	1 an	1100€/mois	Bac+2 en génie mécanique.	2026-06-10 14:34:25.588	2026-06-10 14:34:25.588	cmq866l7s000d6d2ediu8la0i	PUBLISHED	LP_MIEF
+cmq866ldi001m6d2eqoq2op40	Apprenti Maintenance Robotique	Maintenance préventive et corrective de robots industriels en cellule flexible.	1 an	1050€/mois	Bac+2 en génie mécanique.	2026-06-10 14:34:25.59	2026-06-10 14:34:25.59	cmq866l7t000e6d2e8u4vpk5v	PUBLISHED	LP_MRI
 \.
 
 
@@ -379,10 +379,10 @@ cmq7uit1k0001hz2egdu76tzw	Un poste	une description	8 mois	900	aucun	2026-06-10 0
 -- Data for Name: ProjetTuteure; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public."ProjetTuteure" (id, titre, description, prerequis, "nbEtudiants", "createdAt", "updatedAt", "entrepriseId", statut) FROM stdin;
-cmq7n22wq001f852egq7usy1n	De la maquette numérique au prototype physique	SAE de 1ère année : concevoir une maquette numérique sous logiciel CAO puis la concrétiser en prototype physique via des procédés de fabrication adaptés (impression 3D, usinage). L'étudiant suit l'intégralité du cycle de conception-fabrication.	Bases en CAO (SolidWorks ou équivalent), notions de dessin technique.	1	2026-06-10 05:39:02.33	2026-06-10 05:39:02.33	cmq7n22ry000a852e0ezm0nm3	PUBLISHED
-cmq7n22ws001g852eqsp28cmr	Répondre, dans un cadre collaboratif, à un besoin de nature industrielle sur l'ensemble du cycle de vie	SAE de 2e année : en équipe, analyser un besoin industriel réel, proposer une solution technique intégrant les contraintes de conception, de fabrication et de maintenance sur l'ensemble du cycle de vie du produit.	Maîtrise des outils CAO/FAO, connaissances en analyse fonctionnelle et gestion de projet.	1	2026-06-10 05:39:02.332	2026-06-10 05:39:02.332	cmq7n22s0000b852e41bf85of	PUBLISHED
-cmq7n22wu001h852e37ynpttc	Fournir, en autonomie, une solution fonctionnelle et optimisée répondant à une demande industrielle sur l'ensemble du cycle de vie	SAE de 3e année : en totale autonomie, répondre à une commande industrielle complexe en livrant une solution complète, documentée et optimisée (coût, performance, durabilité) couvrant l'ensemble du cycle de vie du produit.	Maîtrise avancée de la CAO/FAO, expérience en gestion de projet industriel, connaissances en optimisation et analyse de cycle de vie.	1	2026-06-10 05:39:02.334	2026-06-10 05:39:02.334	cmq7n22s1000c852ery3lgd66	PENDING
+COPY public."ProjetTuteure" (id, titre, description, prerequis, "nbEtudiants", "createdAt", "updatedAt", "entrepriseId", statut, parcours) FROM stdin;
+cmq866lcz001f6d2eie0q4nhg	De la maquette numérique au prototype physique	SAE de 1ère année : concevoir une maquette numérique sous logiciel CAO puis la concrétiser en prototype physique via des procédés de fabrication adaptés (impression 3D, usinage). L'étudiant suit l'intégralité du cycle de conception-fabrication.	Bases en CAO (SolidWorks ou équivalent), notions de dessin technique.	1	2026-06-10 14:34:25.571	2026-06-10 14:34:25.571	cmq866l7m000a6d2e0d07xd0w	PUBLISHED	CONCEPTION_PRODUCTION_DURABLE
+cmq866ld4001h6d2e4iwdddet	Fournir, en autonomie, une solution fonctionnelle et optimisée répondant à une demande industrielle sur l'ensemble du cycle de vie	SAE de 3e année : en totale autonomie, répondre à une commande industrielle complexe en livrant une solution complète, documentée et optimisée (coût, performance, durabilité) couvrant l'ensemble du cycle de vie du produit.	Maîtrise avancée de la CAO/FAO, expérience en gestion de projet industriel, connaissances en optimisation et analyse de cycle de vie.	1	2026-06-10 14:34:25.576	2026-06-10 14:35:44.289	cmq866l7q000c6d2ejrfhbydn	PENDING	CONCEPTION_PRODUCTION_DURABLE
+cmq866ld2001g6d2ea4x8r622	Répondre, dans un cadre collaboratif, à un besoin de nature industrielle sur l'ensemble du cycle de vie	SAE de 2e année : en équipe, analyser un besoin industriel réel, proposer une solution technique intégrant les contraintes de conception, de fabrication et de maintenance sur l'ensemble du cycle de vie du produit.	Maîtrise des outils CAO/FAO, connaissances en analyse fonctionnelle et gestion de projet.	2	2026-06-10 14:34:25.574	2026-06-10 14:36:01.967	cmq866l7o000b6d2en4kqunga	PUBLISHED	LP_MIE
 \.
 
 
@@ -391,11 +391,11 @@ cmq7n22wu001h852e37ynpttc	Fournir, en autonomie, une solution fonctionnelle et o
 --
 
 COPY public."ResetToken" (id, token, "expiresAt", "userId") FROM stdin;
-cmq7n22x6001n852ebu2krvwj	token-secret-0	2026-06-10 06:39:02.345	cmq7n22q50000852esca862dt
-cmq7n22x8001o852e0utsccwf	token-secret-1	2026-06-10 06:39:02.348	cmq7n22qh0001852e5559ivtn
-cmq7n22xa001p852e2ga8msw9	token-secret-2	2026-06-10 06:39:02.349	cmq7n22rf0002852ei4o2boqx
-cmq7n22xb001q852eum0m4uzu	token-secret-3	2026-06-10 06:39:02.351	cmq7n22ri0003852esy2k7w4b
-cmq7n22xd001r852ecsvsks2c	token-secret-4	2026-06-10 06:39:02.353	cmq7n22rk0004852exi91hm7y
+cmq866ldl001n6d2egntlrlx8	token-secret-0	2026-06-10 15:34:25.592	cmq866l6500006d2esoa5hff5
+cmq866ldn001o6d2e1aqw1o3t	token-secret-1	2026-06-10 15:34:25.595	cmq866l6j00016d2eucn92z2d
+cmq866ldo001p6d2esi2454hn	token-secret-2	2026-06-10 15:34:25.596	cmq866l6n00026d2e7kl3trjt
+cmq866ldq001q6d2e39t11s9v	token-secret-3	2026-06-10 15:34:25.598	cmq866l6r00036d2ex93x9c8w
+cmq866lds001r6d2edhq4c123	token-secret-4	2026-06-10 15:34:25.599	cmq866l6u00046d2ero4c9ofb
 \.
 
 
@@ -403,13 +403,12 @@ cmq7n22xd001r852ecsvsks2c	token-secret-4	2026-06-10 06:39:02.353	cmq7n22rk000485
 -- Data for Name: SupportDeCours; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public."SupportDeCours" (id, titre, "cheminFichier", taille, "dateDepot", "enseignantId") FROM stdin;
-cmq7n22wi001a852egoapp6lg	Support 1 - Matière 1.2	/uploads/support1.pdf	1024	2026-06-10 05:39:02.322	cmq7n22rp0006852ep7xrxujf
-cmq7n22wk001b852ekjenl916	Support 2 - Matière 2.1	/uploads/support2.pdf	2048	2026-06-10 05:39:02.324	cmq7n22rr0007852e2sy3odx5
-cmq7n22wl001c852edzw5m2pi	Support 3 - Matière 2.2	/uploads/support3.pdf	3072	2026-06-10 05:39:02.325	cmq7n22rs0008852er7f175g3
-cmq7n22wn001d852ewq0mq5w7	Support 4 - Matière 3.1	/uploads/support4.pdf	4096	2026-06-10 05:39:02.327	cmq7n22ru0009852egc22kdew
-cmq7n22wo001e852etyl4ebmk	Support 5 - Matière 3.2	/uploads/support5.pdf	5120	2026-06-10 05:39:02.328	cmq7n22rn0005852e75sp912c
-cmq7woon500003i2ey114ldsh	stack-technique.pdf	public/support/stack-technique.pdf	60420	2026-06-10 10:08:33.474	cmq7n22rn0005852e75sp912c
+COPY public."SupportDeCours" (id, titre, "cheminFichier", taille, "dateDepot", "enseignantId", "matiereId") FROM stdin;
+cmq866lcp001a6d2e6f6bni4s	Support 1 - Matière 1.2	/uploads/support1.pdf	1024	2026-06-10 14:34:25.561	cmq866l7100066d2e7novk4zt	cmq866laf000n6d2e25txglmq
+cmq866lcr001b6d2eigqj723u	Support 2 - Matière 2.1	/uploads/support2.pdf	2048	2026-06-10 14:34:25.563	cmq866l7300076d2e6utdg4dp	cmq866lal000p6d2edtcr2dii
+cmq866lct001c6d2ewaoqvvuz	Support 3 - Matière 2.2	/uploads/support3.pdf	3072	2026-06-10 14:34:25.565	cmq866l7500086d2evuhxmg2f	cmq866lan000q6d2ecdmfrk1l
+cmq866lcv001d6d2ejoj53d06	Support 4 - Matière 3.1	/uploads/support4.pdf	4096	2026-06-10 14:34:25.567	cmq866l7i00096d2eb7q3c34v	cmq866lar000s6d2emaiglvpd
+cmq866lcw001e6d2e4gprvpdj	Support 5 - Matière 3.2	/uploads/support5.pdf	5120	2026-06-10 14:34:25.568	cmq866l6y00056d2eakshwd6v	cmq866las000t6d2e22gwzhq8
 \.
 
 
@@ -418,11 +417,11 @@ cmq7woon500003i2ey114ldsh	stack-technique.pdf	public/support/stack-technique.pdf
 --
 
 COPY public."UE" (id, nom, code, coefficient) FROM stdin;
-cmq7n22uf000l852eraecd012	Unité d'Enseignement 1	UE1	1.5
-cmq7n22un000o852eynpivozy	Unité d'Enseignement 2	UE2	2
-cmq7n22us000r852evq0va6cy	Unité d'Enseignement 3	UE3	2.5
-cmq7n22ux000u852eed5lg0jx	Unité d'Enseignement 4	UE4	3
-cmq7n22v2000x852e76ii2jes	Unité d'Enseignement 5	UE5	3.5
+cmq866la8000l6d2ea3ufc263	Unité d'Enseignement 1	UE1	1.5
+cmq866laj000o6d2esfmn7ab7	Unité d'Enseignement 2	UE2	2
+cmq866lap000r6d2ejmxwjylq	Unité d'Enseignement 3	UE3	2.5
+cmq866lau000u6d2eh2q0py3i	Unité d'Enseignement 4	UE4	3
+cmq866laz000x6d2e2lc8qzmk	Unité d'Enseignement 5	UE5	3.5
 \.
 
 
@@ -431,22 +430,22 @@ cmq7n22v2000x852e76ii2jes	Unité d'Enseignement 5	UE5	3.5
 --
 
 COPY public."User" (id, email, password, nom, prenom, role, actif, parcours, "typeFormation", "createdAt", "updatedAt", "anneePromotion", "promesseEmbauche") FROM stdin;
-cmq7n22q50000852esca862dt	etudiant1@test.com	$2b$10$UdlLTU4ZogaTtncYLf5GCO.wHPKv9./vNBQZ5sokf9lneBB4PWHcW	Dupont1	Jean1	ETUDIANT	t	CONCEPTION_PRODUCTION_DURABLE	INITIALE	2026-06-10 05:39:02.093	2026-06-10 05:39:02.093	2	f
-cmq7n22qh0001852e5559ivtn	etudiant2@test.com	$2b$10$UdlLTU4ZogaTtncYLf5GCO.wHPKv9./vNBQZ5sokf9lneBB4PWHcW	Dupont2	Jean2	ETUDIANT	t	SIMULATION_REALITE_VIRTUELLE	ALTERNANCE	2026-06-10 05:39:02.105	2026-06-10 05:39:02.105	3	f
-cmq7n22rf0002852ei4o2boqx	etudiant3@test.com	$2b$10$UdlLTU4ZogaTtncYLf5GCO.wHPKv9./vNBQZ5sokf9lneBB4PWHcW	Dupont3	Jean3	ETUDIANT	t	CONCEPTION_PRODUCTION_DURABLE	INITIALE	2026-06-10 05:39:02.139	2026-06-10 05:39:02.139	1	f
-cmq7n22ri0003852esy2k7w4b	etudiant4@test.com	$2b$10$UdlLTU4ZogaTtncYLf5GCO.wHPKv9./vNBQZ5sokf9lneBB4PWHcW	Dupont4	Jean4	ETUDIANT	t	SIMULATION_REALITE_VIRTUELLE	ALTERNANCE	2026-06-10 05:39:02.142	2026-06-10 05:39:02.142	2	f
-cmq7n22rk0004852exi91hm7y	etudiant5@test.com	$2b$10$UdlLTU4ZogaTtncYLf5GCO.wHPKv9./vNBQZ5sokf9lneBB4PWHcW	Dupont5	Jean5	ETUDIANT	t	CONCEPTION_PRODUCTION_DURABLE	INITIALE	2026-06-10 05:39:02.144	2026-06-10 05:39:02.144	3	f
-cmq7n22rn0005852e75sp912c	enseignant1@test.com	$2b$10$UdlLTU4ZogaTtncYLf5GCO.wHPKv9./vNBQZ5sokf9lneBB4PWHcW	Professeur1	Luc1	ENSEIGNANT	t	NON_DEFINI	INITIALE	2026-06-10 05:39:02.147	2026-06-10 05:39:02.147	1	f
-cmq7n22rr0007852e2sy3odx5	enseignant3@test.com	$2b$10$UdlLTU4ZogaTtncYLf5GCO.wHPKv9./vNBQZ5sokf9lneBB4PWHcW	Professeur3	Luc3	ENSEIGNANT	t	NON_DEFINI	INITIALE	2026-06-10 05:39:02.151	2026-06-10 05:39:02.151	1	f
-cmq7n22rs0008852er7f175g3	enseignant4@test.com	$2b$10$UdlLTU4ZogaTtncYLf5GCO.wHPKv9./vNBQZ5sokf9lneBB4PWHcW	Professeur4	Luc4	ENSEIGNANT	t	NON_DEFINI	INITIALE	2026-06-10 05:39:02.153	2026-06-10 05:39:02.153	1	f
-cmq7n22ry000a852e0ezm0nm3	entreprise1@test.com	$2b$10$UdlLTU4ZogaTtncYLf5GCO.wHPKv9./vNBQZ5sokf9lneBB4PWHcW	Entreprise1	Représentant1	ENTREPRISE	t	NON_DEFINI	INITIALE	2026-06-10 05:39:02.158	2026-06-10 05:39:02.158	1	f
-cmq7n22s0000b852e41bf85of	entreprise2@test.com	$2b$10$UdlLTU4ZogaTtncYLf5GCO.wHPKv9./vNBQZ5sokf9lneBB4PWHcW	Entreprise2	Représentant2	ENTREPRISE	t	NON_DEFINI	INITIALE	2026-06-10 05:39:02.16	2026-06-10 05:39:02.16	1	f
-cmq7n22s1000c852ery3lgd66	entreprise3@test.com	$2b$10$UdlLTU4ZogaTtncYLf5GCO.wHPKv9./vNBQZ5sokf9lneBB4PWHcW	Entreprise3	Représentant3	ENTREPRISE	t	NON_DEFINI	INITIALE	2026-06-10 05:39:02.161	2026-06-10 05:39:02.161	1	f
-cmq7n22s3000d852e7x9wjc1k	entreprise4@test.com	$2b$10$UdlLTU4ZogaTtncYLf5GCO.wHPKv9./vNBQZ5sokf9lneBB4PWHcW	Entreprise4	Représentant4	ENTREPRISE	t	NON_DEFINI	INITIALE	2026-06-10 05:39:02.163	2026-06-10 05:39:02.163	1	f
-cmq7n22s5000e852eqsu6wcca	entreprise5@test.com	$2b$10$UdlLTU4ZogaTtncYLf5GCO.wHPKv9./vNBQZ5sokf9lneBB4PWHcW	Entreprise5	Représentant5	ENTREPRISE	t	NON_DEFINI	INITIALE	2026-06-10 05:39:02.165	2026-06-10 05:39:02.165	1	f
-cmq7n22s7000f852ewxcaepsc	admin@test.com	$2b$10$UdlLTU4ZogaTtncYLf5GCO.wHPKv9./vNBQZ5sokf9lneBB4PWHcW	Admin	Boss	ADMIN	t	NON_DEFINI	INITIALE	2026-06-10 05:39:02.167	2026-06-10 05:39:02.167	1	f
-cmq7n22ru0009852egc22kdew	enseignant5@test.com	$2b$10$UdlLTU4ZogaTtncYLf5GCO.wHPKv9./vNBQZ5sokf9lneBB4PWHcW	Professeur5	Luc5	ADMIN	t	NON_DEFINI	INITIALE	2026-06-10 05:39:02.155	2026-06-10 07:23:49.554	1	f
-cmq7n22rp0006852ep7xrxujf	enseignant2@test.com	$2b$10$UdlLTU4ZogaTtncYLf5GCO.wHPKv9./vNBQZ5sokf9lneBB4PWHcW	Professeur2	Luc2	ENSEIGNANT	t	NON_DEFINI	INITIALE	2026-06-10 05:39:02.149	2026-06-10 07:25:23.68	1	f
+cmq866l6500006d2esoa5hff5	etudiant1@test.com	$2b$10$dH/2tsvCvQpaTikXjr6YwOWS6yjiwAlWUYUNxreQLhTjvMu2YLPIW	Dupont1	Jean1	ETUDIANT	t	CONCEPTION_PRODUCTION_DURABLE	INITIALE	2026-06-10 14:34:25.325	2026-06-10 14:34:25.325	2	f
+cmq866l6j00016d2eucn92z2d	etudiant2@test.com	$2b$10$dH/2tsvCvQpaTikXjr6YwOWS6yjiwAlWUYUNxreQLhTjvMu2YLPIW	Dupont2	Jean2	ETUDIANT	t	SIMULATION_REALITE_VIRTUELLE	ALTERNANCE	2026-06-10 14:34:25.339	2026-06-10 14:34:25.339	3	f
+cmq866l6n00026d2e7kl3trjt	etudiant3@test.com	$2b$10$dH/2tsvCvQpaTikXjr6YwOWS6yjiwAlWUYUNxreQLhTjvMu2YLPIW	Dupont3	Jean3	ETUDIANT	t	CONCEPTION_PRODUCTION_DURABLE	INITIALE	2026-06-10 14:34:25.343	2026-06-10 14:34:25.343	1	f
+cmq866l6r00036d2ex93x9c8w	etudiant4@test.com	$2b$10$dH/2tsvCvQpaTikXjr6YwOWS6yjiwAlWUYUNxreQLhTjvMu2YLPIW	Dupont4	Jean4	ETUDIANT	t	SIMULATION_REALITE_VIRTUELLE	ALTERNANCE	2026-06-10 14:34:25.347	2026-06-10 14:34:25.347	2	f
+cmq866l6u00046d2ero4c9ofb	etudiant5@test.com	$2b$10$dH/2tsvCvQpaTikXjr6YwOWS6yjiwAlWUYUNxreQLhTjvMu2YLPIW	Dupont5	Jean5	ETUDIANT	t	CONCEPTION_PRODUCTION_DURABLE	INITIALE	2026-06-10 14:34:25.35	2026-06-10 14:34:25.35	3	f
+cmq866l6y00056d2eakshwd6v	enseignant1@test.com	$2b$10$dH/2tsvCvQpaTikXjr6YwOWS6yjiwAlWUYUNxreQLhTjvMu2YLPIW	Professeur1	Luc1	ENSEIGNANT	t	NON_DEFINI	INITIALE	2026-06-10 14:34:25.354	2026-06-10 14:34:25.354	1	f
+cmq866l7100066d2e7novk4zt	enseignant2@test.com	$2b$10$dH/2tsvCvQpaTikXjr6YwOWS6yjiwAlWUYUNxreQLhTjvMu2YLPIW	Professeur2	Luc2	ENSEIGNANT	t	NON_DEFINI	INITIALE	2026-06-10 14:34:25.357	2026-06-10 14:34:25.357	1	f
+cmq866l7300076d2e6utdg4dp	enseignant3@test.com	$2b$10$dH/2tsvCvQpaTikXjr6YwOWS6yjiwAlWUYUNxreQLhTjvMu2YLPIW	Professeur3	Luc3	ENSEIGNANT	t	NON_DEFINI	INITIALE	2026-06-10 14:34:25.359	2026-06-10 14:34:25.359	1	f
+cmq866l7500086d2evuhxmg2f	enseignant4@test.com	$2b$10$dH/2tsvCvQpaTikXjr6YwOWS6yjiwAlWUYUNxreQLhTjvMu2YLPIW	Professeur4	Luc4	ENSEIGNANT	t	NON_DEFINI	INITIALE	2026-06-10 14:34:25.361	2026-06-10 14:34:25.361	1	f
+cmq866l7i00096d2eb7q3c34v	enseignant5@test.com	$2b$10$dH/2tsvCvQpaTikXjr6YwOWS6yjiwAlWUYUNxreQLhTjvMu2YLPIW	Professeur5	Luc5	ENSEIGNANT	t	NON_DEFINI	INITIALE	2026-06-10 14:34:25.374	2026-06-10 14:34:25.374	1	f
+cmq866l7m000a6d2e0d07xd0w	entreprise1@test.com	$2b$10$dH/2tsvCvQpaTikXjr6YwOWS6yjiwAlWUYUNxreQLhTjvMu2YLPIW	Entreprise1	Représentant1	ENTREPRISE	t	NON_DEFINI	INITIALE	2026-06-10 14:34:25.378	2026-06-10 14:34:25.378	1	f
+cmq866l7o000b6d2en4kqunga	entreprise2@test.com	$2b$10$dH/2tsvCvQpaTikXjr6YwOWS6yjiwAlWUYUNxreQLhTjvMu2YLPIW	Entreprise2	Représentant2	ENTREPRISE	t	NON_DEFINI	INITIALE	2026-06-10 14:34:25.38	2026-06-10 14:34:25.38	1	f
+cmq866l7q000c6d2ejrfhbydn	entreprise3@test.com	$2b$10$dH/2tsvCvQpaTikXjr6YwOWS6yjiwAlWUYUNxreQLhTjvMu2YLPIW	Entreprise3	Représentant3	ENTREPRISE	t	NON_DEFINI	INITIALE	2026-06-10 14:34:25.382	2026-06-10 14:34:25.382	1	f
+cmq866l7s000d6d2ediu8la0i	entreprise4@test.com	$2b$10$dH/2tsvCvQpaTikXjr6YwOWS6yjiwAlWUYUNxreQLhTjvMu2YLPIW	Entreprise4	Représentant4	ENTREPRISE	t	NON_DEFINI	INITIALE	2026-06-10 14:34:25.384	2026-06-10 14:34:25.384	1	f
+cmq866l7t000e6d2e8u4vpk5v	entreprise5@test.com	$2b$10$dH/2tsvCvQpaTikXjr6YwOWS6yjiwAlWUYUNxreQLhTjvMu2YLPIW	Entreprise5	Représentant5	ENTREPRISE	t	NON_DEFINI	INITIALE	2026-06-10 14:34:25.385	2026-06-10 14:34:25.385	1	f
+cmq866l7w000f6d2eastem0r7	admin@test.com	$2b$10$dH/2tsvCvQpaTikXjr6YwOWS6yjiwAlWUYUNxreQLhTjvMu2YLPIW	Admin	Boss	ADMIN	t	NON_DEFINI	INITIALE	2026-06-10 14:34:25.388	2026-06-10 14:34:25.388	1	f
 \.
 
 
@@ -455,21 +454,21 @@ cmq7n22rp0006852ep7xrxujf	enseignant2@test.com	$2b$10$UdlLTU4ZogaTtncYLf5GCO.wHP
 --
 
 COPY public."_GroupeEtudiants" ("A", "B") FROM stdin;
-cmq7n22sz000g852ejy69ircm	cmq7n22q50000852esca862dt
-cmq7n22sz000g852ejy69ircm	cmq7n22qh0001852e5559ivtn
-cmq7n22sz000g852ejy69ircm	cmq7n22rf0002852ei4o2boqx
-cmq7n22sz000g852ejy69ircm	cmq7n22ri0003852esy2k7w4b
-cmq7n22sz000g852ejy69ircm	cmq7n22rk0004852exi91hm7y
-cmq7n22tb000h852e7p554ihg	cmq7n22q50000852esca862dt
-cmq7n22tb000h852e7p554ihg	cmq7n22qh0001852e5559ivtn
-cmq7n22tb000h852e7p554ihg	cmq7n22rf0002852ei4o2boqx
-cmq7n22tx000i852ez364pgd9	cmq7n22ri0003852esy2k7w4b
-cmq7n22tx000i852ez364pgd9	cmq7n22rk0004852exi91hm7y
-cmq7n22u4000j852e5i8glhon	cmq7n22q50000852esca862dt
-cmq7n22u4000j852e5i8glhon	cmq7n22qh0001852e5559ivtn
-cmq7n22ua000k852ew6bc4at0	cmq7n22rf0002852ei4o2boqx
-cmq7n22ua000k852ew6bc4at0	cmq7n22ri0003852esy2k7w4b
-cmq7n22ua000k852ew6bc4at0	cmq7n22rk0004852exi91hm7y
+cmq866l8p000g6d2e6uiv9n3x	cmq866l6500006d2esoa5hff5
+cmq866l8p000g6d2e6uiv9n3x	cmq866l6j00016d2eucn92z2d
+cmq866l8p000g6d2e6uiv9n3x	cmq866l6n00026d2e7kl3trjt
+cmq866l8p000g6d2e6uiv9n3x	cmq866l6r00036d2ex93x9c8w
+cmq866l8p000g6d2e6uiv9n3x	cmq866l6u00046d2ero4c9ofb
+cmq866l9h000h6d2eiv1to15k	cmq866l6500006d2esoa5hff5
+cmq866l9h000h6d2eiv1to15k	cmq866l6j00016d2eucn92z2d
+cmq866l9h000h6d2eiv1to15k	cmq866l6n00026d2e7kl3trjt
+cmq866l9o000i6d2es8ecrrg3	cmq866l6r00036d2ex93x9c8w
+cmq866l9o000i6d2es8ecrrg3	cmq866l6u00046d2ero4c9ofb
+cmq866l9v000j6d2em6dlvzw7	cmq866l6500006d2esoa5hff5
+cmq866l9v000j6d2em6dlvzw7	cmq866l6j00016d2eucn92z2d
+cmq866la2000k6d2evhx4omc3	cmq866l6n00026d2e7kl3trjt
+cmq866la2000k6d2evhx4omc3	cmq866l6r00036d2ex93x9c8w
+cmq866la2000k6d2evhx4omc3	cmq866l6u00046d2ero4c9ofb
 \.
 
 
@@ -478,10 +477,13 @@ cmq7n22ua000k852ew6bc4at0	cmq7n22rk0004852exi91hm7y
 --
 
 COPY public._prisma_migrations (id, checksum, finished_at, migration_name, logs, rolled_back_at, started_at, applied_steps_count) FROM stdin;
-8864cef7-e5f0-4fac-88e6-6d9f943e6e63	122d743a0403e77ad7e0ed9447f5b8826f2fbdbc55612d936eff004dd13c2eec	2026-06-10 07:39:00.910576+02	20260325122329_init	\N	\N	2026-06-10 07:39:00.907604+02	1
-c2056a97-d97b-45ae-bc08-d84f6a2025c0	a62e3c851e1467cb14c048693fe44463facd1f6cd228efe700c07d1df3ece754	2026-06-10 07:39:00.98879+02	20260325144355_add_groupe_parcours	\N	\N	2026-06-10 07:39:00.91163+02	1
-923c4656-924e-4d0f-969c-df5a7201a829	e655a615a5f054dbbc7e1b5276e0e6a07247f97922c2cfbb963f9f8b6df0ec3a	2026-06-10 07:39:01.029041+02	20260325163611_grill_schema_final	\N	\N	2026-06-10 07:39:00.989892+02	1
-6e952efd-ecdb-4848-9253-ab004ec309d6	5be6f25ea9674da12f679f8e3846098a581b33c8a19084fe5b206aa70098be76	2026-06-10 07:39:01.047064+02	20260414080509_emploi_du_temps_schema	\N	\N	2026-06-10 07:39:01.031098+02	1
+e373c7e1-71e3-4f95-88bf-7a0a15f540f7	122d743a0403e77ad7e0ed9447f5b8826f2fbdbc55612d936eff004dd13c2eec	2026-06-10 16:34:24.202855+02	20260325122329_init	\N	\N	2026-06-10 16:34:24.198746+02	1
+c53ebdd8-f07c-496f-958e-643a20287daf	a62e3c851e1467cb14c048693fe44463facd1f6cd228efe700c07d1df3ece754	2026-06-10 16:34:24.287072+02	20260325144355_add_groupe_parcours	\N	\N	2026-06-10 16:34:24.204417+02	1
+2b76b638-fd4a-4147-a204-8d7015d99101	e655a615a5f054dbbc7e1b5276e0e6a07247f97922c2cfbb963f9f8b6df0ec3a	2026-06-10 16:34:24.325922+02	20260325163611_grill_schema_final	\N	\N	2026-06-10 16:34:24.288656+02	1
+2411fc3f-5a8a-432d-9c29-9616c6a1fed8	5be6f25ea9674da12f679f8e3846098a581b33c8a19084fe5b206aa70098be76	2026-06-10 16:34:24.342409+02	20260414080509_emploi_du_temps_schema	\N	\N	2026-06-10 16:34:24.327467+02	1
+2b989bea-70c5-4b26-b445-f27885654aef	c6bdc98af6f3200e452bd483a7bbde220556d3e4237de78ac229b8429824b53c	2026-06-10 16:34:24.352428+02	20260610133146_add_parcours_to_offre_alternance	\N	\N	2026-06-10 16:34:24.343919+02	1
+9fe8c7f5-60bd-449b-9942-05122c1c4e68	f740059c3294b5ec6f11f92a4fa4aba624f362e22cf8bf710a9dff64fe33ce63	2026-06-10 16:34:24.358014+02	20260610135044_add_parcours_to_projet_tuteure	\N	\N	2026-06-10 16:34:24.353884+02	1
+53512ca5-20b8-4445-866d-54bf1a8f7e83	c22d5781e5d2c13f813340483040f1385ec9ff539cf0835ddf49cbcdd7e748a6	2026-06-10 16:34:24.364999+02	20260610135652_add_matiere_to_support_de_cours	\N	\N	2026-06-10 16:34:24.35928+02	1
 \.
 
 
@@ -645,7 +647,7 @@ ALTER TABLE ONLY public."EmploiDuTemps"
 --
 
 ALTER TABLE ONLY public."EmploiDuTemps"
-    ADD CONSTRAINT "EmploiDuTemps_matiereId_fkey" FOREIGN KEY ("matiereId") REFERENCES public."Matiere"(id) ON UPDATE CASCADE ON DELETE SET NULL;
+    ADD CONSTRAINT "EmploiDuTemps_matiereId_fkey" FOREIGN KEY ("matiereId") REFERENCES public."Matiere"(id) ON UPDATE CASCADE ON DELETE RESTRICT;
 
 
 --
@@ -729,6 +731,14 @@ ALTER TABLE ONLY public."SupportDeCours"
 
 
 --
+-- Name: SupportDeCours SupportDeCours_matiereId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public."SupportDeCours"
+    ADD CONSTRAINT "SupportDeCours_matiereId_fkey" FOREIGN KEY ("matiereId") REFERENCES public."Matiere"(id) ON UPDATE CASCADE ON DELETE SET NULL;
+
+
+--
 -- Name: _GroupeEtudiants _GroupeEtudiants_A_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -748,5 +758,5 @@ ALTER TABLE ONLY public."_GroupeEtudiants"
 -- PostgreSQL database dump complete
 --
 
-\unrestrict Xn0hTvgY9CtaUB82dScPTz7bzREz9XxvP9tjXWHzQNlGYwgQ0Sr2gRCOmOYKtFc
+\unrestrict nqSPrlcdtxZRMh1l4c7ZrqXLBpxbk9z2mbRARIkBOe0GKzp854ADRgYoEZgAde9
 
