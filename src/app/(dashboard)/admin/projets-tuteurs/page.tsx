@@ -15,9 +15,21 @@ type Projet = {
   prerequis: string | null;
   nbEtudiants: number;
   statut: string;
+  parcours: string | null;
   createdAt: string;
   entreprise: Entreprise;
 };
+
+const PARCOURS_LABELS: Record<string, string> = {
+  SIMULATION_REALITE_VIRTUELLE: "Simulation & Réalité Virtuelle",
+  CONCEPTION_PRODUCTION_DURABLE: "Conception & Production Durable",
+  NON_DEFINI: "Non défini",
+  LP_MIE: "LP MIE",
+  LP_MIEF: "LP MIEF",
+  LP_MRI: "LP MRI",
+};
+
+const PARCOURS_OPTIONS = Object.entries(PARCOURS_LABELS);
 
 const LABELS: Record<string, string> = {
   PENDING: "En attente",
@@ -43,6 +55,7 @@ export default function AdminProjetsTuteurs() {
     "PENDING",
   );
   const [ouvert, setOuvert] = useState<string | null>(null);
+  const [parcoursEdit, setParcoursEdit] = useState<Record<string, string>>({});
 
   async function charger() {
     const res = await fetch("/api/admin/projets");
@@ -64,6 +77,15 @@ export default function AdminProjetsTuteurs() {
     });
     charger();
     setOuvert(null);
+  }
+
+  async function changerParcours(id: string, parcours: string) {
+    await fetch(`/api/admin/projets/parcours/${id}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ parcours: parcours || null }),
+    });
+    charger();
   }
 
   const projetsAffiches = projets.filter((p) => p.statut === filtre);
@@ -160,6 +182,43 @@ export default function AdminProjetsTuteurs() {
                       ÉTUDIANTS SOUHAITÉS
                     </p>
                     <p className="text-secondary">{p.nbEtudiants}</p>
+                  </div>
+
+                  <div>
+                    <p className="text-muted font-mono text-xs mb-2">
+                      PARCOURS
+                    </p>
+                    <div className="flex items-center gap-2">
+                      <select
+                        value={parcoursEdit[p.id] ?? (p.parcours || "")}
+                        onChange={(e) =>
+                          setParcoursEdit((prev) => ({
+                            ...prev,
+                            [p.id]: e.target.value,
+                          }))
+                        }
+                        className="text-secondary text-sm border border-border bg-bg-card px-2 py-1 font-mono"
+                        style={{ minWidth: 200 }}
+                      >
+                        <option value="">— Non défini —</option>
+                        {PARCOURS_OPTIONS.map(([value, label]) => (
+                          <option key={value} value={value}>
+                            {label}
+                          </option>
+                        ))}
+                      </select>
+                      <button
+                        className="forge-btn-ghost text-xs"
+                        onClick={() =>
+                          changerParcours(
+                            p.id,
+                            parcoursEdit[p.id] ?? (p.parcours || ""),
+                          )
+                        }
+                      >
+                        Enregistrer
+                      </button>
+                    </div>
                   </div>
 
                   {p.statut !== "PUBLISHED" && (

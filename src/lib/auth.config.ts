@@ -1,31 +1,35 @@
-import type { NextAuthConfig } from 'next-auth';
-import { Role } from '@prisma/client';
+import type { NextAuthConfig } from "next-auth";
+import { Parcours, Role } from "@prisma/client";
 
 export const authConfig = {
   pages: {
-    signIn: '/connexion',
+    signIn: "/connexion",
   },
   callbacks: {
     authorized({ auth, request: { nextUrl } }) {
       const isLoggedIn = !!auth?.user;
-      const isApiAuthRoute = nextUrl.pathname.startsWith('/api/auth');
-      const isDashboardRoute = nextUrl.pathname.startsWith('/espace-') || nextUrl.pathname.startsWith('/admin');
-      
+      const isApiAuthRoute = nextUrl.pathname.startsWith("/api/auth");
+      const isDashboardRoute =
+        nextUrl.pathname.startsWith("/espace-") ||
+        nextUrl.pathname.startsWith("/admin");
+
       if (isApiAuthRoute) {
         return true;
       }
-      
+
       if (isDashboardRoute) {
         if (isLoggedIn) return true;
         return false; // Redirect unauthenticated users to login page
-      } else if (isLoggedIn && nextUrl.pathname === '/connexion') {
+      } else if (isLoggedIn && nextUrl.pathname === "/connexion") {
         const role = auth.user.role as Role;
-        console.log(`[AUTH] User ${auth.user.email} logged in with role ${role}. Redirecting...`);
-        let redirectUrl = '/';
-        if (role === 'ETUDIANT') redirectUrl = '/espace-etudiant';
-        else if (role === 'ENSEIGNANT') redirectUrl = '/espace-enseignant';
-        else if (role === 'ENTREPRISE') redirectUrl = '/espace-entreprise';
-        else if (role === 'ADMIN') redirectUrl = '/admin';
+        console.log(
+          `[AUTH] User ${auth.user.email} logged in with role ${role}. Redirecting...`,
+        );
+        let redirectUrl = "/";
+        if (role === "ETUDIANT") redirectUrl = "/espace-etudiant";
+        else if (role === "ENSEIGNANT") redirectUrl = "/espace-enseignant";
+        else if (role === "ENTREPRISE") redirectUrl = "/espace-entreprise";
+        else if (role === "ADMIN") redirectUrl = "/admin";
         console.log(`[AUTH] Target URL: ${redirectUrl}`);
         return Response.redirect(new URL(redirectUrl, nextUrl));
       }
@@ -35,6 +39,7 @@ export const authConfig = {
       if (user) {
         token.role = user.role as Role;
         token.id = user.id;
+        token.parcours = user.parcours;
       }
       return token;
     },
@@ -42,6 +47,7 @@ export const authConfig = {
       if (token && session.user) {
         session.user.role = token.role as Role;
         session.user.id = token.id as string;
+        session.user.parcours = token.parcours as Parcours;
       }
       return session;
     },

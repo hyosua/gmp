@@ -16,9 +16,21 @@ type Offre = {
   remuneration: string | null;
   prerequis: string | null;
   statut: string;
+  parcours: string | null;
   createdAt: string;
   entreprise: Entreprise;
 };
+
+const PARCOURS_LABELS: Record<string, string> = {
+  SIMULATION_REALITE_VIRTUELLE: "Simulation & Réalité Virtuelle",
+  CONCEPTION_PRODUCTION_DURABLE: "Conception & Production Durable",
+  NON_DEFINI: "Non défini",
+  LP_MIE: "LP MIE",
+  LP_MIEF: "LP MIEF",
+  LP_MRI: "LP MRI",
+};
+
+const PARCOURS_OPTIONS = Object.entries(PARCOURS_LABELS);
 
 const LABELS: Record<string, string> = {
   PENDING: "En attente",
@@ -44,6 +56,7 @@ export default function AdminOffres() {
     "PENDING",
   );
   const [ouvert, setOuvert] = useState<string | null>(null);
+  const [parcoursEdit, setParcoursEdit] = useState<Record<string, string>>({});
 
   async function charger() {
     const res = await fetch("/api/admin/offres");
@@ -65,6 +78,15 @@ export default function AdminOffres() {
     });
     charger();
     setOuvert(null);
+  }
+
+  async function changerParcours(id: string, parcours: string) {
+    await fetch(`/api/admin/offres/parcours/${id}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ parcours: parcours || null }),
+    });
+    charger();
   }
 
   const offresAffichees = offres.filter((o) => o.statut === filtre);
@@ -154,6 +176,43 @@ export default function AdminOffres() {
                       <p className="text-secondary">{o.prerequis}</p>
                     </div>
                   )}
+
+                  <div>
+                    <p className="text-muted font-mono text-xs mb-2">
+                      PARCOURS
+                    </p>
+                    <div className="flex items-center gap-2">
+                      <select
+                        value={parcoursEdit[o.id] ?? (o.parcours || "")}
+                        onChange={(e) =>
+                          setParcoursEdit((prev) => ({
+                            ...prev,
+                            [o.id]: e.target.value,
+                          }))
+                        }
+                        className="text-secondary text-sm border border-border bg-bg-card px-2 py-1 font-mono"
+                        style={{ minWidth: 200 }}
+                      >
+                        <option value="">— Non défini —</option>
+                        {PARCOURS_OPTIONS.map(([value, label]) => (
+                          <option key={value} value={value}>
+                            {label}
+                          </option>
+                        ))}
+                      </select>
+                      <button
+                        className="forge-btn-ghost text-xs"
+                        onClick={() =>
+                          changerParcours(
+                            o.id,
+                            parcoursEdit[o.id] ?? (o.parcours || ""),
+                          )
+                        }
+                      >
+                        Enregistrer
+                      </button>
+                    </div>
+                  </div>
 
                   <div>
                     <p className="text-muted font-mono text-xs mb-1">

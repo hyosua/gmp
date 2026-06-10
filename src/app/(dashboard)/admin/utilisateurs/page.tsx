@@ -394,6 +394,9 @@ export default function AdminUtilisateurs() {
                             <th className="text-left py-2 px-3 font-normal">
                               Rôle
                             </th>
+                            <th className="text-left py-2 px-3 font-normal">
+                              Parcours
+                            </th>
                           </tr>
                         </thead>
                         <tbody>
@@ -413,6 +416,13 @@ export default function AdminUtilisateurs() {
                               </td>
                               <td className="py-2.5 px-3 font-mono">
                                 {l.role}
+                              </td>
+                              <td className="py-2.5 px-3 font-mono text-muted">
+                                {l.parcours
+                                  ? (PARCOURS_LABELS[
+                                      l.parcours.toUpperCase()
+                                    ] ?? l.parcours)
+                                  : "-"}
                               </td>
                             </tr>
                           ))}

@@ -22,7 +22,13 @@ const mockedAuth = auth as unknown as SimpleMock;
 // Helper : simule un enseignant connecté
 function mockSession(userId: string) {
   mockedAuth.mockResolvedValue({
-    user: { id: userId, role: "ENSEIGNANT", email: null, name: null },
+    user: {
+      id: userId,
+      role: "ENSEIGNANT",
+      parcours: "NON_DEFINI",
+      email: null,
+      name: null,
+    },
     expires: new Date(Date.now() + 3600000).toISOString(),
   });
 }

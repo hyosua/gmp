@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { Prisma } from "@prisma/client";
 import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 
@@ -17,9 +18,27 @@ export async function GET() {
     return NextResponse.json(projets);
   }
 
-  // ETUDIANT, ENSEIGNANT et ADMIN voient les projets publiés avec les infos de l'entreprise
+  let wherePublie: Prisma.ProjetTuteureFindManyArgs["where"];
+
+  if (
+    role === "ETUDIANT" &&
+    session.user.parcours &&
+    session.user.parcours !== "NON_DEFINI"
+  ) {
+    wherePublie = {
+      statut: "PUBLISHED",
+      OR: [
+        { parcours: null },
+        { parcours: "NON_DEFINI" },
+        { parcours: session.user.parcours },
+      ],
+    };
+  } else {
+    wherePublie = { statut: "PUBLISHED" };
+  }
+
   const projets = await prisma.projetTuteure.findMany({
-    where: { statut: "PUBLISHED" },
+    where: wherePublie,
     orderBy: { createdAt: "desc" },
     include: {
       entreprise: { select: { nom: true, prenom: true, email: true } },

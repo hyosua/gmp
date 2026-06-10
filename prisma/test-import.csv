@@ -1,0 +1,9 @@
+email,nom,prenom,role,parcours,typeFormation,anneePromotion
+alice.martin@test.com,Martin,Alice,ETUDIANT,SIMULATION_REALITE_VIRTUELLE,INITIALE,1
+bob.dupont@test.com,Dupont,Bob,ETUDIANT,CONCEPTION_PRODUCTION_DURABLE,ALTERNANCE,2
+carla.rossi@test.com,Rossi,Carla,ETUDIANT,LP_MIE,INITIALE,3
+david.noir@test.com,Noir,David,ETUDIANT,LP_MIEF,ALTERNANCE,1
+emma.blanc@test.com,Blanc,Emma,ETUDIANT,LP_MRI,INITIALE,2
+prof.lefevre@test.com,Lefevre,Marc,ENSEIGNANT,,,
+prof.hernandez@test.com,Hernandez,Sofia,ENSEIGNANT,,,
+societe.arc@test.com,Arc,Industrie,ENTREPRISE,,,
