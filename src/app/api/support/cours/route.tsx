@@ -10,13 +10,9 @@ export async function GET() {
     console.log("Tous les cours:", enseignants);
     const session = await auth();
 
-    const cours = await prisma.supportDeCours.findMany({
-      where: { enseignantId: session?.user.id.toString() || '' },
-    });
+    console.log("Cours filtrés:", enseignants);
 
-    console.log("Cours filtrés:", cours);
-
-    return NextResponse.json(cours, { status: 200 });
+    return NextResponse.json(enseignants, { status: 200 });
   } catch (error) {
     console.error("Erreur:", error);
     return NextResponse.json({ error: "Erreur serveur" }, { status: 500 });
