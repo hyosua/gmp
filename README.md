@@ -38,6 +38,7 @@ Next.js 16 · TypeScript · Tailwind CSS · PostgreSQL · Prisma · Auth.js v5
 `Panneau de configuration → Système → Paramètres système avancés → Variables d'environnement`
 
 Dans "Variables système", sélectionner `Path` → Modifier → Nouveau → coller :
+
 ```
 C:\Program Files\PostgreSQL\16\bin
 ```
@@ -89,17 +90,28 @@ Copier la valeur affichée dans le champ `AUTH_SECRET` du `.env`.
 
 ## Base de données
 
-**4. Créer la base et appliquer le schéma**
+**4. Créer la base, appliquer le schéma et les données de démo**
 
 ```bash
 # Créer la base (une seule fois)
 createdb -U postgres gmp
 
-# Appliquer le schéma
-npx prisma migrate dev
+# Appliquer le schéma et remplir avec les données de démo
+npm run db:reset
 ```
 
 Saisir le mot de passe `postgres` si demandé.
+
+## Comptes de démo
+
+Après le seed, ces comptes sont disponibles (mot de passe : **gmp**) :
+
+| Email                  | Rôle           |
+| ---------------------- | -------------- |
+| `admin@test.com`       | Administrateur |
+| `enseignant1@test.com` | Enseignant     |
+| `etudiant1@test.com`   | Étudiant       |
+| `entreprise1@test.com` | Entreprise     |
 
 ## Lancer le projet
 
@@ -132,9 +144,9 @@ npx prisma migrate reset
 
 ## Commandes utiles
 
-| Commande | Description |
-|----------|-------------|
-| `npm run dev` | Serveur de développement |
-| `npm run build` | Build de production |
+| Commande                 | Description              |
+| ------------------------ | ------------------------ |
+| `npm run dev`            | Serveur de développement |
+| `npm run build`          | Build de production      |
 | `npx prisma migrate dev` | Appliquer les migrations |
-| `npx prisma studio` | Interface visuelle BDD |
+| `npx prisma studio`      | Interface visuelle BDD   |
