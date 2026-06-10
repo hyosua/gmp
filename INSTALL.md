@@ -1,21 +1,53 @@
 # Installation - Site GMP
 
+## Versions requises
+
+| Outil      | Minimum | Recommandée |
+| ---------- | ------- | ----------- |
+| Node.js    | 20      | 22 LTS      |
+| PostgreSQL | 14      | 17          |
+
+---
+
 ## 1. Installer Node.js
 
-**Windows / macOS** - télécharger la version **LTS** sur https://nodejs.org et suivre l'installeur.
+Vérifier si Node.js est déjà installé :
 
-**Ubuntu / Debian** - via NodeSource :
-
-```bash
-curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
-sudo apt-get install -y nodejs
 ```
-
-Vérifier l'installation :
-
-```bash
 node -v
 ```
+
+- Si le numéro affiché est `v20` ou supérieur : passez à l'étape 2.
+- Sinon, installer selon votre OS :
+
+**Windows**
+
+1. Aller sur https://nodejs.org
+2. Télécharger la version **LTS** (≥ 20) et lancer l'installeur `.msi`
+3. Cocher "Automatically install necessary tools" si proposé
+4. Fermer et rouvrir le terminal, puis vérifier avec `node -v`
+
+**Linux (Ubuntu / Debian)**
+
+```bash
+sudo apt update && sudo apt install nodejs npm
+```
+
+Ou via `nvm` pour la version LTS la plus récente :
+
+```bash
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
+source ~/.bashrc
+nvm install --lts
+```
+
+**Mac**
+
+```bash
+brew install node
+```
+
+Ou télécharger l'installeur `.pkg` sur https://nodejs.org
 
 ---
 
@@ -23,86 +55,74 @@ node -v
 
 ### Windows
 
-Télécharger l'installeur sur https://www.enterprisedb.com/downloads/postgres-postgresql-downloads (prendre la dernière version).
+1. Télécharger l'installeur sur https://www.enterprisedb.com/downloads/postgres-postgresql-downloads
+   - Choisir la version **17** (ou 16 minimum).
 
-Pendant l'installation :
+2. Lancer l'installeur et suivre les étapes :
+   - Laisser le répertoire par défaut (`C:\Program Files\PostgreSQL\17`)
+   - Choisir un mot de passe pour l'utilisateur `postgres` - **le noter**, il sera demandé plus tard
+   - Laisser le port par défaut **5432**
+   - **Stack Builder** : à la fin de l'installation, une fenêtre "Stack Builder" s'ouvre pour proposer des extensions supplémentaires. **Ce n'est pas nécessaire** pour ce projet - décocher tout et cliquer sur "Annuler" ou "Finish".
 
-- Laisser toutes les options par défaut
-- Choisir un mot de passe pour l'utilisateur `postgres` - **le noter**
-- Port : **5432** (défaut)
-- Décocher "Launch Stack Builder" à la fin
+3. **Ajouter PostgreSQL au PATH** (indispensable) :
+   - Touche `Win` → taper "variables d'environnement" → cliquer sur **"Modifier les variables d'environnement système"**
+   - Cliquer sur **"Variables d'environnement..."**
+   - Dans la section **"Variables système"**, sélectionner la ligne **`Path`** puis cliquer sur **"Modifier..."**
+   - Cliquer sur **"Nouveau"** et entrer :
+     ```
+     C:\Program Files\PostgreSQL\17\bin
+     ```
+     _(remplacer `17` par votre version si différente)_
+   - Cliquer sur **OK** trois fois pour fermer toutes les fenêtres
+   - **Fermer et rouvrir** le terminal
 
-**Ajouter PostgreSQL au PATH :**
+4. Vérifier que l'installation est correcte :
 
-> Panneau de configuration > Système > Paramètres système avancés > Variables d'environnement
+   ```
+   psql --version
+   ```
 
-Dans "Variables système", sélectionner `Path` > Modifier > Nouveau, coller :
+   Vous devez voir quelque chose comme `psql (PostgreSQL) 17.x`.
 
-```
-C:\Program Files\PostgreSQL\17\bin
-```
+5. S'assurer que le service PostgreSQL est démarré :
+   - Touche `Win` → taper "Services" → chercher **"postgresql-x64-17"** → vérifier que le statut est **"En cours d'exécution"**
+   - Sinon, faire un clic droit → "Démarrer"
 
-(adapter `17` selon la version installée)
-
-Valider et **redémarrer le terminal**.
-
----
-
-### Ubuntu / Debian
+### Linux (Ubuntu / Debian)
 
 ```bash
-sudo apt update && sudo apt install -y postgresql
-sudo systemctl start postgresql
+sudo apt install postgresql
+sudo service postgresql start
 ```
 
----
-
-### macOS
-
-Installer via [Homebrew](https://brew.sh) :
+### Mac
 
 ```bash
 brew install postgresql@17
 brew services start postgresql@17
-echo 'export PATH="/opt/homebrew/opt/postgresql@17/bin:$PATH"' >> ~/.zshrc
-source ~/.zshrc
 ```
-
-Définir un mot de passe :
-
-```bash
-psql postgres -c "ALTER USER $(whoami) PASSWORD 'monmotdepasse';"
-```
-
-> Sur Mac avec Homebrew, l'utilisateur PostgreSQL par défaut est votre nom de session macOS (pas `postgres`). Le script demandera ce nom lors de la configuration.
 
 ---
 
-## 3. Installer le projet
+## 3. Lancer le projet
 
-Décompresser le dossier, ouvrir un terminal dedans, puis lancer le script d'installation :
+1. Extraire le fichier `.zip`
+2. Ouvrir un terminal dans le dossier extrait `gmp/`
+   - **Windows** : clic droit sur le dossier > "Ouvrir dans le terminal"
+   - **Linux / Mac** : `cd chemin/vers/gmp`
 
-**Windows** - double-cliquer sur `setup.bat` ou dans un terminal :
+3. Lancer le script d'installation :
 
 ```
-setup.bat
+node setup.js
 ```
 
-**Linux / Mac** :
-
-```bash
-bash setup.sh
-```
-
-Le script configure tout automatiquement (dépendances, base de données, données de démo) et affiche un récapitulatif à la fin. Il peut demander votre mot de passe `sudo` pour créer la base PostgreSQL.
+Le script installe les dépendances, crée la base de données et démarre le serveur.
+Il demandera le mot de passe PostgreSQL sur Windows.
 
 ---
 
-## 4. Lancer le projet
-
-```bash
-npm run dev
-```
+## 4. Ouvrir le site
 
 Ouvrir **http://localhost:3000**
 
@@ -123,73 +143,12 @@ Mot de passe pour tous : **gmp**
 
 ## En cas de problème
 
-**"createdb: command not found"** - PostgreSQL n'est pas dans le PATH. Voir l'étape 2 pour votre OS.
+**"node: command not found"** - Node.js n'est pas installé ou pas dans le PATH. Voir l'étape 1.
 
-**"permission denied"** - Le script utilise `sudo` pour créer la base. Vérifier que l'utilisateur courant a les droits sudo.
+**"psql: command not found" (Windows)** - PostgreSQL n'est pas dans le PATH. Suivre l'étape 2.3 ci-dessus, puis relancer le terminal.
 
-**"database already exists"** - Normal si vous relancez le script, il continue sans problème.
+**Erreur de mot de passe PostgreSQL (Windows)** - Vérifier que vous entrez bien le mot de passe choisi lors de l'installation de PostgreSQL pour l'utilisateur `postgres`.
 
-**Port 5432 déjà utilisé** - Une autre instance PostgreSQL tourne peut-être. Redémarrer le service :
+**Erreur de connexion à la base de données** - Vérifier que PostgreSQL est démarré (Services Windows ou `sudo service postgresql start` sur Linux).
 
-- Windows : `Gestionnaire de services > postgresql > Redémarrer`
-- Linux : `sudo systemctl restart postgresql`
-- Mac : `brew services restart postgresql@17`
-
----
-
-## Installation manuelle (si le script échoue)
-
-Exécuter les commandes suivantes une par une dans le terminal, depuis le dossier du projet.
-
-**1. Créer l'utilisateur et la base de données**
-
-```bash
-sudo -u postgres psql -c "CREATE USER gmp WITH PASSWORD 'gmp';"
-sudo -u postgres createdb -O gmp gmp
-```
-
-**2. Charger les données de démo**
-
-```bash
-sudo -u postgres psql gmp < scripts/dump.sql
-```
-
-**3. Donner les permissions à l'utilisateur**
-
-```bash
-sudo -u postgres psql gmp -c "
-  GRANT ALL ON ALL TABLES IN SCHEMA public TO gmp;
-  GRANT ALL ON ALL SEQUENCES IN SCHEMA public TO gmp;
-  GRANT USAGE ON SCHEMA public TO gmp;
-"
-```
-
-**4. Créer le fichier `.env`**
-
-Créer un fichier `.env` à la racine du projet avec ce contenu (remplacer `5432` par votre port si différent) :
-
-```env
-DATABASE_URL="postgresql://gmp:gmp@localhost:5432/gmp?schema=public"
-AUTH_SECRET="une-chaine-aleatoire-longue"
-NEXT_PUBLIC_APP_URL="http://localhost:3000"
-RESEND_API_KEY=""
-RESEND_FROM=""
-PRISMA_LOG_QUERIES=false
-```
-
-Pour générer une vraie valeur `AUTH_SECRET` :
-
-```bash
-node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
-```
-
-**5. Installer et lancer**
-
-```bash
-npm install
-npx prisma generate
-npx prisma migrate deploy
-npm run dev
-```
-
-Ouvrir **http://localhost:3000**
+**Pour plus de détails** sur la structure du projet, consulter [README.md](README.md).
