@@ -1,6 +1,5 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 
@@ -21,7 +20,6 @@ export default function Offres() {
   const { data: session, status } = useSession();
   const [offres, setOffres] = useState<Offre[]>([]);
   const [choix, setChoix] = useState<string>();
-  const routeur = useRouter();
   const [mode, setMode] = useState<"list" | "create" | "edit">("list");
 
   const [nouveaux, setNouveaux] = useState<Offre>({
@@ -67,9 +65,7 @@ export default function Offres() {
         body: formData,
       });
 
-      const json = await envoie.json();
-
-      console.log(json);
+      await envoie.json();
 
       alert(
         isEdit ? "Offre modifiée avec succès" : "Offre ajoutée avec succès",
@@ -86,22 +82,16 @@ export default function Offres() {
   useEffect(() => {
     if (status === "loading") return;
 
-    if (!session || session.user?.role !== "ENTREPRISE") {
-      routeur.push("/");
-      return;
-    }
-
     fetch("/api/offres")
       .then((r) => r.json())
       .then(setOffres)
-      .catch(console.log);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [status, session]);
+      .catch(console.error);
+  }, [status]);
 
   if (status === "loading") return null;
 
   return (
-    <div>
+    <div className="p-6">
       <h1 style={{ textAlign: "center" }}>Vos offres</h1>
 
       {/* 🔵 TABLEAU */}
@@ -156,91 +146,51 @@ export default function Offres() {
 
       {/* 🟢 FORM CREATE / EDIT */}
       {(mode === "create" || mode === "edit") && (
-        <div style={{ width: "600px", margin: "20px auto" }}>
-          <table
-            style={{
-              width: "100%",
-              borderCollapse: "collapse",
-              border: "2px solid #4a90e2",
-            }}
-          >
-            <tbody>
-              <tr className="border-t border-border">
-                <td>Poste</td>
-                <td className="p-3">
-                  <input
-                    value={nouveaux.poste}
-                    onChange={(e) =>
-                      setNouveaux({ ...nouveaux, poste: e.target.value })
-                    }
-                  />
-                </td>
-              </tr>
+        <div className="forge-card max-w-xl mx-auto mt-6 flex flex-col gap-4">
+          <h2 className="text-secondary font-semibold text-lg">
+            {mode === "edit" ? "Modifier l'offre" : "Nouvelle offre"}
+          </h2>
 
-              <tr className="border-t border-border">
-                <td>Description</td>
-                <td className="p-3">
-                  <textarea
-                    value={nouveaux.description}
-                    onChange={(e) =>
-                      setNouveaux({ ...nouveaux, description: e.target.value })
-                    }
-                  />
-                </td>
-              </tr>
+          {(
+            [
+              { label: "Poste", key: "poste", type: "input" },
+              { label: "Description", key: "description", type: "textarea" },
+              { label: "Durée", key: "duree", type: "input" },
+              { label: "Rémunération", key: "remuneration", type: "input" },
+              { label: "Prérequis", key: "prerequis", type: "textarea" },
+            ] as { label: string; key: keyof typeof nouveaux; type: string }[]
+          ).map(({ label, key, type }) => (
+            <div key={key} className="flex flex-col gap-1">
+              <label className="text-muted text-sm">{label}</label>
+              {type === "textarea" ? (
+                <textarea
+                  className="w-full p-2 border border-border bg-bg-card text-secondary"
+                  rows={3}
+                  value={nouveaux[key] as string}
+                  onChange={(e) =>
+                    setNouveaux({ ...nouveaux, [key]: e.target.value })
+                  }
+                />
+              ) : (
+                <input
+                  className="w-full p-2 border border-border bg-bg-card text-secondary"
+                  value={nouveaux[key] as string}
+                  onChange={(e) =>
+                    setNouveaux({ ...nouveaux, [key]: e.target.value })
+                  }
+                />
+              )}
+            </div>
+          ))}
 
-              <tr className="border-t border-border">
-                <td>Durée</td>
-                <td className="p-3">
-                  <input
-                    value={nouveaux.duree}
-                    onChange={(e) =>
-                      setNouveaux({ ...nouveaux, duree: e.target.value })
-                    }
-                  />
-                </td>
-              </tr>
-
-              <tr className="border-t border-border">
-                <td>Rémunération</td>
-                <td className="p-3">
-                  <input
-                    value={nouveaux.remuneration}
-                    onChange={(e) =>
-                      setNouveaux({ ...nouveaux, remuneration: e.target.value })
-                    }
-                  />
-                </td>
-              </tr>
-
-              <tr className="border-t border-border">
-                <td>Prérequis</td>
-                <td className="p-3">
-                  <textarea
-                    value={nouveaux.prerequis}
-                    onChange={(e) =>
-                      setNouveaux({ ...nouveaux, prerequis: e.target.value })
-                    }
-                  />
-                </td>
-              </tr>
-
-              <tr className="border-t border-border">
-                <td colSpan={2} style={{ textAlign: "center" }}>
-                  <button onClick={NewOffres}>
-                    {mode === "edit" ? "Modifier" : "Ajouter"}
-                  </button>
-
-                  <button
-                    onClick={() => setMode("list")}
-                    style={{ marginLeft: "10px" }}
-                  >
-                    Annuler
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+          <div className="flex gap-3 mt-2 justify-center">
+            <button className="forge-btn-primary" onClick={NewOffres}>
+              {mode === "edit" ? "Modifier" : "Ajouter"}
+            </button>
+            <button className="forge-btn-ghost" onClick={() => setMode("list")}>
+              Annuler
+            </button>
+          </div>
         </div>
       )}
 
