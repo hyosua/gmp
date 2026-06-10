@@ -49,11 +49,6 @@ function getNavigation(role?: string): NavItem[] {
     case "ETUDIANT":
       return [
         {
-          label: "Tableau de bord",
-          href: "/espace-etudiant",
-          icon: LayoutDashboard,
-        },
-        {
           label: "Emploi du temps",
           href: "/espace-etudiant/emploi-du-temps",
           icon: Calendar,
@@ -77,11 +72,6 @@ function getNavigation(role?: string): NavItem[] {
       ];
     case "ENSEIGNANT":
       return [
-        {
-          label: "Tableau de bord",
-          href: "/espace-enseignant",
-          icon: LayoutDashboard,
-        },
         {
           label: "Emploi du temps",
           href: "/espace-enseignant/emploi-du-temps",
