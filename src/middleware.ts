@@ -28,8 +28,11 @@ export default auth((req) => {
 
     const targetPath = getRolePath(role);
 
-    // If user is on /connexion, redirect to their home
-    if (nextUrl.pathname === "/connexion") {
+    // If user is on /connexion or /categorie_connexion, redirect to their home
+    if (
+      nextUrl.pathname === "/connexion" ||
+      nextUrl.pathname === "/categorie_connexion"
+    ) {
       return NextResponse.redirect(new URL(targetPath, nextUrl));
     }
 
