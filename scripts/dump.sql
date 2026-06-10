@@ -2,7 +2,7 @@
 -- PostgreSQL database dump
 --
 
-\restrict 0HM9Ntw2CXCI7Dq65XH1ReO0oomOjkdfUIYQaSjf6Tm3yuSJ5ZLQtAvfa69kSah
+\restrict Xn0hTvgY9CtaUB82dScPTz7bzREz9XxvP9tjXWHzQNlGYwgQ0Sr2gRCOmOYKtFc
 
 -- Dumped from database version 16.14 (Ubuntu 16.14-0ubuntu0.24.04.1)
 -- Dumped by pg_dump version 16.14 (Ubuntu 16.14-0ubuntu0.24.04.1)
@@ -19,23 +19,21 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
--- Name: public; Type: SCHEMA; Schema: -; Owner: hyo
+-- Name: public; Type: SCHEMA; Schema: -; Owner: -
 --
 
 -- *not* creating schema, since initdb creates it
 
 
-ALTER SCHEMA public OWNER TO hyo;
-
 --
--- Name: SCHEMA public; Type: COMMENT; Schema: -; Owner: hyo
+-- Name: SCHEMA public; Type: COMMENT; Schema: -; Owner: -
 --
 
 COMMENT ON SCHEMA public IS '';
 
 
 --
--- Name: Parcours; Type: TYPE; Schema: public; Owner: hyo
+-- Name: Parcours; Type: TYPE; Schema: public; Owner: -
 --
 
 CREATE TYPE public."Parcours" AS ENUM (
@@ -48,10 +46,8 @@ CREATE TYPE public."Parcours" AS ENUM (
 );
 
 
-ALTER TYPE public."Parcours" OWNER TO hyo;
-
 --
--- Name: Role; Type: TYPE; Schema: public; Owner: hyo
+-- Name: Role; Type: TYPE; Schema: public; Owner: -
 --
 
 CREATE TYPE public."Role" AS ENUM (
@@ -62,10 +58,8 @@ CREATE TYPE public."Role" AS ENUM (
 );
 
 
-ALTER TYPE public."Role" OWNER TO hyo;
-
 --
--- Name: Statut; Type: TYPE; Schema: public; Owner: hyo
+-- Name: Statut; Type: TYPE; Schema: public; Owner: -
 --
 
 CREATE TYPE public."Statut" AS ENUM (
@@ -75,10 +69,8 @@ CREATE TYPE public."Statut" AS ENUM (
 );
 
 
-ALTER TYPE public."Statut" OWNER TO hyo;
-
 --
--- Name: TypeFormation; Type: TYPE; Schema: public; Owner: hyo
+-- Name: TypeFormation; Type: TYPE; Schema: public; Owner: -
 --
 
 CREATE TYPE public."TypeFormation" AS ENUM (
@@ -87,10 +79,8 @@ CREATE TYPE public."TypeFormation" AS ENUM (
 );
 
 
-ALTER TYPE public."TypeFormation" OWNER TO hyo;
-
 --
--- Name: TypeGroupe; Type: TYPE; Schema: public; Owner: hyo
+-- Name: TypeGroupe; Type: TYPE; Schema: public; Owner: -
 --
 
 CREATE TYPE public."TypeGroupe" AS ENUM (
@@ -100,14 +90,12 @@ CREATE TYPE public."TypeGroupe" AS ENUM (
 );
 
 
-ALTER TYPE public."TypeGroupe" OWNER TO hyo;
-
 SET default_tablespace = '';
 
 SET default_table_access_method = heap;
 
 --
--- Name: EmploiDuTemps; Type: TABLE; Schema: public; Owner: hyo
+-- Name: EmploiDuTemps; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public."EmploiDuTemps" (
@@ -126,10 +114,8 @@ CREATE TABLE public."EmploiDuTemps" (
 );
 
 
-ALTER TABLE public."EmploiDuTemps" OWNER TO hyo;
-
 --
--- Name: Groupe; Type: TABLE; Schema: public; Owner: hyo
+-- Name: Groupe; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public."Groupe" (
@@ -140,10 +126,8 @@ CREATE TABLE public."Groupe" (
 );
 
 
-ALTER TABLE public."Groupe" OWNER TO hyo;
-
 --
--- Name: Matiere; Type: TABLE; Schema: public; Owner: hyo
+-- Name: Matiere; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public."Matiere" (
@@ -154,10 +138,8 @@ CREATE TABLE public."Matiere" (
 );
 
 
-ALTER TABLE public."Matiere" OWNER TO hyo;
-
 --
--- Name: MatiereEnseignant; Type: TABLE; Schema: public; Owner: hyo
+-- Name: MatiereEnseignant; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public."MatiereEnseignant" (
@@ -166,10 +148,8 @@ CREATE TABLE public."MatiereEnseignant" (
 );
 
 
-ALTER TABLE public."MatiereEnseignant" OWNER TO hyo;
-
 --
--- Name: Note; Type: TABLE; Schema: public; Owner: hyo
+-- Name: Note; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public."Note" (
@@ -184,10 +164,8 @@ CREATE TABLE public."Note" (
 );
 
 
-ALTER TABLE public."Note" OWNER TO hyo;
-
 --
--- Name: OffreAlternance; Type: TABLE; Schema: public; Owner: hyo
+-- Name: OffreAlternance; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public."OffreAlternance" (
@@ -204,10 +182,8 @@ CREATE TABLE public."OffreAlternance" (
 );
 
 
-ALTER TABLE public."OffreAlternance" OWNER TO hyo;
-
 --
--- Name: ProjetTuteure; Type: TABLE; Schema: public; Owner: hyo
+-- Name: ProjetTuteure; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public."ProjetTuteure" (
@@ -223,10 +199,8 @@ CREATE TABLE public."ProjetTuteure" (
 );
 
 
-ALTER TABLE public."ProjetTuteure" OWNER TO hyo;
-
 --
--- Name: ResetToken; Type: TABLE; Schema: public; Owner: hyo
+-- Name: ResetToken; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public."ResetToken" (
@@ -237,10 +211,8 @@ CREATE TABLE public."ResetToken" (
 );
 
 
-ALTER TABLE public."ResetToken" OWNER TO hyo;
-
 --
--- Name: SupportDeCours; Type: TABLE; Schema: public; Owner: hyo
+-- Name: SupportDeCours; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public."SupportDeCours" (
@@ -253,10 +225,8 @@ CREATE TABLE public."SupportDeCours" (
 );
 
 
-ALTER TABLE public."SupportDeCours" OWNER TO hyo;
-
 --
--- Name: UE; Type: TABLE; Schema: public; Owner: hyo
+-- Name: UE; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public."UE" (
@@ -267,10 +237,8 @@ CREATE TABLE public."UE" (
 );
 
 
-ALTER TABLE public."UE" OWNER TO hyo;
-
 --
--- Name: User; Type: TABLE; Schema: public; Owner: hyo
+-- Name: User; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public."User" (
@@ -290,10 +258,8 @@ CREATE TABLE public."User" (
 );
 
 
-ALTER TABLE public."User" OWNER TO hyo;
-
 --
--- Name: _GroupeEtudiants; Type: TABLE; Schema: public; Owner: hyo
+-- Name: _GroupeEtudiants; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public."_GroupeEtudiants" (
@@ -302,10 +268,8 @@ CREATE TABLE public."_GroupeEtudiants" (
 );
 
 
-ALTER TABLE public."_GroupeEtudiants" OWNER TO hyo;
-
 --
--- Name: _prisma_migrations; Type: TABLE; Schema: public; Owner: hyo
+-- Name: _prisma_migrations; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public._prisma_migrations (
@@ -320,10 +284,8 @@ CREATE TABLE public._prisma_migrations (
 );
 
 
-ALTER TABLE public._prisma_migrations OWNER TO hyo;
-
 --
--- Data for Name: EmploiDuTemps; Type: TABLE DATA; Schema: public; Owner: hyo
+-- Data for Name: EmploiDuTemps; Type: TABLE DATA; Schema: public; Owner: -
 --
 
 COPY public."EmploiDuTemps" (id, jour, "heureDebut", "heureFin", salle, intitule, "groupeId", "enseignantId", semaine, "matiereId", "recurrenceFin", recurrent) FROM stdin;
@@ -337,7 +299,7 @@ cmq7rdc410000dp2edsszo97h	lundi	08:00	10:00	109		cmq7n22ua000k852ew6bc4at0	cmq7n
 
 
 --
--- Data for Name: Groupe; Type: TABLE DATA; Schema: public; Owner: hyo
+-- Data for Name: Groupe; Type: TABLE DATA; Schema: public; Owner: -
 --
 
 COPY public."Groupe" (id, nom, type, "anneeScolaire") FROM stdin;
@@ -350,7 +312,7 @@ cmq7n22ua000k852ew6bc4at0	TP2	TP	2025-2026
 
 
 --
--- Data for Name: Matiere; Type: TABLE DATA; Schema: public; Owner: hyo
+-- Data for Name: Matiere; Type: TABLE DATA; Schema: public; Owner: -
 --
 
 COPY public."Matiere" (id, nom, code, "ueId") FROM stdin;
@@ -368,7 +330,7 @@ cmq7n22v5000z852e007rb7bx	Matière 5.2	MAT52	cmq7n22v2000x852e76ii2jes
 
 
 --
--- Data for Name: MatiereEnseignant; Type: TABLE DATA; Schema: public; Owner: hyo
+-- Data for Name: MatiereEnseignant; Type: TABLE DATA; Schema: public; Owner: -
 --
 
 COPY public."MatiereEnseignant" ("enseignantId", "matiereId") FROM stdin;
@@ -386,7 +348,7 @@ cmq7n22ru0009852egc22kdew	cmq7n22v5000z852e007rb7bx
 
 
 --
--- Data for Name: Note; Type: TABLE DATA; Schema: public; Owner: hyo
+-- Data for Name: Note; Type: TABLE DATA; Schema: public; Owner: -
 --
 
 COPY public."Note" (id, valeur, "dateDepot", "etudiantId", "enseignantId", "matiereId", annee, semestre) FROM stdin;
@@ -399,7 +361,7 @@ cmq7n22w60014852ec3jxmklk	14.995293298613877	2026-06-10 05:39:02.31	cmq7n22rk000
 
 
 --
--- Data for Name: OffreAlternance; Type: TABLE DATA; Schema: public; Owner: hyo
+-- Data for Name: OffreAlternance; Type: TABLE DATA; Schema: public; Owner: -
 --
 
 COPY public."OffreAlternance" (id, poste, description, duree, remuneration, prerequis, "createdAt", "updatedAt", "entrepriseId", statut) FROM stdin;
@@ -414,7 +376,7 @@ cmq7uit1k0001hz2egdu76tzw	Un poste	une description	8 mois	900	aucun	2026-06-10 0
 
 
 --
--- Data for Name: ProjetTuteure; Type: TABLE DATA; Schema: public; Owner: hyo
+-- Data for Name: ProjetTuteure; Type: TABLE DATA; Schema: public; Owner: -
 --
 
 COPY public."ProjetTuteure" (id, titre, description, prerequis, "nbEtudiants", "createdAt", "updatedAt", "entrepriseId", statut) FROM stdin;
@@ -425,7 +387,7 @@ cmq7n22wu001h852e37ynpttc	Fournir, en autonomie, une solution fonctionnelle et o
 
 
 --
--- Data for Name: ResetToken; Type: TABLE DATA; Schema: public; Owner: hyo
+-- Data for Name: ResetToken; Type: TABLE DATA; Schema: public; Owner: -
 --
 
 COPY public."ResetToken" (id, token, "expiresAt", "userId") FROM stdin;
@@ -438,7 +400,7 @@ cmq7n22xd001r852ecsvsks2c	token-secret-4	2026-06-10 06:39:02.353	cmq7n22rk000485
 
 
 --
--- Data for Name: SupportDeCours; Type: TABLE DATA; Schema: public; Owner: hyo
+-- Data for Name: SupportDeCours; Type: TABLE DATA; Schema: public; Owner: -
 --
 
 COPY public."SupportDeCours" (id, titre, "cheminFichier", taille, "dateDepot", "enseignantId") FROM stdin;
@@ -452,7 +414,7 @@ cmq7woon500003i2ey114ldsh	stack-technique.pdf	public/support/stack-technique.pdf
 
 
 --
--- Data for Name: UE; Type: TABLE DATA; Schema: public; Owner: hyo
+-- Data for Name: UE; Type: TABLE DATA; Schema: public; Owner: -
 --
 
 COPY public."UE" (id, nom, code, coefficient) FROM stdin;
@@ -465,7 +427,7 @@ cmq7n22v2000x852e76ii2jes	Unité d'Enseignement 5	UE5	3.5
 
 
 --
--- Data for Name: User; Type: TABLE DATA; Schema: public; Owner: hyo
+-- Data for Name: User; Type: TABLE DATA; Schema: public; Owner: -
 --
 
 COPY public."User" (id, email, password, nom, prenom, role, actif, parcours, "typeFormation", "createdAt", "updatedAt", "anneePromotion", "promesseEmbauche") FROM stdin;
@@ -489,7 +451,7 @@ cmq7n22rp0006852ep7xrxujf	enseignant2@test.com	$2b$10$UdlLTU4ZogaTtncYLf5GCO.wHP
 
 
 --
--- Data for Name: _GroupeEtudiants; Type: TABLE DATA; Schema: public; Owner: hyo
+-- Data for Name: _GroupeEtudiants; Type: TABLE DATA; Schema: public; Owner: -
 --
 
 COPY public."_GroupeEtudiants" ("A", "B") FROM stdin;
@@ -512,7 +474,7 @@ cmq7n22ua000k852ew6bc4at0	cmq7n22rk0004852exi91hm7y
 
 
 --
--- Data for Name: _prisma_migrations; Type: TABLE DATA; Schema: public; Owner: hyo
+-- Data for Name: _prisma_migrations; Type: TABLE DATA; Schema: public; Owner: -
 --
 
 COPY public._prisma_migrations (id, checksum, finished_at, migration_name, logs, rolled_back_at, started_at, applied_steps_count) FROM stdin;
@@ -524,7 +486,7 @@ c2056a97-d97b-45ae-bc08-d84f6a2025c0	a62e3c851e1467cb14c048693fe44463facd1f6cd22
 
 
 --
--- Name: EmploiDuTemps EmploiDuTemps_pkey; Type: CONSTRAINT; Schema: public; Owner: hyo
+-- Name: EmploiDuTemps EmploiDuTemps_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public."EmploiDuTemps"
@@ -532,7 +494,7 @@ ALTER TABLE ONLY public."EmploiDuTemps"
 
 
 --
--- Name: Groupe Groupe_pkey; Type: CONSTRAINT; Schema: public; Owner: hyo
+-- Name: Groupe Groupe_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public."Groupe"
@@ -540,7 +502,7 @@ ALTER TABLE ONLY public."Groupe"
 
 
 --
--- Name: MatiereEnseignant MatiereEnseignant_pkey; Type: CONSTRAINT; Schema: public; Owner: hyo
+-- Name: MatiereEnseignant MatiereEnseignant_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public."MatiereEnseignant"
@@ -548,7 +510,7 @@ ALTER TABLE ONLY public."MatiereEnseignant"
 
 
 --
--- Name: Matiere Matiere_pkey; Type: CONSTRAINT; Schema: public; Owner: hyo
+-- Name: Matiere Matiere_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public."Matiere"
@@ -556,7 +518,7 @@ ALTER TABLE ONLY public."Matiere"
 
 
 --
--- Name: Note Note_pkey; Type: CONSTRAINT; Schema: public; Owner: hyo
+-- Name: Note Note_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public."Note"
@@ -564,7 +526,7 @@ ALTER TABLE ONLY public."Note"
 
 
 --
--- Name: OffreAlternance OffreAlternance_pkey; Type: CONSTRAINT; Schema: public; Owner: hyo
+-- Name: OffreAlternance OffreAlternance_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public."OffreAlternance"
@@ -572,7 +534,7 @@ ALTER TABLE ONLY public."OffreAlternance"
 
 
 --
--- Name: ProjetTuteure ProjetTuteure_pkey; Type: CONSTRAINT; Schema: public; Owner: hyo
+-- Name: ProjetTuteure ProjetTuteure_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public."ProjetTuteure"
@@ -580,7 +542,7 @@ ALTER TABLE ONLY public."ProjetTuteure"
 
 
 --
--- Name: ResetToken ResetToken_pkey; Type: CONSTRAINT; Schema: public; Owner: hyo
+-- Name: ResetToken ResetToken_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public."ResetToken"
@@ -588,7 +550,7 @@ ALTER TABLE ONLY public."ResetToken"
 
 
 --
--- Name: SupportDeCours SupportDeCours_pkey; Type: CONSTRAINT; Schema: public; Owner: hyo
+-- Name: SupportDeCours SupportDeCours_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public."SupportDeCours"
@@ -596,7 +558,7 @@ ALTER TABLE ONLY public."SupportDeCours"
 
 
 --
--- Name: UE UE_pkey; Type: CONSTRAINT; Schema: public; Owner: hyo
+-- Name: UE UE_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public."UE"
@@ -604,7 +566,7 @@ ALTER TABLE ONLY public."UE"
 
 
 --
--- Name: User User_pkey; Type: CONSTRAINT; Schema: public; Owner: hyo
+-- Name: User User_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public."User"
@@ -612,7 +574,7 @@ ALTER TABLE ONLY public."User"
 
 
 --
--- Name: _GroupeEtudiants _GroupeEtudiants_AB_pkey; Type: CONSTRAINT; Schema: public; Owner: hyo
+-- Name: _GroupeEtudiants _GroupeEtudiants_AB_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public."_GroupeEtudiants"
@@ -620,7 +582,7 @@ ALTER TABLE ONLY public."_GroupeEtudiants"
 
 
 --
--- Name: _prisma_migrations _prisma_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: hyo
+-- Name: _prisma_migrations _prisma_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public._prisma_migrations
@@ -628,42 +590,42 @@ ALTER TABLE ONLY public._prisma_migrations
 
 
 --
--- Name: Matiere_code_key; Type: INDEX; Schema: public; Owner: hyo
+-- Name: Matiere_code_key; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE UNIQUE INDEX "Matiere_code_key" ON public."Matiere" USING btree (code);
 
 
 --
--- Name: ResetToken_token_key; Type: INDEX; Schema: public; Owner: hyo
+-- Name: ResetToken_token_key; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE UNIQUE INDEX "ResetToken_token_key" ON public."ResetToken" USING btree (token);
 
 
 --
--- Name: UE_code_key; Type: INDEX; Schema: public; Owner: hyo
+-- Name: UE_code_key; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE UNIQUE INDEX "UE_code_key" ON public."UE" USING btree (code);
 
 
 --
--- Name: User_email_key; Type: INDEX; Schema: public; Owner: hyo
+-- Name: User_email_key; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE UNIQUE INDEX "User_email_key" ON public."User" USING btree (email);
 
 
 --
--- Name: _GroupeEtudiants_B_index; Type: INDEX; Schema: public; Owner: hyo
+-- Name: _GroupeEtudiants_B_index; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX "_GroupeEtudiants_B_index" ON public."_GroupeEtudiants" USING btree ("B");
 
 
 --
--- Name: EmploiDuTemps EmploiDuTemps_enseignantId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: hyo
+-- Name: EmploiDuTemps EmploiDuTemps_enseignantId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public."EmploiDuTemps"
@@ -671,7 +633,7 @@ ALTER TABLE ONLY public."EmploiDuTemps"
 
 
 --
--- Name: EmploiDuTemps EmploiDuTemps_groupeId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: hyo
+-- Name: EmploiDuTemps EmploiDuTemps_groupeId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public."EmploiDuTemps"
@@ -679,7 +641,7 @@ ALTER TABLE ONLY public."EmploiDuTemps"
 
 
 --
--- Name: EmploiDuTemps EmploiDuTemps_matiereId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: hyo
+-- Name: EmploiDuTemps EmploiDuTemps_matiereId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public."EmploiDuTemps"
@@ -687,7 +649,7 @@ ALTER TABLE ONLY public."EmploiDuTemps"
 
 
 --
--- Name: MatiereEnseignant MatiereEnseignant_enseignantId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: hyo
+-- Name: MatiereEnseignant MatiereEnseignant_enseignantId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public."MatiereEnseignant"
@@ -695,7 +657,7 @@ ALTER TABLE ONLY public."MatiereEnseignant"
 
 
 --
--- Name: MatiereEnseignant MatiereEnseignant_matiereId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: hyo
+-- Name: MatiereEnseignant MatiereEnseignant_matiereId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public."MatiereEnseignant"
@@ -703,7 +665,7 @@ ALTER TABLE ONLY public."MatiereEnseignant"
 
 
 --
--- Name: Matiere Matiere_ueId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: hyo
+-- Name: Matiere Matiere_ueId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public."Matiere"
@@ -711,7 +673,7 @@ ALTER TABLE ONLY public."Matiere"
 
 
 --
--- Name: Note Note_enseignantId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: hyo
+-- Name: Note Note_enseignantId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public."Note"
@@ -719,7 +681,7 @@ ALTER TABLE ONLY public."Note"
 
 
 --
--- Name: Note Note_etudiantId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: hyo
+-- Name: Note Note_etudiantId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public."Note"
@@ -727,7 +689,7 @@ ALTER TABLE ONLY public."Note"
 
 
 --
--- Name: Note Note_matiereId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: hyo
+-- Name: Note Note_matiereId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public."Note"
@@ -735,7 +697,7 @@ ALTER TABLE ONLY public."Note"
 
 
 --
--- Name: OffreAlternance OffreAlternance_entrepriseId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: hyo
+-- Name: OffreAlternance OffreAlternance_entrepriseId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public."OffreAlternance"
@@ -743,7 +705,7 @@ ALTER TABLE ONLY public."OffreAlternance"
 
 
 --
--- Name: ProjetTuteure ProjetTuteure_entrepriseId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: hyo
+-- Name: ProjetTuteure ProjetTuteure_entrepriseId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public."ProjetTuteure"
@@ -751,7 +713,7 @@ ALTER TABLE ONLY public."ProjetTuteure"
 
 
 --
--- Name: ResetToken ResetToken_userId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: hyo
+-- Name: ResetToken ResetToken_userId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public."ResetToken"
@@ -759,7 +721,7 @@ ALTER TABLE ONLY public."ResetToken"
 
 
 --
--- Name: SupportDeCours SupportDeCours_enseignantId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: hyo
+-- Name: SupportDeCours SupportDeCours_enseignantId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public."SupportDeCours"
@@ -767,7 +729,7 @@ ALTER TABLE ONLY public."SupportDeCours"
 
 
 --
--- Name: _GroupeEtudiants _GroupeEtudiants_A_fkey; Type: FK CONSTRAINT; Schema: public; Owner: hyo
+-- Name: _GroupeEtudiants _GroupeEtudiants_A_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public."_GroupeEtudiants"
@@ -775,7 +737,7 @@ ALTER TABLE ONLY public."_GroupeEtudiants"
 
 
 --
--- Name: _GroupeEtudiants _GroupeEtudiants_B_fkey; Type: FK CONSTRAINT; Schema: public; Owner: hyo
+-- Name: _GroupeEtudiants _GroupeEtudiants_B_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public."_GroupeEtudiants"
@@ -783,15 +745,8 @@ ALTER TABLE ONLY public."_GroupeEtudiants"
 
 
 --
--- Name: SCHEMA public; Type: ACL; Schema: -; Owner: hyo
---
-
-REVOKE USAGE ON SCHEMA public FROM PUBLIC;
-
-
---
 -- PostgreSQL database dump complete
 --
 
-\unrestrict 0HM9Ntw2CXCI7Dq65XH1ReO0oomOjkdfUIYQaSjf6Tm3yuSJ5ZLQtAvfa69kSah
+\unrestrict Xn0hTvgY9CtaUB82dScPTz7bzREz9XxvP9tjXWHzQNlGYwgQ0Sr2gRCOmOYKtFc
 
